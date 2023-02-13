@@ -1,0 +1,15 @@
+<?php
+/**
+ * Autoloader
+ *
+{{>partial_header}}
+ */
+spl_autoload_register(function ($className) {
+    if (0 === strpos($className, "Kronup\\")) {
+        // Prepare class parts
+        $parts = array_slice(explode("\\", $className), 1);
+
+        // Load the file
+        require_once __DIR__ . "/lib/" . implode("/", $parts) . ".php";
+    }
+});

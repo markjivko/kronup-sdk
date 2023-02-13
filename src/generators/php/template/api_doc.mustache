@@ -1,0 +1,142 @@
+---
+title: {{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}}
+parent: API
+layout: page
+---
+
+# Api/{{classname}}
+
+[{{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}} API Reference](https://api.kronup.com/tag/{{#operations}}{{#operation}}{{#-first}}((#toDashes)){{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}((/toDashes)){{/-first}}{{/operation}}{{/operations}}/)
+
+```php
+// Set your API Key 👇 here
+$sdk = new \Kronup\Sdk();
+
+// API Call
+$sdk->api()->{{classVarName}}();
+```
+{{#description}}
+
+{{{description}}}
+{{/description}}
+
+## Methods
+
+Method | Description
+------------- | -------------
+{{#operations}}{{#operation}}{{^isDeprecated}}[**{{operationId}}()**](#{{operationIdLowerCase}}) | {{#summary}}((#tableCell)){{{summary}}}((/tableCell)){{/summary}}
+{{/isDeprecated}}{{/operation}}{{/operations}}{{#operations}}{{#operation}}{{^isDeprecated}}
+
+## `{{{operationId}}}()`
+
+### Example
+
+<!---kronup-example file="Api/{{classname}}/{{{operationId}}}.php"--->
+```php
+<?php
+/**
+ * Copyright {{copyright}}
+ * 
+ * @link    https://kronup.github.io/kronup-php/Api/{{classname}}/#{{{operationIdLowerCase}}}
+ * @license MIT
+ * @author  Mark Jivko
+ * 
+ * SECURITY WARNING
+ * Execute this file in CLI mode only!
+ */
+"cli" !== php_sapi_name() && exit();
+
+// Use any PSR-4 autoloader
+require_once __DIR__ . "/autoload.php";
+{{> php_doc_auth_partial}}
+{{^vendorExtensions.x-group-parameters}}
+{{#allParams}}
+{{#description}}// {{{description}}}
+{{/description}}
+$arg_{{paramName}} = {{#isModel}}(new {{dataType}}()){{#vars}}
+    
+    // {{^required}}(optional) {{/required}}{{#description}}((#shortLine)){{{description}}}((/shortLine)){{/description}}{{^description}}{{dataType}}{{/description}}
+    ->{{setter}}({{#isString}}'{{{example}}}'{{/isString}}{{^isString}}{{#isFreeFormObject}}
+        json_decode(
+            '{{/isFreeFormObject}}{{{example}}}{{#isFreeFormObject}}'
+        )
+    {{/isFreeFormObject}}{{/isString}}){{/vars}}{{/isModel}}{{^isModel}}{{#isString}}"{{{example}}}"{{/isString}}{{^isString}}{{{example}}}{{/isString}}{{/isModel}};
+
+{{/allParams}}
+{{/vendorExtensions.x-group-parameters}}
+{{#vendorExtensions.x-group-parameters}}
+{{#allParams}}// {{{dataType}}}{{#description}} | {{{description}}}{{/description}}
+$payload["{{paramName}}"] = {{{example}}}; 
+{{/allParams}}
+{{/vendorExtensions.x-group-parameters}}
+try {
+
+    /**
+     * {{httpMethod}} ((#stripHash)){{path}}((/stripHash)){{#returnType}}
+     * 
+     * @var {{{returnType}}} $response{{/returnType}}
+     */
+    {{#returnType}}$response = {{/returnType}}$sdk
+        ->api()
+        ->{{classVarName}}()
+        ->{{{operationId}}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}$arg_{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$payload{{/vendorExtensions.x-group-parameters}});
+    {{#returnType}}
+
+    var_dump($response);
+    {{/returnType}}
+
+} catch (\Kronup\Sdk\ApiException $apiExc) {
+    echo sprintf(
+        "API Exception when calling api()->{{classVarName}}()->{{operationId}}(): %s\n", 
+        var_export($apiExc->getResponseObject(), true)
+    );
+} catch (\Exception $exc) {
+    echo sprintf(
+        "Exception when calling api()->{{classVarName}}()->{{operationId}}(): %s\n", 
+        $exc->getMessage()
+    );
+}
+```
+<!---/kronup-example--->
+
+### Request
+
+> **{{httpMethod}}** `((#stripHash)){{path}}((/stripHash))`
+
+### Type signature
+
+```php
+(new \Kronup\Sdk())->api()->{{classVarName}}()->{{{operationId}}}{{^hasParams}}(){{/hasParams}}{{#hasParams}}({{#allParams}}
+    {{^required}}[ {{/required}}{{dataType}} ${{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{^-last}},{{/-last}}{{^required}} ]{{/required}}{{/allParams}}
+){{/hasParams}}{{#returnType}}: {{{returnType}}}{{/returnType}}
+```
+
+### Parameters
+
+{{#vendorExtensions.x-group-parameters}}
+Note: the input parameter is an associative array with the keys listed as the parameter name below.
+
+{{/vendorExtensions.x-group-parameters}}
+{{^allParams}}This endpoint does not need any parameter.{{/allParams}}{{#allParams}}{{#-last}}Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------{{/-last}}{{/allParams}}
+{{#allParams}} **${{paramName}}** | {{#isFile}}**{{{dataType}}}** {{/isFile}}{{#isPrimitiveType}}**{{{dataType}}}** {{/isPrimitiveType}}{{^isPrimitiveType}}{{^isFile}}[**{{{dataType}}}**](../../Model/{{baseType}}){{/isFile}}{{/isPrimitiveType}} | ((#tableCell)){{description}}((/tableCell)) |{{^required}} [optional]{{/required}}{{#defaultValue}} [default to {{defaultValue}}]{{/defaultValue}}
+{{/allParams}}
+
+### Return type
+
+{{#returnType}}{{#returnTypeIsPrimitive}}**{{{returnType}}}**{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}[**{{{returnType}}}**](../../Model/{{returnBaseType}}){{/returnTypeIsPrimitive}}{{/returnType}}{{^returnType}}void (empty response body){{/returnType}}
+
+### Description
+
+> ((#tableCell)){{#summary}}{{{summary}}}{{/summary}}((/tableCell))
+
+((#cleanHtml))
+>> {{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}} <<
+
+{{#notes}}{{{notes}}}{{/notes}}
+((/cleanHtml))
+
+[Back to top](#top){: .btn .btn-purple }
+
+---
+{{/isDeprecated}}{{/operation}}{{/operations}}

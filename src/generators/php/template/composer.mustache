@@ -1,0 +1,42 @@
+{
+    "name": "{{theGitUserId}}/{{theGitRepoId}}",
+    "type": "library",
+    "description": "The official SDK for Kronup",
+    "keywords": [
+        "sdk", "kronup", "kronup.com"
+    ],
+    "homepage": "{{theAuthorUrl}}",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kronup",
+            "homepage": "{{theAuthorUrl}}",
+            "role": "Team"
+        },
+        {   
+            "name": "Mark Jivko",
+            "homepage": "https://markjivko.com",
+            "role": "Author"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/kronup/kronup-php/issues",
+        "source": "https://github.com/kronup/kronup-php"
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-mbstring": "*",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.1",
+        "ext-dom": "*"
+    },
+    "autoload": {
+        "psr-4": { "{{escapedInvokerPackage}}\\" : "{{{srcBasePath}}}/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "{{escapedInvokerPackage}}\\Test\\" : "{{{testBasePath}}}/" }
+    }
+}

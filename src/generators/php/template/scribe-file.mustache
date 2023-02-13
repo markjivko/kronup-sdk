@@ -1,0 +1,106 @@
+{{#classes}}
+---
+title: {{{className}}}
+parent: {{{fragment}}}
+layout: page
+---
+
+# {{{fragment}}}/{{{className}}}
+
+```php
+// Set your API Key 👇 here
+$sdk = new \Kronup\Sdk();
+
+// {{{fragment}}}/{{{className}}}
+$sdk->{{#fluent}}{{{fragment}}}{{/fluent}}->{{{classVarName}}}();
+```
+
+{{#classInfo}}{{{classInfo}}}{{/classInfo}}
+
+Method | Description
+------------- | -------------
+{{#methods}}[**{{{methodName}}}()**](#{{#anchorText}}{{{methodName}}}{{/anchorText}}) | {{{methodDescription}}}
+{{/methods}}{{#methods}}
+
+# `{{{methodName}}}()`
+
+## Example
+
+<!---kronup-example file="{{{fragment}}}/{{{className}}}/{{{methodName}}}.php"--->
+```php
+<?php
+/**
+ * Copyright (c) 2022-2023 kronup.com
+ * 
+ * @link    https://kronup.github.io/kronup-php/{{{fragment}}}/{{{className}}}/#{{#anchorText}}{{{methodName}}}{{/anchorText}}
+ * @license MIT
+ * @author  Mark Jivko
+ * 
+ * SECURITY WARNING
+ * Execute this file in CLI mode only!
+ */
+"cli" !== php_sapi_name() && exit();
+
+// Use any PSR-4 autoloader
+require_once __DIR__ . "/autoload.php";
+
+// Set your API Key 👇 here
+$sdk = new \Kronup\Sdk();
+
+{{#methodArgs}}
+{{#argDescription}}// {{{argDescription}}}
+{{/argDescription}}
+$arg_{{{argName}}} = {{{argExample}}};
+
+{{/methodArgs}}
+try {
+    
+    {{#methodReturn.returnType}}/** @var {{{methodReturn.returnType}}} $result */
+    {{/methodReturn.returnType}}
+    {{#methodReturn.returnType}}$result = {{/methodReturn.returnType}}$sdk
+        ->{{#fluent}}{{{fragment}}}{{/fluent}}
+        ->{{{classVarName}}}()
+        ->{{{methodName}}}({{#methodArgs}}$arg_{{argName}}{{^-last}}, {{/-last}}{{/methodArgs}});
+    {{#methodReturn.returnType}}
+
+    var_dump($result);
+    {{/methodReturn.returnType}}
+
+} catch (\Exception $exc) {
+    echo sprintf(
+        "Exception when calling {{#fluent}}{{{fragment}}}{{/fluent}}->{{{classVarName}}}()->{{{methodName}}}(): %s\n", 
+        $exc->getMessage()
+    );
+}
+```
+<!---/kronup-example--->
+
+## Type signature
+
+```php
+(new \Kronup\Sdk())->{{#fluent}}{{{fragment}}}{{/fluent}}->{{{classVarName}}}()->{{{methodName}}}({{#methodArgs}}
+    {{^argRequired}}[ {{/argRequired}}{{argType}} ${{argName}}{{#argDefault}} = {{argDefault}}{{/argDefault}}{{^-last}},{{/-last}}{{^argRequired}} ]{{/argRequired}}{{/methodArgs}}
+){{#methodReturn.returnType}}: {{{methodReturn.returnType}}}{{/methodReturn.returnType}}
+```
+
+## Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+{{#methodArgs}}**${{argName}}** | {{#linkType}}{{{argType}}}{{/linkType}} | {{{argDescription}}} | {{^argRequired}} [optional]{{/argRequired}}{{#argDefault}} [default to {{argDefault}}]{{/argDefault}}
+{{/methodArgs}}
+
+## Return type
+
+{{#methodReturn}}{{{methodReturn.returnDescription}}} ({{#linkType}}{{{methodReturn.returnType}}}{{/linkType}}{{/methodReturn}}{{^methodReturn}}`void`{{/methodReturn}})
+
+## Description
+
+{{{methodDescription}}}
+
+[Back to top](#top){: .btn .btn-purple }
+
+---
+
+{{/methods}}
+{{/classes}}

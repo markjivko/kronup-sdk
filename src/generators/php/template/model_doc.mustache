@@ -1,0 +1,20 @@
+{{#models}}
+{{#model}}
+---
+title: {{classname}}
+parent: Model
+layout: page
+---
+
+# {{classname}}
+
+## Model getters
+
+Method name | Return type | Description | Notes
+------------ | ------------- | ------------- | -------------
+{{^vars}}**getData()** | mixed | {{{dataType}}} | [mixed type]
+{{/vars}}{{#vars}}**{{getter}}()** | {{#isPrimitiveType}}**{{{dataType}}}**{{/isPrimitiveType}}{{^isPrimitiveType}}[**{{{dataType}}}**](../{{complexType}}){{/isPrimitiveType}} | ((#tableCell)){{{description}}}((/tableCell)){{#example}} <br>Example: `((#tableCell)){{{example}}}((/tableCell))`{{/example}} |{{^required}} [optional]{{/required}}{{#defaultValue}} [default to {{{.}}}]{{/defaultValue}}
+{{/vars}}
+
+{{/model}}
+{{/models}}

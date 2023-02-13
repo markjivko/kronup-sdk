@@ -1,0 +1,6 @@
+{
+    "logLevel": "info",
+    "production": true,
+    "apiKey": "",
+    "schemaMappings": {}
+}

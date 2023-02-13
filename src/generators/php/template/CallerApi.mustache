@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * Kronup SDK Caller - API
+ *
+{{>partial_header}}
+ */
+
+namespace {{invokerPackage}}\Sdk\Caller;
+!defined("KRONUP-SDK") && exit();
+
+use {{invokerPackage}}\Sdk;
+use {{invokerPackage}}\Api as A;
+
+class Api {
+    /**
+     * SDK object
+     *
+     * @var \Kronup\Sdk
+     */
+    protected $_sdk;
+
+    {{#apiInfo}}
+    {{#apis}}
+    /**
+     * {{{baseName}}} API
+     *
+     * @var \{{invokerPackage}}\Api\{{{classname}}}
+     */
+    protected $_{{{classVarName}}}Api = null;
+
+    {{/apis}}
+    {{/apiInfo}}
+    /**
+     * SDK {{api}}
+     *
+     * @param \Kronup\Sdk $sdk SDK object
+     */
+    public function __construct(Sdk $sdk) {
+        $this->_sdk = $sdk;
+    }
+    {{#apiInfo}}
+    {{#apis}}
+    
+    /**
+     * {{{baseName}}} API
+     * 
+     * @return \{{invokerPackage}}\Api\{{{classname}}}
+     */
+    public function {{{classVarName}}}(): A\{{{classname}}} {
+        if (null === $this->_{{{classVarName}}}Api) {
+            $this->_{{{classVarName}}}Api = new A\{{classname}}($this->_sdk);
+        }
+
+        return $this->_{{{classVarName}}}Api;
+    }
+    {{/apis}}
+    {{/apiInfo}}
+}

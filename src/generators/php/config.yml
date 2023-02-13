@@ -1,0 +1,100 @@
+additionalProperties:
+  theGitUserId: "kronup"
+  theGitRepoId: "kronup-php"
+  theAuthorName: "kronup.com"
+  theAuthorUrl: "https://kronup.com/"
+  packagePath: "Kronup"
+  artifactVersion: "1.0.0"
+  invokerPackage: "Kronup"
+  modelPackage: "Model"
+  apiPackage: "Api"
+  composerVendorName: "kronup"
+  composerProjectName: "sdk"
+  licenseInfo: "MIT"
+  copyright: "(c) 2022-2023 kronup.com"
+  
+files:
+  .gitignore.mustache:
+    folder: ""
+    destinationFilename: .gitignore
+    templateType: SupportingFiles
+
+  Sdk.mustache:
+    folder: "lib"
+    destinationFilename: Sdk.php
+    templateType: SupportingFiles
+
+  CallerApi.mustache:
+    folder: "lib/Sdk/Caller"
+    destinationFilename: Api.php
+    templateType: SupportingFiles
+
+  ApiException.mustache:
+    folder: "lib/Sdk"
+    destinationFilename: ApiException.php
+    templateType: SupportingFiles
+
+  Configuration.mustache:
+    folder: "lib/Sdk"
+    destinationFilename: Config.php
+    templateType: SupportingFiles
+
+  HeaderSelector.mustache:
+    folder: "lib/Sdk"
+    destinationFilename: HeaderSelector.php
+    templateType: SupportingFiles
+
+  ObjectSerializer.mustache:
+    folder: "lib/Sdk"
+    destinationFilename: Serializer.php
+    templateType: SupportingFiles
+
+  autoload.mustache:
+    folder: ""
+    destinationFilename: autoload.php
+    templateType: SupportingFiles
+
+  docs-index.mustache:
+    folder: "docs"
+    destinationFilename: index.md
+    templateType: SupportingFiles
+
+  github/code-of-conduct.mustache:
+    folder: ""
+    destinationFilename: CODE-OF-CONDUCT.md
+    templateType: SupportingFiles
+
+  github/contributing.mustache:
+    folder: ""
+    destinationFilename: CONTRIBUTING.md
+    templateType: SupportingFiles
+
+  github/security.mustache:
+    folder: ""
+    destinationFilename: SECURITY.md
+    templateType: SupportingFiles
+
+  github/license.mustache:
+    folder: ""
+    destinationFilename: LICENSE.txt
+    templateType: SupportingFiles
+
+  github/bug-report.mustache:
+    folder: .github/ISSUE_TEMPLATE
+    destinationFilename: bug_report.md
+    templateType: SupportingFiles
+
+  github/feature-request.mustache:
+    folder: .github/ISSUE_TEMPLATE
+    destinationFilename: feature_request.md
+    templateType: SupportingFiles
+
+  github/pull-request.mustache:
+    folder: .github
+    destinationFilename: PULL_REQUEST_TEMPLATE.md
+    templateType: SupportingFiles
+
+  github/workflows/pages.yml:
+    folder: ".github/workflows"
+    destinationFilename: "pages.yml"
+    templateType: SupportingFiles

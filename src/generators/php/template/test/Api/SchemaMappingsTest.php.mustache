@@ -1,0 +1,36 @@
+<?php
+/**
+ * Schema Mappings Test
+ *
+ * @copyright (c) 2022-2023 kronup.com
+ * @license   MIT
+ * @package   Kronup
+ * @author    Mark Jivko
+ */
+
+namespace Kronup\Test\Local\Api;
+!class_exists("\Kronup\Sdk") && exit();
+
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Schema Mappings Test
+ *
+ * @coversDefaultClass \Kronup\Local\Wallet
+ */
+class SchemaMappingsTest extends TestCase {
+
+    /**
+     * Test schema mappings
+     */
+    public function testSchemaMappings() {
+        {{#application.schemaMappings}}
+        // {{{key}}} >> {{{value}}}
+        $this->assertTrue(
+            class_exists("\Kronup\Model\{{{value}}}"), 
+            "{{key}} missing - could not be renamed to {{value}}"
+        );
+
+        {{/application.schemaMappings}}
+    }
+}

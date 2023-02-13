@@ -1,0 +1,26 @@
+### {{{data.name}}}
+
+{{{data.description}}}
+
+You can access any of the {{{data.name}}} endpoints with the following syntax:
+
+```php
+// Set your API Key 👇 here
+$sdk = new \Kronup\Sdk();
+
+// {{{fragment}}}
+$sdk->{{#fluent}}{{{fragment}}}{{/fluent}};
+```
+
+{{#data}}{{#classes}}
+### **{{#fluent}}{{{fragment}}}{{/fluent}}->{{{classVarName}}}()** 
+
+{{#methods}}
+[🔹 **{{{methodName}}}()**](./{{{fragment}}}/{{{className}}}.md#{{#anchorText}}{{{methodName}}}{{/anchorText}})
+
+> {{{methodDescription}}}
+
+{{/methods}}
+[Back to top](#top){: .btn .btn-purple }
+
+{{/classes}}{{/data}}

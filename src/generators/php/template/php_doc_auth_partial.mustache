@@ -1,0 +1,9 @@
+{{#hasAuthMethods}}{{#authMethods}}
+{{#isApiKey}}
+// Set your API Key 👇 here
+$sdk = new \Kronup\Sdk();
+
+// 🐛 Enable debugging
+$sdk->config()->setDebug(true);
+{{/isApiKey}}
+{{/authMethods}}{{/hasAuthMethods}}

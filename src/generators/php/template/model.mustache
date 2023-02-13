@@ -1,0 +1,28 @@
+<?php
+
+{{#models}}
+{{#model}}
+/**
+ * {{name}} Model
+ *
+{{>partial_header}}
+ */
+
+namespace {{modelPackage}};
+!defined("KRONUP-SDK") && exit();
+
+/**
+ * {{name}} Model
+{{#description}}
+ * 
+ * @description {{{description}}}
+{{/description}}
+ */
+{{#isEnum}}
+{{>model_enum}}
+{{/isEnum}}
+{{^isEnum}}
+{{>model_generic}}
+{{/isEnum}}
+{{/model}}
+{{/models}}

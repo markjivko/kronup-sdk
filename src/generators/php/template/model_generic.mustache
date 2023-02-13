@@ -1,0 +1,157 @@
+class {{classname}} extends {{#parentSchema}}{{{parent}}}{{/parentSchema}}{{^parentSchema}}AbstractModel{{/parentSchema}} {
+
+    public const _D = {{#discriminator}}'{{discriminatorName}}'{{/discriminator}}{{^discriminator}}null{{/discriminator}};
+    {{#hasVars}}
+    {{#vars}}
+    {{#isEnum}}
+    {{#allowableValues}}
+    {{#enumVars}}
+    public const {{enumName}}_{{{name}}} = {{{value}}};
+    {{/enumVars}}
+    {{/allowableValues}}
+    {{/isEnum}}
+    {{/vars}}
+    {{/hasVars}}
+    protected static $_name = "{{name}}";
+    protected static $_definition = [
+        {{#vars}}
+        "{{name}}" => ["{{baseName}}", "{{{datatype}}}", {{#dataFormat}}'{{{.}}}'{{/dataFormat}}{{^dataFormat}}null{{/dataFormat}}, "{{getter}}", "{{setter}}", {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}, ["r" => {{#required}}1{{/required}}{{^required}}0{{/required}}{{#isEnum}}, "e" => 1{{/isEnum}}{{#isContainer}}, "c" => 1{{/isContainer}}{{#hasValidation}}{{#pattern}}, "p" => "{{{pattern}}}"{{/pattern}}{{#minimum}}, "n" => [{{{minimum}}}{{#exclusiveMinimum}}, 1{{/exclusiveMinimum}}]{{/minimum}}{{#maximum}}, "x" => [{{{maximum}}}{{#exclusiveMaximum}}, 1{{/exclusiveMaximum}}]{{/maximum}}{{#minLength}}, "nl" => {{{minLength}}}{{/minLength}}{{#maxLength}}, "xl" => {{{maxLength}}}{{/maxLength}}{{#minItems}}, "ni" => {{{minItems}}}{{/minItems}}{{#maxItems}}, "xi" => {{{maxItems}}}{{/maxItems}}{{/hasValidation}}]]{{^-last}}, {{/-last}}
+        {{/vars}}
+    ];
+
+    /**
+     * {{classname}}
+     {{#hasVars}}
+     *
+     * @param mixed[] $data Model data
+     {{/hasVars}}
+     {{^hasVars}}
+     *
+     * @param mixed $data Model data
+     {{/hasVars}}
+     */
+    public function __construct({{#hasVars}}array $data = []{{/hasVars}}{{^hasVars}}$data = null{{/hasVars}}) {
+        {{#parentSchema}}
+        parent::__construct($data);
+
+        {{/parentSchema}}
+        {{#hasVars}}
+        foreach(static::$_definition as $k => $v) {
+            $this->_data[$k] = isset($data[$k]) ? $data[$k] : $v[5];
+        }
+        {{/hasVars}}
+        {{^hasVars}}
+        $this->_data = $data;
+        {{/hasVars}}
+        {{#discriminator}}
+        $this->_data[array_search('{{discriminator}}', self::attributeMap(), true)] = $this->modelName();
+        {{/discriminator}}
+    }
+    {{#parentSchema}}
+    /**
+     * {@inheritdoc}
+     */
+    public static function attributeMap(): array {
+        return parent::attributeMap() + array_map(function ($item) {
+            return $item[0];
+        }, static::$_definition);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function openAPITypes(): array {
+        return array_map(function ($item) {
+            return $item[1];
+        }, static::$_definition) + parent::_types();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function openAPIFormats(): array {
+        return array_map(function ($item) {
+            return $item[2];
+        }, static::$_definition) + parent::openAPIFormats();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public static function getters(): array {
+        return parent::getters() + array_map(function ($item) {
+            return $item[3];
+        }, static::$_definition);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function setters(): array {
+        return parent::setters() + array_map(function ($item) {
+            return $item[4];
+        }, static::$_definition);
+    }
+    {{/parentSchema}}
+
+    {{^hasVars}}
+    /**
+     * Get data
+     * 
+     * @return mixed {{dataType}}
+     */
+    public function getData() {
+        return $this->_data;
+    }
+
+    /**
+     * Set data
+     * 
+     * @param mixed $data {{dataType}}
+     * @return $this
+     */
+    public function setData($data) {
+        $this->_data = $data;
+
+        return $this;
+    }
+    
+    {{/hasVars}}
+    {{#vars}}
+    {{#isEnum}}
+    /**
+     * Get allowable values
+     *
+     * @return string[]
+     */
+    public function {{getter}}AllowableValues(): array {
+        return [
+            {{#allowableValues}}{{#enumVars}}self::{{enumName}}_{{{name}}},{{^-last}}
+            {{/-last}}{{/enumVars}}{{/allowableValues}}
+        ];
+    }
+    {{/isEnum}}
+    {{/vars}}
+    {{#vars}}
+
+    /**
+     * Get {{name}}
+     *
+     * @return {{{dataType}}}{{^required}}|null{{/required}}
+     */
+    public function {{getter}}(): {{^isContainer}}{{^required}}?{{/required}}{{datatype}}{{/isContainer}}{{#isContainer}}{{^required}}?{{/required}}array{{/isContainer}} {
+        return $this->_data["{{name}}"];
+    }
+
+    /**
+     * Set {{name}}
+     * 
+     * @param {{{dataType}}}{{^required}}|null{{/required}} ${{name}}{{#description}} {{{description}}}{{/description}}{{^description}} {{{name}}}{{/description}}
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    public function {{setter}}({{#isContainer}}{{^required}}?{{/required}}array{{/isContainer}} ${{name}}) {
+        return $this->_set("{{name}}", ${{name}});
+    }
+    {{/vars}}
+}

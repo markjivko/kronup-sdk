@@ -1,0 +1,67 @@
+/**
+ * Kronup SDK Developer
+ *
+ * @desc      Develop SDK client in real-time
+ * @copyright (c) 2022-2023 kronup.com
+ * @author    Mark Jivko
+ */
+const logger = require("../utils/logger");
+const config = require("../utils/config");
+const path = require("path");
+const generators = require("../utils/generators");
+const watcher = require("../utils/watcher");
+const fs = require("fs-extra");
+
+(async () => {
+    logger.tools.banner();
+    logger.tools.heading("Development mode");
+
+    // Get the client
+    const client = await generators.getClient();
+
+    // Prepare the directories
+    const pathRoot = path.dirname(path.dirname(__dirname));
+    const srcDir = path.join(pathRoot, "src", "generators", client);
+
+    try {
+        config.openApi();
+
+        // PRepare the task running flag
+        let taskRunning = false;
+
+        // Log the folders
+        logger.debug(
+            `Listening to "${logger.tools.colorInfo(
+                `src/generators/${client}`
+            )}" for changes, re-building to "${logger.tools.colorInfo(`out/${client}`)}"...\n`
+        );
+
+        // Watch for changes in the source
+        watcher.watch(srcDir, async () => {
+            do {
+                if (!fs.existsSync(srcDir)) {
+                    logger.error("Source directory removed");
+                    process.exit();
+                    break;
+                }
+
+                // Another task is running
+                if (taskRunning) {
+                    break;
+                }
+
+                // Set the flag
+                taskRunning = true;
+
+                // Build the SDK
+                await generators.build({ client, logging: true, animation: true });
+
+                // All done
+                taskRunning = false;
+            } while (false);
+        });
+    } catch (e) {
+        logger.error(` ${e}`);
+        process.exit(1);
+    }
+})();
