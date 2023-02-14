@@ -18,10 +18,16 @@ module.exports = {
         {
             files: "*.php",
             options: {
-                phpVersion: "8.1",
+                phpVersion: "8.2",
                 printWidth: 120,
                 braceStyle: "1tbs",
                 trailingCommaPHP: false
+            }
+        },
+        {
+            files: "*.yml",
+            options: {
+                tabWidth: 2
             }
         }
     ]

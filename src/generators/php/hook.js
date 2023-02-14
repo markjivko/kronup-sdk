@@ -35,15 +35,10 @@ module.exports = class hook extends iHook {
                 if ("IPFSApi.md" === docFileName && "$arg_file" === varName) {
                     match = `${varName} = new \\SplFileObject('${varValue.replace(/['"]+/g, "")}');`;
                 } else {
-                    // Provide a real mnemonic
-                    if (varValue.match(/(?:mnemonic.*example)/gi)) {
-                        match = `${varName} = 'police hat quantum advance enroll glove thank build warfare inject invite obscure enable inflict seek web cable answer chest suspect comfort tent source seven';`;
-                    } else {
-                        // Poorly escaped string
-                        const strMatch = varValue.match(/"'(.*?)'"/i);
-                        if (null !== strMatch) {
-                            match = `${varName} = '${strMatch[1]}';`;
-                        }
+                    // Poorly escaped string
+                    const strMatch = varValue.match(/"'(.*?)'"/i);
+                    if (null !== strMatch) {
+                        match = `${varName} = '${strMatch[1]}';`;
                     }
                 }
 
