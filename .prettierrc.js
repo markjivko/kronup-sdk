@@ -18,7 +18,7 @@ module.exports = {
         {
             files: "*.php",
             options: {
-                phpVersion: "8.2",
+                phpVersion: "8.1",
                 printWidth: 120,
                 braceStyle: "1tbs",
                 trailingCommaPHP: false
