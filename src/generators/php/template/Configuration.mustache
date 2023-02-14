@@ -35,7 +35,7 @@ class Config {
      *
      * @var string
      */
-    protected $_host = '{{basePath}}';
+    protected $_host = '((#host)){{basePath}}((/host))';
 
     /**
      * User agent of the HTTP request, set to "{{invokerPackage}}_SDK_PHP/{{{artifactVersion}}}" by default

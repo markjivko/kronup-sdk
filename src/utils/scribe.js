@@ -9,6 +9,7 @@ const fs = require("fs-extra");
 const path = require("path");
 const jsYaml = require("js-yaml");
 const Mustache = require("mustache");
+const config = require("./config");
 const { NodeHtmlMarkdown } = require("node-html-markdown");
 
 /**
@@ -69,7 +70,8 @@ const operations = {
         str
             .replace(/\#.*?$/g, "")
             .replace(/\//g, " /")
-            .trim()
+            .trim(),
+    host: str => (config.application().production ? str : str.replace(/^.*?\/v(\d+)\b/g, "http://localhost:3000/v$1"))
 };
 
 /* eslint-disable guard-for-in */

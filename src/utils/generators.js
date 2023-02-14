@@ -92,8 +92,8 @@ const gHook = class {
         }
 
         // Parse generated files
-        for (const relativePath in readdirRelative(path.join(this.buildPath, "lib", "Api"))) {
-            const filePath = path.join(this.buildPath, "lib", "Api", relativePath);
+        for (const relativePath in readdirRelative(path.join(this.buildPath, "lib"))) {
+            const filePath = path.join(this.buildPath, "lib", relativePath);
             const contentsOriginal = fs.readFileSync(filePath).toString();
 
             // Parse scribe tags in all documents
