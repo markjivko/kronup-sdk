@@ -32,5 +32,8 @@ class SchemaMappingsTest extends TestCase {
         );
 
         {{/application.schemaMappings}}
+        {{^application.schemaMappings}}
+        $this->assertTrue(true, "No schema mappings were defined");
+        {{/application.schemaMappings}}
     }
 }

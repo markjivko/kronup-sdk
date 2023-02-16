@@ -5,8 +5,8 @@
  * @copyright (c) 2022-2023 kronup.com
  * @author    Mark Jivko
  */
-const logger = require("../utils/logger");
 const config = require("../utils/config");
+const logger = require("../utils/logger");
 const path = require("path");
 const generators = require("../utils/generators");
 const watcher = require("../utils/watcher");
@@ -22,11 +22,12 @@ const fs = require("fs-extra");
     // Prepare the directories
     const pathRoot = path.dirname(path.dirname(__dirname));
     const srcDir = path.join(pathRoot, "src", "generators", client);
+    const configDir = path.join(pathRoot, "config");
 
     try {
         config.openApi();
 
-        // PRepare the task running flag
+        // Prepare the task running flag
         let taskRunning = false;
 
         // Log the folders
@@ -37,7 +38,7 @@ const fs = require("fs-extra");
         );
 
         // Watch for changes in the source
-        watcher.watch(srcDir, async () => {
+        watcher.watch([srcDir, configDir], async () => {
             do {
                 if (!fs.existsSync(srcDir)) {
                     logger.error("Source directory removed");
@@ -52,6 +53,9 @@ const fs = require("fs-extra");
 
                 // Set the flag
                 taskRunning = true;
+
+                // Reload the config
+                config.application(true);
 
                 // Build the SDK
                 await generators.build({ client, logging: true, animation: true });

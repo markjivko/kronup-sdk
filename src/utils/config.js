@@ -16,11 +16,12 @@ module.exports = {
     /**
      * Initialize and return the application cofiguration
      *
+     * @param {boolean} reload
      * @return {string|null}
      * @throws {Error}
      */
-    application: function () {
-        if (null === configApplication) {
+    application: function (reload) {
+        if (reload || null === configApplication) {
             const pathRoot = path.dirname(path.dirname(__dirname));
             const pathConfig = path.join(pathRoot, "config", "application.json");
             const pathConfigSample = path.join(pathRoot, "config", "application-sample.json");

@@ -99,33 +99,36 @@ module.exports = {
     /**
      * Listen for file changes
      *
-     * @param {string}   pathDir  Directory path
+     * @param {string[]} dirs     Directory paths
      * @param {function} callback Callback on change
      */
-    watch: (pathDir, callback) => {
+    watch: (dirs, callback) => {
         let ready = false;
 
         // Prepare the listener
         ["unlink", "change", "add", "ready"].forEach(eventType => {
-            chokidar.watch(pathDir).on(
+            chokidar.watch(dirs).on(
                 eventType,
                 (p, e) => {
-                    // Set the ready flag
-                    if ("ready" === eventType) {
-                        ready = true;
-                        if ("function" === typeof callback) {
-                            (async () => {
-                                await callback(p, e);
-                            })();
+                    do {
+                        // Set the ready flag
+                        if ("ready" === eventType) {
+                            ready = true;
+                            if ("function" === typeof callback) {
+                                setTimeout(async () => {
+                                    await callback(p, e);
+                                }, 200);
+                            }
+                            break;
                         }
-                    }
 
-                    // Add, change and delete events only when ready
-                    if ("ready" !== eventType && ready && "function" === typeof callback) {
-                        (async () => {
-                            await callback(p, e);
-                        })();
-                    }
+                        // Add, change and delete events only when ready
+                        if (ready && "function" === typeof callback) {
+                            setTimeout(async () => {
+                                await callback(p, e);
+                            }, 200);
+                        }
+                    } while (false);
                 },
                 {
                     ignored: ".git",
@@ -134,7 +137,7 @@ module.exports = {
                     persistent: true,
                     alwaysStat: true,
                     awaitWriteFinish: true,
-                    cwd: pathDir
+                    cwd: dirs
                 }
             );
         });

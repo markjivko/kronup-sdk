@@ -136,6 +136,45 @@ const tools = {
     },
 
     /**
+     * Development mode: continuous fetching
+     */
+    handleDev: async () => {
+        console.log("");
+        logger.info("📦 Fetching OpenAPI specification at a regular interval\n");
+
+        // State machine
+        const go = async () => {
+            const start = new Date().getTime();
+            try {
+                const changesMade = await tools.handleFetch("sample");
+
+                if (changesMade) {
+                    // Prepare the timestamp
+                    const timestamp = new Date().toLocaleString("en-gb", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit"
+                    });
+
+                    // Log the end
+                    logger.debug(
+                        `^^^ ${timestamp} in ${new Intl.NumberFormat("en-GB").format(
+                            (new Date().getTime() - start) / 1000
+                        )}s\n`
+                    );
+                }
+
+                setTimeout(go, 2000);
+            } catch (e) {
+                setTimeout(go, 1000);
+            }
+        };
+
+        // Start the state machine
+        go();
+    },
+
+    /**
      * Perform check on configuration files
      *
      * @param {array}  choices Array of {value, name} objects for inquirer
@@ -215,57 +254,52 @@ const tools = {
      * Fetch OpenApi specification from server
      *
      * @param {string} name (optional) Configuration name
+     * @return {boolean}
      */
     handleFetch: async name => {
+        let changesMade = false;
+
+        // Prepare the paths
         const configName = await tools.getConfigName(name);
+        const pathConfigMain = path.join(configPath, "openapi.json");
+        const pathConfigFetched = path.join(configPath, configName);
 
         // Fetch the html
-        logger.debug("📥 Fetching OpenAPI Specification...");
         const openApiObject = await axios.get(`http://localhost:3000/openapi.json`);
+
+        // Invalid response
         if ("object" !== typeof openApiObject || null === openApiObject) {
             throw new Error("Invalid server response");
         }
 
-        do {
-            // Versions mode
-            if (Array.isArray(openApiObject.data.versions)) {
-                openApiObject.data.versions.forEach(version => {
-                    const fileName = configName.replace(
-                        /\.json$/gi,
-                        (version.isDefault ? "" : `-${version.id.replace(/\W+/g, "-")}`) + ".json"
-                    );
-
-                    // Fix specification issues
-                    treatSpec(version.spec);
-
-                    // Write to config
-                    fs.writeFileSync(path.join(configPath, fileName), JSON.stringify(version.spec, null, 4));
-                    logger.success(`✨ Created "${fileName} (v)"`);
-                });
-                break;
-            }
-
-            // Direct mode
-            if ("string" === typeof openApiObject.data.openapi) {
-                // Fix specification issues
-                treatSpec(openApiObject.data);
-
-                // Write to config
-                fs.writeFileSync(
-                    path.join(configPath, configName),
-                    JSON.stringify(openApiObject.data, null, 4)
-                );
-                logger.success(`✨ Created "${configName}" (d)`);
-                break;
-            }
-
+        // Invalid payload
+        if ("string" !== typeof openApiObject.data.openapi) {
             throw new Error("Unknown specification format");
-        } while (false);
+        }
+
+        // Fix specification issues
+        treatSpec(openApiObject.data);
+
+        // Prepare the data
+        const jsonMain = fs.existsSync(pathConfigMain) ? fs.readFileSync(pathConfigMain).toString() : "";
+        const jsonFetchedOld = fs.existsSync(pathConfigFetched) ? fs.readFileSync(pathConfigFetched).toString() : "";
+        const jsonFetchedNew = JSON.stringify(openApiObject.data, null, 4);
+
+        // Update the fetched configuration file
+        if (jsonFetchedOld !== jsonFetchedNew) {
+            fs.writeFileSync(pathConfigFetched, jsonFetchedNew);
+            logger.success(`✨ Updated "${configName}"`);
+            changesMade = true;
+        }
 
         // Auto-switch
-        fs.copyFileSync(path.join(configPath, configName),path.join(configPath, 'openapi.json'));
+        if (jsonMain !== jsonFetchedNew) {
+            fs.copyFileSync(pathConfigFetched, pathConfigMain);
+            logger.success(`✨ Updated "openapi.json"`);
+            changesMade = true;
+        }
 
-        console.log("\n");
+        return changesMade;
     },
 
     /**
@@ -351,7 +385,8 @@ const tools = {
         const actionChoices = [
             { value: "check", name: "Check configuration" },
             { value: "fetch", name: "Fetch from server" },
-            { value: "copy", name: "Copy from file" }
+            { value: "copy", name: "Copy from file" },
+            { value: "dev", name: "Development mode" }
         ];
 
         // Files to switch to
@@ -396,12 +431,18 @@ const tools = {
                 await tools.handleNew(choicesSwitch, argExtra, process.argv.slice(4)[0]);
                 break;
 
+            case "dev":
+                await tools.handleDev();
+                break;
+
             case "check":
                 await tools.handleCheck(choicesSwitch, argExtra);
                 break;
 
             case "fetch":
+                logger.debug("📥 Fetching OpenAPI Specification...");
                 await tools.handleFetch(argExtra);
+                console.log("\n");
                 break;
 
             case "switch":
