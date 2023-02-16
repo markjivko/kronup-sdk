@@ -75,7 +75,7 @@ module.exports = {
 
                 // Empty directory
                 if (toDir !== toPath && 0 === fs.readdirSync(toDir).length) {
-                    fs.rmSync(toDir);
+                    fs.rmdirSync(toDir);
                     logger.debug(`${logger.tools.colorError("(x) Deleted")}  📂 ${path.dirname(filePath)}`);
                 }
             }

@@ -2,10 +2,5 @@
     "logLevel": "info",
     "production": true,
     "apiKey": "",
-    "schemaMappings": {
-        "accountUpdate_400_response": "Response400",
-        "accountRead_401_response": "Response401",
-        "invitationRead_403_response": "Response403",
-        "invitationRead_404_response": "Response404"
-    }
+    "schemaMappings": {}
 }
