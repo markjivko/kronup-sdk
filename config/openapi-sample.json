@@ -110,19 +110,11 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Account model updated. Returns updated fields and their new values.",
+                        "description": "Account model updated",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "AccountUpdatedFields",
-                                    "type": "object",
-                                    "properties": {
-                                        "userName": {
-                                            "type": "string",
-                                            "description": "User name",
-                                            "example": "John Doe"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/Account"
                                 }
                             }
                         }
@@ -1619,7 +1611,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Account"
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -1738,6 +1730,28 @@
                         "title": "Error 401 message",
                         "description": "401 Error message (supports i18n)",
                         "example": "Authorization error"
+                    }
+                },
+                "required": [
+                    "id",
+                    "message"
+                ]
+            },
+            "Error402": {
+                "description": "Payment required",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Error 402 ID",
+                        "description": "Unique lowercase string that identifies this 402 error",
+                        "example": "payment-*"
+                    },
+                    "message": {
+                        "type": "string",
+                        "title": "Error 402 message",
+                        "description": "402 Error message (supports i18n)",
+                        "example": "Payment required error"
                     }
                 },
                 "required": [
