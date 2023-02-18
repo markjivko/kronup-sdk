@@ -10,10 +10,10 @@ layout: page
 
 ## Model getters
 
-Method name | Return type | Description | Notes
------------- | ------------- | ------------- | -------------
+Method name | Return type | Description
+------------ | ------------- | -------------
 {{^vars}}**getData()** | mixed | {{{dataType}}} | [mixed type]
-{{/vars}}{{#vars}}**{{getter}}()** | {{#isPrimitiveType}}**{{{dataType}}}**{{/isPrimitiveType}}{{^isPrimitiveType}}[**{{{dataType}}}**](../{{complexType}}){{/isPrimitiveType}} | ((#tableCell)){{{description}}}((/tableCell)){{#example}} <br>Example: `((#tableCell)){{{example}}}((/tableCell))`{{/example}} |{{#defaultValue}} [default to {{{.}}}]{{/defaultValue}}
+{{/vars}}{{#vars}}**{{getter}}()** | {{#isPrimitiveType}}**{{{dataType}}}**{{/isPrimitiveType}}{{^isPrimitiveType}}[**{{{dataType}}}**](../{{complexType}}){{/isPrimitiveType}} | ((#tableCell)){{{description}}}((/tableCell)){{#example}} <br>Example: `((#tableCell)){{{example}}}((/tableCell))`{{/example}} {{#defaultValue}} [default to {{{.}}}]{{/defaultValue}}
 {{/vars}}
 
 {{/model}}

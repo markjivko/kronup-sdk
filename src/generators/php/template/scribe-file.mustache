@@ -85,9 +85,9 @@ try {
 
 ## Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-{{#methodArgs}}**${{argName}}** | {{#linkType}}{{{argType}}}{{/linkType}} | {{{argDescription}}} | {{^argRequired}} [optional]{{/argRequired}}{{#argDefault}} [default to {{argDefault}}]{{/argDefault}}
+Name | Type | Description
+------------- | ------------- | -------------
+{{#methodArgs}}**${{argName}}** | {{#linkType}}{{{argType}}}{{/linkType}} | {{{argDescription}}} {{^argRequired}} [optional]{{/argRequired}}{{#argDefault}} [default to {{argDefault}}]{{/argDefault}}
 {{/methodArgs}}
 
 ## Return type
