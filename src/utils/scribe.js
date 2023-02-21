@@ -71,7 +71,12 @@ const operations = {
             .replace(/\#.*?$/g, "")
             .replace(/\//g, " /")
             .trim(),
-    host: str => (config.application().production ? str : str.replace(/^.*?\/v(\d+)\b/g, "http://localhost:3000/v$1"))
+    host: str => (config.application().production ? str : str.replace(/^.*?\/v(\d+)\b/g, "http://localhost:3000/v$1")),
+    commentLines: str =>
+        `${str}`
+            .split("\n")
+            .map(item => ` * ${item}`)
+            .join("\n")
 };
 
 /* eslint-disable guard-for-in */

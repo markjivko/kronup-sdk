@@ -136,7 +136,7 @@ module.exports = class hook extends iHook {
         // Run unit tests
         const code = spawnSync("vendor/bin/phpunit", [], {
             cwd: pathOutDev,
-            stdio: ["ignore", process.stdout, process.stderr],
+            stdio: ["inherit", process.stdout, process.stderr],
             env: this.getEnv()
         });
 

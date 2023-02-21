@@ -2,11 +2,11 @@
     "openapi": "3.0.0",
     "info": {
         "version": "0.0.1",
-        "title": "api",
-        "description": "# API reference\n\nThe kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your Kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/).\n\n# Authentication\n\nOur API uses a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) for authentication. You can get your token form the settings page.\n\n```\n$ curl -H \"Authorization: Bearer YOUR.JWT.KEY\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Request failed despite valid arguments |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
+        "title": "kronup api",
+        "description": "# API reference\n\nThe Kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your Kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/).\n\n# Authentication\n\nOur API uses a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) for authentication. You can get your token form the settings page.\n\n```\n$ curl -H \"Authorization: Bearer YOUR.JWT.KEY\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Request failed despite valid arguments |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with Kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
         "x-logo": {
             "url": "/img/banner.svg",
-            "altText": "kronup"
+            "altText": "Kronup"
         },
         "license": {
             "name": "Apache 2.0",
@@ -34,6 +34,10 @@
         {
             "name": "Invitations",
             "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **50** invitations."
+        },
+        {
+            "name": "Value items",
+            "description": "Value items are commonly referred to as `issues` in project management."
         }
     ],
     "paths": {
@@ -963,6 +967,259 @@
                 ]
             }
         },
+        "/items": {
+            "get": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "List value items",
+                "description": "List value items",
+                "operationId": "itemList",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of value items",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "ItemList",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Item"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/items?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    },
+                    {
+                        "lang": "Node",
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"GET\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/items?pageNumber=1&pageSize=100\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                    },
+                    {
+                        "lang": "Java",
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/items?pageNumber=1&pageSize=100\")\n  .get()\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                    },
+                    {
+                        "lang": "C#",
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/items?pageNumber=1&pageSize=100\");\nvar request = new RestRequest(Method.GET);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                    },
+                    {
+                        "lang": "Ruby",
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/items?pageNumber=1&pageSize=100\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/items?pageNumber=1&pageSize=100\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Create value item",
+                "description": "Add a value item to planning",
+                "operationId": "itemCreate",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value item created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Item"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Value item digest",
+                                        "minLength": 3,
+                                        "maxLength": 256
+                                    },
+                                    "details": {
+                                        "type": "string",
+                                        "description": "Value item description",
+                                        "minLength": 3,
+                                        "maxLength": 4096
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/items \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\"}'"
+                    },
+                    {
+                        "lang": "Node",
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"POST\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/items\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type\": \"application/json\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({digest: 'string', details: 'string'}));\nreq.end();"
+                    },
+                    {
+                        "lang": "Java",
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/items\")\n  .post(body)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                    },
+                    {
+                        "lang": "C#",
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/items\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddParameter(\"application/json\", \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\"}\", ParameterType.RequestBody);\nIRestResponse response = client.Execute(request);"
+                    },
+                    {
+                        "lang": "Ruby",
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/items\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/items\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                    }
+                ]
+            }
+        },
         "/organizations": {
             "post": {
                 "tags": [
@@ -1176,6 +1433,99 @@
                     {
                         "lang": "PHP",
                         "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/organizations/org-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"orgName\\\":\\\"Example, Inc.\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Delete organization",
+                "description": "Remove organization",
+                "operationId": "organizationDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Organization ID",
+                        "example": "org-id-***"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Organization deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Organization"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                    },
+                    {
+                        "lang": "Node",
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"DELETE\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/organizations/org-id-***\",\n  \"headers\": {\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                    },
+                    {
+                        "lang": "Java",
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/organizations/org-id-***\")\n  .delete(null)\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                    },
+                    {
+                        "lang": "C#",
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/organizations/org-id-***\");\nvar request = new RestRequest(Method.DELETE);\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                    },
+                    {
+                        "lang": "Ruby",
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/organizations/org-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/organizations/org-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             }
@@ -1845,6 +2195,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
+                            "title": "AccountRoleOrg",
                             "properties": {
                                 "orgId": {
                                     "type": "string",
@@ -1861,6 +2212,20 @@
                                     ]
                                 }
                             }
+                        }
+                    },
+                    "projects": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "Account projects"
+                        }
+                    },
+                    "teams": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "Account teams"
                         }
                     },
                     "createdAt": {
@@ -1980,6 +2345,272 @@
                     }
                 }
             },
+            "Item": {
+                "type": "object",
+                "title": "Value item",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Value item ID",
+                        "example": "value-item-***"
+                    },
+                    "digest": {
+                        "type": "string",
+                        "description": "Value item digest",
+                        "minLength": 3,
+                        "maxLength": 256,
+                        "example": "Value item number 1"
+                    },
+                    "details": {
+                        "type": "string",
+                        "description": "Value item description",
+                        "minLength": 3,
+                        "maxLength": 4096,
+                        "example": "Item detailed description ***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "Organization, Inc."
+                    },
+                    "projectId": {
+                        "type": "string",
+                        "description": "Project ID",
+                        "example": "Productivity app"
+                    },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "UX"
+                    },
+                    "authorId": {
+                        "$ref": "#/components/schemas/ItemAuthor"
+                    },
+                    "stage": {
+                        "$ref": "#/components/schemas/ItemStage"
+                    },
+                    "stageChanges": {
+                        "type": "array",
+                        "title": "Stage changes",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "authorId": {
+                                    "$ref": "#/components/schemas/ItemAuthor"
+                                },
+                                "stage": {
+                                    "$ref": "#/components/schemas/ItemStage"
+                                },
+                                "time": {
+                                    "type": "number",
+                                    "description": "UNIX timestamp of stage change"
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Value Item Type\n  * `f` - Feature\n  * `b` - Bug fix\n  * `c` - Chore",
+                        "enum": [
+                            "f",
+                            "b",
+                            "c"
+                        ]
+                    },
+                    "priority": {
+                        "type": "string",
+                        "description": "Value Item Priority using MoSCoW\n  * `m` - Must-have\n  * `s` - Should-have\n  * `c` - Could-have\n  * `w` - Will NOT have",
+                        "enum": [
+                            "m",
+                            "s",
+                            "c",
+                            "w"
+                        ]
+                    },
+                    "assumptions": {
+                        "type": "array",
+                        "description": "Assumptions",
+                        "items": {
+                            "$ref": "#/components/schemas/Assumption"
+                        }
+                    },
+                    "tasks": {
+                        "type": "array",
+                        "description": "Tasks",
+                        "items": {
+                            "$ref": "#/components/schemas/Task"
+                        }
+                    }
+                }
+            },
+            "ItemAuthor": {
+                "type": "string",
+                "description": "Author ID",
+                "example": "user-id-***"
+            },
+            "ItemStage": {
+                "type": "string",
+                "description": "Value Item Stage\n  * `p` - Planning\n  * `v` - Validation\n  * `x` - Execution\n  * `c` - Deep Context",
+                "enum": [
+                    "p",
+                    "v",
+                    "x",
+                    "c"
+                ],
+                "example": "p"
+            },
+            "Assumption": {
+                "type": "object",
+                "description": "Value Item Assumption",
+                "properties": {
+                    "authorId": {
+                        "$ref": "#/components/schemas/ItemAuthor"
+                    },
+                    "digest": {
+                        "type": "string",
+                        "description": "Assumptions are formulated as simple statements that can be proven true or false; avoid questions and opinions.\n\n> ❌ What are the features?\n> \n> ❌ Does this feature exist?\n> \n> ❌ I don't like this feature.\n> \n> ✅ This feature exists.",
+                        "example": "Electron.js supports Windows 7"
+                    },
+                    "validated": {
+                        "type": "boolean",
+                        "description": "Assumption was validated by experiments"
+                    },
+                    "experiment": {
+                        "type": "object",
+                        "description": "Experiment",
+                        "properties": {
+                            "authorId": {
+                                "$ref": "#/components/schemas/ItemAuthor"
+                            },
+                            "digest": {
+                                "type": "string",
+                                "description": "Experiment findings formulated in one sentence"
+                            },
+                            "details": {
+                                "type": "string",
+                                "description": "Experiment details"
+                            },
+                            "state": {
+                                "type": "string",
+                                "description": "Experiment state\n  * `i` - Idle\n  * `x` - Executing\n  * `d` - Done",
+                                "enum": [
+                                    "i",
+                                    "x",
+                                    "d"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "Task": {
+                "type": "object",
+                "description": "Value Item Task",
+                "properties": {
+                    "assigneeId": {
+                        "$ref": "#/components/schemas/ItemAuthor"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Task title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Task description"
+                    },
+                    "state": {
+                        "type": "string",
+                        "description": "Task state\n  * `i` - Idle\n  * `p` - In progress\n  * `r` - In review\n  * `d` - Done",
+                        "enum": [
+                            "i",
+                            "p",
+                            "r",
+                            "d"
+                        ]
+                    },
+                    "keywords": {
+                        "type": "array",
+                        "description": "Keywords",
+                        "items": {
+                            "type": "string",
+                            "title": "Keyword ID"
+                        }
+                    },
+                    "iteration": {
+                        "type": "number",
+                        "description": "Iteration number"
+                    },
+                    "discoveries": {
+                        "type": "array",
+                        "description": "Discoveries",
+                        "items": {
+                            "type": "object",
+                            "description": "Discovery",
+                            "properties": {
+                                "details": {
+                                    "type": "string",
+                                    "description": "Discovery details"
+                                },
+                                "iteration": {
+                                    "type": "number",
+                                    "description": "Iteration number"
+                                }
+                            }
+                        }
+                    },
+                    "feedback": {
+                        "type": "array",
+                        "description": "Feedback",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "authorId": {
+                                    "$ref": "#/components/schemas/ItemAuthor"
+                                },
+                                "issue": {
+                                    "type": "string",
+                                    "description": "Feedback issue\n  * `?` - ?\n  * `?` - ?",
+                                    "enum": [
+                                        "x"
+                                    ]
+                                },
+                                "text": {
+                                    "type": "string",
+                                    "description": "Feedback details"
+                                },
+                                "reply": {
+                                    "type": "string",
+                                    "description": "Feedback reply"
+                                },
+                                "iteration": {
+                                    "type": "number",
+                                    "description": "Iteration number"
+                                }
+                            }
+                        }
+                    },
+                    "ama": {
+                        "type": "array",
+                        "description": "Ask me anything",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "authorId": {
+                                    "$ref": "#/components/schemas/ItemAuthor"
+                                },
+                                "text": {
+                                    "type": "string",
+                                    "description": "Feedback details"
+                                },
+                                "reply": {
+                                    "type": "string",
+                                    "description": "Feedback reply"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "Organization": {
                 "type": "object",
                 "title": "Organization",
@@ -2062,6 +2693,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
+                            "title": "AccountRoleOrg",
                             "properties": {
                                 "orgId": {
                                     "type": "string",
@@ -2078,6 +2710,20 @@
                                     ]
                                 }
                             }
+                        }
+                    },
+                    "projects": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "Account projects"
+                        }
+                    },
+                    "teams": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "Account teams"
                         }
                     },
                     "createdAt": {
@@ -2115,7 +2761,8 @@
                 "Account",
                 "Users",
                 "Organizations",
-                "Invitations"
+                "Invitations",
+                "Value items"
             ]
         }
     ]

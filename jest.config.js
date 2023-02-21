@@ -1,6 +1,6 @@
 module.exports = {
-    verbose: false,
-    collectCoverage: true,
+    verbose: true,
+    collectCoverage: false,
     rootDir: "./test",
     setupFiles: ["<rootDir>/.jest/init.js"]
 };

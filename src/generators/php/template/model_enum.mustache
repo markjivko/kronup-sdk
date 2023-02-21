@@ -1,17 +1,8 @@
-class {{classname}} {
-    {{#allowableValues}}{{#enumVars}}
+class {{classname}} extends AbstractEnum {
+    {{#allowableValues}}
+    // Allowed values
+    {{#enumVars}}
     const {{{name}}} = {{{value}}};
-    {{/enumVars}}{{/allowableValues}}
-
-    /**
-     * Allowed values of the enum
-     *
-     * @return string[]|int[]
-     */
-    public static function getAllowableEnumValues(): array {
-        return [
-            {{#allowableValues}}{{#enumVars}}self::{{{name}}},{{^-last}}
-            {{/-last}}{{/enumVars}}{{/allowableValues}}
-        ];
-    }
+    {{/enumVars}}
+    {{/allowableValues}}
 }

@@ -15,7 +15,7 @@ class {{classname}} extends {{#parentSchema}}{{{parent}}}{{/parentSchema}}{{^par
     protected static $_name = "{{name}}";
     protected static $_definition = [
         {{#vars}}
-        "{{name}}" => ["{{baseName}}", "{{{datatype}}}", {{#dataFormat}}'{{{.}}}'{{/dataFormat}}{{^dataFormat}}null{{/dataFormat}}, "{{getter}}", "{{setter}}", {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}, ["r" => {{#required}}1{{/required}}{{^required}}0{{/required}}{{#isEnum}}, "e" => 1{{/isEnum}}{{#isContainer}}, "c" => 1{{/isContainer}}{{#hasValidation}}{{#pattern}}, "p" => "{{{pattern}}}"{{/pattern}}{{#minimum}}, "n" => [{{{minimum}}}{{#exclusiveMinimum}}, 1{{/exclusiveMinimum}}]{{/minimum}}{{#maximum}}, "x" => [{{{maximum}}}{{#exclusiveMaximum}}, 1{{/exclusiveMaximum}}]{{/maximum}}{{#minLength}}, "nl" => {{{minLength}}}{{/minLength}}{{#maxLength}}, "xl" => {{{maxLength}}}{{/maxLength}}{{#minItems}}, "ni" => {{{minItems}}}{{/minItems}}{{#maxItems}}, "xi" => {{{maxItems}}}{{/maxItems}}{{/hasValidation}}]]{{^-last}}, {{/-last}}
+        "{{baseName}}" => ["{{baseName}}", "{{{datatype}}}", {{#dataFormat}}'{{{.}}}'{{/dataFormat}}{{^dataFormat}}null{{/dataFormat}}, "{{getter}}", "{{setter}}", {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}, ["r" => {{#required}}1{{/required}}{{^required}}0{{/required}}{{#isEnum}}, "e" => 1{{/isEnum}}{{#isContainer}}, "c" => 1{{/isContainer}}{{#hasValidation}}{{#pattern}}, "p" => "{{{pattern}}}"{{/pattern}}{{#minimum}}, "n" => [{{{minimum}}}{{#exclusiveMinimum}}, 1{{/exclusiveMinimum}}]{{/minimum}}{{#maximum}}, "x" => [{{{maximum}}}{{#exclusiveMaximum}}, 1{{/exclusiveMaximum}}]{{/maximum}}{{#minLength}}, "nl" => {{{minLength}}}{{/minLength}}{{#maxLength}}, "xl" => {{{maxLength}}}{{/maxLength}}{{#minItems}}, "ni" => {{{minItems}}}{{/minItems}}{{#maxItems}}, "xi" => {{{maxItems}}}{{/maxItems}}{{/hasValidation}}]]{{^-last}}, {{/-last}}
         {{/vars}}
     ];
 
@@ -135,23 +135,23 @@ class {{classname}} extends {{#parentSchema}}{{{parent}}}{{/parentSchema}}{{^par
     {{#vars}}
 
     /**
-     * Get {{name}}
+     * Get {{baseName}}
      *
      * @return {{{dataType}}}{{^required}}|null{{/required}}
      */
     public function {{getter}}(): {{^isContainer}}{{^required}}?{{/required}}{{datatype}}{{/isContainer}}{{#isContainer}}{{^required}}?{{/required}}array{{/isContainer}} {
-        return $this->_data["{{name}}"];
+        return $this->_data["{{baseName}}"];
     }
 
     /**
-     * Set {{name}}
+     * Set {{baseName}}
      * 
-     * @param {{{dataType}}}{{^required}}|null{{/required}} ${{name}}{{#description}} {{{description}}}{{/description}}{{^description}} {{{name}}}{{/description}}
+     * @param {{{dataType}}}{{^required}}|null{{/required}} ${{name}}{{#description}} {{{description}}}{{/description}}
      * @throws \InvalidArgumentException
      * @return $this
      */
-    public function {{setter}}({{#isContainer}}{{^required}}?{{/required}}array{{/isContainer}} ${{name}}) {
-        return $this->_set("{{name}}", ${{name}});
+    public function {{setter}}({{#isContainer}}{{^required}}?{{/required}}array {{/isContainer}}${{name}}) {
+        return $this->_set("{{baseName}}", ${{name}});
     }
     {{/vars}}
 }

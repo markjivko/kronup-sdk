@@ -1,6 +1,6 @@
 <?php
 /**
- * Exception Test
+ * Value Item Test
  *
  * @copyright (c) 2022-2023 kronup.com
  * @license   MIT
@@ -12,15 +12,15 @@ namespace Kronup\Test\Local\Api;
 !class_exists("\Kronup\Sdk") && exit();
 
 use Kronup\Sdk;
-use Kronup\Sdk\ApiException;
+use Kronup\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Exception Test
+ * Value Item Test
  *
  * @coversDefaultClass \Kronup\Local\Wallet
  */
-class ExceptionTest extends TestCase {
+class ItemTest extends TestCase {
     /**
      * Kronup SDK
      *
@@ -32,15 +32,17 @@ class ExceptionTest extends TestCase {
      * Set-up
      */
     public function setUp(): void {
-        $this->sdk = new Sdk("my-api-key");
+        $this->sdk = new Sdk(getenv("KRONUP_API_KEY"));
     }
 
     /**
-     * Unauthorized
+     * Get user list
      */
-    public function testUnauthorized(): void {
-        $this->assertTrue(true);
-        // $this->expectExceptionObject(new ApiException("Unauthorized", 401));
-        // $this->sdk->api()->users()->userList('org-id');
+    public function testItemCreate(): void {
+        $account = $this->sdk
+            ->api()
+            ->valueItems()
+            ->itemCreate("63ee59d152340c387a42cfbc", (new Model\ItemCreateRequest())->setTitle("Hello world"));
+        $this->assertInstanceOf(Model\Item::class, $account);
     }
 }
