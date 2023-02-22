@@ -3,7 +3,7 @@
     "info": {
         "version": "0.0.1",
         "title": "kronup api",
-        "description": "# API reference\n\nThe Kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your Kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/).\n\n# Authentication\n\nOur API uses a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) for authentication. You can get your token form the settings page.\n\n```\n$ curl -H \"Authorization: Bearer YOUR.JWT.KEY\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Request failed despite valid arguments |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with Kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
+        "description": "# API reference\n\nThe Kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your Kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/).\n\n# Authentication\n\nOur API uses a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) for authentication. You can get your token form the settings page.\n\n```\n$ curl -H \"Authorization: Bearer YOUR.JWT.KEY\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Request failed despite valid arguments |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with Kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |\n| auth-api-limited | API daily usage limit reached |",
         "x-logo": {
             "url": "/img/banner.svg",
             "altText": "Kronup"
@@ -203,20 +203,11 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Account model deleted. Returns a list of organizations deleted with this account.",
+                        "description": "Account model deleted",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "description": "List of Organization IDs",
-                                    "items": {
-                                        "type": "string",
-                                        "title": "Organization ID"
-                                    },
-                                    "example": [
-                                        "org-id-1**",
-                                        "org-id-2**"
-                                    ]
+                                    "$ref": "#/components/schemas/Account"
                                 }
                             }
                         }
@@ -2177,11 +2168,6 @@
                         "description": "User icon URL",
                         "example": "https://***"
                     },
-                    "userTokenIat": {
-                        "type": "integer",
-                        "description": "User token creation timestamp",
-                        "example": 1663663000
-                    },
                     "roleSite": {
                         "type": "string",
                         "description": "User site role",
@@ -2218,14 +2204,14 @@
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "description": "Account projects"
+                            "description": "Project ID"
                         }
                     },
                     "teams": {
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "description": "Account teams"
+                            "description": "Team ID"
                         }
                     },
                     "createdAt": {
@@ -2675,11 +2661,6 @@
                         "description": "User icon URL",
                         "example": "https://***"
                     },
-                    "userTokenIat": {
-                        "type": "integer",
-                        "description": "User token creation timestamp",
-                        "example": 1663663000
-                    },
                     "roleSite": {
                         "type": "string",
                         "description": "User site role",
@@ -2716,14 +2697,14 @@
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "description": "Account projects"
+                            "description": "Project ID"
                         }
                     },
                     "teams": {
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "description": "Account teams"
+                            "description": "Team ID"
                         }
                     },
                     "createdAt": {

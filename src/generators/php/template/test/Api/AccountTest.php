@@ -36,9 +36,9 @@ class AccountTest extends TestCase {
     }
 
     /**
-     * Get user list
+     * Read & Update
      */
-    public function testAccountRead(): void {
+    public function testAccountReadUpdate(): void {
         // Fetch account data
         $account = $this->sdk
             ->api()

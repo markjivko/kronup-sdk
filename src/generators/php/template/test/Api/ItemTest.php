@@ -39,10 +39,20 @@ class ItemTest extends TestCase {
      * Get user list
      */
     public function testItemCreate(): void {
+        // Fetch account data
+        $account = $this->sdk
+            ->api()
+            ->account()
+            ->accountRead();
+
+        // Get the first organization ID
+        $orgId = current($account->getRoleOrg())->getOrgId();
+
+        // Create an item
         $account = $this->sdk
             ->api()
             ->valueItems()
-            ->itemCreate("63ee59d152340c387a42cfbc", (new Model\ItemCreateRequest())->setTitle("Hello world"));
+            ->itemCreate($orgId, (new Model\ItemCreateRequest())->setDigest("Hello world"));
         $this->assertInstanceOf(Model\Item::class, $account);
     }
 }
