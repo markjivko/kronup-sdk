@@ -84,7 +84,7 @@ class TeamTest extends TestCase {
         $this->assertEquals("A colorful description", $teamModelUpdated->getTeamDesc());
 
         // Add a channel
-        $modelWithChannels = $this->sdk
+        $team = $this->sdk
             ->api()
             ->teamChannels()
             ->teamChannelCreate(
@@ -94,17 +94,17 @@ class TeamTest extends TestCase {
                     ->setChannelName("A new channel")
                     ->setChannelDesc("The channel description")
             );
-        $this->assertInstanceOf(Model\Team::class, $modelWithChannels);
-        $this->assertIsArray($modelWithChannels->getChannels());
-        $this->assertGreaterThanOrEqual(2, count($modelWithChannels->getChannels()));
+        $this->assertInstanceOf(Model\Team::class, $team);
+        $this->assertIsArray($team->getChannels());
+        $this->assertGreaterThanOrEqual(2, count($team->getChannels()));
 
         // Update a channel
         $this->sdk
             ->api()
             ->teamChannels()
             ->teamChannelUpdate(
-                $modelWithChannels->getId(),
-                $modelWithChannels->getChannels()[1]->getId(),
+                $team->getId(),
+                $team->getChannels()[1]->getId(),
                 $orgId,
                 (new Model\TeamChannelCreateRequest())
                     ->setChannelName("A new channel 2")
@@ -115,22 +115,52 @@ class TeamTest extends TestCase {
         $modelUser = $this->sdk
             ->api()
             ->teamChannels()
-            ->teamChannelAssign(
-                $modelWithChannels->getId(),
-                $modelWithChannels->getChannels()[1]->getId(),
-                $account->getId(),
-                $orgId
-            );
+            ->teamChannelAssign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
         $this->assertInstanceOf(Model\User::class, $modelUser);
-        $this->assertIsArray($modelUser->getTeams());
+        $countAssigned = count($modelUser->getTeams()[count($modelUser->getTeams()) - 1]->getChannelIds());
+
+        // Unassign the secondary channel
+        $modelUser2 = $this->sdk
+            ->api()
+            ->teamChannels()
+            ->teamChannelUnassign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+        $this->assertInstanceOf(Model\User::class, $modelUser2);
+        $countUnassigned = count($modelUser2->getTeams()[count($modelUser2->getTeams()) - 1]->getChannelIds());
+        $this->assertGreaterThan($countUnassigned, $countAssigned);
+
+        // Unassign from the team
+        $modelUser3 = $this->sdk
+            ->api()
+            ->teams()
+            ->teamUnassign($team->getId(), $account->getId(), $orgId);
+        $this->assertInstanceOf(Model\User::class, $modelUser3);
+        $userTeams = array_map(function ($item) {
+            return $item->getTeamId();
+        }, $modelUser3->getTeams());
+        $this->assertNotContains($team->getId(), $userTeams);
+
+        // Assign team back
+        $modelUser4 = $this->sdk
+            ->api()
+            ->teams()
+            ->teamAssign($team->getId(), $account->getId(), $orgId);
+        $this->assertInstanceOf(Model\User::class, $modelUser4);
+        $userTeams = array_map(function ($item) {
+            return $item->getTeamId();
+        }, $modelUser4->getTeams());
+        $this->assertContains($team->getId(), $userTeams);
 
         // Delete a channel
         $this->sdk
             ->api()
             ->teamChannels()
-            ->teamChannelDelete($modelWithChannels->getId(), $modelWithChannels->getChannels()[1]->getId(), $orgId);
+            ->teamChannelAssign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+        $this->sdk
+            ->api()
+            ->teamChannels()
+            ->teamChannelDelete($team->getId(), $team->getChannels()[1]->getId(), $orgId);
 
-        //Remove the team
+        // Remove the team
         $teamModelDeleted = $this->sdk
             ->api()
             ->teams()

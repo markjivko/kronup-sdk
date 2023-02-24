@@ -3673,10 +3673,14 @@
                                     "description": "Team ID",
                                     "example": "team-id-***"
                                 },
-                                "channelId": {
-                                    "type": "string",
-                                    "description": "Team Channel ID",
-                                    "example": "channel-id-***"
+                                "channelIds": {
+                                    "type": "array",
+                                    "description": "Team channels",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Team Channel ID",
+                                        "example": "channel-id-***"
+                                    }
                                 }
                             }
                         }
@@ -4155,14 +4159,14 @@
                         "type": "string",
                         "description": "Team name",
                         "minLength": 3,
-                        "maxLength": 256,
+                        "maxLength": 64,
                         "example": "User Experience"
                     },
                     "teamDesc": {
                         "type": "string",
                         "description": "Team description",
                         "minLength": 0,
-                        "maxLength": 512,
+                        "maxLength": 256,
                         "example": ""
                     },
                     "channels": {
@@ -4201,14 +4205,14 @@
                         "type": "string",
                         "description": "Channel name",
                         "minLength": 3,
-                        "maxLength": 256,
+                        "maxLength": 64,
                         "example": "General"
                     },
                     "channelDesc": {
                         "type": "string",
                         "description": "Channel description",
                         "minLength": 0,
-                        "maxLength": 512,
+                        "maxLength": 256,
                         "example": ""
                     }
                 }
@@ -4248,10 +4252,14 @@
                                     "description": "Team ID",
                                     "example": "team-id-***"
                                 },
-                                "channelId": {
-                                    "type": "string",
-                                    "description": "Team Channel ID",
-                                    "example": "channel-id-***"
+                                "channelIds": {
+                                    "type": "array",
+                                    "description": "Team channels",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Team Channel ID",
+                                        "example": "channel-id-***"
+                                    }
                                 }
                             }
                         }
