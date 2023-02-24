@@ -54,8 +54,8 @@
                 "tags": [
                     "Account"
                 ],
-                "summary": "Read account data",
-                "description": "Retrieve the current account model.",
+                "summary": "Fetch account",
+                "description": "Retrieve the current account model",
                 "operationId": "accountRead",
                 "parameters": [],
                 "responses": {
@@ -372,8 +372,8 @@
                 "tags": [
                     "Invitations"
                 ],
-                "summary": "Read invitation",
-                "description": "Fetch invitation data",
+                "summary": "Fetch invitation",
+                "description": "Retrieve invitation model",
                 "operationId": "invitationRead",
                 "parameters": [
                     {
@@ -727,8 +727,8 @@
                 "tags": [
                     "Invitations"
                 ],
-                "summary": "List all invitations",
-                "description": "Get a list of all invitations",
+                "summary": "List invitations",
+                "description": "Get a list of invitation models",
                 "operationId": "invitationList",
                 "parameters": [
                     {
@@ -972,7 +972,7 @@
                     "Value items"
                 ],
                 "summary": "List value items",
-                "description": "List value items",
+                "description": "Get a list of value item models",
                 "operationId": "itemList",
                 "parameters": [
                     {
@@ -2309,8 +2309,8 @@
                 "tags": [
                     "Teams"
                 ],
-                "summary": "List all teams",
-                "description": "Get a list of all teams",
+                "summary": "List teams",
+                "description": "Get a list of team models",
                 "operationId": "teamList",
                 "parameters": [
                     {
@@ -2407,8 +2407,8 @@
                 "tags": [
                     "Teams"
                 ],
-                "summary": "Read team",
-                "description": "Fetch team data",
+                "summary": "Fetch team",
+                "description": "Retrieve team model",
                 "operationId": "teamRead",
                 "parameters": [
                     {
@@ -3020,8 +3020,8 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "List all users",
-                "description": "Get a list of user models; supports pagination",
+                "summary": "List users",
+                "description": "Get a list of user models",
                 "operationId": "userList",
                 "parameters": [
                     {
@@ -3156,8 +3156,8 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get user",
-                "description": "Retrieve the user model",
+                "summary": "Fetch user",
+                "description": "Retrieve user model",
                 "operationId": "userRead",
                 "parameters": [
                     {
