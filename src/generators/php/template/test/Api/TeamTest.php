@@ -98,7 +98,39 @@ class TeamTest extends TestCase {
         $this->assertIsArray($modelWithChannels->getChannels());
         $this->assertGreaterThanOrEqual(2, count($modelWithChannels->getChannels()));
 
-        // Remove the team
+        // Update a channel
+        $this->sdk
+            ->api()
+            ->teamChannels()
+            ->teamChannelUpdate(
+                $modelWithChannels->getId(),
+                $modelWithChannels->getChannels()[1]->getId(),
+                $orgId,
+                (new Model\TeamChannelCreateRequest())
+                    ->setChannelName("A new channel 2")
+                    ->setChannelDesc("The 2nd channel description")
+            );
+
+        // Assign the secondary channel
+        $modelUser = $this->sdk
+            ->api()
+            ->teamChannels()
+            ->teamChannelAssign(
+                $modelWithChannels->getId(),
+                $modelWithChannels->getChannels()[1]->getId(),
+                $account->getId(),
+                $orgId
+            );
+        $this->assertInstanceOf(Model\User::class, $modelUser);
+        $this->assertIsArray($modelUser->getTeams());
+
+        // Delete a channel
+        $this->sdk
+            ->api()
+            ->teamChannels()
+            ->teamChannelDelete($modelWithChannels->getId(), $modelWithChannels->getChannels()[1]->getId(), $orgId);
+
+        //Remove the team
         $teamModelDeleted = $this->sdk
             ->api()
             ->teams()

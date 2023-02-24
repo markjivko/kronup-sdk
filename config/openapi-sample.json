@@ -264,7 +264,7 @@
                 ]
             }
         },
-        "/invitations/{id}": {
+        "/invitations/{inviteId}": {
             "put": {
                 "tags": [
                     "Invitations"
@@ -274,7 +274,7 @@
                 "operationId": "invitationAccept",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "inviteId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -377,7 +377,7 @@
                 "operationId": "invitationRead",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "inviteId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -465,7 +465,7 @@
                 "operationId": "invitationUpdate",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "inviteId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -617,7 +617,7 @@
                 "operationId": "invitationDelete",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "inviteId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -1322,7 +1322,7 @@
                 ]
             }
         },
-        "/organizations/{id}": {
+        "/organizations/{orgId}": {
             "post": {
                 "tags": [
                     "Organizations"
@@ -1332,7 +1332,7 @@
                 "operationId": "organizationUpdate",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "orgId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -1444,7 +1444,7 @@
                 "operationId": "organizationDelete",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "orgId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -1529,7 +1529,7 @@
                 ]
             }
         },
-        "/teams/{id}/channel": {
+        "/teams/{teamId}/channel": {
             "post": {
                 "tags": [
                     "Team channels"
@@ -1539,7 +1539,7 @@
                 "operationId": "teamChannelCreate",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -1661,7 +1661,7 @@
                 ]
             }
         },
-        "/teams/{id}/channel/{channelId}": {
+        "/teams/{teamId}/channel/{channelId}": {
             "post": {
                 "tags": [
                     "Team channels"
@@ -1671,7 +1671,7 @@
                 "operationId": "teamChannelUpdate",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -1811,7 +1811,7 @@
                 "operationId": "teamChannelDelete",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -1916,7 +1916,7 @@
                 ]
             }
         },
-        "/teams/{id}/channel/{channelId}/user/{userId}": {
+        "/teams/{teamId}/channel/{channelId}/user/{userId}": {
             "put": {
                 "tags": [
                     "Team channels"
@@ -1926,7 +1926,7 @@
                 "operationId": "teamChannelAssign",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -1972,7 +1972,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -2059,7 +2059,7 @@
                 "operationId": "teamChannelUnassign",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -2105,7 +2105,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -2402,7 +2402,7 @@
                 ]
             }
         },
-        "/teams/{id}": {
+        "/teams/{teamId}": {
             "get": {
                 "tags": [
                     "Teams"
@@ -2412,7 +2412,7 @@
                 "operationId": "teamRead",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -2525,7 +2525,7 @@
                 "operationId": "teamUpdate",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -2662,7 +2662,7 @@
                 "operationId": "teamDelete",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -2767,7 +2767,7 @@
                 ]
             }
         },
-        "/teams/{id}/user/{userId}": {
+        "/teams/{teamId}/user/{userId}": {
             "put": {
                 "tags": [
                     "Teams"
@@ -2777,7 +2777,7 @@
                 "operationId": "teamAssign",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -2813,7 +2813,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -2900,7 +2900,7 @@
                 "operationId": "teamUnassign",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "teamId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -2936,7 +2936,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -3151,7 +3151,7 @@
                 ]
             }
         },
-        "/users/{id}": {
+        "/users/{userId}": {
             "get": {
                 "tags": [
                     "Users"
@@ -3161,7 +3161,7 @@
                 "operationId": "userRead",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "userId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -3264,7 +3264,7 @@
                 "operationId": "userUpdateRole",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "userId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -3420,7 +3420,7 @@
                 "operationId": "userRemove",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "userId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -3662,7 +3662,7 @@
                         "description": "User icon URL",
                         "example": "https://***"
                     },
-                    "teamChannels": {
+                    "teams": {
                         "type": "array",
                         "items": {
                             "type": "object",
@@ -4154,9 +4154,9 @@
                     "teamName": {
                         "type": "string",
                         "description": "Team name",
-                        "example": "UX",
                         "minLength": 3,
-                        "maxLength": 256
+                        "maxLength": 256,
+                        "example": "User Experience"
                     },
                     "teamDesc": {
                         "type": "string",
@@ -4237,7 +4237,7 @@
                         "description": "User icon URL",
                         "example": "https://***"
                     },
-                    "teamChannels": {
+                    "teams": {
                         "type": "array",
                         "items": {
                             "type": "object",
