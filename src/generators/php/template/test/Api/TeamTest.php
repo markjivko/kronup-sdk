@@ -168,4 +168,131 @@ class TeamTest extends TestCase {
         $this->assertInstanceOf(Model\Team::class, $teamModelDeleted);
         $this->assertEquals($teamModelDeleted->getId(), $teamModelRead->getId());
     }
+
+    /**
+     * Team limits (name & description)
+     */
+    public function testTeamLimits(): void {
+        // Fetch account data
+        $account = $this->sdk
+            ->api()
+            ->account()
+            ->accountRead();
+
+        // Get the first organization ID
+        $orgId = current($account->getRoleOrg())->getOrgId();
+
+        // Create: Name too long
+        try {
+            $this->sdk
+                ->api()
+                ->teams()
+                ->teamCreate($orgId, new Model\TeamCreateRequest(["teamName" => str_repeat("x ", 33)]));
+            $this->assertTrue(false, "teams.create(name) should throw an error");
+        } catch (Sdk\ApiException $exc) {
+            $this->assertEquals("invalid-argument-teamName", $exc->getResponseObject()["id"]);
+        }
+
+        // Create: Description too long
+        try {
+            $this->sdk
+                ->api()
+                ->teams()
+                ->teamCreate(
+                    $orgId,
+                    new Model\TeamCreateRequest(["teamName" => "abc", "teamDesc" => str_repeat("x ", 129)])
+                );
+            $this->assertTrue(false, "teams.create(description) should throw an error");
+        } catch (Sdk\ApiException $exc) {
+            $this->assertEquals("invalid-argument-teamDesc", $exc->getResponseObject()["id"]);
+        }
+
+        // Create a new team
+        $team = $this->sdk
+            ->api()
+            ->teams()
+            ->teamCreate($orgId, (new Model\TeamCreateRequest())->setTeamName("Test"));
+        $this->assertInstanceOf(Model\Team::class, $team);
+
+        // Update: Name too long
+        try {
+            $this->sdk
+                ->api()
+                ->teams()
+                ->teamUpdate($team->getId(), $orgId, new Model\TeamUpdateRequest(["teamName" => str_repeat("x ", 33)]));
+            $this->assertTrue(false, "teams.update(name) should throw an error");
+        } catch (Sdk\ApiException $exc) {
+            $this->assertEquals("invalid-argument-teamName", $exc->getResponseObject()["id"]);
+        }
+
+        // Update: Description too long
+        try {
+            $this->sdk
+                ->api()
+                ->teams()
+                ->teamUpdate(
+                    $team->getId(),
+                    $orgId,
+                    new Model\TeamUpdateRequest(["teamDesc" => str_repeat("x ", 129)])
+                );
+            $this->assertTrue(false, "teams.update(description) should throw an error");
+        } catch (Sdk\ApiException $exc) {
+            $this->assertEquals("invalid-argument-teamDesc", $exc->getResponseObject()["id"]);
+        }
+
+        // Remove the temporary team
+        $this->sdk
+            ->api()
+            ->teams()
+            ->teamDelete($team->getId(), $orgId);
+    }
+
+    /**
+     * Team delete (test that it's unassigned from all users)
+     */
+    public function testTeamDelete() {
+        // Fetch account data
+        $account = $this->sdk
+            ->api()
+            ->account()
+            ->accountRead();
+
+        // Get the first organization ID
+        $orgId = current($account->getRoleOrg())->getOrgId();
+
+        // Create a new team
+        $team = $this->sdk
+            ->api()
+            ->teams()
+            ->teamCreate($orgId, (new Model\TeamCreateRequest())->setTeamName("Test"));
+        $this->assertInstanceOf(Model\Team::class, $team);
+
+        // Assign team to user
+        $user = $this->sdk
+            ->api()
+            ->teams()
+            ->teamAssign($team->getId(), $account->getId(), $orgId);
+        $teamIds = array_map(function ($item) {
+            return $item->getTeamId();
+        }, $user->getTeams());
+        $this->assertContains($team->getId(), $teamIds);
+
+        // Delete the team
+        $this->sdk
+            ->api()
+            ->teams()
+            ->teamDelete($team->getId(), $orgId);
+
+        // Fetch the user model again
+        $user = $this->sdk
+            ->api()
+            ->account()
+            ->accountRead();
+        $teamIds = array_map(function ($item) {
+            return $item->getTeamId();
+        }, $user->getTeams());
+
+        // Check that the user is no longer part of the deleted team
+        $this->assertNotContains($team->getId(), $teamIds);
+    }
 }

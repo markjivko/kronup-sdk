@@ -3,7 +3,7 @@
     "info": {
         "version": "0.0.1",
         "title": "kronup api",
-        "description": "# API reference\n\nThe Kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your Kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/).\n\n# Authentication\n\nOur API uses a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) for authentication. You can get your token form the settings page.\n\n```\n$ curl -H \"Authorization: Bearer YOUR.JWT.KEY\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Request failed despite valid arguments |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with Kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |\n| auth-api-limited | API daily usage limit reached |",
+        "description": "# API reference\n\nThe Kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your Kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/).\n\n# Authorization\n\nOur API uses a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) for authentication. \n\nYou can get your token form the settings page.\n\n```\n$ curl -H \"Authorization: Bearer YOUR.JWT.KEY\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with Kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
         "x-logo": {
             "url": "/img/banner.svg",
             "altText": "Kronup"
@@ -25,27 +25,27 @@
         },
         {
             "name": "Users",
-            "description": "Manage users within the scope of an organization.\n\nThere are 3 site-level roles: **admin**, **moderator** and **user**.\n\nAdmins and moderators have access to account data outside of their organization (read as **A can B**):\n\n\n|  | B: admin | B: moderator | B: user |\n|---|---|---|---|\n| A: admin | read/write | read/write | read/write |\n| A: moderator | read | read/write | read/write |\n| A: user | - | - | - |\n\n\nThere are 3 organization-level roles: **owner**, **manager** and **member**.\n\nWithin the same organization, account actions are limited (read as **A can B**):\n\n\n|  | B: owner | B: manager | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: manager | read | read/write | read/write |\n| A: member | read | read | read |\n\n\n\n* Any account has **read/write** permissions over **itself**\n* Site-level roles have priority over organization-level roles for **write** rules\n* Organization-level roles have priority over site-level roles for **read** rules"
-        },
-        {
-            "name": "Organizations",
-            "description": "Each account owns at most **500** Organizations.\n\nThese are the role-based access control rules for organizations:\n\n| Organization Role \\ Action | Read * | Write * | Delete ** |\n|---|---|---|---|\n| Owner | yes | yes | yes |\n| Manager | yes | yes | no |\n| Member | yes | no | no |\n\n\n(*) The **read** and **write** actions refer to all endpoints that require the **x-org-id** header.\n\n(**) The **delete** action refers to removing the Organization model."
+            "description": "Manage users within the scope of an [Organization](#tag/Organizations).\n\nThere are 3 site-level roles: **admin**, **moderator** and **user**.\n\nAdmins and moderators have access to account data outside of their organization (read as **A can B**):\n\n\n|  | B: admin | B: moderator | B: user |\n|---|---|---|---|\n| A: admin | read/write | read/write | read/write |\n| A: moderator | read | read/write | read/write |\n| A: user | - | - | - |\n\n\nThere are 3 organization-level roles: **owner**, **manager** and **member**.\n\nWithin the same organization, account actions are limited (read as **A can B**):\n\n\n|  | B: owner | B: manager | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: manager | read | read/write | read/write |\n| A: member | read | read | read |\n\n\n\n* Any account has **read/write** permissions over **itself**\n* Site-level roles have priority over organization-level roles for **write** rules\n* Organization-level roles have priority over site-level roles for **read** rules"
         },
         {
             "name": "Invitations",
-            "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **1000** invitations."
+            "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **500** invitations."
+        },
+        {
+            "name": "Organizations",
+            "description": "Each [Account](#tag/Account) owns at most **50** Organizations.\n\nThese are the role-based access control rules for organizations:\n\n| Organization Role \\ Action | Read * | Write * | Delete ** |\n|---|---|---|---|\n| Owner | yes | yes | yes |\n| Manager | yes | yes | no |\n| Member | yes | no | no |\n\n\n(*) The **read** and **write** actions refer to all endpoints that require the **x-org-id** header.\n\n(**) The **delete** action refers to removing the Organization model."
         },
         {
             "name": "Teams",
-            "description": "Each Organization has at least **1** and at most **500** Teams."
+            "description": "Each [Organization](#tag/Organizations) has at least **1** and at most **100** Teams."
         },
         {
-            "name": "Team channels",
-            "description": "Each Team has at least **1** and at most **250** Channels."
+            "name": "Channels",
+            "description": "Each [Team](#tag/Teams) has at least **1** and at most **100** Channels."
         },
         {
             "name": "Value items",
-            "description": "Value items are commonly referred to as `issues` in project management."
+            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly."
         }
     ],
     "paths": {
@@ -966,7 +966,7 @@
                 ]
             }
         },
-        "/items": {
+        "/teams/{teamId}/channels/{channelId}/items": {
             "get": {
                 "tags": [
                     "Value items"
@@ -975,6 +975,26 @@
                 "description": "Get a list of value item models",
                 "operationId": "itemList",
                 "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
                     {
                         "name": "x-org-id",
                         "in": "header",
@@ -1077,27 +1097,27 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/items?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"GET\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/items?pageNumber=1&pageSize=100\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"GET\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/items?pageNumber=1&pageSize=100\")\n  .get()\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100\")\n  .get()\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/items?pageNumber=1&pageSize=100\");\nvar request = new RestRequest(Method.GET);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100\");\nvar request = new RestRequest(Method.GET);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/items?pageNumber=1&pageSize=100\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/items?pageNumber=1&pageSize=100\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             },
@@ -1109,6 +1129,26 @@
                 "description": "Add a value item to planning",
                 "operationId": "itemCreate",
                 "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
                     {
                         "name": "x-org-id",
                         "in": "header",
@@ -1180,6 +1220,25 @@
                                         "description": "Value item description",
                                         "minLength": 3,
                                         "maxLength": 4096
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "description": "Value item type",
+                                        "enum": [
+                                            "f",
+                                            "b",
+                                            "c"
+                                        ]
+                                    },
+                                    "priority": {
+                                        "type": "string",
+                                        "description": "Value item MoSCoW priority",
+                                        "enum": [
+                                            "m",
+                                            "s",
+                                            "c",
+                                            "w"
+                                        ]
                                     }
                                 }
                             }
@@ -1194,27 +1253,27 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/items \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\",\"type\":\"f\",\"priority\":\"m\"}'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"POST\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/items\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type\": \"application/json\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({digest: 'string', details: 'string'}));\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"POST\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***/items\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type\": \"application/json\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({digest: 'string', details: 'string', type: 'f', priority: 'm'}));\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/items\")\n  .post(body)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\",\\\"type\\\":\\\"f\\\",\\\"priority\\\":\\\"m\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items\")\n  .post(body)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/items\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddParameter(\"application/json\", \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\"}\", ParameterType.RequestBody);\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddParameter(\"application/json\", \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\",\\\"type\\\":\\\"f\\\",\\\"priority\\\":\\\"m\\\"}\", ParameterType.RequestBody);\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/items\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\",\\\"type\\\":\\\"f\\\",\\\"priority\\\":\\\"m\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/items\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\",\\\"type\\\":\\\"f\\\",\\\"priority\\\":\\\"m\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             }
@@ -1529,14 +1588,14 @@
                 ]
             }
         },
-        "/teams/{teamId}/channel": {
+        "/teams/{teamId}/channels": {
             "post": {
                 "tags": [
-                    "Team channels"
+                    "Channels"
                 ],
                 "summary": "Create channel",
                 "description": "Create a new channel for a team",
-                "operationId": "teamChannelCreate",
+                "operationId": "channelCreate",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -1612,12 +1671,12 @@
                                         "type": "string",
                                         "description": "Channel name",
                                         "minLength": 3,
-                                        "maxLength": 256
+                                        "maxLength": 64
                                     },
                                     "channelDesc": {
                                         "type": "string",
                                         "description": "Channel description",
-                                        "maxLength": 512,
+                                        "maxLength": 256,
                                         "default": ""
                                     }
                                 },
@@ -1636,39 +1695,39 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channel' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"POST\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channel\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type\": \"application/json\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({channelName: 'string', channelDesc: ''}));\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"POST\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type\": \"application/json\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({channelName: 'string', channelDesc: ''}));\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channel\")\n  .post(body)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels\")\n  .post(body)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channel\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddParameter(\"application/json\", \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\", ParameterType.RequestBody);\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddParameter(\"application/json\", \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\", ParameterType.RequestBody);\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channel\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channel\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             }
         },
-        "/teams/{teamId}/channel/{channelId}": {
+        "/teams/{teamId}/channels/{channelId}": {
             "post": {
                 "tags": [
-                    "Team channels"
+                    "Channels"
                 ],
                 "summary": "Update channel",
                 "description": "Update channel details for a team",
-                "operationId": "teamChannelUpdate",
+                "operationId": "channelUpdate",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -1754,12 +1813,12 @@
                                         "type": "string",
                                         "description": "Channel name",
                                         "minLength": 3,
-                                        "maxLength": 256
+                                        "maxLength": 64
                                     },
                                     "channelDesc": {
                                         "type": "string",
                                         "description": "Channel description",
-                                        "maxLength": 512,
+                                        "maxLength": 256,
                                         "default": ""
                                     }
                                 },
@@ -1778,37 +1837,37 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"POST\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channel/channel-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type\": \"application/json\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({channelName: 'string', channelDesc: ''}));\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"POST\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type\": \"application/json\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({channelName: 'string', channelDesc: ''}));\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***\")\n  .post(body)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***\")\n  .post(body)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddParameter(\"application/json\", \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\", ParameterType.RequestBody);\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddParameter(\"application/json\", \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\", ParameterType.RequestBody);\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"channelName\\\":\\\"string\\\",\\\"channelDesc\\\":\\\"\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             },
             "delete": {
                 "tags": [
-                    "Team channels"
+                    "Channels"
                 ],
                 "summary": "Delete channel",
                 "description": "Delete a channel and unassign all users",
-                "operationId": "teamChannelDelete",
+                "operationId": "channelDelete",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -1891,39 +1950,39 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"DELETE\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channel/channel-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"DELETE\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***\")\n  .delete(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***\")\n  .delete(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***\");\nvar request = new RestRequest(Method.DELETE);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***\");\nvar request = new RestRequest(Method.DELETE);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             }
         },
-        "/teams/{teamId}/channel/{channelId}/user/{userId}": {
+        "/teams/{teamId}/channels/{channelId}/users/{userId}": {
             "put": {
                 "tags": [
-                    "Team channels"
+                    "Channels"
                 ],
                 "summary": "Assign to channel",
                 "description": "Assign a user to a channel",
-                "operationId": "teamChannelAssign",
+                "operationId": "channelAssign",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -2026,37 +2085,37 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"PUT\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"PUT\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\")\n  .put(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\")\n  .put(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\");\nvar request = new RestRequest(Method.PUT);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\");\nvar request = new RestRequest(Method.PUT);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Put.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Put.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             },
             "delete": {
                 "tags": [
-                    "Team channels"
+                    "Channels"
                 ],
                 "summary": "Unassign from channel",
                 "description": "Remove a user from a channel",
-                "operationId": "teamChannelUnassign",
+                "operationId": "channelUnassign",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -2159,27 +2218,27 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"DELETE\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"DELETE\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\")\n  .delete(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\")\n  .delete(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\");\nvar request = new RestRequest(Method.DELETE);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\");\nvar request = new RestRequest(Method.DELETE);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channel/channel-id-***/user/user-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             }
@@ -2257,12 +2316,12 @@
                                         "type": "string",
                                         "description": "Team name",
                                         "minLength": 3,
-                                        "maxLength": 256
+                                        "maxLength": 64
                                     },
                                     "teamDesc": {
                                         "type": "string",
                                         "description": "Team description",
-                                        "maxLength": 512,
+                                        "maxLength": 256,
                                         "default": ""
                                     }
                                 },
@@ -2608,12 +2667,12 @@
                                         "type": "string",
                                         "description": "Team name",
                                         "minLength": 3,
-                                        "maxLength": 256
+                                        "maxLength": 64
                                     },
                                     "teamDesc": {
                                         "type": "string",
                                         "description": "Team description",
-                                        "maxLength": 512,
+                                        "maxLength": 256,
                                         "default": ""
                                     }
                                 }
@@ -2767,7 +2826,7 @@
                 ]
             }
         },
-        "/teams/{teamId}/user/{userId}": {
+        "/teams/{teamId}/users/{userId}": {
             "put": {
                 "tags": [
                     "Teams"
@@ -2867,27 +2926,27 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/user/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"PUT\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/user/user-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"PUT\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/users/user-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/user/user-id-***\")\n  .put(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/users/user-id-***\")\n  .put(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/user/user-id-***\");\nvar request = new RestRequest(Method.PUT);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/users/user-id-***\");\nvar request = new RestRequest(Method.PUT);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/user/user-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Put.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/users/user-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Put.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/user/user-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/users/user-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"PUT\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             },
@@ -2990,27 +3049,27 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/user/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     },
                     {
                         "lang": "Node",
-                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"DELETE\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/user/user-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"DELETE\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/users/user-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
                     },
                     {
                         "lang": "Java",
-                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/user/user-id-***\")\n  .delete(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/users/user-id-***\")\n  .delete(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
                     },
                     {
                         "lang": "C#",
-                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/user/user-id-***\");\nvar request = new RestRequest(Method.DELETE);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/users/user-id-***\");\nvar request = new RestRequest(Method.DELETE);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
                     },
                     {
                         "lang": "Ruby",
-                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/user/user-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/users/user-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
                     },
                     {
                         "lang": "PHP",
-                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/user/user-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/users/user-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
                     }
                 ]
             }
@@ -3666,7 +3725,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "UserTeamChannel",
+                            "title": "UserChannel",
                             "properties": {
                                 "teamId": {
                                     "type": "string",
@@ -3675,10 +3734,10 @@
                                 },
                                 "channelIds": {
                                     "type": "array",
-                                    "description": "Team channels",
+                                    "description": "Channels",
                                     "items": {
                                         "type": "string",
-                                        "description": "Team Channel ID",
+                                        "description": "Channel ID",
                                         "example": "channel-id-***"
                                     }
                                 }
@@ -3848,6 +3907,16 @@
                         "description": "Organization ID",
                         "example": "Organization, Inc."
                     },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    "channelId": {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
                     "digest": {
                         "type": "string",
                         "description": "Value item digest",
@@ -3861,16 +3930,6 @@
                         "minLength": 3,
                         "maxLength": 4096,
                         "example": "Item detailed description ***"
-                    },
-                    "projectId": {
-                        "type": "string",
-                        "description": "Project ID",
-                        "example": "Productivity app"
-                    },
-                    "teamId": {
-                        "type": "string",
-                        "description": "Team ID",
-                        "example": "UX"
                     },
                     "authorId": {
                         "$ref": "#/components/schemas/ItemAuthor"
@@ -3905,7 +3964,8 @@
                             "f",
                             "b",
                             "c"
-                        ]
+                        ],
+                        "example": "f"
                     },
                     "priority": {
                         "type": "string",
@@ -3915,7 +3975,8 @@
                             "s",
                             "c",
                             "w"
-                        ]
+                        ],
+                        "example": "m"
                     },
                     "assumptions": {
                         "type": "array",
@@ -3959,11 +4020,14 @@
                     "digest": {
                         "type": "string",
                         "description": "Assumptions are formulated as simple statements that can be proven true or false; avoid questions and opinions.\n\n> ❌ What are the features?\n> \n> ❌ Does this feature exist?\n> \n> ❌ I don't like this feature.\n> \n> ✅ This feature exists.",
-                        "example": "Electron.js supports Windows 7"
+                        "example": "Electron.js supports Windows 7",
+                        "minLength": 3,
+                        "maxLength": 256
                     },
                     "validated": {
                         "type": "boolean",
-                        "description": "Assumption was validated by experiments"
+                        "description": "Assumption was validated by experiments",
+                        "default": false
                     },
                     "experiment": {
                         "type": "object",
@@ -3974,20 +4038,26 @@
                             },
                             "digest": {
                                 "type": "string",
-                                "description": "Experiment findings formulated in one sentence"
+                                "description": "Experiment findings formulated in one sentence",
+                                "minLength": 3,
+                                "maxLength": 256,
+                                "example": "Tested latest version successfully with a virtual machine"
                             },
                             "details": {
                                 "type": "string",
-                                "description": "Experiment details"
+                                "description": "Experiment details",
+                                "maxLength": 4096,
+                                "default": ""
                             },
                             "state": {
                                 "type": "string",
-                                "description": "Experiment state\n  * `i` - Idle\n  * `x` - Executing\n  * `d` - Done",
+                                "description": "Experiment state\n  * `i` - Idle\n  * `r` - Running\n  * `d` - Done",
                                 "enum": [
                                     "i",
-                                    "x",
+                                    "r",
                                     "d"
-                                ]
+                                ],
+                                "default": "i"
                             }
                         }
                     }
@@ -4000,13 +4070,17 @@
                     "assigneeId": {
                         "$ref": "#/components/schemas/ItemAuthor"
                     },
-                    "title": {
+                    "digest": {
                         "type": "string",
-                        "description": "Task title"
+                        "description": "Task title",
+                        "minLength": 3,
+                        "maxLength": 256
                     },
-                    "description": {
+                    "details": {
                         "type": "string",
-                        "description": "Task description"
+                        "description": "Task description",
+                        "maxLength": 4096,
+                        "default": ""
                     },
                     "state": {
                         "type": "string",
@@ -4016,7 +4090,8 @@
                             "p",
                             "r",
                             "d"
-                        ]
+                        ],
+                        "default": "i"
                     },
                     "keywords": {
                         "type": "array",
@@ -4039,7 +4114,9 @@
                             "properties": {
                                 "details": {
                                     "type": "string",
-                                    "description": "Discovery details"
+                                    "description": "Discovery details",
+                                    "minLength": 3,
+                                    "maxLength": 4096
                                 },
                                 "iteration": {
                                     "type": "number",
@@ -4059,18 +4136,30 @@
                                 },
                                 "issue": {
                                     "type": "string",
-                                    "description": "Feedback issue\n  * `?` - ?\n  * `?` - ?",
+                                    "description": "Feedback issue\n  * `v` - Value\n  * `c` - Complexity\n  * `f` - Flexibility\n  * `t` - Testing\n  * `s` - Security\n  * `ci` - CI/CD\n  * `st` - Standards\n  * `m` - Miscellaneous",
                                     "enum": [
-                                        "x"
-                                    ]
+                                        "v",
+                                        "c",
+                                        "f",
+                                        "t",
+                                        "s",
+                                        "ci",
+                                        "st",
+                                        "m"
+                                    ],
+                                    "default": "v"
                                 },
-                                "text": {
+                                "details": {
                                     "type": "string",
-                                    "description": "Feedback details"
+                                    "description": "Feedback details",
+                                    "minLength": 3,
+                                    "maxLength": 512
                                 },
                                 "reply": {
                                     "type": "string",
-                                    "description": "Feedback reply"
+                                    "description": "Feedback reply from task assignee",
+                                    "minLength": 3,
+                                    "maxLength": 512
                                 },
                                 "iteration": {
                                     "type": "number",
@@ -4088,13 +4177,17 @@
                                 "authorId": {
                                     "$ref": "#/components/schemas/ItemAuthor"
                                 },
-                                "text": {
+                                "details": {
                                     "type": "string",
-                                    "description": "Feedback details"
+                                    "description": "Feedback details",
+                                    "minLength": 3,
+                                    "maxLength": 512
                                 },
                                 "reply": {
                                     "type": "string",
-                                    "description": "Feedback reply"
+                                    "description": "Feedback reply from task assignee",
+                                    "minLength": 3,
+                                    "maxLength": 512
                                 }
                             }
                         }
@@ -4171,9 +4264,9 @@
                     },
                     "channels": {
                         "type": "array",
-                        "description": "Team channels",
+                        "description": "Channels",
                         "items": {
-                            "$ref": "#/components/schemas/TeamChannel"
+                            "$ref": "#/components/schemas/Channel"
                         }
                     },
                     "createdAt": {
@@ -4188,9 +4281,9 @@
                     }
                 }
             },
-            "TeamChannel": {
+            "Channel": {
                 "type": "object",
-                "description": "Team Channel",
+                "description": "Channel",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -4245,7 +4338,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "UserTeamChannel",
+                            "title": "UserChannel",
                             "properties": {
                                 "teamId": {
                                     "type": "string",
@@ -4254,10 +4347,10 @@
                                 },
                                 "channelIds": {
                                     "type": "array",
-                                    "description": "Team channels",
+                                    "description": "Channels",
                                     "items": {
                                         "type": "string",
-                                        "description": "Team Channel ID",
+                                        "description": "Channel ID",
                                         "example": "channel-id-***"
                                     }
                                 }
@@ -4324,10 +4417,10 @@
             "tags": [
                 "Account",
                 "Users",
-                "Organizations",
                 "Invitations",
+                "Organizations",
                 "Teams",
-                "Team channels",
+                "Channels",
                 "Value items"
             ]
         }
