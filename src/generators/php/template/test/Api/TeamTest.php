@@ -86,11 +86,11 @@ class TeamTest extends TestCase {
         // Add a channel
         $team = $this->sdk
             ->api()
-            ->teamChannels()
-            ->teamChannelCreate(
+            ->channels()
+            ->channelCreate(
                 $teamModel->getId(),
                 $orgId,
-                (new Model\TeamChannelCreateRequest())
+                (new Model\ChannelCreateRequest())
                     ->setChannelName("A new channel")
                     ->setChannelDesc("The channel description")
             );
@@ -101,12 +101,12 @@ class TeamTest extends TestCase {
         // Update a channel
         $this->sdk
             ->api()
-            ->teamChannels()
-            ->teamChannelUpdate(
+            ->channels()
+            ->channelUpdate(
                 $team->getId(),
                 $team->getChannels()[1]->getId(),
                 $orgId,
-                (new Model\TeamChannelCreateRequest())
+                (new Model\ChannelCreateRequest())
                     ->setChannelName("A new channel 2")
                     ->setChannelDesc("The 2nd channel description")
             );
@@ -114,16 +114,16 @@ class TeamTest extends TestCase {
         // Assign the secondary channel
         $modelUser = $this->sdk
             ->api()
-            ->teamChannels()
-            ->teamChannelAssign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+            ->channels()
+            ->channelAssign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
         $this->assertInstanceOf(Model\User::class, $modelUser);
         $countAssigned = count($modelUser->getTeams()[count($modelUser->getTeams()) - 1]->getChannelIds());
 
         // Unassign the secondary channel
         $modelUser2 = $this->sdk
             ->api()
-            ->teamChannels()
-            ->teamChannelUnassign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+            ->channels()
+            ->channelUnassign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
         $this->assertInstanceOf(Model\User::class, $modelUser2);
         $countUnassigned = count($modelUser2->getTeams()[count($modelUser2->getTeams()) - 1]->getChannelIds());
         $this->assertGreaterThan($countUnassigned, $countAssigned);
@@ -153,12 +153,12 @@ class TeamTest extends TestCase {
         // Delete a channel
         $this->sdk
             ->api()
-            ->teamChannels()
-            ->teamChannelAssign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+            ->channels()
+            ->channelAssign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
         $this->sdk
             ->api()
-            ->teamChannels()
-            ->teamChannelDelete($team->getId(), $team->getChannels()[1]->getId(), $orgId);
+            ->channels()
+            ->channelDelete($team->getId(), $team->getChannels()[1]->getId(), $orgId);
 
         // Remove the team
         $teamModelDeleted = $this->sdk
@@ -190,7 +190,7 @@ class TeamTest extends TestCase {
                 ->teamCreate($orgId, new Model\TeamCreateRequest(["teamName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "teams.create(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
-            $this->assertEquals("invalid-argument-teamName", $exc->getResponseObject()["id"]);
+            $this->assertEquals("invalid-argument", $exc->getResponseObject()["id"]);
         }
 
         // Create: Description too long
@@ -204,7 +204,7 @@ class TeamTest extends TestCase {
                 );
             $this->assertTrue(false, "teams.create(description) should throw an error");
         } catch (Sdk\ApiException $exc) {
-            $this->assertEquals("invalid-argument-teamDesc", $exc->getResponseObject()["id"]);
+            $this->assertEquals("invalid-argument", $exc->getResponseObject()["id"]);
         }
 
         // Create a new team
@@ -222,7 +222,7 @@ class TeamTest extends TestCase {
                 ->teamUpdate($team->getId(), $orgId, new Model\TeamUpdateRequest(["teamName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "teams.update(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
-            $this->assertEquals("invalid-argument-teamName", $exc->getResponseObject()["id"]);
+            $this->assertEquals("invalid-argument", $exc->getResponseObject()["id"]);
         }
 
         // Update: Description too long
@@ -237,7 +237,7 @@ class TeamTest extends TestCase {
                 );
             $this->assertTrue(false, "teams.update(description) should throw an error");
         } catch (Sdk\ApiException $exc) {
-            $this->assertEquals("invalid-argument-teamDesc", $exc->getResponseObject()["id"]);
+            $this->assertEquals("invalid-argument", $exc->getResponseObject()["id"]);
         }
 
         // Remove the temporary team

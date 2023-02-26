@@ -973,7 +973,7 @@
                 ],
                 "summary": "List value items",
                 "description": "Get a list of value item models",
-                "operationId": "itemList",
+                "operationId": "valueItemList",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -1034,7 +1034,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "ItemList",
+                                    "title": "ValueItemList",
                                     "type": "object",
                                     "properties": {
                                         "pageSize": {
@@ -1050,7 +1050,7 @@
                                         "items": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Item"
+                                                "$ref": "#/components/schemas/ValueItem"
                                             }
                                         }
                                     }
@@ -1127,7 +1127,7 @@
                 ],
                 "summary": "Create value item",
                 "description": "Add a value item to planning",
-                "operationId": "itemCreate",
+                "operationId": "valueItemCreate",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -1166,7 +1166,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Item"
+                                    "$ref": "#/components/schemas/ValueItem"
                                 }
                             }
                         }
@@ -3893,7 +3893,7 @@
                     }
                 }
             },
-            "Item": {
+            "ValueItem": {
                 "type": "object",
                 "title": "Value item",
                 "properties": {
@@ -3920,39 +3920,61 @@
                     "digest": {
                         "type": "string",
                         "description": "Value item digest",
-                        "minLength": 3,
+                        "minLength": 1,
                         "maxLength": 256,
                         "example": "Value item number 1"
                     },
                     "details": {
                         "type": "string",
                         "description": "Value item description",
-                        "minLength": 3,
+                        "minLength": 1,
                         "maxLength": 4096,
                         "example": "Item detailed description ***"
                     },
                     "authorId": {
-                        "$ref": "#/components/schemas/ItemAuthor"
+                        "$ref": "#/components/schemas/ValueItemAuthor"
                     },
                     "stage": {
-                        "$ref": "#/components/schemas/ItemStage"
+                        "type": "string",
+                        "description": "Value Item Stage\n          * `p` - Planning\n          * `v` - Validation\n          * `x` - Execution\n          * `c` - Deep Context",
+                        "enum": [
+                            "p",
+                            "v",
+                            "x",
+                            "c"
+                        ],
+                        "example": "p"
                     },
-                    "stageChanges": {
+                    "changes": {
                         "type": "array",
-                        "title": "Stage changes",
+                        "title": "Changes",
                         "items": {
                             "type": "object",
-                            "title": "ItemStageChange",
+                            "title": "ValueItemChange",
                             "properties": {
                                 "authorId": {
-                                    "$ref": "#/components/schemas/ItemAuthor"
+                                    "$ref": "#/components/schemas/ValueItemAuthor"
                                 },
-                                "stage": {
-                                    "$ref": "#/components/schemas/ItemStage"
+                                "changed": {
+                                    "type": "string",
+                                    "enum": [
+                                        "stage",
+                                        "type",
+                                        "priority"
+                                    ],
+                                    "description": "Property that was changed"
+                                },
+                                "old": {
+                                    "type": "string",
+                                    "description": "Old value"
+                                },
+                                "new": {
+                                    "type": "string",
+                                    "description": "New value"
                                 },
                                 "time": {
                                     "type": "number",
-                                    "description": "UNIX timestamp of stage change"
+                                    "description": "UNIX timestamp of change"
                                 }
                             }
                         }
@@ -3994,34 +4016,23 @@
                     }
                 }
             },
-            "ItemAuthor": {
+            "ValueItemAuthor": {
                 "type": "string",
                 "description": "Author ID",
                 "example": "user-id-***"
-            },
-            "ItemStage": {
-                "type": "string",
-                "description": "Value Item Stage\n  * `p` - Planning\n  * `v` - Validation\n  * `x` - Execution\n  * `c` - Deep Context",
-                "enum": [
-                    "p",
-                    "v",
-                    "x",
-                    "c"
-                ],
-                "example": "p"
             },
             "Assumption": {
                 "type": "object",
                 "description": "Value Item Assumption",
                 "properties": {
                     "authorId": {
-                        "$ref": "#/components/schemas/ItemAuthor"
+                        "$ref": "#/components/schemas/ValueItemAuthor"
                     },
                     "digest": {
                         "type": "string",
                         "description": "Assumptions are formulated as simple statements that can be proven true or false; avoid questions and opinions.\n\n> ❌ What are the features?\n> \n> ❌ Does this feature exist?\n> \n> ❌ I don't like this feature.\n> \n> ✅ This feature exists.",
                         "example": "Electron.js supports Windows 7",
-                        "minLength": 3,
+                        "minLength": 1,
                         "maxLength": 256
                     },
                     "validated": {
@@ -4034,20 +4045,20 @@
                         "description": "Experiment",
                         "properties": {
                             "authorId": {
-                                "$ref": "#/components/schemas/ItemAuthor"
+                                "$ref": "#/components/schemas/ValueItemAuthor"
                             },
                             "digest": {
                                 "type": "string",
                                 "description": "Experiment findings formulated in one sentence",
-                                "minLength": 3,
+                                "minLength": 1,
                                 "maxLength": 256,
                                 "example": "Tested latest version successfully with a virtual machine"
                             },
                             "details": {
                                 "type": "string",
                                 "description": "Experiment details",
-                                "maxLength": 4096,
-                                "default": ""
+                                "minLength": 1,
+                                "maxLength": 4096
                             },
                             "state": {
                                 "type": "string",
@@ -4068,19 +4079,19 @@
                 "description": "Value Item Task",
                 "properties": {
                     "assigneeId": {
-                        "$ref": "#/components/schemas/ItemAuthor"
+                        "$ref": "#/components/schemas/ValueItemAuthor"
                     },
                     "digest": {
                         "type": "string",
                         "description": "Task title",
-                        "minLength": 3,
+                        "minLength": 1,
                         "maxLength": 256
                     },
                     "details": {
                         "type": "string",
                         "description": "Task description",
-                        "maxLength": 4096,
-                        "default": ""
+                        "minLength": 1,
+                        "maxLength": 4096
                     },
                     "state": {
                         "type": "string",
@@ -4115,7 +4126,7 @@
                                 "details": {
                                     "type": "string",
                                     "description": "Discovery details",
-                                    "minLength": 3,
+                                    "minLength": 1,
                                     "maxLength": 4096
                                 },
                                 "iteration": {
@@ -4132,7 +4143,7 @@
                             "type": "object",
                             "properties": {
                                 "authorId": {
-                                    "$ref": "#/components/schemas/ItemAuthor"
+                                    "$ref": "#/components/schemas/ValueItemAuthor"
                                 },
                                 "issue": {
                                     "type": "string",
@@ -4149,16 +4160,16 @@
                                     ],
                                     "default": "v"
                                 },
-                                "details": {
+                                "message": {
                                     "type": "string",
                                     "description": "Feedback details",
-                                    "minLength": 3,
+                                    "minLength": 1,
                                     "maxLength": 512
                                 },
                                 "reply": {
                                     "type": "string",
                                     "description": "Feedback reply from task assignee",
-                                    "minLength": 3,
+                                    "minLength": 1,
                                     "maxLength": 512
                                 },
                                 "iteration": {
@@ -4175,18 +4186,18 @@
                             "type": "object",
                             "properties": {
                                 "authorId": {
-                                    "$ref": "#/components/schemas/ItemAuthor"
+                                    "$ref": "#/components/schemas/ValueItemAuthor"
                                 },
-                                "details": {
+                                "message": {
                                     "type": "string",
                                     "description": "Feedback details",
-                                    "minLength": 3,
+                                    "minLength": 1,
                                     "maxLength": 512
                                 },
                                 "reply": {
                                     "type": "string",
                                     "description": "Feedback reply from task assignee",
-                                    "minLength": 3,
+                                    "minLength": 1,
                                     "maxLength": 512
                                 }
                             }
@@ -4251,7 +4262,7 @@
                     "teamName": {
                         "type": "string",
                         "description": "Team name",
-                        "minLength": 3,
+                        "minLength": 1,
                         "maxLength": 64,
                         "example": "User Experience"
                     },
@@ -4297,7 +4308,7 @@
                     "channelName": {
                         "type": "string",
                         "description": "Channel name",
-                        "minLength": 3,
+                        "minLength": 1,
                         "maxLength": 64,
                         "example": "General"
                     },

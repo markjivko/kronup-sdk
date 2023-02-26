@@ -133,8 +133,11 @@ module.exports = class hook extends iHook {
             });
         }
 
+        // Prepare the path
+        const phpUnitPath = config.application().production ? [] : [path.join(pathOut, "test", "Api", "ItemTest.php")];
+
         // Run unit tests
-        const code = spawnSync("vendor/bin/phpunit", [], {
+        const code = spawnSync("vendor/bin/phpunit", phpUnitPath, {
             cwd: pathOutDev,
             stdio: ["inherit", process.stdout, process.stderr],
             env: this.getEnv()
