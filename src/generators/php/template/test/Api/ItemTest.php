@@ -99,7 +99,7 @@ class ItemTest extends TestCase {
      * Read & Update
      */
     public function testItemReadAll(): void {
-        $item = $this->sdk
+        $this->sdk
             ->api()
             ->valueItems()
             ->valueItemCreate(
@@ -111,9 +111,16 @@ class ItemTest extends TestCase {
                     ->setDetails("The details")
                     ->setPriority(Model\ValueItemCreateRequest::PRIORITY_C)
             );
-        // $items = $this->sdk
-        //     ->api()
-        //     ->valueItems()
-        //     ->itemList($this->team->getId(), $this->channel->getId(), $this->orgId);
+
+        // Get the list
+        $items = $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemList($this->team->getId(), $this->channel->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ValueItemList::class, $items);
+        $this->assertIsArray($items->getItems());
+        $this->assertGreaterThan(0, count($items->getItems()));
+
+        var_dump($items->getItems()[0]);
     }
 }
