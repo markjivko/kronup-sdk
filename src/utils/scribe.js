@@ -50,14 +50,7 @@ const operations = {
             });
     },
     removeHashLinks: str => str.replace(/<a\s+href\s*=\s*"#.*?>(.*?)<\s*\/\s*a>/gi, "$1"),
-    tableCell: str => {
-        str = operations.removeHashLinks(str);
-
-        return str
-            .replace(/<\s*\/?\s*(?:p|ul|ol|li|table|tr|td|hr|span|br)\s*>|[\r\n]+/gi, "")
-            .replace(/\|/gi, "/")
-            .trim();
-    },
+    tableCell: str => operations.removeHashLinks(str).replace(/\|/gi, "/").trim(),
     shortLine: str => {
         str = operations.removeHashLinks(str);
 
