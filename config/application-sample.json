@@ -1,5 +1,6 @@
 {
     "logLevel": "info",
+    "unitTest": null,
     "production": true,
     "apiKey": "",
     "schemaMappings": {}

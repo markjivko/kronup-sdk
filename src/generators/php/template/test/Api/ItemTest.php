@@ -14,6 +14,7 @@ namespace Kronup\Test\Local\Api;
 use Kronup\Sdk;
 use Kronup\Model;
 use PHPUnit\Framework\TestCase;
+use Kronup\Sdk\ApiException;
 
 /**
  * Item Test
@@ -87,6 +88,9 @@ class ItemTest extends TestCase {
             ->teamAssign($this->team->getId(), $this->account->getId(), $this->orgId);
     }
 
+    /**
+     * Tear-down
+     */
     public function tearDown(): void {
         // Remove the team
         $this->sdk
@@ -98,8 +102,36 @@ class ItemTest extends TestCase {
     /**
      * Read & Update
      */
-    public function testItemReadAll(): void {
-        $this->sdk
+    public function testCreateRead(): void {
+        $item = $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemCreate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->orgId,
+                (new Model\ValueItemCreateRequest())
+                    ->setDigest("The digest")
+                    ->setDetails("The details")
+                    ->setPriority(Model\ValueItemCreateRequest::PRIORITY_C)
+            );
+        $this->assertInstanceOf(Model\ValueItem::class, $item);
+
+        // Get the list
+        $items = $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemList($this->team->getId(), $this->channel->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ValueItemList::class, $items);
+        $this->assertIsArray($items->getItems());
+        $this->assertGreaterThan(0, count($items->getItems()));
+    }
+
+    /**
+     * Delete item
+     */
+    public function testUpdateDelete() {
+        $item = $this->sdk
             ->api()
             ->valueItems()
             ->valueItemCreate(
@@ -112,15 +144,33 @@ class ItemTest extends TestCase {
                     ->setPriority(Model\ValueItemCreateRequest::PRIORITY_C)
             );
 
-        // Get the list
-        $items = $this->sdk
+        // Update the item
+        $itemUpdated = $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemList($this->team->getId(), $this->channel->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\ValueItemList::class, $items);
-        $this->assertIsArray($items->getItems());
-        $this->assertGreaterThan(0, count($items->getItems()));
+            ->valueItemUpdate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $item->getId(),
+                $this->orgId,
+                (new Model\ValueItemUpdateRequest())->setDigest("The new digest")
+            );
+        $this->assertInstanceOf(Model\ValueItem::class, $itemUpdated);
+        $this->assertEquals("The new digest", $itemUpdated->getDigest());
 
-        var_dump($items->getItems()[0]);
+        // Delete the item
+        $itemDeleted = $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemDelete($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ValueItem::class, $itemDeleted);
+        $this->assertEquals($itemDeleted->getId(), $item->getId());
+
+        // Expect to fail (item was removed)
+        $this->expectExceptionObject(new ApiException("Not Found", 404));
+        $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemRead($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
     }
 }

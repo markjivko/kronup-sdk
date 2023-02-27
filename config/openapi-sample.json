@@ -966,6 +966,440 @@
                 ]
             }
         },
+        "/teams/{teamId}/channels/{channelId}/items/{itemId}": {
+            "get": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Fetch value item",
+                "description": "Retrieve value item model",
+                "operationId": "valueItemRead",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value item found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItem"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    },
+                    {
+                        "lang": "Node",
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"GET\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                    },
+                    {
+                        "lang": "Java",
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\")\n  .get()\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                    },
+                    {
+                        "lang": "C#",
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\");\nvar request = new RestRequest(Method.GET);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                    },
+                    {
+                        "lang": "Ruby",
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Update value item",
+                "description": "Update value item details",
+                "operationId": "valueItemUpdate",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value item updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItem"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Value item digest",
+                                        "minLength": 3,
+                                        "maxLength": 256
+                                    },
+                                    "details": {
+                                        "type": "string",
+                                        "description": "Value item description",
+                                        "minLength": 3,
+                                        "maxLength": 4096
+                                    },
+                                    "stage": {
+                                        "type": "string",
+                                        "description": "Value item stage",
+                                        "enum": [
+                                            "p",
+                                            "v",
+                                            "x",
+                                            "c"
+                                        ]
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "description": "Value item type",
+                                        "enum": [
+                                            "f",
+                                            "b",
+                                            "c"
+                                        ]
+                                    },
+                                    "priority": {
+                                        "type": "string",
+                                        "description": "Value item MoSCoW priority",
+                                        "enum": [
+                                            "m",
+                                            "s",
+                                            "c",
+                                            "w"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\",\"stage\":\"p\",\"type\":\"f\",\"priority\":\"m\"}'"
+                    },
+                    {
+                        "lang": "Node",
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"POST\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type\": \"application/json\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({digest: 'string', details: 'string', stage: 'p', type: 'f', priority: 'm'}));\nreq.end();"
+                    },
+                    {
+                        "lang": "Java",
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\",\\\"stage\\\":\\\"p\\\",\\\"type\\\":\\\"f\\\",\\\"priority\\\":\\\"m\\\"}\");\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\")\n  .post(body)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .addHeader(\"content-type\", \"application/json\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                    },
+                    {
+                        "lang": "C#",
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\");\nvar request = new RestRequest(Method.POST);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nrequest.AddHeader(\"content-type\", \"application/json\");\nrequest.AddParameter(\"application/json\", \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\",\\\"stage\\\":\\\"p\\\",\\\"type\\\":\\\"f\\\",\\\"priority\\\":\\\"m\\\"}\", ParameterType.RequestBody);\nIRestResponse response = client.Execute(request);"
+                    },
+                    {
+                        "lang": "Ruby",
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\nrequest[\"content-type\"] = 'application/json'\nrequest.body = \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\",\\\"stage\\\":\\\"p\\\",\\\"type\\\":\\\"f\\\",\\\"priority\\\":\\\"m\\\"}\"\n\nresponse = http.request(request)\nputs response.read_body"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => \"{\\\"digest\\\":\\\"string\\\",\\\"details\\\":\\\"string\\\",\\\"stage\\\":\\\"p\\\",\\\"type\\\":\\\"f\\\",\\\"priority\\\":\\\"m\\\"}\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"content-type: application/json\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Delete value item",
+                "description": "Delete a value item from the flow",
+                "operationId": "valueItemDelete",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value item deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItem"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    },
+                    {
+                        "lang": "Node",
+                        "source": "const http = require(\"https\");\n\nconst options = {\n  \"method\": \"DELETE\",\n  \"hostname\": \"api.kronup.com\",\n  \"port\": null,\n  \"path\": \"/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\",\n  \"headers\": {\n    \"x-org-id\": \"org-id-***\",\n    \"Authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+                    },
+                    {
+                        "lang": "Java",
+                        "source": "OkHttpClient client = new OkHttpClient();\n\nRequest request = new Request.Builder()\n  .url(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\")\n  .delete(null)\n  .addHeader(\"x-org-id\", \"org-id-***\")\n  .addHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .build();\n\nResponse response = client.newCall(request).execute();"
+                    },
+                    {
+                        "lang": "C#",
+                        "source": "var client = new RestClient(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\");\nvar request = new RestRequest(Method.DELETE);\nrequest.AddHeader(\"x-org-id\", \"org-id-***\");\nrequest.AddHeader(\"Authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+                    },
+                    {
+                        "lang": "Ruby",
+                        "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Delete.new(url)\nrequest[\"x-org-id\"] = 'org-id-***'\nrequest[\"Authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"DELETE\",\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer REPLACE_BEARER_TOKEN\",\n    \"x-org-id: org-id-***\"\n  ],\n]);\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+                    }
+                ]
+            }
+        },
         "/teams/{teamId}/channels/{channelId}/items": {
             "get": {
                 "tags": [
@@ -3944,40 +4378,6 @@
                             "c"
                         ],
                         "example": "p"
-                    },
-                    "changes": {
-                        "type": "array",
-                        "title": "Changes",
-                        "items": {
-                            "type": "object",
-                            "title": "ValueItemChange",
-                            "properties": {
-                                "authorId": {
-                                    "$ref": "#/components/schemas/ValueItemAuthor"
-                                },
-                                "changed": {
-                                    "type": "string",
-                                    "enum": [
-                                        "stage",
-                                        "type",
-                                        "priority"
-                                    ],
-                                    "description": "Property that was changed"
-                                },
-                                "old": {
-                                    "type": "string",
-                                    "description": "Old value"
-                                },
-                                "new": {
-                                    "type": "string",
-                                    "description": "New value"
-                                },
-                                "time": {
-                                    "type": "number",
-                                    "description": "UNIX timestamp of change"
-                                }
-                            }
-                        }
                     },
                     "type": {
                         "type": "string",
