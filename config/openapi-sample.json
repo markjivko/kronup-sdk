@@ -138,6 +138,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestAccountUpdate",
                                 "properties": {
                                     "userName": {
                                         "type": "string",
@@ -433,6 +434,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestInvitationUpdate",
                                 "properties": {
                                     "inviteName": {
                                         "type": "string",
@@ -726,6 +728,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestInvitationCreate",
                                 "properties": {
                                     "inviteName": {
                                         "type": "string",
@@ -997,6 +1000,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestValueItemUpdate",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -1011,17 +1015,6 @@
                                         "minLength": 3,
                                         "maxLength": 4096,
                                         "example": "Feature description"
-                                    },
-                                    "stage": {
-                                        "type": "string",
-                                        "description": "Value item stage <ul> <li><code>p</code> - Planning</li> <li><code>v</code> - Validation</li> <li><code>x</code> - Execution</li> <li><code>c</code> - Deep Context</li> </ul>",
-                                        "enum": [
-                                            "p",
-                                            "v",
-                                            "x",
-                                            "c"
-                                        ],
-                                        "example": "p"
                                     },
                                     "type": {
                                         "type": "string",
@@ -1057,7 +1050,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"stage\":\"p\",\"type\":\"f\",\"priority\":\"m\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"f\",\"priority\":\"m\"}'"
                     }
                 ]
             },
@@ -1387,6 +1380,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestValueItemCreate",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -1498,6 +1492,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestOrganizationCreate",
                                 "properties": {
                                     "orgName": {
                                         "type": "string",
@@ -1592,6 +1587,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestOrganizationUpdate",
                                 "properties": {
                                     "orgName": {
                                         "type": "string",
@@ -1769,6 +1765,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestChannelCreate",
                                 "properties": {
                                     "channelName": {
                                         "type": "string",
@@ -1891,6 +1888,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestChannelUpdate",
                                 "properties": {
                                     "channelName": {
                                         "type": "string",
@@ -2314,6 +2312,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestTeamCreate",
                                 "properties": {
                                     "teamName": {
                                         "type": "string",
@@ -2605,6 +2604,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestTeamUpdate",
                                 "properties": {
                                     "teamName": {
                                         "type": "string",
@@ -3245,6 +3245,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "title": "RequestUserUpdateRole",
                                 "properties": {
                                     "roleSite": {
                                         "type": "string",
@@ -3719,7 +3720,7 @@
                     },
                     "stage": {
                         "type": "string",
-                        "description": "Value Item Stage\n<ul>\n<li>`p` - Planning</li>\n<li>`v` - Validation</li>\n<li>`x` - Execution</li>\n<li>`c` - Deep Context</li>\n</ul>",
+                        "description": "Value Item Stage\n\n  * `p` - Planning\n  * `v` - Validation\n  * `x` - Execution\n  * `c` - Deep Context",
                         "enum": [
                             "p",
                             "v",
@@ -3730,7 +3731,7 @@
                     },
                     "type": {
                         "type": "string",
-                        "description": "Value Item Type\n<ul>\n<li>`f` - Feature</li>\n<li>`b` - Bug fix</li>\n<li>`c` - Chore</li>\n</ul>",
+                        "description": "Value Item Type\n\n  * `f` - Feature\n  * `b` - Bug fix\n  * `c` - Chore",
                         "enum": [
                             "f",
                             "b",
@@ -3740,7 +3741,7 @@
                     },
                     "priority": {
                         "type": "string",
-                        "description": "Value Item Priority using MoSCoW\n<ul>\n<li>`m` - Must-have</li>\n<li>`s` - Should-have</li>\n<li>`c` - Could-have</li>\n<li>`w` - Will NOT have</li>\n</ul>",
+                        "description": "Value Item Priority using MoSCoW\n\n  * `m` - Must-have\n  * `s` - Should-have\n  * `c` - Could-have\n  * `w` - Will NOT have",
                         "enum": [
                             "m",
                             "s",
@@ -3811,7 +3812,7 @@
                             },
                             "state": {
                                 "type": "string",
-                                "description": "Experiment state\n<ul>\n<li>`i` - Idle</li>\n<li>`r` - Running</li>\n<li>`d` - Done</li>\n</ul>",
+                                "description": "Experiment state\n\n  * `i` - Idle\n  * `r` - Running\n  * `d` - Done",
                                 "enum": [
                                     "i",
                                     "r",
@@ -3844,7 +3845,7 @@
                     },
                     "state": {
                         "type": "string",
-                        "description": "Task state\n<ul>\n<li>`i` - Idle</li>\n<li>`p` - In progress</li>\n<li>`r` - In review</li>\n<li>`d` - Done</li>\n</ul>",
+                        "description": "Task state\n\n  * `i` - Idle\n  * `p` - In progress\n  * `r` - In review\n  * `d` - Done",
                         "enum": [
                             "i",
                             "p",
@@ -3896,7 +3897,7 @@
                                 },
                                 "issue": {
                                     "type": "string",
-                                    "description": "Feedback issue\n<ul>\n<li>`v` - Value</li>\n<li>`c` - Complexity</li>\n<li>`f` - Flexibility</li>\n<li>`t` - Testing</li>\n<li>`s` - Security</li>\n<li>`ci` - CI/CD</li>\n<li>`st` - Standards</li>\n<li>`m` - Miscellaneous</li>\n</ul>",
+                                    "description": "Feedback issue\n\n  * `v` - Value\n  * `c` - Complexity\n  * `f` - Flexibility\n  * `t` - Testing\n  * `s` - Security\n  * `ci` - CI/CD\n  * `st` - Standards\n  * `m` - Miscellaneous",
                                     "enum": [
                                         "v",
                                         "c",

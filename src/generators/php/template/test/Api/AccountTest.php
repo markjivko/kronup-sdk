@@ -51,7 +51,7 @@ class AccountTest extends TestCase {
         $updatedAccount = $this->sdk
             ->api()
             ->account()
-            ->accountUpdate((new Model\AccountUpdateRequest())->setUserName("$userName 2"));
+            ->accountUpdate((new Model\RequestAccountUpdate())->setUserName("$userName 2"));
         $this->assertInstanceOf(Model\Account::class, $updatedAccount);
         $this->assertEquals("$userName 2", $updatedAccount->getUserName());
 
@@ -59,6 +59,6 @@ class AccountTest extends TestCase {
         $this->sdk
             ->api()
             ->account()
-            ->accountUpdate((new Model\AccountUpdateRequest())->setUserName($userName));
+            ->accountUpdate((new Model\RequestAccountUpdate())->setUserName($userName));
     }
 }

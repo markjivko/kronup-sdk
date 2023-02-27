@@ -76,7 +76,7 @@ class ItemTest extends TestCase {
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->teamCreate($this->orgId, (new Model\TeamCreateRequest())->setTeamName("New team"));
+            ->teamCreate($this->orgId, (new Model\RequestTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -110,10 +110,10 @@ class ItemTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
-                (new Model\ValueItemCreateRequest())
+                (new Model\RequestValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\ValueItemCreateRequest::PRIORITY_C)
+                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
             );
         $this->assertInstanceOf(Model\ValueItem::class, $item);
 
@@ -138,10 +138,10 @@ class ItemTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
-                (new Model\ValueItemCreateRequest())
+                (new Model\RequestValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\ValueItemCreateRequest::PRIORITY_C)
+                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
             );
 
         // Update the item
@@ -153,7 +153,7 @@ class ItemTest extends TestCase {
                 $this->channel->getId(),
                 $item->getId(),
                 $this->orgId,
-                (new Model\ValueItemUpdateRequest())->setDigest("The new digest")
+                (new Model\RequestValueItemUpdate())->setDigest("The new digest")
             );
         $this->assertInstanceOf(Model\ValueItem::class, $itemUpdated);
         $this->assertEquals("The new digest", $itemUpdated->getDigest());

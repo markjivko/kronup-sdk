@@ -52,7 +52,7 @@ class TeamTest extends TestCase {
         $teamModel = $this->sdk
             ->api()
             ->teams()
-            ->teamCreate($orgId, (new Model\TeamCreateRequest())->setTeamName("New team"));
+            ->teamCreate($orgId, (new Model\RequestTeamCreate())->setTeamName("New team"));
         $this->assertInstanceOf(Model\Team::class, $teamModel);
 
         // Read the team data
@@ -77,7 +77,7 @@ class TeamTest extends TestCase {
             ->teamUpdate(
                 $teamModel->getId(),
                 $orgId,
-                (new Model\TeamUpdateRequest())->setTeamName("Another team name")->setTeamDesc("A colorful description")
+                (new Model\RequestTeamUpdate())->setTeamName("Another team name")->setTeamDesc("A colorful description")
             );
         $this->assertInstanceOf(Model\Team::class, $teamModelUpdated);
         $this->assertEquals("Another team name", $teamModelUpdated->getTeamName());
@@ -90,7 +90,7 @@ class TeamTest extends TestCase {
             ->channelCreate(
                 $teamModel->getId(),
                 $orgId,
-                (new Model\ChannelCreateRequest())
+                (new Model\RequestChannelCreate())
                     ->setChannelName("A new channel")
                     ->setChannelDesc("The channel description")
             );
@@ -106,7 +106,7 @@ class TeamTest extends TestCase {
                 $team->getId(),
                 $team->getChannels()[1]->getId(),
                 $orgId,
-                (new Model\ChannelCreateRequest())
+                (new Model\RequestChannelUpdate())
                     ->setChannelName("A new channel 2")
                     ->setChannelDesc("The 2nd channel description")
             );
@@ -187,7 +187,7 @@ class TeamTest extends TestCase {
             $this->sdk
                 ->api()
                 ->teams()
-                ->teamCreate($orgId, new Model\TeamCreateRequest(["teamName" => str_repeat("x ", 33)]));
+                ->teamCreate($orgId, new Model\RequestTeamCreate(["teamName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "teams.create(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
             $this->assertEquals("invalid-argument", $exc->getResponseObject()["id"]);
@@ -200,7 +200,7 @@ class TeamTest extends TestCase {
                 ->teams()
                 ->teamCreate(
                     $orgId,
-                    new Model\TeamCreateRequest(["teamName" => "abc", "teamDesc" => str_repeat("x ", 129)])
+                    new Model\RequestTeamCreate(["teamName" => "abc", "teamDesc" => str_repeat("x ", 129)])
                 );
             $this->assertTrue(false, "teams.create(description) should throw an error");
         } catch (Sdk\ApiException $exc) {
@@ -211,7 +211,7 @@ class TeamTest extends TestCase {
         $team = $this->sdk
             ->api()
             ->teams()
-            ->teamCreate($orgId, (new Model\TeamCreateRequest())->setTeamName("Test"));
+            ->teamCreate($orgId, (new Model\RequestTeamCreate())->setTeamName("Test"));
         $this->assertInstanceOf(Model\Team::class, $team);
 
         // Update: Name too long
@@ -219,7 +219,7 @@ class TeamTest extends TestCase {
             $this->sdk
                 ->api()
                 ->teams()
-                ->teamUpdate($team->getId(), $orgId, new Model\TeamUpdateRequest(["teamName" => str_repeat("x ", 33)]));
+                ->teamUpdate($team->getId(), $orgId, new Model\RequestTeamUpdate(["teamName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "teams.update(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
             $this->assertEquals("invalid-argument", $exc->getResponseObject()["id"]);
@@ -233,7 +233,7 @@ class TeamTest extends TestCase {
                 ->teamUpdate(
                     $team->getId(),
                     $orgId,
-                    new Model\TeamUpdateRequest(["teamDesc" => str_repeat("x ", 129)])
+                    new Model\RequestTeamUpdate(["teamDesc" => str_repeat("x ", 129)])
                 );
             $this->assertTrue(false, "teams.update(description) should throw an error");
         } catch (Sdk\ApiException $exc) {
@@ -264,7 +264,7 @@ class TeamTest extends TestCase {
         $team = $this->sdk
             ->api()
             ->teams()
-            ->teamCreate($orgId, (new Model\TeamCreateRequest())->setTeamName("Test"));
+            ->teamCreate($orgId, (new Model\RequestTeamCreate())->setTeamName("Test"));
         $this->assertInstanceOf(Model\Team::class, $team);
 
         // Assign team to user
