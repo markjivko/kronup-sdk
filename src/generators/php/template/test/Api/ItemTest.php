@@ -173,4 +173,30 @@ class ItemTest extends TestCase {
             ->valueItems()
             ->valueItemRead($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
     }
+
+    /**
+     * Advance error
+     */
+    public function testAdvanceError() {
+        $item = $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemCreate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->orgId,
+                (new Model\RequestValueItemCreate())
+                    ->setDigest("The digest")
+                    ->setDetails("The details")
+                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
+            );
+        $this->assertInstanceOf(Model\ValueItem::class, $item);
+
+        // Advance the item
+        $this->expectExceptionObject(new ApiException("You must add at least 1 Assumption", 403));
+        $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemAdvance($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
+    }
 }

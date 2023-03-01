@@ -46,6 +46,10 @@
         {
             "name": "Value items",
             "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly."
+        },
+        {
+            "name": "Assumptions",
+            "description": "Each [value item](#tag/Value-items) has at least **1** and at most **100** Assumptions.\n\nLess is more, so focus on having smaller value items with fewer assumptions per item.\n\nAssumptions need to be validated by running experiments or by relying on past results."
         }
     ],
     "paths": {
@@ -205,29 +209,29 @@
                 ]
             }
         },
-        "/invitations/{inviteId}": {
-            "put": {
+        "/invitations": {
+            "post": {
                 "tags": [
                     "Invitations"
                 ],
-                "summary": "Accept invitation",
-                "description": "Accept an invitation to join an organization",
-                "operationId": "invitationAccept",
+                "summary": "Create invitation",
+                "description": "Create a new invitation to this organization",
+                "operationId": "invitationCreate",
                 "parameters": [
                     {
-                        "name": "inviteId",
-                        "in": "path",
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
                         "required": true,
+                        "example": "org-id-***",
                         "schema": {
                             "type": "string"
-                        },
-                        "description": "Invitation ID",
-                        "example": "invitation-id-***"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Invitation accepted successfully",
+                        "description": "Invitation created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -265,13 +269,133 @@
                                 }
                             }
                         }
-                    },
-                    "404": {
-                        "description": "Not Found",
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "RequestInvitationCreate",
+                                "properties": {
+                                    "inviteName": {
+                                        "type": "string",
+                                        "description": "Invitation name",
+                                        "minLength": 3,
+                                        "maxLength": 64
+                                    },
+                                    "inviteDomain": {
+                                        "type": "string",
+                                        "description": "User email domain name. If specified, restrict access to e-mail addresses belonging to this domain.",
+                                        "maxLength": 64,
+                                        "default": ""
+                                    },
+                                    "inviteOrgRole": {
+                                        "type": "string",
+                                        "description": "User role",
+                                        "enum": [
+                                            "manager",
+                                            "member"
+                                        ],
+                                        "default": "member",
+                                        "example": "member"
+                                    },
+                                    "inviteExpireDays": {
+                                        "type": "integer",
+                                        "description": "The invitation expires after this many days. 0 = no expiration",
+                                        "minimum": 0,
+                                        "maximum": 365,
+                                        "default": 0,
+                                        "example": 5
+                                    },
+                                    "inviteUsesMax": {
+                                        "type": "integer",
+                                        "description": "The invitation expires after being used this many times. 0 = no expiration",
+                                        "minimum": 0,
+                                        "maximum": 10000,
+                                        "default": 0,
+                                        "example": 10
+                                    }
+                                },
+                                "required": [
+                                    "inviteName"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"inviteName\":\"string\",\"inviteDomain\":\"\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Invitations"
+                ],
+                "summary": "List invitations",
+                "description": "Get a list of invitation models",
+                "operationId": "invitationList",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of invitations for organization",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Error404"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Invitation"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
                                 }
                             }
                         }
@@ -285,10 +409,12 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
-            },
+            }
+        },
+        "/invitations/{inviteId}": {
             "get": {
                 "tags": [
                     "Invitations"
@@ -582,38 +708,33 @@
                         "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
-            }
-        },
-        "/invitations": {
-            "get": {
+            },
+            "put": {
                 "tags": [
                     "Invitations"
                 ],
-                "summary": "List invitations",
-                "description": "Get a list of invitation models",
-                "operationId": "invitationList",
+                "summary": "Accept invitation",
+                "description": "Accept an invitation to join an organization",
+                "operationId": "invitationAccept",
                 "parameters": [
                     {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
+                        "name": "inviteId",
+                        "in": "path",
                         "required": true,
-                        "example": "org-id-***",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Invitation ID",
+                        "example": "invitation-id-***"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of invitations for organization",
+                        "description": "Invitation accepted successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Invitation"
-                                    }
+                                    "$ref": "#/components/schemas/Invitation"
                                 }
                             }
                         }
@@ -647,6 +768,16 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -657,18 +788,40 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
                     }
                 ]
-            },
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/items": {
             "post": {
                 "tags": [
-                    "Invitations"
+                    "Value items"
                 ],
-                "summary": "Create invitation",
-                "description": "Create a new invitation to this organization",
-                "operationId": "invitationCreate",
+                "summary": "Create value item",
+                "description": "Add a value item to planning",
+                "operationId": "valueItemCreate",
                 "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
                     {
                         "name": "x-org-id",
                         "in": "header",
@@ -682,11 +835,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Invitation created successfully",
+                        "description": "Value item created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Invitation"
+                                    "$ref": "#/components/schemas/ValueItem"
                                 }
                             }
                         }
@@ -728,50 +881,44 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestInvitationCreate",
+                                "title": "RequestValueItemCreate",
                                 "properties": {
-                                    "inviteName": {
+                                    "digest": {
                                         "type": "string",
-                                        "description": "Invitation name",
+                                        "description": "Value item digest",
                                         "minLength": 3,
-                                        "maxLength": 64
+                                        "maxLength": 256,
+                                        "example": "Feature name"
                                     },
-                                    "inviteDomain": {
+                                    "details": {
                                         "type": "string",
-                                        "description": "User email domain name. If specified, restrict access to e-mail addresses belonging to this domain.",
-                                        "maxLength": 64,
-                                        "default": ""
+                                        "description": "Value item description",
+                                        "minLength": 3,
+                                        "maxLength": 4096,
+                                        "example": "Feature description"
                                     },
-                                    "inviteOrgRole": {
+                                    "type": {
                                         "type": "string",
-                                        "description": "User role",
+                                        "description": "Value item type  <ul> <li><code>f</code> - Feature</li> <li><code>b</code> - Bug fix</li> <li><code>c</code> - Chore</li> </ul>",
                                         "enum": [
-                                            "manager",
-                                            "member"
+                                            "f",
+                                            "b",
+                                            "c"
                                         ],
-                                        "default": "member",
-                                        "example": "member"
+                                        "example": "f"
                                     },
-                                    "inviteExpireDays": {
-                                        "type": "integer",
-                                        "description": "The invitation expires after this many days. 0 = no expiration",
-                                        "minimum": 0,
-                                        "maximum": 365,
-                                        "default": 0,
-                                        "example": 5
-                                    },
-                                    "inviteUsesMax": {
-                                        "type": "integer",
-                                        "description": "The invitation expires after being used this many times. 0 = no expiration",
-                                        "minimum": 0,
-                                        "maximum": 10000,
-                                        "default": 0,
-                                        "example": 10
+                                    "priority": {
+                                        "type": "string",
+                                        "description": "Value item MoSCoW priority <ul> <li><code>m</code> - Must-have</li> <li><code>s</code> - Should-have</li> <li><code>c</code> - Could-have</li> <li><code>w</code> - Will NOT have</li> </ul>",
+                                        "enum": [
+                                            "m",
+                                            "s",
+                                            "c",
+                                            "w"
+                                        ],
+                                        "example": "m"
                                     }
-                                },
-                                "required": [
-                                    "inviteName"
-                                ]
+                                }
                             }
                         }
                     }
@@ -784,7 +931,141 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"inviteName\":\"string\",\"inviteDomain\":\"\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"f\",\"priority\":\"m\"}'"
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "List value items",
+                "description": "Get a list of value item models",
+                "operationId": "valueItemList",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of value items",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "ValueItemList",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ValueItem"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -992,6 +1273,16 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
                     }
                 },
                 "requestBody": {
@@ -1143,6 +1434,16 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1156,16 +1457,14 @@
                         "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
-            }
-        },
-        "/teams/{teamId}/channels/{channelId}/items": {
-            "get": {
+            },
+            "put": {
                 "tags": [
                     "Value items"
                 ],
-                "summary": "List value items",
-                "description": "Get a list of value item models",
-                "operationId": "valueItemList",
+                "summary": "Advance value item",
+                "description": "Advance a value item",
+                "operationId": "valueItemAdvance",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -1186,6 +1485,254 @@
                         },
                         "description": "Channel ID",
                         "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value item advanced successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItem"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/items/{itemId}/assms": {
+            "post": {
+                "tags": [
+                    "Assumptions"
+                ],
+                "summary": "Create assumption",
+                "description": "Add an assumption to value item",
+                "operationId": "assumptionCreate",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value Item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assumption created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Assumption"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "RequestAssmCreate",
+                                "properties": {
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Assumption digest",
+                                        "minLength": 1,
+                                        "maxLength": 256,
+                                        "example": "This thing is possible"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"This thing is possible\"}'"
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Assumptions"
+                ],
+                "summary": "List assumptions",
+                "description": "Get a list of assumption models",
+                "operationId": "assumptionList",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value Item ID",
+                        "example": "value-item-id-***"
                     },
                     {
                         "name": "x-org-id",
@@ -1222,11 +1769,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of value items",
+                        "description": "List of assumptions",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "ValueItemList",
+                                    "title": "AssumptionList",
                                     "type": "object",
                                     "properties": {
                                         "pageSize": {
@@ -1239,10 +1786,10 @@
                                             "description": "Page number",
                                             "example": 1
                                         },
-                                        "items": {
+                                        "assumptions": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/ValueItem"
+                                                "$ref": "#/components/schemas/Assumption"
                                             }
                                         }
                                     }
@@ -1289,17 +1836,19 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
-            },
-            "post": {
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/items/{itemId}/assms/{assmId}": {
+            "get": {
                 "tags": [
-                    "Value items"
+                    "Assumptions"
                 ],
-                "summary": "Create value item",
-                "description": "Add a value item to planning",
-                "operationId": "valueItemCreate",
+                "summary": "Fetch assumption",
+                "description": "Retrieve assumption model",
+                "operationId": "assumptionRead",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -1322,6 +1871,26 @@
                         "example": "channel-id-***"
                     },
                     {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "assmId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Assumption ID",
+                        "example": "assm-id-***"
+                    },
+                    {
                         "name": "x-org-id",
                         "in": "header",
                         "description": "Organization ID",
@@ -1334,11 +1903,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Value item created successfully",
+                        "description": "Assumption found",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ValueItem"
+                                    "$ref": "#/components/schemas/Assumption"
                                 }
                             }
                         }
@@ -1372,6 +1941,139 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Assumptions"
+                ],
+                "summary": "Update assumption",
+                "description": "Update assumption details",
+                "operationId": "assumptionUpdate",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "assmId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Assumption ID",
+                        "example": "assm-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assumption updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Assumption"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
                     }
                 },
                 "requestBody": {
@@ -1380,42 +2082,14 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestValueItemCreate",
+                                "title": "RequestAssmUpdate",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
-                                        "description": "Value item digest",
-                                        "minLength": 3,
+                                        "description": "Assumption digest",
+                                        "minLength": 1,
                                         "maxLength": 256,
                                         "example": "Feature name"
-                                    },
-                                    "details": {
-                                        "type": "string",
-                                        "description": "Value item description",
-                                        "minLength": 3,
-                                        "maxLength": 4096,
-                                        "example": "Feature description"
-                                    },
-                                    "type": {
-                                        "type": "string",
-                                        "description": "Value item type  <ul> <li><code>f</code> - Feature</li> <li><code>b</code> - Bug fix</li> <li><code>c</code> - Chore</li> </ul>",
-                                        "enum": [
-                                            "f",
-                                            "b",
-                                            "c"
-                                        ],
-                                        "example": "f"
-                                    },
-                                    "priority": {
-                                        "type": "string",
-                                        "description": "Value item MoSCoW priority <ul> <li><code>m</code> - Must-have</li> <li><code>s</code> - Should-have</li> <li><code>c</code> - Could-have</li> <li><code>w</code> - Will NOT have</li> </ul>",
-                                        "enum": [
-                                            "m",
-                                            "s",
-                                            "c",
-                                            "w"
-                                        ],
-                                        "example": "m"
                                     }
                                 }
                             }
@@ -1430,7 +2104,293 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"f\",\"priority\":\"m\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\"}'"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Assumptions"
+                ],
+                "summary": "Delete assumption",
+                "description": "Delete an assumption from a value item",
+                "operationId": "assumptionDelete",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "assmId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Assumption ID",
+                        "example": "assm-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assumption deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Assumption"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/items/{itemId}/assms/{assmId}/exp": {
+            "post": {
+                "tags": [
+                    "Assumptions"
+                ],
+                "summary": "Update experiment",
+                "description": "Update experiment details",
+                "operationId": "assumptionExperimentUpdate",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "assmId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Assumption ID",
+                        "example": "assm-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assumption updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Assumption"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "RequestAssmExpUpdate",
+                                "properties": {
+                                    "confirmed": {
+                                        "type": "boolean",
+                                        "description": "Experiment confirms assumption"
+                                    },
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Experiment digest",
+                                        "minLength": 1,
+                                        "maxLength": 256
+                                    },
+                                    "details": {
+                                        "type": "string",
+                                        "description": "Experiment findings",
+                                        "minLength": 1,
+                                        "maxLength": 4096
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "description": "Experiment state <ul> <li><code>i</code> - Idle</li> <li><code>r</code> - Running</li> <li><code>d</code> - Done</li> </ul>",
+                                        "enum": [
+                                            "i",
+                                            "r",
+                                            "d"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"confirmed\":true,\"digest\":\"string\",\"details\":\"string\",\"state\":\"i\"}'"
                     }
                 ]
             }
@@ -3509,7 +4469,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "UserChannel",
+                            "title": "UserTeam",
                             "properties": {
                                 "teamId": {
                                     "type": "string",
@@ -3729,6 +4689,11 @@
                         ],
                         "example": "p"
                     },
+                    "canAdvance": {
+                        "type": "boolean",
+                        "description": "Value Item can advance to the next stage\n  * In Planning: at least 1 Assumption was added\n  * In Validation: all Assumptions were validated\n  * In Execution: all Tasks were completed",
+                        "default": false
+                    },
                     "type": {
                         "type": "string",
                         "description": "Value Item Type\n\n  * `f` - Feature\n  * `b` - Bug fix\n  * `c` - Chore",
@@ -3761,7 +4726,8 @@
                         "type": "array",
                         "description": "Tasks",
                         "items": {
-                            "$ref": "#/components/schemas/Task"
+                            "type": "string",
+                            "title": "Task ID"
                         }
                     }
                 }
@@ -3775,6 +4741,11 @@
                 "type": "object",
                 "description": "Value Item Assumption",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Value item ID",
+                        "example": "value-item-***"
+                    },
                     "authorId": {
                         "$ref": "#/components/schemas/ValueItemAuthor"
                     },
@@ -3794,8 +4765,16 @@
                         "type": "object",
                         "description": "Experiment",
                         "properties": {
-                            "authorId": {
-                                "$ref": "#/components/schemas/ValueItemAuthor"
+                            "authors": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ValueItemAuthor"
+                                }
+                            },
+                            "confirmed": {
+                                "type": "boolean",
+                                "description": "Experiment confirms assumption",
+                                "default": false
                             },
                             "digest": {
                                 "type": "string",
@@ -3824,10 +4803,75 @@
                     }
                 }
             },
+            "Organization": {
+                "type": "object",
+                "title": "Organization",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "org-id-***"
+                    },
+                    "orgName": {
+                        "type": "string",
+                        "description": "Organization name",
+                        "example": "Organization, Inc."
+                    },
+                    "orgIcon": {
+                        "type": "string",
+                        "description": "Organization logo URL",
+                        "example": "https://***"
+                    },
+                    "orgOwners": {
+                        "type": "array",
+                        "description": "Organization owners",
+                        "items": {
+                            "type": "string",
+                            "title": "User ID",
+                            "example": "user-id-***"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    }
+                }
+            },
             "Task": {
                 "type": "object",
-                "description": "Value Item Task",
+                "title": "Value Item Task",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Task ID",
+                        "example": "task-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "Organization, Inc."
+                    },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    "channelId": {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    "itemId": {
+                        "type": "string",
+                        "description": "Value Item ID",
+                        "example": "value-item-id-***"
+                    },
                     "assigneeId": {
                         "$ref": "#/components/schemas/ValueItemAuthor"
                     },
@@ -3873,15 +4917,15 @@
                             "type": "object",
                             "description": "Discovery",
                             "properties": {
+                                "iteration": {
+                                    "type": "number",
+                                    "description": "Iteration number"
+                                },
                                 "details": {
                                     "type": "string",
                                     "description": "Discovery details",
                                     "minLength": 1,
-                                    "maxLength": 4096
-                                },
-                                "iteration": {
-                                    "type": "number",
-                                    "description": "Iteration number"
+                                    "maxLength": 1024
                                 }
                             }
                         }
@@ -3892,6 +4936,10 @@
                         "items": {
                             "type": "object",
                             "properties": {
+                                "iteration": {
+                                    "type": "number",
+                                    "description": "Iteration number"
+                                },
                                 "authorId": {
                                     "$ref": "#/components/schemas/ValueItemAuthor"
                                 },
@@ -3914,84 +4962,16 @@
                                     "type": "string",
                                     "description": "Feedback details",
                                     "minLength": 1,
-                                    "maxLength": 512
+                                    "maxLength": 1024
                                 },
                                 "reply": {
                                     "type": "string",
                                     "description": "Feedback reply from task assignee",
                                     "minLength": 1,
-                                    "maxLength": 512
-                                },
-                                "iteration": {
-                                    "type": "number",
-                                    "description": "Iteration number"
+                                    "maxLength": 1024
                                 }
                             }
                         }
-                    },
-                    "ama": {
-                        "type": "array",
-                        "description": "Ask me anything",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "authorId": {
-                                    "$ref": "#/components/schemas/ValueItemAuthor"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "description": "Feedback details",
-                                    "minLength": 1,
-                                    "maxLength": 512
-                                },
-                                "reply": {
-                                    "type": "string",
-                                    "description": "Feedback reply from task assignee",
-                                    "minLength": 1,
-                                    "maxLength": 512
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "Organization": {
-                "type": "object",
-                "title": "Organization",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
-                    },
-                    "orgName": {
-                        "type": "string",
-                        "description": "Organization name",
-                        "example": "Organization, Inc."
-                    },
-                    "orgIcon": {
-                        "type": "string",
-                        "description": "Organization logo URL",
-                        "example": "https://***"
-                    },
-                    "orgOwners": {
-                        "type": "array",
-                        "description": "Organization owners",
-                        "items": {
-                            "type": "string",
-                            "title": "User ID",
-                            "example": "user-id-***"
-                        }
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "description": "Created timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "description": "Updated timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
             },
@@ -4099,7 +5079,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "UserChannel",
+                            "title": "UserTeam",
                             "properties": {
                                 "teamId": {
                                     "type": "string",
@@ -4182,7 +5162,8 @@
                 "Organizations",
                 "Teams",
                 "Channels",
-                "Value items"
+                "Value items",
+                "Assumptions"
             ]
         }
     ]
