@@ -50,6 +50,10 @@
         {
             "name": "Assumptions",
             "description": "Each [value item](#tag/Value-items) has at least **1** and at most **100** Assumptions.\n\nLess is more, so focus on having smaller value items with fewer assumptions per item.\n\nAssumptions need to be validated by running experiments or by relying on past results."
+        },
+        {
+            "name": "Tasks",
+            "description": "Each [value item](#tag/Value-items) has at least **1** and at most **100** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context."
         }
     ],
     "paths": {
@@ -142,7 +146,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestAccountUpdate",
+                                "title": "Request Account Update",
                                 "properties": {
                                     "userName": {
                                         "type": "string",
@@ -277,7 +281,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestInvitationCreate",
+                                "title": "Request Invitation Create",
                                 "properties": {
                                     "inviteName": {
                                         "type": "string",
@@ -560,7 +564,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestInvitationUpdate",
+                                "title": "Request Invitation Update",
                                 "properties": {
                                     "inviteName": {
                                         "type": "string",
@@ -881,19 +885,19 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestValueItemCreate",
+                                "title": "Request Value Item Create",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
                                         "description": "Value item digest",
-                                        "minLength": 3,
+                                        "minLength": 1,
                                         "maxLength": 256,
                                         "example": "Feature name"
                                     },
                                     "details": {
                                         "type": "string",
                                         "description": "Value item description",
-                                        "minLength": 3,
+                                        "minLength": 1,
                                         "maxLength": 4096,
                                         "example": "Feature description"
                                     },
@@ -1002,7 +1006,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "ValueItemList",
+                                    "title": "Value Items List",
                                     "type": "object",
                                     "properties": {
                                         "pageSize": {
@@ -1291,19 +1295,19 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestValueItemUpdate",
+                                "title": "Request Value Item Update",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
                                         "description": "Value item digest",
-                                        "minLength": 3,
+                                        "minLength": 1,
                                         "maxLength": 256,
                                         "example": "Feature name"
                                     },
                                     "details": {
                                         "type": "string",
                                         "description": "Value item description",
-                                        "minLength": 3,
+                                        "minLength": 1,
                                         "maxLength": 4096,
                                         "example": "Feature description"
                                     },
@@ -1670,7 +1674,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestAssmCreate",
+                                "title": "Request Assm Create",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -1773,7 +1777,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "AssumptionList",
+                                    "title": "Assumptions List",
                                     "type": "object",
                                     "properties": {
                                         "pageSize": {
@@ -2082,7 +2086,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestAssmUpdate",
+                                "title": "Request Assm Update",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -2237,9 +2241,9 @@
                 "tags": [
                     "Assumptions"
                 ],
-                "summary": "Update experiment",
+                "summary": "Validate",
                 "description": "Update experiment details",
-                "operationId": "assumptionExperimentUpdate",
+                "operationId": "assumptionValidate",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -2350,7 +2354,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestAssmExpUpdate",
+                                "title": "Request Assm Validate",
                                 "properties": {
                                     "confirmed": {
                                         "type": "boolean",
@@ -2391,6 +2395,685 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"confirmed\":true,\"digest\":\"string\",\"details\":\"string\",\"state\":\"i\"}'"
+                    }
+                ]
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks": {
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Create task",
+                "description": "Add a task to value item",
+                "operationId": "taskCreate",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value Item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Request Task Create",
+                                "properties": {
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Task digest",
+                                        "minLength": 1,
+                                        "maxLength": 256
+                                    },
+                                    "details": {
+                                        "type": "string",
+                                        "description": "Task details",
+                                        "minLength": 1,
+                                        "maxLength": 4096
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\"}'"
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "List tasks",
+                "description": "Get a list of task models",
+                "operationId": "taskList",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value Item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of tasks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Tasks List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1
+                                        },
+                                        "tasks": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Task"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Fetch task",
+                "description": "Retrieve task model",
+                "operationId": "taskRead",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Task ID",
+                        "example": "task-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Update task",
+                "description": "Update task details",
+                "operationId": "taskUpdate",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Task ID",
+                        "example": "task-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Request Task Update",
+                                "properties": {
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Task digest",
+                                        "minLength": 1,
+                                        "maxLength": 256
+                                    },
+                                    "details": {
+                                        "type": "string",
+                                        "description": "Task details",
+                                        "minLength": 1,
+                                        "maxLength": 4096
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "enum": [
+                                            "i",
+                                            "p",
+                                            "r",
+                                            "d"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\",\"state\":\"i\"}'"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Delete task",
+                "description": "Delete a task from a value item",
+                "operationId": "taskDelete",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Task ID",
+                        "example": "task-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -2452,7 +3135,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestOrganizationCreate",
+                                "title": "Request Organization Create",
                                 "properties": {
                                     "orgName": {
                                         "type": "string",
@@ -2547,7 +3230,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestOrganizationUpdate",
+                                "title": "Request Organization Update",
                                 "properties": {
                                     "orgName": {
                                         "type": "string",
@@ -2725,7 +3408,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestChannelCreate",
+                                "title": "Request Channel Create",
                                 "properties": {
                                     "channelName": {
                                         "type": "string",
@@ -2848,7 +3531,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestChannelUpdate",
+                                "title": "Request Channel Update",
                                 "properties": {
                                     "channelName": {
                                         "type": "string",
@@ -3272,7 +3955,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestTeamCreate",
+                                "title": "Request Team Create",
                                 "properties": {
                                     "teamName": {
                                         "type": "string",
@@ -3564,7 +4247,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestTeamUpdate",
+                                "title": "Request Team Update",
                                 "properties": {
                                     "teamName": {
                                         "type": "string",
@@ -3945,7 +4628,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "UserList",
+                                    "title": "Users List",
                                     "type": "object",
                                     "properties": {
                                         "pageSize": {
@@ -4132,7 +4815,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "UserRoles",
+                                    "title": "User Roles",
                                     "type": "object",
                                     "properties": {
                                         "roleSite": {
@@ -4205,7 +4888,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "RequestUserUpdateRole",
+                                "title": "Request User Role Update",
                                 "properties": {
                                     "roleSite": {
                                         "type": "string",
@@ -4469,7 +5152,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "UserTeam",
+                            "title": "User Team",
                             "properties": {
                                 "teamId": {
                                     "type": "string",
@@ -4501,7 +5184,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "UserRoleOrg",
+                            "title": "User Role Org",
                             "properties": {
                                 "role": {
                                     "type": "string",
@@ -4644,7 +5327,7 @@
                     "id": {
                         "type": "string",
                         "description": "Value item ID",
-                        "example": "value-item-***"
+                        "example": "value-item-id-***"
                     },
                     "orgId": {
                         "type": "string",
@@ -4724,10 +5407,9 @@
                     },
                     "tasks": {
                         "type": "array",
-                        "description": "Tasks",
+                        "title": "Tasks",
                         "items": {
-                            "type": "string",
-                            "title": "Task ID"
+                            "$ref": "#/components/schemas/Task"
                         }
                     }
                 }
@@ -4744,7 +5426,7 @@
                     "id": {
                         "type": "string",
                         "description": "Value item ID",
-                        "example": "value-item-***"
+                        "example": "value-item-id-***"
                     },
                     "authorId": {
                         "$ref": "#/components/schemas/ValueItemAuthor"
@@ -4803,74 +5485,18 @@
                     }
                 }
             },
-            "Organization": {
-                "type": "object",
-                "title": "Organization",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
-                    },
-                    "orgName": {
-                        "type": "string",
-                        "description": "Organization name",
-                        "example": "Organization, Inc."
-                    },
-                    "orgIcon": {
-                        "type": "string",
-                        "description": "Organization logo URL",
-                        "example": "https://***"
-                    },
-                    "orgOwners": {
-                        "type": "array",
-                        "description": "Organization owners",
-                        "items": {
-                            "type": "string",
-                            "title": "User ID",
-                            "example": "user-id-***"
-                        }
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "description": "Created timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "description": "Updated timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
-                    }
-                }
-            },
             "Task": {
                 "type": "object",
-                "title": "Value Item Task",
                 "properties": {
                     "id": {
                         "type": "string",
                         "description": "Task ID",
-                        "example": "task-***"
+                        "example": "task-id-***"
                     },
-                    "orgId": {
+                    "minuteId": {
                         "type": "string",
-                        "description": "Organization ID",
-                        "example": "Organization, Inc."
-                    },
-                    "teamId": {
-                        "type": "string",
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    "channelId": {
-                        "type": "string",
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    "itemId": {
-                        "type": "string",
-                        "description": "Value Item ID",
-                        "example": "value-item-id-***"
+                        "description": "Minute ID",
+                        "example": "minute-id-***"
                     },
                     "assigneeId": {
                         "$ref": "#/components/schemas/ValueItemAuthor"
@@ -4908,6 +5534,48 @@
                     },
                     "iteration": {
                         "type": "number",
+                        "description": "Iteration number",
+                        "default": 1,
+                        "min": 1
+                    }
+                }
+            },
+            "Minute": {
+                "type": "object",
+                "title": "Task Minute",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Minute ID",
+                        "example": "minute-id-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "Organization, Inc."
+                    },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    "channelId": {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    "itemId": {
+                        "type": "string",
+                        "description": "Value Item ID",
+                        "example": "value-item-id-***"
+                    },
+                    "taskId": {
+                        "type": "string",
+                        "description": "Task ID",
+                        "example": "task-id-***"
+                    },
+                    "iteration": {
+                        "type": "number",
                         "description": "Iteration number"
                     },
                     "discoveries": {
@@ -4915,11 +5583,14 @@
                         "description": "Discoveries",
                         "items": {
                             "type": "object",
-                            "description": "Discovery",
+                            "title": "Minute Discovery",
                             "properties": {
                                 "iteration": {
                                     "type": "number",
                                     "description": "Iteration number"
+                                },
+                                "authorId": {
+                                    "$ref": "#/components/schemas/ValueItemAuthor"
                                 },
                                 "details": {
                                     "type": "string",
@@ -4935,6 +5606,7 @@
                         "description": "Feedback",
                         "items": {
                             "type": "object",
+                            "title": "Minute Feedback",
                             "properties": {
                                 "iteration": {
                                     "type": "number",
@@ -4966,12 +5638,52 @@
                                 },
                                 "reply": {
                                     "type": "string",
-                                    "description": "Feedback reply from task assignee",
+                                    "description": "Reply from assignee",
                                     "minLength": 1,
                                     "maxLength": 1024
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "Organization": {
+                "type": "object",
+                "title": "Organization",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "org-id-***"
+                    },
+                    "orgName": {
+                        "type": "string",
+                        "description": "Organization name",
+                        "example": "Organization, Inc."
+                    },
+                    "orgIcon": {
+                        "type": "string",
+                        "description": "Organization logo URL",
+                        "example": "https://***"
+                    },
+                    "orgOwners": {
+                        "type": "array",
+                        "description": "Organization owners",
+                        "items": {
+                            "type": "string",
+                            "title": "User ID",
+                            "example": "user-id-***"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
             },
@@ -5079,7 +5791,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "UserTeam",
+                            "title": "User Team",
                             "properties": {
                                 "teamId": {
                                     "type": "string",
@@ -5111,7 +5823,7 @@
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "UserRoleOrg",
+                            "title": "User Role Org",
                             "properties": {
                                 "role": {
                                     "type": "string",
@@ -5163,7 +5875,8 @@
                 "Teams",
                 "Channels",
                 "Value items",
-                "Assumptions"
+                "Assumptions",
+                "Tasks"
             ]
         }
     ]

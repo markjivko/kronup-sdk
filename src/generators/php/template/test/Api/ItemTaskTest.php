@@ -1,6 +1,6 @@
 <?php
 /**
- * Value Item Assumption Test
+ * Value Item Task Test
  *
  * @copyright (c) 2022-2023 kronup.com
  * @license   MIT
@@ -17,11 +17,11 @@ use PHPUnit\Framework\TestCase;
 use Kronup\Sdk\ApiException;
 
 /**
- * Assumption Test
+ * Task Test
  *
  * @coversDefaultClass \Kronup\Local\Wallet
  */
-class ItemAssmTest extends TestCase {
+class ItemTaskTest extends TestCase {
     /**
      * Kronup SDK
      *
@@ -107,23 +107,8 @@ class ItemAssmTest extends TestCase {
                     ->setDetails("The details")
                     ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
             );
-    }
 
-    /**
-     * Tear-down
-     */
-    public function tearDown(): void {
-        // Remove the team
-        $this->sdk
-            ->api()
-            ->teams()
-            ->teamDelete($this->team->getId(), $this->orgId);
-    }
-
-    /**
-     * Create & Read
-     */
-    public function testCreateRead(): void {
+        // Add an assumption
         $assm = $this->sdk
             ->api()
             ->assumptions()
@@ -134,71 +119,15 @@ class ItemAssmTest extends TestCase {
                 $this->orgId,
                 (new Model\RequestAssmCreate())->setDigest("X can be done")
             );
-        $this->assertInstanceOf(Model\Assumption::class, $assm);
 
-        // Read
-        $assmRead = $this->sdk
-            ->api()
-            ->assumptions()
-            ->assumptionRead(
-                $this->team->getId(),
-                $this->channel->getId(),
-                $this->item->getId(),
-                $assm->getId(),
-                $this->orgId
-            );
-        $this->assertInstanceOf(Model\Assumption::class, $assmRead);
-        $this->assertEquals($assm->getDigest(), $assmRead->getDigest());
-
-        // List
-        $assmList = $this->sdk
-            ->api()
-            ->assumptions()
-            ->assumptionList($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\AssumptionsList::class, $assmList);
-        $this->assertIsArray($assmList->getAssumptions());
-        $this->assertGreaterThan(0, count($assmList->getAssumptions()));
-    }
-
-    /**
-     * Update & delete
-     */
-    public function testUpdateDelete(): void {
-        $assm = $this->sdk
-            ->api()
-            ->assumptions()
-            ->assumptionCreate(
-                $this->team->getId(),
-                $this->channel->getId(),
-                $this->item->getId(),
-                $this->orgId,
-                (new Model\RequestAssmCreate())->setDigest("X can be done")
-            );
-        $this->assertInstanceOf(Model\Assumption::class, $assm);
-
-        // Update assumption
-        $assmUpdated = $this->sdk
-            ->api()
-            ->assumptions()
-            ->assumptionUpdate(
-                $this->team->getId(),
-                $this->channel->getId(),
-                $this->item->getId(),
-                $assm->getId(),
-                $this->orgId,
-                (new Model\RequestAssmUpdate())->setDigest("New assumption")
-            );
-        $this->assertInstanceOf(Model\Assumption::class, $assmUpdated);
-        $this->assertEquals("New assumption", $assmUpdated->getDigest());
-
-        // Advance
+        // Advance to validation
         $this->sdk
             ->api()
             ->valueItems()
             ->valueItemAdvance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
 
         // Validate assumption with experiment
-        $assmUpdatedExp = $this->sdk
+        $this->sdk
             ->api()
             ->assumptions()
             ->assumptionValidate(
@@ -213,33 +142,113 @@ class ItemAssmTest extends TestCase {
                     ->setConfirmed(true)
                     ->setState(Model\RequestAssmValidate::STATE_D)
             );
-        $this->assertInstanceOf(Model\Assumption::class, $assmUpdatedExp);
-        $this->assertInstanceOf(Model\AssumptionExperiment::class, $assmUpdatedExp->getExperiment());
-        $this->assertEquals("Experiment digest", $assmUpdatedExp->getExperiment()->getDigest());
-        $this->assertEquals("Experiment details", $assmUpdatedExp->getExperiment()->getDetails());
-        $this->assertTrue($assmUpdatedExp->getExperiment()->getConfirmed());
-        $this->assertEquals(Model\RequestAssmValidate::STATE_D, $assmUpdatedExp->getExperiment()->getState());
 
-        // Delete
-        $assmDeleted = $this->sdk
-            ->api()
-            ->assumptions()
-            ->assumptionDelete(
-                $this->team->getId(),
-                $this->channel->getId(),
-                $this->item->getId(),
-                $assm->getId(),
-                $this->orgId
-            );
-        $this->expectExceptionObject(new ApiException("Not Found", 404));
+        // Advance to execution
         $this->sdk
             ->api()
-            ->assumptions()
-            ->assumptionRead(
+            ->valueItems()
+            ->valueItemAdvance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+    }
+
+    /**
+     * Tear-down
+     */
+    public function xtearDown(): void {
+        // Remove the team
+        $this->sdk
+            ->api()
+            ->teams()
+            ->teamDelete($this->team->getId(), $this->orgId);
+    }
+
+    /**
+     * Create & Read
+     */
+    public function testCreateRead(): void {
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskCreate(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $assmDeleted->getId(),
+                $this->orgId,
+                (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+            );
+        $this->assertInstanceOf(Model\Task::class, $task);
+
+        // Read
+        $taskRead = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskRead(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->orgId
+            );
+        $this->assertInstanceOf(Model\Task::class, $taskRead);
+        $this->assertEquals($task->getDigest(), $taskRead->getDigest());
+
+        // List
+        $taskList = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskList($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\TasksList::class, $taskList);
+        $this->assertIsArray($taskList->getTasks());
+        $this->assertGreaterThan(0, count($taskList->getTasks()));
+    }
+
+    /**
+     * Update & delete
+     */
+    public function testUpdateDelete(): void {
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskCreate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $this->orgId,
+                (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+            );
+        $this->assertInstanceOf(Model\Task::class, $task);
+
+        // Update task
+        $taskUpdated = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskUpdate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->orgId,
+                (new Model\RequestTaskUpdate())->setDigest("New task title")->setState(Model\RequestTaskUpdate::STATE_D)
+            );
+        $this->assertInstanceOf(Model\Task::class, $taskUpdated);
+        $this->assertEquals("New task title", $taskUpdated->getDigest());
+        $this->assertEquals(Model\RequestTaskUpdate::STATE_D, $taskUpdated->getState());
+
+        // Advance
+        $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemAdvance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+
+        // Delete not allowed in deep context
+        $this->expectExceptionObject(new ApiException("Forbidden", 403));
+        $this->sdk
+            ->api()
+            ->tasks()
+            ->taskDelete(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
                 $this->orgId
             );
     }

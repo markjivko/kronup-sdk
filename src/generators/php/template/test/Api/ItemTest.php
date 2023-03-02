@@ -122,7 +122,7 @@ class ItemTest extends TestCase {
             ->api()
             ->valueItems()
             ->valueItemList($this->team->getId(), $this->channel->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\ValueItemList::class, $items);
+        $this->assertInstanceOf(Model\ValueItemsList::class, $items);
         $this->assertIsArray($items->getItems());
         $this->assertGreaterThan(0, count($items->getItems()));
     }
