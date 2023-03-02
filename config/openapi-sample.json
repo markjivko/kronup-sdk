@@ -903,7 +903,7 @@
                                     },
                                     "type": {
                                         "type": "string",
-                                        "description": "Value item type  <ul> <li><code>f</code> - Feature</li> <li><code>b</code> - Bug fix</li> <li><code>c</code> - Chore</li> </ul>",
+                                        "description": "Value item type   * f - Feature  * b - Bug fix  * c - Chore",
                                         "enum": [
                                             "f",
                                             "b",
@@ -913,7 +913,7 @@
                                     },
                                     "priority": {
                                         "type": "string",
-                                        "description": "Value item MoSCoW priority <ul> <li><code>m</code> - Must-have</li> <li><code>s</code> - Should-have</li> <li><code>c</code> - Could-have</li> <li><code>w</code> - Will NOT have</li> </ul>",
+                                        "description": "Value item MoSCoW priority  * m - Must-have  * s - Should-have  * c - Could-have  * w - Will NOT have",
                                         "enum": [
                                             "m",
                                             "s",
@@ -1313,7 +1313,7 @@
                                     },
                                     "type": {
                                         "type": "string",
-                                        "description": "Value item type  <ul> <li><code>f</code> - Feature</li> <li><code>b</code> - Bug fix</li> <li><code>c</code> - Chore</li> </ul>",
+                                        "description": "Value item type:  * f - Feature  * b - Bug fix  * c - Chore",
                                         "enum": [
                                             "f",
                                             "b",
@@ -1323,7 +1323,7 @@
                                     },
                                     "priority": {
                                         "type": "string",
-                                        "description": "Value item MoSCoW priority <ul> <li><code>m</code> - Must-have</li> <li><code>s</code> - Should-have</li> <li><code>c</code> - Could-have</li> <li><code>w</code> - Will NOT have</li> </ul>",
+                                        "description": "Value item MoSCoW priority:  * m - Must-have  * s - Should-have  * c - Could-have  * w - Will NOT have",
                                         "enum": [
                                             "m",
                                             "s",
@@ -2374,7 +2374,7 @@
                                     },
                                     "state": {
                                         "type": "string",
-                                        "description": "Experiment state <ul> <li><code>i</code> - Idle</li> <li><code>r</code> - Running</li> <li><code>d</code> - Done</li> </ul>",
+                                        "description": "Experiment state:  * i - Idle  * r - Running  * d - Done",
                                         "enum": [
                                             "i",
                                             "r",
