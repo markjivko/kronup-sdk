@@ -165,7 +165,7 @@ module.exports = class iHook {
                         const url = `https://github.com/${gitUserId}/${gitRepoId}/blob/main/${folderName}/${exRelativePath}`;
 
                         // Replace example block with link
-                        exAll = `{: .new-title }\n> #️⃣ Execute command in terminal \n> \n> [✨ ${
+                        exAll = `{: .new-title }\n> #️⃣ Execute command in terminal \n> \n> [${
                             "string" === typeof commandPrefix ? commandPrefix + " " : ""
                         }**${path.basename(exRelativePath)}**](${url}){: .btn .btn-green .mt-4}`;
                     }

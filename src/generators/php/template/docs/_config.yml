@@ -1,4 +1,4 @@
-title: Kronup - PHP SDK
+title: kronup / php
 description: The official PHP SDK for Kronup
 theme: just-the-docs
 url: https://kronup.github.io/kronup-php
@@ -64,8 +64,7 @@ last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https:/
 # Footer "Edit this page on GitHub" link text
 gh_edit_link: false
 
-# Color scheme currently only supports "dark", "light"/nil (default), or a custom scheme that you define
-color_scheme: "light"
+color_scheme: "kronup"
 
 callouts_level: quiet # or loud
 callouts:
