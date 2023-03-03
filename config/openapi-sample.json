@@ -5409,13 +5409,14 @@
                         "type": "array",
                         "title": "Tasks",
                         "items": {
-                            "$ref": "#/components/schemas/Task"
+                            "$ref": "#/components/schemas/TaskCore"
                         }
                     }
                 }
             },
             "ValueItemAuthor": {
                 "type": "string",
+                "title": "Author",
                 "description": "Author ID",
                 "example": "user-id-***"
             },
@@ -5485,18 +5486,15 @@
                     }
                 }
             },
-            "Task": {
+            "TaskCore": {
                 "type": "object",
+                "title": "Task Core",
+                "description": "Task model without Minutes",
                 "properties": {
                     "id": {
                         "type": "string",
                         "description": "Task ID",
                         "example": "task-id-***"
-                    },
-                    "minuteId": {
-                        "type": "string",
-                        "description": "Minute ID",
-                        "example": "minute-id-***"
                     },
                     "assigneeId": {
                         "$ref": "#/components/schemas/ValueItemAuthor"
@@ -5531,12 +5529,54 @@
                             "type": "string",
                             "title": "Keyword ID"
                         }
+                    }
+                }
+            },
+            "Task": {
+                "type": "object",
+                "description": "Full Task model that includes Minutes",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Task ID",
+                        "example": "task-id-***"
                     },
-                    "iteration": {
-                        "type": "number",
-                        "description": "Iteration number",
-                        "default": 1,
-                        "min": 1
+                    "minute": {
+                        "$ref": "#/components/schemas/Minute"
+                    },
+                    "assigneeId": {
+                        "$ref": "#/components/schemas/ValueItemAuthor"
+                    },
+                    "digest": {
+                        "type": "string",
+                        "description": "Task title",
+                        "minLength": 1,
+                        "maxLength": 256
+                    },
+                    "details": {
+                        "type": "string",
+                        "description": "Task description",
+                        "minLength": 1,
+                        "maxLength": 4096
+                    },
+                    "state": {
+                        "type": "string",
+                        "description": "Task state\n\n  * `i` - Idle\n  * `p` - In progress\n  * `r` - In review\n  * `d` - Done",
+                        "enum": [
+                            "i",
+                            "p",
+                            "r",
+                            "d"
+                        ],
+                        "default": "i"
+                    },
+                    "keywords": {
+                        "type": "array",
+                        "description": "Keywords",
+                        "items": {
+                            "type": "string",
+                            "title": "Keyword ID"
+                        }
                     }
                 }
             },
@@ -5544,39 +5584,11 @@
                 "type": "object",
                 "title": "Task Minute",
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Minute ID",
-                        "example": "minute-id-***"
-                    },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "Organization, Inc."
-                    },
-                    "teamId": {
-                        "type": "string",
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    "channelId": {
-                        "type": "string",
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    "itemId": {
-                        "type": "string",
-                        "description": "Value Item ID",
-                        "example": "value-item-id-***"
-                    },
-                    "taskId": {
-                        "type": "string",
-                        "description": "Task ID",
-                        "example": "task-id-***"
-                    },
                     "iteration": {
                         "type": "number",
-                        "description": "Iteration number"
+                        "description": "Iteration number",
+                        "min": 1,
+                        "default": 1
                     },
                     "discoveries": {
                         "type": "array",
@@ -5587,7 +5599,9 @@
                             "properties": {
                                 "iteration": {
                                     "type": "number",
-                                    "description": "Iteration number"
+                                    "description": "Iteration number",
+                                    "min": 1,
+                                    "default": 1
                                 },
                                 "authorId": {
                                     "$ref": "#/components/schemas/ValueItemAuthor"
@@ -5610,7 +5624,9 @@
                             "properties": {
                                 "iteration": {
                                     "type": "number",
-                                    "description": "Iteration number"
+                                    "description": "Iteration number",
+                                    "min": 1,
+                                    "default": 1
                                 },
                                 "authorId": {
                                     "$ref": "#/components/schemas/ValueItemAuthor"

@@ -94,7 +94,7 @@ class ItemTaskTest extends TestCase {
             ->teams()
             ->teamAssign($this->team->getId(), $this->account->getId(), $this->orgId);
 
-        // Store the value item
+        // Add value item
         $this->item = $this->sdk
             ->api()
             ->valueItems()
@@ -153,7 +153,7 @@ class ItemTaskTest extends TestCase {
     /**
      * Tear-down
      */
-    public function xtearDown(): void {
+    public function tearDown(): void {
         // Remove the team
         $this->sdk
             ->api()
@@ -176,6 +176,7 @@ class ItemTaskTest extends TestCase {
                 (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\Task::class, $task);
+        $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
 
         // Read
         $taskRead = $this->sdk
@@ -189,9 +190,10 @@ class ItemTaskTest extends TestCase {
                 $this->orgId
             );
         $this->assertInstanceOf(Model\Task::class, $taskRead);
+        $this->assertInstanceOf(Model\Minute::class, $taskRead->getMinute());
         $this->assertEquals($task->getDigest(), $taskRead->getDigest());
 
-        // List
+        // Task List - must include minute
         $taskList = $this->sdk
             ->api()
             ->tasks()
@@ -199,6 +201,25 @@ class ItemTaskTest extends TestCase {
         $this->assertInstanceOf(Model\TasksList::class, $taskList);
         $this->assertIsArray($taskList->getTasks());
         $this->assertGreaterThan(0, count($taskList->getTasks()));
+        $this->assertInstanceOf(Model\Task::class, $taskList->getTasks()[0]);
+        $this->assertInstanceOf(Model\Minute::class, $taskList->getTasks()[0]->getMinute());
+
+        // Validate minute objects
+        foreach ($taskList->getTasks() as $task) {
+            $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
+        }
+
+        // Item list - tasks must not have minutes
+        $itemList = $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemList($this->team->getId(), $this->channel->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ValueItemsList::class, $itemList);
+        $this->assertIsArray($itemList->getItems());
+        $this->assertGreaterThan(0, count($itemList->getItems()));
+        $this->assertIsArray($itemList->getItems()[0]->getTasks());
+        $this->assertGreaterThan(0, count($itemList->getItems()[0]->getTasks()));
+        $this->assertInstanceOf(Model\TaskCore::class, $itemList->getItems()[0]->getTasks()[0]);
     }
 
     /**
@@ -232,6 +253,7 @@ class ItemTaskTest extends TestCase {
         $this->assertInstanceOf(Model\Task::class, $taskUpdated);
         $this->assertEquals("New task title", $taskUpdated->getDigest());
         $this->assertEquals(Model\RequestTaskUpdate::STATE_D, $taskUpdated->getState());
+        $this->assertInstanceOf(Model\Minute::class, $taskUpdated->getMinute());
 
         // Advance
         $this->sdk
@@ -251,5 +273,20 @@ class ItemTaskTest extends TestCase {
                 $task->getId(),
                 $this->orgId
             );
+    }
+
+    public function testMinuteCreateRead(): void {
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskCreate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $this->orgId,
+                (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+            );
+        $this->assertInstanceOf(Model\Task::class, $task);
+        $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
     }
 }
