@@ -54,6 +54,10 @@
         {
             "name": "Tasks",
             "description": "Each [value item](#tag/Value-items) has at least **1** and at most **100** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context."
+        },
+        {
+            "name": "Experience",
+            "description": "Each [task](#tag/Tasks) can be described with a series of Keywords.\n        \nTeam members can assess their own and their peer's proficiency with each keyword.\n\nThis anonymous evaluation will be used to determine task assignments in order to maximize productivity and happiness."
         }
     ],
     "paths": {
@@ -209,6 +213,116 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                    }
+                ]
+            }
+        },
+        "/keywords": {
+            "post": {
+                "tags": [
+                    "Experience"
+                ],
+                "summary": "Create keyword",
+                "description": "Define a keyword",
+                "operationId": "keywordCreate",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Keyword created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Keyword"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Request Keyword Create",
+                                "properties": {
+                                    "keyword": {
+                                        "type": "string",
+                                        "description": "Keyword",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    },
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Keyword digest",
+                                        "minLength": 0,
+                                        "maxLength": 256
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/keywords \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"keyword\":\"string\",\"digest\":\"string\"}'"
                     }
                 ]
             }
@@ -2475,7 +2589,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -2651,7 +2765,7 @@
                                         "tasks": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/TaskCore"
+                                                "$ref": "#/components/schemas/Task"
                                             }
                                         }
                                     }
@@ -2779,7 +2893,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -2902,7 +3016,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -3059,7 +3173,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -3194,7 +3308,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskCore"
+                                    "$ref": "#/components/schemas/Task"
                                 }
                             }
                         }
@@ -3329,7 +3443,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -3462,7 +3576,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -3587,7 +3701,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -3741,7 +3855,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -3822,9 +3936,9 @@
                 "tags": [
                     "Tasks"
                 ],
-                "summary": "Remove discovery",
-                "description": "Remove a task discovery",
-                "operationId": "taskDiscoveryRemove",
+                "summary": "Delete discovery",
+                "description": "Delete a task discovery",
+                "operationId": "taskDiscoveryDelete",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -3893,7 +4007,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -4018,7 +4132,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -4176,7 +4290,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -4261,9 +4375,9 @@
                 "tags": [
                     "Tasks"
                 ],
-                "summary": "Remove feedback",
-                "description": "Remove a task feedback",
-                "operationId": "taskFeedbackRemove",
+                "summary": "Delete feedback",
+                "description": "Delete a feedback for a task",
+                "operationId": "taskFeedbackDelete",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -4332,7 +4446,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -4467,7 +4581,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Task"
+                                    "$ref": "#/components/schemas/TaskExpanded"
                                 }
                             }
                         }
@@ -6709,6 +6823,54 @@
                     }
                 }
             },
+            "Experience": {
+                "type": "object",
+                "title": "Experience",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "Organization, Inc."
+                    },
+                    "experience": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "title": "Assessment",
+                            "properties": {
+                                "k": {
+                                    "type": "string",
+                                    "description": "Keyword ID",
+                                    "example": "keyword-id-***"
+                                },
+                                "s": {
+                                    "type": "array",
+                                    "description": "Self-assessment",
+                                    "items": {
+                                        "type": "number",
+                                        "min": 1,
+                                        "max": 10
+                                    }
+                                },
+                                "p": {
+                                    "type": "array",
+                                    "description": "Peer assessment",
+                                    "items": {
+                                        "type": "number",
+                                        "min": 1,
+                                        "max": 10
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "Invitation": {
                 "type": "object",
                 "title": "Invitation",
@@ -6876,7 +7038,7 @@
                         "type": "array",
                         "description": "List of Tasks without Minutes",
                         "items": {
-                            "$ref": "#/components/schemas/TaskCore"
+                            "$ref": "#/components/schemas/Task"
                         }
                     }
                 }
@@ -6915,7 +7077,7 @@
                         "type": "object",
                         "description": "Experiment",
                         "properties": {
-                            "authors": {
+                            "authorIds": {
                                 "type": "array",
                                 "items": {
                                     "$ref": "#/components/schemas/ValueItemAuthor"
@@ -6953,9 +7115,9 @@
                     }
                 }
             },
-            "TaskCore": {
+            "Task": {
                 "type": "object",
-                "title": "Task Core",
+                "title": "Task",
                 "description": "Task model without Minutes",
                 "properties": {
                     "id": {
@@ -6999,8 +7161,9 @@
                     }
                 }
             },
-            "Task": {
+            "TaskExpanded": {
                 "type": "object",
+                "title": "Task with Minute included",
                 "description": "Full Task model that includes Minutes",
                 "properties": {
                     "id": {
@@ -7051,6 +7214,16 @@
                 "type": "object",
                 "title": "Keyword",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "Organization, Inc."
+                    },
                     "keyword": {
                         "type": "string",
                         "description": "Keyword",
@@ -7379,7 +7552,8 @@
                 "Channels",
                 "Value items",
                 "Assumptions",
-                "Tasks"
+                "Tasks",
+                "Experience"
             ]
         }
     ]

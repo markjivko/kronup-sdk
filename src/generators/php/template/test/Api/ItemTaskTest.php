@@ -119,6 +119,7 @@ class ItemTaskTest extends TestCase {
                 $this->orgId,
                 (new Model\RequestAssmCreate())->setDigest("X can be done")
             );
+        $this->assertInstanceOf(Model\Assumption::class, $assm);
 
         // Advance to validation
         $this->sdk
@@ -175,7 +176,7 @@ class ItemTaskTest extends TestCase {
                 $this->orgId,
                 (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
             );
-        $this->assertInstanceOf(Model\Task::class, $task);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
 
         // Read
@@ -189,7 +190,7 @@ class ItemTaskTest extends TestCase {
                 $task->getId(),
                 $this->orgId
             );
-        $this->assertInstanceOf(Model\Task::class, $taskRead);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $taskRead);
         $this->assertInstanceOf(Model\Minute::class, $taskRead->getMinute());
         $this->assertEquals($task->getDigest(), $taskRead->getDigest());
 
@@ -201,7 +202,7 @@ class ItemTaskTest extends TestCase {
         $this->assertInstanceOf(Model\TasksList::class, $taskList);
         $this->assertIsArray($taskList->getTasks());
         $this->assertGreaterThan(0, count($taskList->getTasks()));
-        $this->assertInstanceOf(Model\TaskCore::class, $taskList->getTasks()[0]);
+        $this->assertInstanceOf(Model\Task::class, $taskList->getTasks()[0]);
 
         // Item list - tasks must not have minutes
         $itemList = $this->sdk
@@ -213,7 +214,7 @@ class ItemTaskTest extends TestCase {
         $this->assertGreaterThan(0, count($itemList->getItems()));
         $this->assertIsArray($itemList->getItems()[0]->getTasks());
         $this->assertGreaterThan(0, count($itemList->getItems()[0]->getTasks()));
-        $this->assertInstanceOf(Model\TaskCore::class, $itemList->getItems()[0]->getTasks()[0]);
+        $this->assertInstanceOf(Model\Task::class, $itemList->getItems()[0]->getTasks()[0]);
     }
 
     /**
@@ -230,7 +231,7 @@ class ItemTaskTest extends TestCase {
                 $this->orgId,
                 (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
             );
-        $this->assertInstanceOf(Model\Task::class, $task);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
 
         // Update task
         $taskUpdated = $this->sdk
@@ -244,7 +245,7 @@ class ItemTaskTest extends TestCase {
                 $this->orgId,
                 (new Model\RequestTaskUpdate())->setDigest("New task title")->setState(Model\RequestTaskUpdate::STATE_D)
             );
-        $this->assertInstanceOf(Model\Task::class, $taskUpdated);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $taskUpdated);
         $this->assertEquals("New task title", $taskUpdated->getDigest());
         $this->assertEquals(Model\RequestTaskUpdate::STATE_D, $taskUpdated->getState());
         $this->assertInstanceOf(Model\Minute::class, $taskUpdated->getMinute());
@@ -283,7 +284,7 @@ class ItemTaskTest extends TestCase {
                 $this->orgId,
                 (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
             );
-        $this->assertInstanceOf(Model\Task::class, $task);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
     }
 
@@ -301,7 +302,7 @@ class ItemTaskTest extends TestCase {
                 $this->orgId,
                 (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
             );
-        $this->assertInstanceOf(Model\Task::class, $task);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
 
         // Assign the task
         $taskAssigned = $this->sdk
@@ -315,7 +316,7 @@ class ItemTaskTest extends TestCase {
                 $this->account->getId(),
                 $this->orgId
             );
-        $this->assertInstanceOf(Model\TaskCore::class, $taskAssigned);
+        $this->assertInstanceOf(Model\Task::class, $taskAssigned);
         $this->assertIsString($taskAssigned->getAssigneeId());
         $this->assertEquals($this->account->getId(), $taskAssigned->getAssigneeId());
     }
