@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2022-2023 kronup.com
  * @license   MIT
- * @package   Kronup
+ * @package   kronup
  * @author    Mark Jivko
  */
 
@@ -23,7 +23,7 @@ use Kronup\Sdk\ApiException;
  */
 class ItemTaskTest extends TestCase {
     /**
-     * Kronup SDK
+     * kronup sdk
      *
      * @var \Kronup\Sdk
      */
@@ -201,13 +201,7 @@ class ItemTaskTest extends TestCase {
         $this->assertInstanceOf(Model\TasksList::class, $taskList);
         $this->assertIsArray($taskList->getTasks());
         $this->assertGreaterThan(0, count($taskList->getTasks()));
-        $this->assertInstanceOf(Model\Task::class, $taskList->getTasks()[0]);
-        $this->assertInstanceOf(Model\Minute::class, $taskList->getTasks()[0]->getMinute());
-
-        // Validate minute objects
-        foreach ($taskList->getTasks() as $task) {
-            $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
-        }
+        $this->assertInstanceOf(Model\TaskCore::class, $taskList->getTasks()[0]);
 
         // Item list - tasks must not have minutes
         $itemList = $this->sdk
@@ -275,6 +269,9 @@ class ItemTaskTest extends TestCase {
             );
     }
 
+    /**
+     * Create minute
+     */
     public function testMinuteCreateRead(): void {
         $task = $this->sdk
             ->api()
@@ -288,5 +285,38 @@ class ItemTaskTest extends TestCase {
             );
         $this->assertInstanceOf(Model\Task::class, $task);
         $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
+    }
+
+    /**
+     * Assign user to task
+     */
+    public function testAssign(): void {
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskCreate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $this->orgId,
+                (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+            );
+        $this->assertInstanceOf(Model\Task::class, $task);
+
+        // Assign the task
+        $taskAssigned = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskAssign(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->account->getId(),
+                $this->orgId
+            );
+        $this->assertInstanceOf(Model\TaskCore::class, $taskAssigned);
+        $this->assertIsString($taskAssigned->getAssigneeId());
+        $this->assertEquals($this->account->getId(), $taskAssigned->getAssigneeId());
     }
 }

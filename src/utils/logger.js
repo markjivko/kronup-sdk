@@ -121,11 +121,11 @@ module.exports = {
          * @param {string} text Heading
          */
         heading: function (text) {
-            const headerText = `Kronup - SDK Generator v.${version} - ${text.trim()}`;
+            const headerText = `kronup - SDK Generator v.${version} - ${text.trim()}`;
 
             // Log the message
             console.log(`  \x1b[37m${headerText}\x1b[0m\n`);
-            tools.log([`Kronup v.${version}: ${text}`], tools.logLevels.info);
+            tools.log([`kronup v.${version}: ${text}`], tools.logLevels.info);
         },
 
         /**

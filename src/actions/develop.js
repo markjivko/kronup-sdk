@@ -1,5 +1,5 @@
 /**
- * Kronup SDK Developer
+ * kronup sdk Developer
  *
  * @desc      Develop SDK client in real-time
  * @copyright (c) 2022-2023 kronup.com

@@ -1,5 +1,5 @@
 /**
- * Kronup SDK Initializer
+ * kronup sdk Initializer
  *
  * @desc      Initialize a new SDK client generator
  * @copyright (c) 2022-2023 kronup.com

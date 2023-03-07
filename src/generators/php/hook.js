@@ -1,7 +1,7 @@
 /**
  * PHP SDK hooks
  *
- * @package   Kronup
+ * @package   kronup
  * @author    Mark Jivko
  */
 const iHook = require("../../lib/iHook");

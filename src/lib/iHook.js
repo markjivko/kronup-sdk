@@ -183,7 +183,7 @@ module.exports = class iHook {
 
     /**
      * Get environment variables.
-     * Initialize the Kronup API from configuration if not present
+     * Initialize the kronup API from configuration if not present
      *
      * @return {object}
      */

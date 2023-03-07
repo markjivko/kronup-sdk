@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2022-2023 kronup.com
  * @license   MIT
- * @package   Kronup
+ * @package   kronup
  * @author    Mark Jivko
  */
 
@@ -23,7 +23,7 @@ use Kronup\Sdk\ApiException;
  */
 class ItemTest extends TestCase {
     /**
-     * Kronup SDK
+     * kronup SDK
      *
      * @var \Kronup\Sdk
      */

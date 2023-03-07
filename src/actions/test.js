@@ -1,5 +1,5 @@
 /**
- * Kronup SDK Tester
+ * kronup sdk Tester
  *
  * @desc      Run unit tests
  * @copyright (c) 2022-2023 kronup.com
