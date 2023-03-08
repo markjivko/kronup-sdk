@@ -45,6 +45,8 @@ class AccountTest extends TestCase {
             ->account()
             ->accountRead();
         $this->assertInstanceOf(Model\Account::class, $account);
+        $this->assertEquals(0, count($account->listProps()));
+
         $userName = $account->getUserName();
 
         // Update the account
@@ -53,6 +55,8 @@ class AccountTest extends TestCase {
             ->account()
             ->accountUpdate((new Model\RequestAccountUpdate())->setUserName("$userName 2"));
         $this->assertInstanceOf(Model\Account::class, $updatedAccount);
+        $this->assertEquals(0, count($updatedAccount->listProps()));
+
         $this->assertEquals("$userName 2", $updatedAccount->getUserName());
 
         // Revert the changes

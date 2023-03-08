@@ -29,7 +29,7 @@
         },
         {
             "name": "Invitations",
-            "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **500** invitations."
+            "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **250** invitations."
         },
         {
             "name": "Organizations",
@@ -223,7 +223,7 @@
                     "Experience"
                 ],
                 "summary": "Create keyword",
-                "description": "Define a keyword",
+                "description": "Add a keyword to Ledger",
                 "operationId": "keywordCreate",
                 "parameters": [
                     {
@@ -239,7 +239,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Keyword created successfully",
+                        "description": "Keyword added to ledger successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -302,12 +302,6 @@
                                         "description": "Keyword",
                                         "minLength": 1,
                                         "maxLength": 64
-                                    },
-                                    "digest": {
-                                        "type": "string",
-                                        "description": "Keyword digest",
-                                        "minLength": 0,
-                                        "maxLength": 256
                                     }
                                 }
                             }
@@ -322,7 +316,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/keywords \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"keyword\":\"string\",\"digest\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/keywords \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"keyword\":\"string\"}'"
                     }
                 ]
             }
@@ -7210,9 +7204,9 @@
                     }
                 }
             },
-            "Keyword": {
+            "Ledger": {
                 "type": "object",
-                "title": "Keyword",
+                "title": "Keyword Ledger",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -7224,17 +7218,28 @@
                         "description": "Organization ID",
                         "example": "Organization, Inc."
                     },
-                    "keyword": {
-                        "type": "string",
-                        "description": "Keyword",
-                        "minLength": 1,
-                        "maxLength": 64
+                    "keywords": {
+                        "type": "array",
+                        "description": "Keywords",
+                        "items": {
+                            "type": "object",
+                            "title": "Keyword",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "k": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                }
+                            }
+                        }
                     },
-                    "digest": {
-                        "type": "string",
-                        "description": "Keyword digest",
-                        "minLength": 0,
-                        "maxLength": 256
+                    "full": {
+                        "type": "boolean",
+                        "description": "Keyword Ledger is full",
+                        "default": false
                     }
                 }
             },

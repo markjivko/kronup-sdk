@@ -135,6 +135,7 @@ class ItemAssmTest extends TestCase {
                 (new Model\RequestAssmCreate())->setDigest("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
+        $this->assertEquals(0, count($assm->listProps()));
 
         // Read
         $assmRead = $this->sdk
@@ -148,6 +149,8 @@ class ItemAssmTest extends TestCase {
                 $this->orgId
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmRead);
+        $this->assertEquals(0, count($assmRead->listProps()));
+
         $this->assertEquals($assm->getDigest(), $assmRead->getDigest());
 
         // List
@@ -156,6 +159,8 @@ class ItemAssmTest extends TestCase {
             ->assumptions()
             ->assumptionList($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
         $this->assertInstanceOf(Model\AssumptionsList::class, $assmList);
+        $this->assertEquals(0, count($assmList->listProps()));
+
         $this->assertIsArray($assmList->getAssumptions());
         $this->assertGreaterThan(0, count($assmList->getAssumptions()));
     }
@@ -175,6 +180,7 @@ class ItemAssmTest extends TestCase {
                 (new Model\RequestAssmCreate())->setDigest("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
+        $this->assertEquals(0, count($assm->listProps()));
 
         // Update assumption
         $assmUpdated = $this->sdk
@@ -189,6 +195,7 @@ class ItemAssmTest extends TestCase {
                 (new Model\RequestAssmUpdate())->setDigest("New assumption")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmUpdated);
+        $this->assertEquals(0, count($assmUpdated->listProps()));
         $this->assertEquals("New assumption", $assmUpdated->getDigest());
 
         // Advance
@@ -214,7 +221,11 @@ class ItemAssmTest extends TestCase {
                     ->setState(Model\RequestAssmValidate::STATE_D)
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmUpdatedExp);
+        $this->assertEquals(0, count($assmUpdatedExp->listProps()));
+
         $this->assertInstanceOf(Model\AssumptionExperiment::class, $assmUpdatedExp->getExperiment());
+        $this->assertEquals(0, count($assmUpdatedExp->getExperiment()->listProps()));
+
         $this->assertEquals("Experiment digest", $assmUpdatedExp->getExperiment()->getDigest());
         $this->assertEquals("Experiment details", $assmUpdatedExp->getExperiment()->getDetails());
         $this->assertTrue($assmUpdatedExp->getExperiment()->getConfirmed());

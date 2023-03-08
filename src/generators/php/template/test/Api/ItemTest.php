@@ -116,6 +116,7 @@ class ItemTest extends TestCase {
                     ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
             );
         $this->assertInstanceOf(Model\ValueItem::class, $item);
+        $this->assertEquals(0, count($item->listProps()));
 
         // Get the list
         $items = $this->sdk
@@ -123,6 +124,8 @@ class ItemTest extends TestCase {
             ->valueItems()
             ->valueItemList($this->team->getId(), $this->channel->getId(), $this->orgId);
         $this->assertInstanceOf(Model\ValueItemsList::class, $items);
+        $this->assertEquals(0, count($items->listProps()));
+
         $this->assertIsArray($items->getItems());
         $this->assertGreaterThan(0, count($items->getItems()));
     }
@@ -156,6 +159,8 @@ class ItemTest extends TestCase {
                 (new Model\RequestValueItemUpdate())->setDigest("The new digest")
             );
         $this->assertInstanceOf(Model\ValueItem::class, $itemUpdated);
+        $this->assertEquals(0, count($itemUpdated->listProps()));
+
         $this->assertEquals("The new digest", $itemUpdated->getDigest());
 
         // Delete the item
@@ -164,6 +169,8 @@ class ItemTest extends TestCase {
             ->valueItems()
             ->valueItemDelete($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
         $this->assertInstanceOf(Model\ValueItem::class, $itemDeleted);
+        $this->assertEquals(0, count($itemDeleted->listProps()));
+
         $this->assertEquals($itemDeleted->getId(), $item->getId());
 
         // Expect to fail (item was removed)
@@ -191,6 +198,7 @@ class ItemTest extends TestCase {
                     ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
             );
         $this->assertInstanceOf(Model\ValueItem::class, $item);
+        $this->assertEquals(0, count($item->listProps()));
 
         // Advance the item
         $this->expectExceptionObject(new ApiException("You must add at least 1 Assumption", 403));

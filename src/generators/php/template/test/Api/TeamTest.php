@@ -54,6 +54,7 @@ class TeamTest extends TestCase {
             ->teams()
             ->teamCreate($orgId, (new Model\RequestTeamCreate())->setTeamName("New team"));
         $this->assertInstanceOf(Model\Team::class, $teamModel);
+        $this->assertEquals(0, count($teamModel->listProps()));
 
         // Read the team data
         $teamModelRead = $this->sdk
@@ -61,6 +62,7 @@ class TeamTest extends TestCase {
             ->teams()
             ->teamRead($teamModel->getId(), $orgId);
         $this->assertInstanceOf(Model\Team::class, $teamModelRead);
+        $this->assertEquals(0, count($teamModelRead->listProps()));
 
         // List all teams
         $teamsList = $this->sdk
@@ -80,6 +82,8 @@ class TeamTest extends TestCase {
                 (new Model\RequestTeamUpdate())->setTeamName("Another team name")->setTeamDesc("A colorful description")
             );
         $this->assertInstanceOf(Model\Team::class, $teamModelUpdated);
+        $this->assertEquals(0, count($teamModelUpdated->listProps()));
+
         $this->assertEquals("Another team name", $teamModelUpdated->getTeamName());
         $this->assertEquals("A colorful description", $teamModelUpdated->getTeamDesc());
 
@@ -95,6 +99,8 @@ class TeamTest extends TestCase {
                     ->setChannelDesc("The channel description")
             );
         $this->assertInstanceOf(Model\Team::class, $team);
+        $this->assertEquals(0, count($team->listProps()));
+
         $this->assertIsArray($team->getChannels());
         $this->assertGreaterThanOrEqual(2, count($team->getChannels()));
 
@@ -117,6 +123,8 @@ class TeamTest extends TestCase {
             ->channels()
             ->channelAssign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
         $this->assertInstanceOf(Model\User::class, $modelUser);
+        $this->assertEquals(0, count($modelUser->listProps()));
+
         $countAssigned = count($modelUser->getTeams()[count($modelUser->getTeams()) - 1]->getChannelIds());
 
         // Unassign the secondary channel
@@ -125,6 +133,8 @@ class TeamTest extends TestCase {
             ->channels()
             ->channelUnassign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
         $this->assertInstanceOf(Model\User::class, $modelUser2);
+        $this->assertEquals(0, count($modelUser2->listProps()));
+
         $countUnassigned = count($modelUser2->getTeams()[count($modelUser2->getTeams()) - 1]->getChannelIds());
         $this->assertGreaterThan($countUnassigned, $countAssigned);
 
@@ -134,6 +144,8 @@ class TeamTest extends TestCase {
             ->teams()
             ->teamUnassign($team->getId(), $account->getId(), $orgId);
         $this->assertInstanceOf(Model\User::class, $modelUser3);
+        $this->assertEquals(0, count($modelUser3->listProps()));
+
         $userTeams = array_map(function ($item) {
             return $item->getTeamId();
         }, $modelUser3->getTeams());
@@ -145,6 +157,8 @@ class TeamTest extends TestCase {
             ->teams()
             ->teamAssign($team->getId(), $account->getId(), $orgId);
         $this->assertInstanceOf(Model\User::class, $modelUser4);
+        $this->assertEquals(0, count($modelUser4->listProps()));
+
         $userTeams = array_map(function ($item) {
             return $item->getTeamId();
         }, $modelUser4->getTeams());
@@ -166,6 +180,8 @@ class TeamTest extends TestCase {
             ->teams()
             ->teamDelete($teamModel->getId(), $orgId);
         $this->assertInstanceOf(Model\Team::class, $teamModelDeleted);
+        $this->assertEquals(0, count($teamModelDeleted->listProps()));
+
         $this->assertEquals($teamModelDeleted->getId(), $teamModelRead->getId());
     }
 
@@ -213,6 +229,7 @@ class TeamTest extends TestCase {
             ->teams()
             ->teamCreate($orgId, (new Model\RequestTeamCreate())->setTeamName("Test"));
         $this->assertInstanceOf(Model\Team::class, $team);
+        $this->assertEquals(0, count($team->listProps()));
 
         // Update: Name too long
         try {
@@ -266,6 +283,7 @@ class TeamTest extends TestCase {
             ->teams()
             ->teamCreate($orgId, (new Model\RequestTeamCreate())->setTeamName("Test"));
         $this->assertInstanceOf(Model\Team::class, $team);
+        $this->assertEquals(0, count($team->listProps()));
 
         // Assign team to user
         $user = $this->sdk
