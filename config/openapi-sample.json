@@ -57,7 +57,11 @@
         },
         {
             "name": "Notions",
-            "description": "Each [task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task.\n\nTeam members can anonymously assess their own and their peer's proficiency with each Notion.\n\nThe evaluation of Notions will be used to determine task assignments in order to maximize productivity and team happiness."
+            "description": "Each [task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task."
+        },
+        {
+            "name": "Experience",
+            "description": "Team members can anonymously assess their own and their peer's proficiency with each each [notion](#tag/Notions).\n\nThe evaluation of notions will be used to determine task assignments in order to maximize productivity and team happiness."
         }
     ],
     "paths": {
@@ -213,6 +217,230 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                    }
+                ]
+            }
+        },
+        "/xp/notions/{notionId}/grade/{grade}": {
+            "put": {
+                "tags": [
+                    "Experience"
+                ],
+                "summary": "Self-evaluation",
+                "description": "Evaluate yourself on a notion",
+                "operationId": "evaluateSelf",
+                "parameters": [
+                    {
+                        "name": "notionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    {
+                        "name": "grade",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Grade between 1 and 10",
+                        "min": 1,
+                        "max": 10,
+                        "example": 10
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Self-evaluation successfull",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Experience"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/grade/10' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/xp/notions/{notionId}/users/{userId}/grade/{grade}": {
+            "put": {
+                "tags": [
+                    "Experience"
+                ],
+                "summary": "Evaluate peer",
+                "description": "Anonymously evaluate another user on this notion",
+                "operationId": "evaluatePeer",
+                "parameters": [
+                    {
+                        "name": "notionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    {
+                        "name": "grade",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Grade between 1 and 10",
+                        "min": 1,
+                        "max": 10,
+                        "example": 10
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User evaluated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Experience"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***/grade/10' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -4555,7 +4783,7 @@
                     "Notions"
                 ],
                 "summary": "Create notion",
-                "description": "Define a notion - a skill, technology or approach required to execute a task",
+                "description": "Define a notion",
                 "operationId": "notionCreate",
                 "parameters": [
                     {
@@ -7253,35 +7481,68 @@
                         "description": "User ID",
                         "example": "user-id-***"
                     },
-                    "evaluations": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "title": "Experience Evaluations",
-                            "properties": {
-                                "n": {
-                                    "type": "string",
-                                    "description": "Notion ID",
-                                    "example": "notion-id-***"
+                    "notionId": {
+                        "type": "string",
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    "selfEval": {
+                        "type": "object",
+                        "title": "Evaluations: self",
+                        "properties": {
+                            "count": {
+                                "type": "number",
+                                "description": "Total number of evaluations",
+                                "min": 0,
+                                "example": 2
+                            },
+                            "average": {
+                                "type": "string",
+                                "description": "Average value",
+                                "example": "8.500000"
+                            },
+                            "last10": {
+                                "type": "array",
+                                "description": "Last 10 values",
+                                "items": {
+                                    "type": "number",
+                                    "min": 1,
+                                    "max": 10
                                 },
-                                "s": {
-                                    "type": "array",
-                                    "description": "Self-assessments",
-                                    "items": {
-                                        "type": "number",
-                                        "min": 1,
-                                        "max": 10
-                                    }
+                                "example": [
+                                    7,
+                                    10
+                                ]
+                            }
+                        }
+                    },
+                    "peerEval": {
+                        "type": "object",
+                        "title": "Evaluations: peers",
+                        "properties": {
+                            "count": {
+                                "type": "number",
+                                "description": "Total number of evaluations",
+                                "min": 0,
+                                "example": 2
+                            },
+                            "average": {
+                                "type": "string",
+                                "description": "Average value",
+                                "example": "9.500000"
+                            },
+                            "last10": {
+                                "type": "array",
+                                "description": "Last 10 values",
+                                "items": {
+                                    "type": "number",
+                                    "min": 1,
+                                    "max": 10
                                 },
-                                "p": {
-                                    "type": "array",
-                                    "description": "Peer assessments",
-                                    "items": {
-                                        "type": "number",
-                                        "min": 1,
-                                        "max": 10
-                                    }
-                                }
+                                "example": [
+                                    9,
+                                    10
+                                ]
                             }
                         }
                     }
@@ -7966,7 +8227,8 @@
                 "Value items",
                 "Assumptions",
                 "Tasks",
-                "Notions"
+                "Notions",
+                "Experience"
             ]
         }
     ]

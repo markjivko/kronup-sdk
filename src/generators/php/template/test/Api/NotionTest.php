@@ -44,6 +44,13 @@ class NotionTest extends TestCase {
     protected $orgId;
 
     /**
+     * Notion id
+     *
+     * @var string
+     */
+    protected $notionId = null;
+
+    /**
      * Set-up
      */
     public function setUp(): void {
@@ -63,6 +70,13 @@ class NotionTest extends TestCase {
      * Tear-down
      */
     public function tearDown(): void {
+        if (null !== $this->notionId) {
+            $deleted = $this->sdk
+                ->api()
+                ->notions()
+                ->notionDelete($this->notionId, $this->orgId);
+            $this->assertTrue($deleted);
+        }
     }
 
     /**
@@ -76,6 +90,7 @@ class NotionTest extends TestCase {
             ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue($notionValue));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
+        $this->notionId = $notion->getId();
 
         // Find notion by id
         $notionRead = $this->sdk
@@ -118,6 +133,14 @@ class NotionTest extends TestCase {
         $this->assertInstanceOf(Model\Notion::class, $notionUpdated);
         $this->assertEquals(0, count($notionUpdated->listProps()));
         $this->assertEquals($notionValue . "-updated", $notionUpdated->getValue());
+
+        // Prepare the list
+        $notionList = $this->sdk
+            ->api()
+            ->notions()
+            ->notionSearch($this->orgId, substr($notionValue, 0, 4), 1, 10);
+        $this->assertInstanceOf(Model\NotionsList::class, $notionList);
+        $this->assertEquals(0, count($notionList->listProps()));
 
         // Delete the notion
         $deleted = $this->sdk

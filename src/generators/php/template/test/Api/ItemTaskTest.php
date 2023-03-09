@@ -157,10 +157,11 @@ class ItemTaskTest extends TestCase {
      */
     public function tearDown(): void {
         // Remove the team
-        $this->sdk
+        $deleted = $this->sdk
             ->api()
             ->teams()
             ->teamDelete($this->team->getId(), $this->orgId);
+        $this->assertTrue($deleted);
     }
 
     /**
