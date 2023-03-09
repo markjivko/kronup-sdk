@@ -56,8 +56,8 @@
             "description": "Each [value item](#tag/Value-items) has at least **1** and at most **100** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context."
         },
         {
-            "name": "Experience",
-            "description": "Each [task](#tag/Tasks) can be described with a series of Keywords.\n        \nTeam members can assess their own and their peer's proficiency with each keyword.\n\nThis anonymous evaluation will be used to determine task assignments in order to maximize productivity and happiness."
+            "name": "Notions",
+            "description": "Each [task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task.\n\nTeam members can anonymously assess their own and their peer's proficiency with each Notion.\n\nThe evaluation of Notions will be used to determine task assignments in order to maximize productivity and team happiness."
         }
     ],
     "paths": {
@@ -184,11 +184,11 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Account model deleted",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Account"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -213,110 +213,6 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
-                    }
-                ]
-            }
-        },
-        "/keywords": {
-            "post": {
-                "tags": [
-                    "Experience"
-                ],
-                "summary": "Create keyword",
-                "description": "Add a keyword to Ledger",
-                "operationId": "keywordCreate",
-                "parameters": [
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Keyword added to ledger successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Keyword"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "title": "Request Keyword Create",
-                                "properties": {
-                                    "keyword": {
-                                        "type": "string",
-                                        "description": "Keyword",
-                                        "minLength": 1,
-                                        "maxLength": 64
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/keywords \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"keyword\":\"string\"}'"
                     }
                 ]
             }
@@ -759,11 +655,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Invitation deleted successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Invitation"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -1508,11 +1404,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Value item deleted successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ValueItem"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -2301,11 +2197,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Assumption deleted successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Assumption"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -3163,11 +3059,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Task deleted successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -3361,14 +3257,14 @@
                 ]
             }
         },
-        "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/keywords/{keywordId}": {
+        "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/notions/{notionId}": {
             "put": {
                 "tags": [
                     "Tasks"
                 ],
-                "summary": "Add keyword",
-                "description": "Add a keyword to task",
-                "operationId": "taskKeywordAdd",
+                "summary": "Add notion",
+                "description": "Add a notion to task",
+                "operationId": "taskNotionAdd",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -3411,14 +3307,14 @@
                         "example": "task-id-***"
                     },
                     {
-                        "name": "keywordId",
+                        "name": "notionId",
                         "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Keyword ID",
-                        "example": "keyword-id-***"
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
                     },
                     {
                         "name": "x-org-id",
@@ -3433,7 +3329,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Keyword added successfully",
+                        "description": "Notion added successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3491,7 +3387,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/keywords/keyword-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             },
@@ -3499,9 +3395,9 @@
                 "tags": [
                     "Tasks"
                 ],
-                "summary": "Remove keyword",
-                "description": "Remove a keyword from task",
-                "operationId": "taskKeywordRemove",
+                "summary": "Remove notion",
+                "description": "Remove a notion from task",
+                "operationId": "taskNotionRemove",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -3544,14 +3440,14 @@
                         "example": "task-id-***"
                     },
                     {
-                        "name": "keywordId",
+                        "name": "notionId",
                         "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Keyword ID",
-                        "example": "keyword-id-***"
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
                     },
                     {
                         "name": "x-org-id",
@@ -3566,11 +3462,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Keyword removed successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -3624,7 +3520,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/keywords/keyword-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -3997,11 +3893,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Discovery removed successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -4436,11 +4332,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Feedback removed successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -4653,6 +4549,523 @@
                 ]
             }
         },
+        "/notions": {
+            "post": {
+                "tags": [
+                    "Notions"
+                ],
+                "summary": "Create notion",
+                "description": "Define a notion - a skill, technology or approach required to execute a task",
+                "operationId": "notionCreate",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notion added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notion"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Request Notion Create",
+                                "properties": {
+                                    "value": {
+                                        "type": "string",
+                                        "description": "Notion",
+                                        "minLength": 1,
+                                        "maxLength": 64,
+                                        "example": "electron.js"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/notions \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"value\":\"electron.js\"}'"
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Notions"
+                ],
+                "summary": "Search notions",
+                "description": "Get a list of notion models",
+                "operationId": "notionSearch",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "searchTerm",
+                        "in": "query",
+                        "description": "Search term",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of notions that match the search",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Notions List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1
+                                        },
+                                        "notions": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Notion"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/notions?searchTerm=SOME_STRING_VALUE&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/notions/{notionId}": {
+            "get": {
+                "tags": [
+                    "Notions"
+                ],
+                "summary": "Fetch notion",
+                "description": "Retrieve notion model",
+                "operationId": "notionRead",
+                "parameters": [
+                    {
+                        "name": "notionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notion found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notion"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Notions"
+                ],
+                "summary": "Update notion",
+                "description": "Update notion",
+                "operationId": "notionUpdate",
+                "parameters": [
+                    {
+                        "name": "notionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notion updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notion"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Request Notion Update",
+                                "properties": {
+                                    "value": {
+                                        "type": "string",
+                                        "description": "Notion value",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"value\":\"string\"}'"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Notions"
+                ],
+                "summary": "Delete notion",
+                "description": "Delete a notion model",
+                "operationId": "notionDelete",
+                "parameters": [
+                    {
+                        "name": "notionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OK"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
         "/organizations": {
             "post": {
                 "tags": [
@@ -4852,11 +5265,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Organization deleted successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Organization"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -5181,11 +5594,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team created successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -5399,11 +5812,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team updated successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -5884,11 +6297,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team deleted successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -6092,11 +6505,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team updated successfully",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -6523,11 +6936,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "User removed from organization",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/OK"
                                 }
                             }
                         }
@@ -6589,6 +7002,10 @@
     },
     "components": {
         "schemas": {
+            "OK": {
+                "description": "Operation was successful",
+                "type": "boolean"
+            },
             "Error400": {
                 "description": "Invalid argument error",
                 "type": "object",
@@ -6829,22 +7246,27 @@
                     "orgId": {
                         "type": "string",
                         "description": "Organization ID",
-                        "example": "Organization, Inc."
+                        "example": "org-id-***"
                     },
-                    "experience": {
+                    "userId": {
+                        "type": "string",
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    "evaluations": {
                         "type": "array",
                         "items": {
                             "type": "object",
-                            "title": "Assessment",
+                            "title": "Experience Evaluations",
                             "properties": {
-                                "k": {
+                                "n": {
                                     "type": "string",
-                                    "description": "Keyword ID",
-                                    "example": "keyword-id-***"
+                                    "description": "Notion ID",
+                                    "example": "notion-id-***"
                                 },
                                 "s": {
                                     "type": "array",
-                                    "description": "Self-assessment",
+                                    "description": "Self-assessments",
                                     "items": {
                                         "type": "number",
                                         "min": 1,
@@ -6853,7 +7275,7 @@
                                 },
                                 "p": {
                                     "type": "array",
-                                    "description": "Peer assessment",
+                                    "description": "Peer assessments",
                                     "items": {
                                         "type": "number",
                                         "min": 1,
@@ -6955,7 +7377,7 @@
                     "orgId": {
                         "type": "string",
                         "description": "Organization ID",
-                        "example": "Organization, Inc."
+                        "example": "org-id-***"
                     },
                     "teamId": {
                         "type": "string",
@@ -7145,12 +7567,13 @@
                         ],
                         "default": "i"
                     },
-                    "keywords": {
+                    "notions": {
                         "type": "array",
-                        "description": "Keywords",
+                        "description": "Notions",
                         "items": {
                             "type": "string",
-                            "title": "Keyword ID"
+                            "title": "Notion ID",
+                            "example": "notion-id-***"
                         }
                     }
                 }
@@ -7194,52 +7617,14 @@
                         ],
                         "default": "i"
                     },
-                    "keywords": {
+                    "notions": {
                         "type": "array",
-                        "description": "Keywords",
+                        "description": "Notions",
                         "items": {
                             "type": "string",
-                            "title": "Keyword ID"
+                            "title": "Notion ID",
+                            "example": "notion-id-***"
                         }
-                    }
-                }
-            },
-            "Ledger": {
-                "type": "object",
-                "title": "Keyword Ledger",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "Organization, Inc."
-                    },
-                    "keywords": {
-                        "type": "array",
-                        "description": "Keywords",
-                        "items": {
-                            "type": "object",
-                            "title": "Keyword",
-                            "properties": {
-                                "id": {
-                                    "type": "string"
-                                },
-                                "k": {
-                                    "type": "string",
-                                    "minLength": 1,
-                                    "maxLength": 64
-                                }
-                            }
-                        }
-                    },
-                    "full": {
-                        "type": "boolean",
-                        "description": "Keyword Ledger is full",
-                        "default": false
                     }
                 }
             },
@@ -7328,6 +7713,29 @@
                     }
                 }
             },
+            "Notion": {
+                "type": "object",
+                "title": "Notion",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization Id",
+                        "example": "org-id-***"
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Notion: skill, technology etc.",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "example": "electron.js"
+                    }
+                }
+            },
             "Organization": {
                 "type": "object",
                 "title": "Organization",
@@ -7380,14 +7788,14 @@
                     "orgId": {
                         "type": "string",
                         "description": "Organization ID",
-                        "example": "Organization, Inc."
+                        "example": "org-id-***"
                     },
                     "teamName": {
                         "type": "string",
                         "description": "Team name",
                         "minLength": 1,
                         "maxLength": 64,
-                        "example": "User Experience"
+                        "example": "UX"
                     },
                     "teamDesc": {
                         "type": "string",
@@ -7558,7 +7966,7 @@
                 "Value items",
                 "Assumptions",
                 "Tasks",
-                "Experience"
+                "Notions"
             ]
         }
     ]

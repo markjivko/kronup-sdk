@@ -93,10 +93,11 @@ class ItemTest extends TestCase {
      */
     public function tearDown(): void {
         // Remove the team
-        $this->sdk
+        $deleted = $this->sdk
             ->api()
             ->teams()
             ->teamDelete($this->team->getId(), $this->orgId);
+        $this->assertTrue($deleted);
     }
 
     /**
@@ -164,14 +165,11 @@ class ItemTest extends TestCase {
         $this->assertEquals("The new digest", $itemUpdated->getDigest());
 
         // Delete the item
-        $itemDeleted = $this->sdk
+        $deleted = $this->sdk
             ->api()
             ->valueItems()
             ->valueItemDelete($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\ValueItem::class, $itemDeleted);
-        $this->assertEquals(0, count($itemDeleted->listProps()));
-
-        $this->assertEquals($itemDeleted->getId(), $item->getId());
+        $this->assertTrue($deleted);
 
         // Expect to fail (item was removed)
         $this->expectExceptionObject(new ApiException("Not Found", 404));

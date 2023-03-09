@@ -114,10 +114,11 @@ class ItemAssmTest extends TestCase {
      */
     public function tearDown(): void {
         // Remove the team
-        $this->sdk
+        $deleted = $this->sdk
             ->api()
             ->teams()
             ->teamDelete($this->team->getId(), $this->orgId);
+        $this->assertTrue($deleted);
     }
 
     /**
@@ -232,7 +233,7 @@ class ItemAssmTest extends TestCase {
         $this->assertEquals(Model\RequestAssmValidate::STATE_D, $assmUpdatedExp->getExperiment()->getState());
 
         // Delete
-        $assmDeleted = $this->sdk
+        $deleted = $this->sdk
             ->api()
             ->assumptions()
             ->assumptionDelete(
@@ -242,6 +243,8 @@ class ItemAssmTest extends TestCase {
                 $assm->getId(),
                 $this->orgId
             );
+        $this->assertTrue($deleted);
+
         $this->expectExceptionObject(new ApiException("Not Found", 404));
         $this->sdk
             ->api()
@@ -250,7 +253,7 @@ class ItemAssmTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $assmDeleted->getId(),
+                $assm->getId(),
                 $this->orgId
             );
     }

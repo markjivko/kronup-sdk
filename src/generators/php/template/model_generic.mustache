@@ -135,7 +135,7 @@ class {{classname}} extends {{#parentSchema}}{{{parent}}}{{/parentSchema}}{{^par
     {{#vars}}
 
     /**
-     * Get {{baseName}}
+     * Get {{baseName}} - {{#description}}{{{description}}}{{/description}}
      *
      * @return {{{dataType}}}{{^required}}|null{{/required}}
      */
@@ -144,7 +144,7 @@ class {{classname}} extends {{#parentSchema}}{{{parent}}}{{/parentSchema}}{{^par
     }
 
     /**
-     * Set {{baseName}}
+     * Set {{baseName}} - {{#description}}{{{description}}}{{/description}}
      * 
      * @param {{{dataType}}}{{^required}}|null{{/required}} ${{name}}{{#description}} {{{description}}}{{/description}}
      * @throws \InvalidArgumentException

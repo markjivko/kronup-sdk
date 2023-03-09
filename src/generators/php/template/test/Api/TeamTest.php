@@ -128,10 +128,17 @@ class TeamTest extends TestCase {
         $countAssigned = count($modelUser->getTeams()[count($modelUser->getTeams()) - 1]->getChannelIds());
 
         // Unassign the secondary channel
-        $modelUser2 = $this->sdk
+        $channelUnassigned = $this->sdk
             ->api()
             ->channels()
             ->channelUnassign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+        $this->assertTrue($channelUnassigned);
+
+        // Fetch the model
+        $modelUser2 = $this->sdk
+            ->api()
+            ->users()
+            ->userRead($account->getId());
         $this->assertInstanceOf(Model\User::class, $modelUser2);
         $this->assertEquals(0, count($modelUser2->listProps()));
 
@@ -139,13 +146,19 @@ class TeamTest extends TestCase {
         $this->assertGreaterThan($countUnassigned, $countAssigned);
 
         // Unassign from the team
-        $modelUser3 = $this->sdk
+        $teamUnassigned = $this->sdk
             ->api()
             ->teams()
             ->teamUnassign($team->getId(), $account->getId(), $orgId);
-        $this->assertInstanceOf(Model\User::class, $modelUser3);
-        $this->assertEquals(0, count($modelUser3->listProps()));
+        $this->assertTrue($teamUnassigned);
 
+        // Fetch the user model
+        $modelUser3 = $this->sdk
+            ->api()
+            ->users()
+            ->userRead($account->getId());
+
+        // Fetch the teams
         $userTeams = array_map(function ($item) {
             return $item->getTeamId();
         }, $modelUser3->getTeams());
@@ -169,20 +182,18 @@ class TeamTest extends TestCase {
             ->api()
             ->channels()
             ->channelAssign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
-        $this->sdk
+        $channelDeleted = $this->sdk
             ->api()
             ->channels()
             ->channelDelete($team->getId(), $team->getChannels()[1]->getId(), $orgId);
+        $this->assertTrue($channelDeleted);
 
         // Remove the team
-        $teamModelDeleted = $this->sdk
+        $teamDeleted = $this->sdk
             ->api()
             ->teams()
             ->teamDelete($teamModel->getId(), $orgId);
-        $this->assertInstanceOf(Model\Team::class, $teamModelDeleted);
-        $this->assertEquals(0, count($teamModelDeleted->listProps()));
-
-        $this->assertEquals($teamModelDeleted->getId(), $teamModelRead->getId());
+        $this->assertTrue($teamDeleted);
     }
 
     /**
@@ -258,10 +269,11 @@ class TeamTest extends TestCase {
         }
 
         // Remove the temporary team
-        $this->sdk
+        $teamDeleted = $this->sdk
             ->api()
             ->teams()
             ->teamDelete($team->getId(), $orgId);
+        $this->assertTrue($teamDeleted);
     }
 
     /**
@@ -296,10 +308,11 @@ class TeamTest extends TestCase {
         $this->assertContains($team->getId(), $teamIds);
 
         // Delete the team
-        $this->sdk
+        $deleted = $this->sdk
             ->api()
             ->teams()
             ->teamDelete($team->getId(), $orgId);
+        $this->assertTrue($deleted);
 
         // Fetch the user model again
         $user = $this->sdk
