@@ -221,14 +221,119 @@
                 ]
             }
         },
+        "/xp/notions/{notionId}/users/{userId}": {
+            "get": {
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "Fetch notion experience",
+                "description": "Retrieve experience model for specified Notion",
+                "operationId": "experienceRead",
+                "parameters": [
+                    {
+                        "name": "notionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Experience found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Experience"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
         "/xp/users/{userId}": {
             "get": {
                 "tags": [
                     "Experiences"
                 ],
-                "summary": "Fetch user experience",
-                "description": "Retrieve user experience list",
-                "operationId": "xpListUser",
+                "summary": "Fetch all experiences",
+                "description": "Retrieve all experience models for this user",
+                "operationId": "experienceList",
                 "parameters": [
                     {
                         "name": "userId",
@@ -364,7 +469,7 @@
                 ],
                 "summary": "Self-evaluation",
                 "description": "Evaluate yourself on a notion",
-                "operationId": "xpEvaluateSelf",
+                "operationId": "experienceEvaluateSelf",
                 "parameters": [
                     {
                         "name": "notionId",
@@ -471,7 +576,7 @@
                 ],
                 "summary": "Evaluate peer",
                 "description": "Anonymously evaluate another user on this notion",
-                "operationId": "xpEvaluatePeer",
+                "operationId": "experienceEvaluatePeer",
                 "parameters": [
                     {
                         "name": "notionId",
@@ -7618,7 +7723,7 @@
                         "example": "user-id-***"
                     },
                     "notion": {
-                        "$ref": "#/definitions/Notion"
+                        "$ref": "#/components/schemas/Notion"
                     },
                     "selfEval": {
                         "type": "object",
@@ -8016,7 +8121,7 @@
                         "type": "array",
                         "description": "Notions",
                         "items": {
-                            "$ref": "#/definitions/Notion"
+                            "$ref": "#/components/schemas/Notion"
                         }
                     }
                 }

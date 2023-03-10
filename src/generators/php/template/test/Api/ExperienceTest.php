@@ -92,7 +92,7 @@ class ExperienceTest extends TestCase {
             $experience = $this->sdk
                 ->api()
                 ->experiences()
-                ->xpEvaluateSelf($this->notion->getId(), mt_rand(1, 10), $this->orgId);
+                ->experienceEvaluateSelf($this->notion->getId(), mt_rand(1, 10), $this->orgId);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
@@ -102,7 +102,7 @@ class ExperienceTest extends TestCase {
             $experience = $this->sdk
                 ->api()
                 ->experiences()
-                ->xpEvaluatePeer($this->notion->getId(), $this->account->getId(), mt_rand(1, 10), $this->orgId);
+                ->experienceEvaluatePeer($this->notion->getId(), $this->account->getId(), mt_rand(1, 10), $this->orgId);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
@@ -111,7 +111,7 @@ class ExperienceTest extends TestCase {
         $xpList = $this->sdk
             ->api()
             ->experiences()
-            ->xpListUser($this->account->getId(), $this->orgId);
+            ->experienceList($this->account->getId(), $this->orgId);
         $this->assertInstanceOf(Model\ExperienceList::class, $xpList);
         $this->assertEquals(0, count($xpList->listProps()));
 
@@ -127,6 +127,17 @@ class ExperienceTest extends TestCase {
             $this->assertInstanceOf(Model\Notion::class, $xp->getNotion());
             $this->assertEquals(0, count($xp->getNotion()->listProps()));
         }
+
+        // Find one
+        $xpRead = $this->sdk
+            ->api()
+            ->experiences()
+            ->experienceRead($this->notion->getId(), $this->account->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\Experience::class, $xpRead);
+        $this->assertEquals(0, count($xpRead->listProps()));
+
+        $this->assertInstanceOf(Model\Notion::class, $xpRead->getNotion());
+        $this->assertEquals(0, count($xpRead->getNotion()->listProps()));
     }
 
     // @TODO Test removed experience when deleting notion
