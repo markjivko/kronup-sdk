@@ -86,13 +86,13 @@ class ExperienceTest extends TestCase {
     /**
      * Create & Read
      */
-    public function testCreateRead(): void {
+    public function testCreateReadEvaluate(): void {
         // Evaluate self
         for ($i = 1; $i <= 11; $i++) {
             $experience = $this->sdk
                 ->api()
-                ->experience()
-                ->evaluateSelf($this->notion->getId(), mt_rand(1, 10), $this->orgId);
+                ->experiences()
+                ->xpEvaluateSelf($this->notion->getId(), mt_rand(1, 10), $this->orgId);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
@@ -101,10 +101,35 @@ class ExperienceTest extends TestCase {
         for ($i = 1; $i <= 11; $i++) {
             $experience = $this->sdk
                 ->api()
-                ->experience()
-                ->evaluatePeer($this->notion->getId(), $this->account->getId(), mt_rand(1, 10), $this->orgId);
+                ->experiences()
+                ->xpEvaluatePeer($this->notion->getId(), $this->account->getId(), mt_rand(1, 10), $this->orgId);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
+
+        // Find all
+        $xpList = $this->sdk
+            ->api()
+            ->experiences()
+            ->xpListUser($this->account->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ExperienceList::class, $xpList);
+        $this->assertEquals(0, count($xpList->listProps()));
+
+        // Assert array
+        $this->assertIsArray($xpList->getExperiences());
+        $this->assertEquals(1, count($xpList->getExperiences()));
+
+        // Validate notions are expanded
+        foreach ($xpList->getExperiences() as $xp) {
+            $this->assertInstanceOf(Model\Experience::class, $xp);
+            $this->assertEquals(0, count($xp->listProps()));
+
+            $this->assertInstanceOf(Model\Notion::class, $xp->getNotion());
+            $this->assertEquals(0, count($xp->getNotion()->listProps()));
+        }
     }
+
+    // @TODO Test removed experience when deleting notion
+    // @TODO Test removed notion from task when deleting notion
+    // @TODO Test delete
 }

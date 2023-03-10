@@ -60,7 +60,7 @@
             "description": "Each [task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task."
         },
         {
-            "name": "Experience",
+            "name": "Experiences",
             "description": "Team members can anonymously assess their own and their peer's proficiency with each each [notion](#tag/Notions).\n\nThe evaluation of notions will be used to determine task assignments in order to maximize productivity and team happiness."
         }
     ],
@@ -221,14 +221,150 @@
                 ]
             }
         },
+        "/xp/users/{userId}": {
+            "get": {
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "Fetch user experience",
+                "description": "Retrieve user experience list",
+                "operationId": "xpListUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of user experience",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Experience List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1
+                                        },
+                                        "experiences": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Experience"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/users/user-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
         "/xp/notions/{notionId}/grade/{grade}": {
             "put": {
                 "tags": [
-                    "Experience"
+                    "Experiences"
                 ],
                 "summary": "Self-evaluation",
                 "description": "Evaluate yourself on a notion",
-                "operationId": "evaluateSelf",
+                "operationId": "xpEvaluateSelf",
                 "parameters": [
                     {
                         "name": "notionId",
@@ -331,11 +467,11 @@
         "/xp/notions/{notionId}/users/{userId}/grade/{grade}": {
             "put": {
                 "tags": [
-                    "Experience"
+                    "Experiences"
                 ],
                 "summary": "Evaluate peer",
                 "description": "Anonymously evaluate another user on this notion",
-                "operationId": "evaluatePeer",
+                "operationId": "xpEvaluatePeer",
                 "parameters": [
                     {
                         "name": "notionId",
@@ -7481,10 +7617,8 @@
                         "description": "User ID",
                         "example": "user-id-***"
                     },
-                    "notionId": {
-                        "type": "string",
-                        "description": "Notion ID",
-                        "example": "notion-id-***"
+                    "notion": {
+                        "$ref": "#/definitions/Notion"
                     },
                     "selfEval": {
                         "type": "object",
@@ -7828,7 +7962,7 @@
                         ],
                         "default": "i"
                     },
-                    "notions": {
+                    "notionIds": {
                         "type": "array",
                         "description": "Notions",
                         "items": {
@@ -7882,9 +8016,7 @@
                         "type": "array",
                         "description": "Notions",
                         "items": {
-                            "type": "string",
-                            "title": "Notion ID",
-                            "example": "notion-id-***"
+                            "$ref": "#/definitions/Notion"
                         }
                     }
                 }
@@ -8228,7 +8360,7 @@
                 "Assumptions",
                 "Tasks",
                 "Notions",
-                "Experience"
+                "Experiences"
             ]
         }
     ]
