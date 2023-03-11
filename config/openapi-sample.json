@@ -333,7 +333,7 @@
                 ],
                 "summary": "Fetch all experiences",
                 "description": "Retrieve all experience models for this user",
-                "operationId": "experienceList",
+                "operationId": "experiencesList",
                 "parameters": [
                     {
                         "name": "userId",
@@ -384,7 +384,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Experience List",
+                                    "title": "Experiences List",
                                     "type": "object",
                                     "properties": {
                                         "pageSize": {
@@ -1378,22 +1378,22 @@
                                         "type": "string",
                                         "description": "Value item type   * f - Feature  * b - Bug fix  * c - Chore",
                                         "enum": [
-                                            "f",
-                                            "b",
-                                            "c"
+                                            "feature",
+                                            "bug fix",
+                                            "chore"
                                         ],
-                                        "example": "f"
+                                        "example": "feature"
                                     },
                                     "priority": {
                                         "type": "string",
                                         "description": "Value item MoSCoW priority  * m - Must-have  * s - Should-have  * c - Could-have  * w - Will NOT have",
                                         "enum": [
-                                            "m",
-                                            "s",
-                                            "c",
-                                            "w"
+                                            "must",
+                                            "shoud",
+                                            "could",
+                                            "will not"
                                         ],
-                                        "example": "m"
+                                        "example": "must"
                                     }
                                 }
                             }
@@ -1408,7 +1408,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"f\",\"priority\":\"m\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":\"must\"}'"
                     }
                 ]
             },
@@ -1788,22 +1788,22 @@
                                         "type": "string",
                                         "description": "Value item type:  * f - Feature  * b - Bug fix  * c - Chore",
                                         "enum": [
-                                            "f",
-                                            "b",
-                                            "c"
+                                            "feature",
+                                            "bug fix",
+                                            "chore"
                                         ],
-                                        "example": "f"
+                                        "example": "feature"
                                     },
                                     "priority": {
                                         "type": "string",
                                         "description": "Value item MoSCoW priority:  * m - Must-have  * s - Should-have  * c - Could-have  * w - Will NOT have",
                                         "enum": [
-                                            "m",
-                                            "s",
-                                            "c",
-                                            "w"
+                                            "must",
+                                            "should",
+                                            "could",
+                                            "will not"
                                         ],
-                                        "example": "m"
+                                        "example": "must"
                                     }
                                 }
                             }
@@ -1818,7 +1818,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"f\",\"priority\":\"m\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":\"must\"}'"
                     }
                 ]
             },
@@ -2869,9 +2869,9 @@
                                         "type": "string",
                                         "description": "Experiment state:  * i - Idle  * r - Running  * d - Done",
                                         "enum": [
-                                            "i",
-                                            "r",
-                                            "d"
+                                            "idle",
+                                            "running",
+                                            "done"
                                         ]
                                     }
                                 }
@@ -2887,7 +2887,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"confirmed\":true,\"digest\":\"string\",\"details\":\"string\",\"state\":\"i\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"confirmed\":true,\"digest\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
                     }
                 ]
             }
@@ -3444,10 +3444,10 @@
                                     "state": {
                                         "type": "string",
                                         "enum": [
-                                            "i",
-                                            "p",
-                                            "r",
-                                            "d"
+                                            "idle",
+                                            "in progress",
+                                            "in review",
+                                            "done"
                                         ]
                                     }
                                 }
@@ -3463,7 +3463,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\",\"state\":\"i\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
                     }
                 ]
             },
@@ -4553,7 +4553,17 @@
                                     },
                                     "issue": {
                                         "type": "string",
-                                        "description": "Feedback issue"
+                                        "description": "Feedback issue",
+                                        "enum": [
+                                            "value",
+                                            "complexity",
+                                            "flexibility",
+                                            "testing",
+                                            "security",
+                                            "ci/cd",
+                                            "standards",
+                                            "misc"
+                                        ]
                                     }
                                 }
                             }
@@ -4568,7 +4578,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"message\":\"string\",\"issue\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
                     }
                 ]
             }
@@ -4707,11 +4717,22 @@
                                         "type": "string",
                                         "description": "Feedback details",
                                         "minLength": 1,
-                                        "maxLength": 1024
+                                        "maxLength": 1024,
+                                        "required": "true"
                                     },
                                     "issue": {
                                         "type": "string",
-                                        "description": "Feedback issue"
+                                        "description": "Feedback issue",
+                                        "enum": [
+                                            "value",
+                                            "complexity",
+                                            "flexibility",
+                                            "testing",
+                                            "security",
+                                            "ci/cd",
+                                            "standards",
+                                            "misc"
+                                        ]
                                     }
                                 }
                             }
@@ -4726,7 +4747,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback/feedback-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"message\":\"string\",\"issue\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback/feedback-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
                     }
                 ]
             },
@@ -4998,7 +5019,8 @@
                                         "type": "string",
                                         "description": "Feedback reply",
                                         "minLength": 1,
-                                        "maxLength": 1024
+                                        "maxLength": 1024,
+                                        "required": "true"
                                     }
                                 }
                             }
@@ -7908,14 +7930,14 @@
                     },
                     "stage": {
                         "type": "string",
-                        "description": "Value Item Stage\n\n  * `p` - Planning\n  * `v` - Validation\n  * `x` - Execution\n  * `c` - Deep Context",
+                        "description": "Value Item Stage\n\n  * `planning` - Planning\n  * `validation` - Validation\n  * `execution` - Execution\n  * `deep context` - Deep Context",
                         "enum": [
-                            "p",
-                            "v",
-                            "x",
-                            "c"
+                            "planning",
+                            "validation",
+                            "execution",
+                            "deep context"
                         ],
-                        "example": "p"
+                        "example": "planning"
                     },
                     "canAdvance": {
                         "type": "boolean",
@@ -7924,24 +7946,24 @@
                     },
                     "type": {
                         "type": "string",
-                        "description": "Value Item Type\n\n  * `f` - Feature\n  * `b` - Bug fix\n  * `c` - Chore",
+                        "description": "Value Item Type\n\n  * `feature` - Feature\n  * `bug fix` - Bug fix\n  * `chore` - Chore",
                         "enum": [
-                            "f",
-                            "b",
-                            "c"
+                            "feature",
+                            "bug fix",
+                            "chore"
                         ],
-                        "example": "f"
+                        "example": "feature"
                     },
                     "priority": {
                         "type": "string",
-                        "description": "Value Item Priority using MoSCoW\n\n  * `m` - Must-have\n  * `s` - Should-have\n  * `c` - Could-have\n  * `w` - Will NOT have",
+                        "description": "Value Item Priority using MoSCoW\n\n  * `must` - Must-have\n  * `should` - Should-have\n  * `could` - Could-have\n  * `will not` - Will NOT have",
                         "enum": [
-                            "m",
-                            "s",
-                            "c",
-                            "w"
+                            "must",
+                            "should",
+                            "could",
+                            "will not"
                         ],
-                        "example": "m"
+                        "example": "must"
                     },
                     "assumptions": {
                         "type": "array",
@@ -8019,13 +8041,13 @@
                             },
                             "state": {
                                 "type": "string",
-                                "description": "Experiment state\n\n  * `i` - Idle\n  * `r` - Running\n  * `d` - Done",
+                                "description": "Experiment state\n\n  * `idle` - Idle\n  * `running` - Running\n  * `done` - Done",
                                 "enum": [
-                                    "i",
-                                    "r",
-                                    "d"
+                                    "idle",
+                                    "running",
+                                    "done"
                                 ],
-                                "default": "i"
+                                "default": "idle"
                             }
                         }
                     }
@@ -8058,14 +8080,14 @@
                     },
                     "state": {
                         "type": "string",
-                        "description": "Task state\n\n  * `i` - Idle\n  * `p` - In progress\n  * `r` - In review\n  * `d` - Done",
+                        "description": "Task state\n\n  * `idle` - Idle\n  * `in progress` - In progress\n  * `in review` - In review\n  * `done` - Done",
                         "enum": [
-                            "i",
-                            "p",
-                            "r",
-                            "d"
+                            "idle",
+                            "in progress",
+                            "in review",
+                            "done"
                         ],
-                        "default": "i"
+                        "default": "idle"
                     },
                     "notionIds": {
                         "type": "array",
@@ -8108,14 +8130,14 @@
                     },
                     "state": {
                         "type": "string",
-                        "description": "Task state\n\n  * `i` - Idle\n  * `p` - In progress\n  * `r` - In review\n  * `d` - Done",
+                        "description": "Task state\n\n  * `idle` - Idle\n  * `in progress` - In progress\n  * `in review` - In review\n  * `done` - Done",
                         "enum": [
-                            "i",
-                            "p",
-                            "r",
-                            "d"
+                            "idle",
+                            "in progress",
+                            "in review",
+                            "done"
                         ],
-                        "default": "i"
+                        "default": "idle"
                     },
                     "notions": {
                         "type": "array",
@@ -8144,6 +8166,11 @@
                             "title": "Minute Discovery",
                             "description": "Task discovery recorded in an iteration",
                             "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "Discovery ID",
+                                    "example": "discovery-id-***"
+                                },
                                 "iteration": {
                                     "type": "number",
                                     "description": "Iteration number",
@@ -8170,6 +8197,11 @@
                             "title": "Minute Feedback",
                             "description": "Task feedback recorded in an iteration",
                             "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "Feedback ID",
+                                    "example": "feedback-id-***"
+                                },
                                 "iteration": {
                                     "type": "number",
                                     "description": "Iteration number",
@@ -8181,18 +8213,18 @@
                                 },
                                 "issue": {
                                     "type": "string",
-                                    "description": "Feedback issue\n\n  * `v` - Value\n  * `c` - Complexity\n  * `f` - Flexibility\n  * `t` - Testing\n  * `s` - Security\n  * `ci` - CI/CD\n  * `st` - Standards\n  * `m` - Miscellaneous",
+                                    "description": "Feedback issue\n\n  * `value` - Value\n  * `complexity` - Complexity\n  * `flexibility` - Flexibility\n  * `testing` - Testing\n  * `security` - Security\n  * `ci/cd` - CI/CD\n  * `standards` - Standards\n  * `misc` - Miscellaneous",
                                     "enum": [
-                                        "v",
-                                        "c",
-                                        "f",
-                                        "t",
-                                        "s",
-                                        "ci",
-                                        "st",
-                                        "m"
+                                        "value",
+                                        "complexity",
+                                        "flexibility",
+                                        "testing",
+                                        "security",
+                                        "ci/cd",
+                                        "standards",
+                                        "misc"
                                     ],
-                                    "default": "v"
+                                    "default": "value"
                                 },
                                 "message": {
                                     "type": "string",

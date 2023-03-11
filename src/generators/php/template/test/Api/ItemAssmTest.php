@@ -105,7 +105,7 @@ class ItemAssmTest extends TestCase {
                 (new Model\RequestValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
+                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
             );
     }
 
@@ -219,7 +219,7 @@ class ItemAssmTest extends TestCase {
                     ->setDigest("Experiment digest")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
-                    ->setState(Model\RequestAssmValidate::STATE_D)
+                    ->setState(Model\RequestAssmValidate::STATE_DONE)
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmUpdatedExp);
         $this->assertEquals(0, count($assmUpdatedExp->listProps()));
@@ -230,7 +230,7 @@ class ItemAssmTest extends TestCase {
         $this->assertEquals("Experiment digest", $assmUpdatedExp->getExperiment()->getDigest());
         $this->assertEquals("Experiment details", $assmUpdatedExp->getExperiment()->getDetails());
         $this->assertTrue($assmUpdatedExp->getExperiment()->getConfirmed());
-        $this->assertEquals(Model\RequestAssmValidate::STATE_D, $assmUpdatedExp->getExperiment()->getState());
+        $this->assertEquals(Model\RequestAssmValidate::STATE_DONE, $assmUpdatedExp->getExperiment()->getState());
 
         // Delete
         $deleted = $this->sdk

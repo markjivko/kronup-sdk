@@ -114,7 +114,7 @@ class ItemTest extends TestCase {
                 (new Model\RequestValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
+                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
             );
         $this->assertInstanceOf(Model\ValueItem::class, $item);
         $this->assertEquals(0, count($item->listProps()));
@@ -145,7 +145,7 @@ class ItemTest extends TestCase {
                 (new Model\RequestValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
+                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
             );
 
         // Update the item
@@ -193,7 +193,7 @@ class ItemTest extends TestCase {
                 (new Model\RequestValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
+                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
             );
         $this->assertInstanceOf(Model\ValueItem::class, $item);
         $this->assertEquals(0, count($item->listProps()));

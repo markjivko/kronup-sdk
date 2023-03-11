@@ -111,8 +111,8 @@ class ExperienceTest extends TestCase {
         $xpList = $this->sdk
             ->api()
             ->experiences()
-            ->experienceList($this->account->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\ExperienceList::class, $xpList);
+            ->experiencesList($this->account->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ExperiencesList::class, $xpList);
         $this->assertEquals(0, count($xpList->listProps()));
 
         // Assert array

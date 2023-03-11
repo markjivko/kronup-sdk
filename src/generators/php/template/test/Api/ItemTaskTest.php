@@ -112,7 +112,7 @@ class ItemTaskTest extends TestCase {
                 (new Model\RequestValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_C)
+                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
             );
 
         // Add an assumption
@@ -149,7 +149,7 @@ class ItemTaskTest extends TestCase {
                     ->setDigest("Experiment digest")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
-                    ->setState(Model\RequestAssmValidate::STATE_D)
+                    ->setState(Model\RequestAssmValidate::STATE_DONE)
             );
 
         // Advance to execution
@@ -289,13 +289,15 @@ class ItemTaskTest extends TestCase {
                 $this->item->getId(),
                 $task->getId(),
                 $this->orgId,
-                (new Model\RequestTaskUpdate())->setDigest("New task title")->setState(Model\RequestTaskUpdate::STATE_D)
+                (new Model\RequestTaskUpdate())
+                    ->setDigest("New task title")
+                    ->setState(Model\RequestTaskUpdate::STATE_DONE)
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $taskUpdated);
         $this->assertEquals(0, count($taskUpdated->listProps()));
 
         $this->assertEquals("New task title", $taskUpdated->getDigest());
-        $this->assertEquals(Model\RequestTaskUpdate::STATE_D, $taskUpdated->getState());
+        $this->assertEquals(Model\RequestTaskUpdate::STATE_DONE, $taskUpdated->getState());
         $this->assertInstanceOf(Model\Minute::class, $taskUpdated->getMinute());
         $this->assertEquals(0, count($taskUpdated->getMinute()->listProps()));
 
