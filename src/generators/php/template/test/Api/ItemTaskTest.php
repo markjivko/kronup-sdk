@@ -65,6 +65,13 @@ class ItemTaskTest extends TestCase {
     protected $item;
 
     /**
+     * Notion
+     *
+     * @var Model\Notion
+     */
+    protected $notion;
+
+    /**
      * Set-up
      */
     public function setUp(): void {
@@ -150,6 +157,14 @@ class ItemTaskTest extends TestCase {
             ->api()
             ->valueItems()
             ->valueItemAdvance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+
+        // Prepare the notion
+        $this->notion = $this->sdk
+            ->api()
+            ->notions()
+            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
+        $this->assertInstanceOf(Model\Notion::class, $this->notion);
+        $this->assertEquals(0, count($this->notion->listProps()));
     }
 
     /**
@@ -162,6 +177,13 @@ class ItemTaskTest extends TestCase {
             ->teams()
             ->teamDelete($this->team->getId(), $this->orgId);
         $this->assertTrue($deleted);
+
+        // Remove the notion
+        $deletedNotion = $this->sdk
+            ->api()
+            ->notions()
+            ->notionDelete($this->notion->getId(), $this->orgId);
+        $this->assertTrue($deletedNotion);
     }
 
     /**
@@ -352,5 +374,184 @@ class ItemTaskTest extends TestCase {
 
         $this->assertIsString($taskAssigned->getAssigneeId());
         $this->assertEquals($this->account->getId(), $taskAssigned->getAssigneeId());
+    }
+
+    /**
+     * Notion add and remove
+     */
+    public function testNotions(): void {
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskCreate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $this->orgId,
+                (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+            );
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertEquals(0, count($task->listProps()));
+
+        // Added notion
+        $taskNotion = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskNotionAdd(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->notion->getId(),
+                $this->orgId
+            );
+        $this->assertInstanceOf(Model\Task::class, $taskNotion);
+        $this->assertEquals(0, count($taskNotion->listProps()));
+
+        $this->assertIsArray($taskNotion->getNotionIds());
+        $this->assertEquals(1, count($taskNotion->getNotionIds()));
+
+        // Read the task
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskRead(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->orgId
+            );
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertEquals(0, count($task->listProps()));
+
+        $this->assertIsArray($task->getNotions());
+        $this->assertEquals(1, count($task->getNotions()));
+
+        $this->assertInstanceOf(Model\Notion::class, $task->getNotions()[0]);
+        $this->assertEquals(0, count($task->getNotions()[0]->listProps()));
+
+        $this->assertEquals($this->notion->getValue(), $task->getNotions()[0]->getValue());
+
+        // Remove the notion
+        $removed = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskNotionRemove(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->notion->getId(),
+                $this->orgId
+            );
+        $this->assertTrue($removed);
+
+        // Read the task
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskRead(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->orgId
+            );
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertEquals(0, count($task->listProps()));
+
+        $this->assertIsArray($task->getNotions());
+        $this->assertEquals(0, count($task->getNotions()));
+    }
+
+    /**
+     * Removing notion deletes it from task as well
+     */
+    public function testRemoveNotion(): void {
+        // Prepare the notion
+        $notion = $this->sdk
+            ->api()
+            ->notions()
+            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue("new-notion-" . mt_rand(1, 999)));
+        $this->assertInstanceOf(Model\Notion::class, $notion);
+        $this->assertEquals(0, count($notion->listProps()));
+
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskCreate(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $this->orgId,
+                (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+            );
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertEquals(0, count($task->listProps()));
+
+        // Added notion
+        $taskNotion = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskNotionAdd(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $notion->getId(),
+                $this->orgId
+            );
+        $this->assertInstanceOf(Model\Task::class, $taskNotion);
+        $this->assertEquals(0, count($taskNotion->listProps()));
+
+        $this->assertIsArray($taskNotion->getNotionIds());
+        $this->assertEquals(1, count($taskNotion->getNotionIds()));
+
+        // Read the task
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskRead(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->orgId
+            );
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertEquals(0, count($task->listProps()));
+
+        $this->assertIsArray($task->getNotions());
+        $this->assertEquals(1, count($task->getNotions()));
+
+        $this->assertInstanceOf(Model\Notion::class, $task->getNotions()[0]);
+        $this->assertEquals(0, count($task->getNotions()[0]->listProps()));
+
+        $this->assertEquals($notion->getValue(), $task->getNotions()[0]->getValue());
+
+        // Delete the notion
+        $deleted = $this->sdk
+            ->api()
+            ->notions()
+            ->notionDelete($notion->getId(), $this->orgId);
+        $this->assertTrue($deleted);
+
+        // Read the task
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->taskRead(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $task->getId(),
+                $this->orgId
+            );
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertEquals(0, count($task->listProps()));
+
+        $this->assertIsArray($task->getNotions());
+        $this->assertEquals(0, count($task->getNotions()));
     }
 }

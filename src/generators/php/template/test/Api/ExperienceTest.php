@@ -140,7 +140,38 @@ class ExperienceTest extends TestCase {
         $this->assertEquals(0, count($xpRead->getNotion()->listProps()));
     }
 
-    // @TODO Test removed experience when deleting notion
-    // @TODO Test removed notion from task when deleting notion
-    // @TODO Test delete
+    /**
+     * Removing notion deletes it from task as well
+     */
+    public function testRemoveNotion(): void {
+        // Prepare the notion
+        $notion = $this->sdk
+            ->api()
+            ->notions()
+            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue("new-notion-" . mt_rand(1, 999)));
+        $this->assertInstanceOf(Model\Notion::class, $notion);
+        $this->assertEquals(0, count($notion->listProps()));
+
+        // Evaluate self
+        $experience = $this->sdk
+            ->api()
+            ->experiences()
+            ->experienceEvaluateSelf($notion->getId(), mt_rand(1, 10), $this->orgId);
+        $this->assertInstanceOf(Model\Experience::class, $experience);
+        $this->assertEquals(0, count($experience->listProps()));
+
+        // Delete the notion
+        $deleted = $this->sdk
+            ->api()
+            ->notions()
+            ->notionDelete($notion->getId(), $this->orgId);
+        $this->assertTrue($deleted);
+
+        // Fetch the experience
+        $this->expectExceptionObject(new ApiException("Not Found", 404));
+        $this->sdk
+            ->api()
+            ->experiences()
+            ->experienceRead($notion->getId(), $this->account->getId(), $this->orgId);
+    }
 }

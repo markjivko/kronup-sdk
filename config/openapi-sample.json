@@ -3802,7 +3802,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/Task"
                                 }
                             }
                         }
