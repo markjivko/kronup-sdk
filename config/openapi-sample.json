@@ -397,6 +397,11 @@
                                             "description": "Page number",
                                             "example": 1
                                         },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
+                                        },
                                         "experiences": {
                                             "type": "array",
                                             "items": {
@@ -873,6 +878,11 @@
                                             "type": "integer",
                                             "description": "Page number",
                                             "example": 1
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
                                         },
                                         "invitations": {
                                             "type": "array",
@@ -1529,6 +1539,11 @@
                                             "type": "integer",
                                             "description": "Page number",
                                             "example": 1
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
                                         },
                                         "items": {
                                             "type": "array",
@@ -2310,6 +2325,11 @@
                                             "type": "integer",
                                             "description": "Page number",
                                             "example": 1
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
                                         },
                                         "assumptions": {
                                             "type": "array",
@@ -3158,6 +3178,11 @@
                                             "type": "integer",
                                             "description": "Page number",
                                             "example": 1
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
                                         },
                                         "tasks": {
                                             "type": "array",
@@ -5240,6 +5265,11 @@
                                             "description": "Page number",
                                             "example": 1
                                         },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
+                                        },
                                         "notions": {
                                             "type": "array",
                                             "items": {
@@ -6566,6 +6596,11 @@
                                             "description": "Page number",
                                             "example": 1
                                         },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
+                                        },
                                         "teams": {
                                             "type": "array",
                                             "items": {
@@ -7510,6 +7545,11 @@
                                             "type": "integer",
                                             "description": "Page number",
                                             "example": 1
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
                                         },
                                         "users": {
                                             "type": "array",

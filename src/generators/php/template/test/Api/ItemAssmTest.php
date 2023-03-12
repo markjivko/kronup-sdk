@@ -164,6 +164,7 @@ class ItemAssmTest extends TestCase {
 
         $this->assertIsArray($assmList->getAssumptions());
         $this->assertGreaterThan(0, count($assmList->getAssumptions()));
+        $this->assertGreaterThanOrEqual(count($assmList->getAssumptions()), $assmList->getTotal());
     }
 
     /**

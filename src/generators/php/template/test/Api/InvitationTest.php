@@ -74,6 +74,7 @@ class InvitationTest extends TestCase {
 
         $this->assertIsArray($invitationsList->getInvitations());
         $this->assertGreaterThanOrEqual(1, count($invitationsList->getInvitations()));
+        $this->assertGreaterThanOrEqual(count($invitationsList->getInvitations()), $invitationsList->getTotal());
 
         // Update invitation details
         $invitationModelUpdated = $this->sdk

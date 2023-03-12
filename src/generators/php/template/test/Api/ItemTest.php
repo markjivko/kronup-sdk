@@ -129,6 +129,7 @@ class ItemTest extends TestCase {
 
         $this->assertIsArray($items->getItems());
         $this->assertGreaterThan(0, count($items->getItems()));
+        $this->assertGreaterThanOrEqual(count($items->getItems()), $items->getTotal());
     }
 
     /**

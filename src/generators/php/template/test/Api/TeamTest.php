@@ -75,6 +75,8 @@ class TeamTest extends TestCase {
         $this->assertIsArray($teamsList->getTeams());
         $this->assertGreaterThanOrEqual(1, count($teamsList->getTeams()));
 
+        $this->assertGreaterThanOrEqual(count($teamsList->getTeams()), $teamsList->getTotal());
+
         // Update team details
         $teamModelUpdated = $this->sdk
             ->api()

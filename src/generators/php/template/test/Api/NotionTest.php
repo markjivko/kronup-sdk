@@ -142,6 +142,8 @@ class NotionTest extends TestCase {
         $this->assertInstanceOf(Model\NotionsList::class, $notionList);
         $this->assertEquals(0, count($notionList->listProps()));
 
+        $this->assertGreaterThanOrEqual(count($notionList->getNotions()), $notionList->getTotal());
+
         // Delete the notion
         $deleted = $this->sdk
             ->api()

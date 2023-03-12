@@ -118,6 +118,7 @@ class ExperienceTest extends TestCase {
         // Assert array
         $this->assertIsArray($xpList->getExperiences());
         $this->assertEquals(1, count($xpList->getExperiences()));
+        $this->assertGreaterThanOrEqual(count($xpList->getExperiences()), $xpList->getTotal());
 
         // Validate notions are expanded
         foreach ($xpList->getExperiences() as $xp) {
