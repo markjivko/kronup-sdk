@@ -374,6 +374,7 @@
                             "type": "integer",
                             "default": 100,
                             "minimum": 1,
+                            "maximum": 500,
                             "example": 100
                         }
                     }
@@ -387,15 +388,20 @@
                                     "title": "Experiences List",
                                     "type": "object",
                                     "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
                                         "pageNumber": {
                                             "type": "integer",
                                             "description": "Page number",
-                                            "example": 1
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -856,6 +862,7 @@
                             "type": "integer",
                             "default": 100,
                             "minimum": 1,
+                            "maximum": 500,
                             "example": 100
                         }
                     }
@@ -869,15 +876,20 @@
                                     "title": "Invitations List",
                                     "type": "object",
                                     "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
                                         "pageNumber": {
                                             "type": "integer",
                                             "description": "Page number",
-                                            "example": 1
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -1517,6 +1529,7 @@
                             "type": "integer",
                             "default": 100,
                             "minimum": 1,
+                            "maximum": 500,
                             "example": 100
                         }
                     }
@@ -1530,15 +1543,20 @@
                                     "title": "Value Items List",
                                     "type": "object",
                                     "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
                                         "pageNumber": {
                                             "type": "integer",
                                             "description": "Page number",
-                                            "example": 1
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -2303,6 +2321,7 @@
                             "type": "integer",
                             "default": 100,
                             "minimum": 1,
+                            "maximum": 500,
                             "example": 100
                         }
                     }
@@ -2316,15 +2335,20 @@
                                     "title": "Assumptions List",
                                     "type": "object",
                                     "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
                                         "pageNumber": {
                                             "type": "integer",
                                             "description": "Page number",
-                                            "example": 1
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -3156,6 +3180,7 @@
                             "type": "integer",
                             "default": 100,
                             "minimum": 1,
+                            "maximum": 500,
                             "example": 100
                         }
                     }
@@ -3169,15 +3194,20 @@
                                     "title": "Tasks List",
                                     "type": "object",
                                     "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
                                         "pageNumber": {
                                             "type": "integer",
                                             "description": "Page number",
-                                            "example": 1
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -5242,6 +5272,7 @@
                             "type": "integer",
                             "default": 100,
                             "minimum": 1,
+                            "maximum": 500,
                             "example": 100
                         }
                     }
@@ -5255,15 +5286,20 @@
                                     "title": "Notions List",
                                     "type": "object",
                                     "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
                                         "pageNumber": {
                                             "type": "integer",
                                             "description": "Page number",
-                                            "example": 1
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -6573,6 +6609,7 @@
                             "type": "integer",
                             "default": 100,
                             "minimum": 1,
+                            "maximum": 500,
                             "example": 100
                         }
                     }
@@ -6586,15 +6623,20 @@
                                     "title": "Teams List",
                                     "type": "object",
                                     "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
                                         "pageNumber": {
                                             "type": "integer",
                                             "description": "Page number",
-                                            "example": 1
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -7523,6 +7565,7 @@
                             "type": "integer",
                             "default": 100,
                             "minimum": 1,
+                            "maximum": 500,
                             "example": 100
                         }
                     }
@@ -7536,15 +7579,20 @@
                                     "title": "Users List",
                                     "type": "object",
                                     "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
                                         "pageNumber": {
                                             "type": "integer",
                                             "description": "Page number",
-                                            "example": 1
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
                                         },
                                         "total": {
                                             "type": "integer",
