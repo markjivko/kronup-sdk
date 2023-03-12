@@ -831,6 +831,28 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "example": 100
+                        }
                     }
                 ],
                 "responses": {
@@ -839,9 +861,25 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Invitation"
+                                    "title": "Invitations List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1
+                                        },
+                                        "invitations": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Invitation"
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -886,7 +924,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/invitations?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -6485,6 +6523,28 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "example": 100
+                        }
                     }
                 ],
                 "responses": {
@@ -6493,9 +6553,25 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Team"
+                                    "title": "Teams List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1
+                                        },
+                                        "teams": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Team"
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -6540,7 +6616,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -7059,122 +7135,6 @@
                 ]
             }
         },
-        "/users": {
-            "get": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "List users",
-                "description": "Get a list of user models",
-                "operationId": "userList",
-                "parameters": [
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "pageNumber",
-                        "in": "query",
-                        "description": "Pagination: page number",
-                        "schema": {
-                            "type": "integer",
-                            "default": 1,
-                            "minimum": 1,
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "pageSize",
-                        "in": "query",
-                        "description": "Pagination: page size",
-                        "schema": {
-                            "type": "integer",
-                            "default": 100,
-                            "minimum": 1,
-                            "example": 100
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of users in organization",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "title": "Users List",
-                                    "type": "object",
-                                    "properties": {
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100
-                                        },
-                                        "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1
-                                        },
-                                        "users": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/User"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
-                    }
-                ]
-            }
-        },
         "/users/{userId}": {
             "get": {
                 "tags": [
@@ -7486,6 +7446,122 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List users",
+                "description": "Get a list of user models",
+                "operationId": "userList",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of users in organization",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Users List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100
+                                        },
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1
+                                        },
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
