@@ -21,7 +21,7 @@
     "tags": [
         {
             "name": "Account",
-            "description": "Manage the current account. \nThese methods apply to the identity declared in the authorization bearer token."
+            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach account and Service Account can send at most **10000** requests per day through our API."
         },
         {
             "name": "Users",
@@ -45,23 +45,23 @@
         },
         {
             "name": "Value items",
-            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly."
+            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly.\n\nIn order to prevent information overload, each [Channel](#tag/Channels) can hold at most **50** 'value items'."
         },
         {
             "name": "Assumptions",
-            "description": "Each [value item](#tag/Value-items) has at least **1** and at most **100** Assumptions.\n\nLess is more, so focus on having smaller value items with fewer assumptions per item.\n\nAssumptions need to be validated by running experiments or by relying on past results."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **100** Assumptions.\n\nLess is more, so focus on having smaller value items with fewer assumptions per item.\n\nAssumptions need to be validated by running experiments or by relying on past results."
         },
         {
             "name": "Tasks",
-            "description": "Each [value item](#tag/Value-items) has at least **1** and at most **100** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **100** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **50** [Notions](#tag/Notions), **100** discoveries, and **250** feedback items."
         },
         {
             "name": "Notions",
-            "description": "Each [task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task."
+            "description": "Each [Task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task.\n\nEach [Organization](#tag/Organizations) can define at most **100000** Notions."
         },
         {
             "name": "Experiences",
-            "description": "Team members can anonymously assess their own and their peer's proficiency with each each [notion](#tag/Notions).\n\nThe evaluation of notions will be used to determine task assignments in order to maximize productivity and team happiness."
+            "description": "Team members can anonymously assess their own and their peer's proficiency with each each [Notion](#tag/Notions).\n\nThe evaluation of notions will be used to determine task assignments in order to maximize productivity and team happiness."
         }
     ],
     "paths": {
@@ -5468,7 +5468,7 @@
                     "Notions"
                 ],
                 "summary": "Delete notion",
-                "description": "Delete a notion model",
+                "description": "Delete a notion model. This also removes the associated Experiences for all users in this Organization.",
                 "operationId": "notionDelete",
                 "parameters": [
                     {
