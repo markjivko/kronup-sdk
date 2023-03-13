@@ -189,7 +189,7 @@ class ItemTaskTest extends TestCase {
     /**
      * Create & Read
      */
-    public function xtestCreateRead(): void {
+    public function testCreateRead(): void {
         $task = $this->sdk
             ->api()
             ->tasks()
@@ -303,20 +303,24 @@ class ItemTaskTest extends TestCase {
         $this->assertInstanceOf(Model\Minute::class, $taskUpdated->getMinute());
         $this->assertEquals(0, count($taskUpdated->getMinute()->listProps()));
 
+        // Re-fetch the item
+        $this->item = $this->sdk
+            ->api()
+            ->valueItems()
+            ->valueItemRead($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+
         // Advance
         $this->sdk
             ->api()
             ->valueItems()
             ->valueItemAdvance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
 
-        // @TODO task moved to deep context, find it there
-
-        // Delete not allowed in deep context
-        $this->expectExceptionObject(new ApiException("Forbidden", 403));
+        // Task can no longer be loaded (now in deep context)
+        $this->expectExceptionObject(new ApiException("Not Found", 404));
         $this->sdk
             ->api()
             ->tasks()
-            ->taskDelete(
+            ->taskRead(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
@@ -328,7 +332,7 @@ class ItemTaskTest extends TestCase {
     /**
      * Create minute
      */
-    public function xtestMinuteCreateRead(): void {
+    public function testMinuteCreateRead(): void {
         $task = $this->sdk
             ->api()
             ->tasks()
@@ -349,7 +353,7 @@ class ItemTaskTest extends TestCase {
     /**
      * Assign user to task
      */
-    public function xtestAssign(): void {
+    public function testAssign(): void {
         $task = $this->sdk
             ->api()
             ->tasks()
@@ -385,7 +389,7 @@ class ItemTaskTest extends TestCase {
     /**
      * Notion add and remove
      */
-    public function xtestNotions(): void {
+    public function testNotions(): void {
         $task = $this->sdk
             ->api()
             ->tasks()
@@ -474,7 +478,7 @@ class ItemTaskTest extends TestCase {
     /**
      * Removing notion deletes it from task as well
      */
-    public function xtestRemoveNotion(): void {
+    public function testRemoveNotion(): void {
         // Prepare the notion
         $notion = $this->sdk
             ->api()

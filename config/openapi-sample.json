@@ -62,6 +62,10 @@
         {
             "name": "Experiences",
             "description": "Team members can anonymously assess their own and their peer's proficiency with each each [Notion](#tag/Notions).\n\nThe evaluation of notions will be used to determine task assignments in order to maximize productivity and team happiness."
+        },
+        {
+            "name": "Deep Context",
+            "description": "Once all [Tasks](#tag/Tasks) are marked as done, [Value items](#tag/Value-items) can be advanced further to Deep Context.\n        \nOnce in Deep Context, Value items can no longer be modified or restored to an active state."
         }
     ],
     "paths": {
@@ -217,6 +221,329 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                    }
+                ]
+            }
+        },
+        "/deep-context/{itemId}": {
+            "get": {
+                "tags": [
+                    "Deep Context"
+                ],
+                "summary": "Fetch value item",
+                "description": "Retrieve value item model",
+                "operationId": "deepContextRead",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value item found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItemExpanded"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/deep-context/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Deep Context"
+                ],
+                "summary": "Delete value item",
+                "description": "Delete a value item from Deep Context\";",
+                "operationId": "deepContextDelete",
+                "parameters": [
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OK"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/deep-context/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/deep-context": {
+            "get": {
+                "tags": [
+                    "Deep Context"
+                ],
+                "summary": "Search value items",
+                "description": "Get a list of value item models",
+                "operationId": "deepContextSearch",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "searchTerm",
+                        "in": "query",
+                        "description": "Search term",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "maximum": 500,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of value items",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Deep Context List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ValueItem"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/deep-context?searchTerm=SOME_STRING_VALUE&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -8090,7 +8417,7 @@
                         "example": "Item detailed description ***"
                     },
                     "authorId": {
-                        "$ref": "#/components/schemas/ValueItemAuthor"
+                        "$ref": "#/components/schemas/AuthorId"
                     },
                     "stage": {
                         "type": "string",
@@ -8138,14 +8465,14 @@
                     },
                     "tasks": {
                         "type": "array",
-                        "description": "List of Tasks without Minutes",
+                        "description": "List of Tasks",
                         "items": {
                             "$ref": "#/components/schemas/Task"
                         }
                     }
                 }
             },
-            "ValueItemAuthor": {
+            "AuthorId": {
                 "type": "string",
                 "title": "Author",
                 "description": "Author ID",
@@ -8161,7 +8488,7 @@
                         "example": "value-item-id-***"
                     },
                     "authorId": {
-                        "$ref": "#/components/schemas/ValueItemAuthor"
+                        "$ref": "#/components/schemas/AuthorId"
                     },
                     "digest": {
                         "type": "string",
@@ -8182,7 +8509,7 @@
                             "authorIds": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/ValueItemAuthor"
+                                    "$ref": "#/components/schemas/AuthorId"
                                 }
                             },
                             "confirmed": {
@@ -8228,7 +8555,7 @@
                         "example": "task-id-***"
                     },
                     "assigneeId": {
-                        "$ref": "#/components/schemas/ValueItemAuthor"
+                        "$ref": "#/components/schemas/AuthorId"
                     },
                     "digest": {
                         "type": "string",
@@ -8266,19 +8593,16 @@
             },
             "TaskExpanded": {
                 "type": "object",
-                "title": "Task with Minute included",
-                "description": "Full Task model that includes Minutes",
+                "title": "Task",
+                "description": "Task model without Minutes",
                 "properties": {
                     "id": {
                         "type": "string",
                         "description": "Task ID",
                         "example": "task-id-***"
                     },
-                    "minute": {
-                        "$ref": "#/components/schemas/Minute"
-                    },
                     "assigneeId": {
-                        "$ref": "#/components/schemas/ValueItemAuthor"
+                        "$ref": "#/components/schemas/AuthorId"
                     },
                     "digest": {
                         "type": "string",
@@ -8303,11 +8627,108 @@
                         ],
                         "default": "idle"
                     },
+                    "minute": {
+                        "$ref": "#/components/schemas/Minute"
+                    },
                     "notions": {
                         "type": "array",
                         "description": "Notions",
                         "items": {
                             "$ref": "#/components/schemas/Notion"
+                        }
+                    }
+                }
+            },
+            "ValueItemExpanded": {
+                "type": "object",
+                "title": "Value Item Expanded",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "org-id-***"
+                    },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    "channelId": {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    "digest": {
+                        "type": "string",
+                        "description": "Value item digest",
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "example": "Value item number 1"
+                    },
+                    "details": {
+                        "type": "string",
+                        "description": "Value item description",
+                        "minLength": 1,
+                        "maxLength": 4096,
+                        "example": "Item detailed description ***"
+                    },
+                    "authorId": {
+                        "$ref": "#/components/schemas/AuthorId"
+                    },
+                    "stage": {
+                        "type": "string",
+                        "description": "Value Item Stage\n\n  * `planning` - Planning\n  * `validation` - Validation\n  * `execution` - Execution\n  * `deep context` - Deep Context",
+                        "enum": [
+                            "planning",
+                            "validation",
+                            "execution",
+                            "deep context"
+                        ],
+                        "example": "planning"
+                    },
+                    "canAdvance": {
+                        "type": "boolean",
+                        "description": "Value Item can advance to the next stage\n  * In Planning: at least 1 Assumption was added\n  * In Validation: all Assumptions were validated\n  * In Execution: all Tasks were completed",
+                        "default": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Value Item Type\n\n  * `feature` - Feature\n  * `bug fix` - Bug fix\n  * `chore` - Chore",
+                        "enum": [
+                            "feature",
+                            "bug fix",
+                            "chore"
+                        ],
+                        "example": "feature"
+                    },
+                    "priority": {
+                        "type": "string",
+                        "description": "Value Item Priority using MoSCoW\n\n  * `must` - Must-have\n  * `should` - Should-have\n  * `could` - Could-have\n  * `will not` - Will NOT have",
+                        "enum": [
+                            "must",
+                            "should",
+                            "could",
+                            "will not"
+                        ],
+                        "example": "must"
+                    },
+                    "assumptions": {
+                        "type": "array",
+                        "description": "Assumptions",
+                        "items": {
+                            "$ref": "#/components/schemas/Assumption"
+                        }
+                    },
+                    "tasks": {
+                        "type": "array",
+                        "description": "List of expanded Tasks",
+                        "items": {
+                            "$ref": "#/components/schemas/TaskExpanded"
                         }
                     }
                 }
@@ -8342,7 +8763,7 @@
                                     "default": 1
                                 },
                                 "authorId": {
-                                    "$ref": "#/components/schemas/ValueItemAuthor"
+                                    "$ref": "#/components/schemas/AuthorId"
                                 },
                                 "details": {
                                     "type": "string",
@@ -8373,7 +8794,7 @@
                                     "default": 1
                                 },
                                 "authorId": {
-                                    "$ref": "#/components/schemas/ValueItemAuthor"
+                                    "$ref": "#/components/schemas/AuthorId"
                                 },
                                 "issue": {
                                     "type": "string",
@@ -8661,7 +9082,8 @@
                 "Assumptions",
                 "Tasks",
                 "Notions",
-                "Experiences"
+                "Experiences",
+                "Deep Context"
             ]
         }
     ]
