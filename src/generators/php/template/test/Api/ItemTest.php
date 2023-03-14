@@ -76,7 +76,7 @@ class ItemTest extends TestCase {
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->teamCreate($this->orgId, (new Model\RequestTeamCreate())->setTeamName("New team"));
+            ->teamCreate($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -111,10 +111,10 @@ class ItemTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
-                (new Model\RequestValueItemCreate())
+                (new Model\PayloadValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
+                    ->setPriority(Model\PayloadValueItemCreate::PRIORITY_COULD)
             );
         $this->assertInstanceOf(Model\ValueItem::class, $item);
         $this->assertEquals(0, count($item->listProps()));
@@ -143,10 +143,10 @@ class ItemTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
-                (new Model\RequestValueItemCreate())
+                (new Model\PayloadValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
+                    ->setPriority(Model\PayloadValueItemCreate::PRIORITY_COULD)
             );
 
         // Update the item
@@ -158,7 +158,7 @@ class ItemTest extends TestCase {
                 $this->channel->getId(),
                 $item->getId(),
                 $this->orgId,
-                (new Model\RequestValueItemUpdate())->setDigest("The new digest")
+                (new Model\PayloadValueItemUpdate())->setDigest("The new digest")
             );
         $this->assertInstanceOf(Model\ValueItem::class, $itemUpdated);
         $this->assertEquals(0, count($itemUpdated->listProps()));
@@ -191,10 +191,10 @@ class ItemTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
-                (new Model\RequestValueItemCreate())
+                (new Model\PayloadValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
+                    ->setPriority(Model\PayloadValueItemCreate::PRIORITY_COULD)
             );
         $this->assertInstanceOf(Model\ValueItem::class, $item);
         $this->assertEquals(0, count($item->listProps()));

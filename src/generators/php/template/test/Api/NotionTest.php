@@ -87,7 +87,7 @@ class NotionTest extends TestCase {
         $notion = $this->sdk
             ->api()
             ->notions()
-            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue($notionValue));
+            ->notionCreate($this->orgId, (new Model\PayloadNotionCreate())->setValue($notionValue));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
         $this->notionId = $notion->getId();
@@ -106,7 +106,7 @@ class NotionTest extends TestCase {
         $this->sdk
             ->api()
             ->notions()
-            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue($notionValue));
+            ->notionCreate($this->orgId, (new Model\PayloadNotionCreate())->setValue($notionValue));
     }
 
     /**
@@ -117,7 +117,7 @@ class NotionTest extends TestCase {
         $notion = $this->sdk
             ->api()
             ->notions()
-            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue($notionValue));
+            ->notionCreate($this->orgId, (new Model\PayloadNotionCreate())->setValue($notionValue));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
 
@@ -128,7 +128,7 @@ class NotionTest extends TestCase {
             ->notionUpdate(
                 $notion->getId(),
                 $this->orgId,
-                (new Model\RequestNotionUpdate())->setValue($notionValue . "-updated")
+                (new Model\PayloadNotionUpdate())->setValue($notionValue . "-updated")
             );
         $this->assertInstanceOf(Model\Notion::class, $notionUpdated);
         $this->assertEquals(0, count($notionUpdated->listProps()));

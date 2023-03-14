@@ -52,7 +52,7 @@ class InvitationTest extends TestCase {
         $invitationModel = $this->sdk
             ->api()
             ->invitations()
-            ->invitationCreate($orgId, (new Model\RequestInvitationCreate())->setInviteName("New invitation"));
+            ->invitationCreate($orgId, (new Model\PayloadInvitationCreate())->setInviteName("New invitation"));
         $this->assertInstanceOf(Model\Invitation::class, $invitationModel);
         $this->assertEquals(0, count($invitationModel->listProps()));
 
@@ -83,7 +83,7 @@ class InvitationTest extends TestCase {
             ->invitationUpdate(
                 $invitationModel->getId(),
                 $orgId,
-                (new Model\RequestInvitationUpdate())
+                (new Model\PayloadInvitationUpdate())
                     ->setInviteName("Another invitation name")
                     ->setInviteDomain("example.com")
             );
@@ -119,7 +119,7 @@ class InvitationTest extends TestCase {
             $this->sdk
                 ->api()
                 ->invitations()
-                ->invitationCreate($orgId, new Model\RequestInvitationCreate(["inviteName" => str_repeat("x ", 33)]));
+                ->invitationCreate($orgId, new Model\PayloadInvitationCreate(["inviteName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "invitations.create(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
             $this->assertEquals("invalid-argument-inviteName", $exc->getResponseObject()["id"]);
@@ -129,7 +129,7 @@ class InvitationTest extends TestCase {
         $invitation = $this->sdk
             ->api()
             ->invitations()
-            ->invitationCreate($orgId, (new Model\RequestInvitationCreate())->setInviteName("Test"));
+            ->invitationCreate($orgId, (new Model\PayloadInvitationCreate())->setInviteName("Test"));
         $this->assertInstanceOf(Model\Invitation::class, $invitation);
         $this->assertEquals(0, count($invitation->listProps()));
 
@@ -141,7 +141,7 @@ class InvitationTest extends TestCase {
                 ->invitationUpdate(
                     $invitation->getId(),
                     $orgId,
-                    new Model\RequestInvitationUpdate(["inviteName" => str_repeat("x ", 33)])
+                    new Model\PayloadInvitationUpdate(["inviteName" => str_repeat("x ", 33)])
                 );
             $this->assertTrue(false, "invitations.update(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
@@ -173,7 +173,7 @@ class InvitationTest extends TestCase {
         $invitation = $this->sdk
             ->api()
             ->invitations()
-            ->invitationCreate($orgId, (new Model\RequestInvitationCreate())->setInviteName("Test"));
+            ->invitationCreate($orgId, (new Model\PayloadInvitationCreate())->setInviteName("Test"));
         $this->assertInstanceOf(Model\Invitation::class, $invitation);
         $this->assertEquals(0, count($invitation->listProps()));
 

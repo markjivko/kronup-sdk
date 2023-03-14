@@ -158,7 +158,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Account Update",
+                                "title": "Payload Account Update",
                                 "properties": {
                                     "userName": {
                                         "type": "string",
@@ -1092,7 +1092,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Invitation Create",
+                                "title": "Payload Invitation Create",
                                 "properties": {
                                     "inviteName": {
                                         "type": "string",
@@ -1424,7 +1424,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Invitation Update",
+                                "title": "Payload Invitation Update",
                                 "properties": {
                                     "inviteName": {
                                         "type": "string",
@@ -1745,7 +1745,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Value Item Create",
+                                "title": "Payload Value Item Create",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -2166,7 +2166,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Value Item Update",
+                                "title": "Payload Value Item Update",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -2555,7 +2555,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Assm Create",
+                                "title": "Payload Assm Create",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -2988,7 +2988,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Assm Update",
+                                "title": "Payload Assm Update",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -3256,7 +3256,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Assm Validate",
+                                "title": "Payload Assm Validate",
                                 "properties": {
                                     "confirmed": {
                                         "type": "boolean",
@@ -3409,7 +3409,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Task Create",
+                                "title": "Payload Task Create",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -3847,7 +3847,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Task Update",
+                                "title": "Payload Task Update",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -4532,7 +4532,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Task Discovery Create",
+                                "title": "Payload Task Discovery Create",
                                 "properties": {
                                     "details": {
                                         "type": "string",
@@ -4686,7 +4686,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Task Discovery Update",
+                                "title": "Payload Task Discovery Update",
                                 "properties": {
                                     "details": {
                                         "type": "string",
@@ -4963,7 +4963,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Task Feedback Create",
+                                "title": "Payload Task Feedback Create",
                                 "properties": {
                                     "message": {
                                         "type": "string",
@@ -5131,7 +5131,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Task Feedback Update",
+                                "title": "Payload Task Feedback Update",
                                 "properties": {
                                     "message": {
                                         "type": "string",
@@ -5433,7 +5433,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Task Feedback Reply",
+                                "title": "Payload Task Feedback Reply",
                                 "properties": {
                                     "reply": {
                                         "type": "string",
@@ -5528,7 +5528,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Notion Create",
+                                "title": "Payload Notion Create",
                                 "properties": {
                                     "value": {
                                         "type": "string",
@@ -5869,7 +5869,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Notion Update",
+                                "title": "Payload Notion Update",
                                 "properties": {
                                     "value": {
                                         "type": "string",
@@ -6045,7 +6045,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Organization Create",
+                                "title": "Payload Organization Create",
                                 "properties": {
                                     "orgName": {
                                         "type": "string",
@@ -6140,7 +6140,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Organization Update",
+                                "title": "Payload Organization Update",
                                 "properties": {
                                     "orgName": {
                                         "type": "string",
@@ -6318,7 +6318,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Channel Create",
+                                "title": "Payload Channel Create",
                                 "properties": {
                                     "channelName": {
                                         "type": "string",
@@ -6441,7 +6441,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Channel Update",
+                                "title": "Payload Channel Update",
                                 "properties": {
                                     "channelName": {
                                         "type": "string",
@@ -6865,7 +6865,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Team Create",
+                                "title": "Payload Team Create",
                                 "properties": {
                                     "teamName": {
                                         "type": "string",
@@ -7206,7 +7206,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request Team Update",
+                                "title": "Payload Team Update",
                                 "properties": {
                                     "teamName": {
                                         "type": "string",
@@ -7731,7 +7731,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Request User Role Update",
+                                "title": "Payload User Role Update",
                                 "properties": {
                                     "roleSite": {
                                         "type": "string",
@@ -8504,7 +8504,8 @@
                     },
                     "experiment": {
                         "type": "object",
-                        "description": "Experiment",
+                        "title": "Experiment",
+                        "description": "Experiment meant to validate assumption",
                         "properties": {
                             "authorIds": {
                                 "type": "array",

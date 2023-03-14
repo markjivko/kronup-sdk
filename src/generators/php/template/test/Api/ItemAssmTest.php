@@ -83,7 +83,7 @@ class ItemAssmTest extends TestCase {
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->teamCreate($this->orgId, (new Model\RequestTeamCreate())->setTeamName("New team"));
+            ->teamCreate($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -102,10 +102,10 @@ class ItemAssmTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
-                (new Model\RequestValueItemCreate())
+                (new Model\PayloadValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
+                    ->setPriority(Model\PayloadValueItemCreate::PRIORITY_COULD)
             );
     }
 
@@ -133,7 +133,7 @@ class ItemAssmTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\RequestAssmCreate())->setDigest("X can be done")
+                (new Model\PayloadAssmCreate())->setDigest("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
@@ -179,7 +179,7 @@ class ItemAssmTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\RequestAssmCreate())->setDigest("X can be done")
+                (new Model\PayloadAssmCreate())->setDigest("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
@@ -194,7 +194,7 @@ class ItemAssmTest extends TestCase {
                 $this->item->getId(),
                 $assm->getId(),
                 $this->orgId,
-                (new Model\RequestAssmUpdate())->setDigest("New assumption")
+                (new Model\PayloadAssmUpdate())->setDigest("New assumption")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmUpdated);
         $this->assertEquals(0, count($assmUpdated->listProps()));
@@ -216,22 +216,22 @@ class ItemAssmTest extends TestCase {
                 $this->item->getId(),
                 $assm->getId(),
                 $this->orgId,
-                (new Model\RequestAssmValidate())
+                (new Model\PayloadAssmValidate())
                     ->setDigest("Experiment digest")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
-                    ->setState(Model\RequestAssmValidate::STATE_DONE)
+                    ->setState(Model\PayloadAssmValidate::STATE_DONE)
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmUpdatedExp);
         $this->assertEquals(0, count($assmUpdatedExp->listProps()));
 
-        $this->assertInstanceOf(Model\AssumptionExperiment::class, $assmUpdatedExp->getExperiment());
+        $this->assertInstanceOf(Model\Experiment::class, $assmUpdatedExp->getExperiment());
         $this->assertEquals(0, count($assmUpdatedExp->getExperiment()->listProps()));
 
         $this->assertEquals("Experiment digest", $assmUpdatedExp->getExperiment()->getDigest());
         $this->assertEquals("Experiment details", $assmUpdatedExp->getExperiment()->getDetails());
         $this->assertTrue($assmUpdatedExp->getExperiment()->getConfirmed());
-        $this->assertEquals(Model\RequestAssmValidate::STATE_DONE, $assmUpdatedExp->getExperiment()->getState());
+        $this->assertEquals(Model\PayloadAssmValidate::STATE_DONE, $assmUpdatedExp->getExperiment()->getState());
 
         // Delete
         $deleted = $this->sdk

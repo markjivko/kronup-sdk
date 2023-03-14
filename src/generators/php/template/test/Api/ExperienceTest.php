@@ -67,7 +67,7 @@ class ExperienceTest extends TestCase {
         $this->notion = $this->sdk
             ->api()
             ->notions()
-            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue(uniqid()));
+            ->notionCreate($this->orgId, (new Model\PayloadNotionCreate())->setValue(uniqid()));
         $this->assertInstanceOf(Model\Notion::class, $this->notion);
         $this->assertEquals(0, count($this->notion->listProps()));
     }
@@ -149,7 +149,7 @@ class ExperienceTest extends TestCase {
         $notion = $this->sdk
             ->api()
             ->notions()
-            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue("new-notion-" . mt_rand(1, 999)));
+            ->notionCreate($this->orgId, (new Model\PayloadNotionCreate())->setValue("new-notion-" . mt_rand(1, 999)));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
 

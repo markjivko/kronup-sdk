@@ -97,7 +97,7 @@ class ItemTaskMinuteTest extends TestCase {
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->teamCreate($this->orgId, (new Model\RequestTeamCreate())->setTeamName("New team"));
+            ->teamCreate($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -116,10 +116,10 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
-                (new Model\RequestValueItemCreate())
+                (new Model\PayloadValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\RequestValueItemCreate::PRIORITY_COULD)
+                    ->setPriority(Model\PayloadValueItemCreate::PRIORITY_COULD)
             );
 
         // Add an assumption
@@ -131,7 +131,7 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\RequestAssmCreate())->setDigest("X can be done")
+                (new Model\PayloadAssmCreate())->setDigest("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
@@ -152,11 +152,11 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->item->getId(),
                 $assm->getId(),
                 $this->orgId,
-                (new Model\RequestAssmValidate())
+                (new Model\PayloadAssmValidate())
                     ->setDigest("Experiment digest")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
-                    ->setState(Model\RequestAssmValidate::STATE_DONE)
+                    ->setState(Model\PayloadAssmValidate::STATE_DONE)
             );
 
         // Advance to execution
@@ -169,7 +169,7 @@ class ItemTaskMinuteTest extends TestCase {
         $this->notion = $this->sdk
             ->api()
             ->notions()
-            ->notionCreate($this->orgId, (new Model\RequestNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
+            ->notionCreate($this->orgId, (new Model\PayloadNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
         $this->assertInstanceOf(Model\Notion::class, $this->notion);
         $this->assertEquals(0, count($this->notion->listProps()));
 
@@ -182,7 +182,7 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\RequestTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+                (new Model\PayloadTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $this->task);
         $this->assertEquals(0, count($this->task->listProps()));
@@ -224,7 +224,7 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->item->getId(),
                 $this->task->getId(),
                 $this->orgId,
-                (new Model\RequestTaskDiscoveryCreate())->setDetails($discoveryText)
+                (new Model\PayloadTaskDiscoveryCreate())->setDetails($discoveryText)
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
@@ -289,7 +289,7 @@ class ItemTaskMinuteTest extends TestCase {
                     ->getDiscoveries()[0]
                     ->getId(),
                 $this->orgId,
-                (new Model\RequestTaskDiscoveryUpdate())->setDetails($discoveryTextUpdated)
+                (new Model\PayloadTaskDiscoveryUpdate())->setDetails($discoveryTextUpdated)
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
@@ -355,9 +355,9 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->item->getId(),
                 $this->task->getId(),
                 $this->orgId,
-                (new Model\RequestTaskFeedbackCreate())
+                (new Model\PayloadTaskFeedbackCreate())
                     ->setMessage($feedbackMessage)
-                    ->setIssue(Model\RequestTaskFeedbackCreate::ISSUE_VALUE)
+                    ->setIssue(Model\PayloadTaskFeedbackCreate::ISSUE_VALUE)
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
@@ -422,9 +422,9 @@ class ItemTaskMinuteTest extends TestCase {
                     ->getFeedback()[0]
                     ->getId(),
                 $this->orgId,
-                (new Model\RequestTaskFeedbackUpdate())
+                (new Model\PayloadTaskFeedbackUpdate())
                     ->setMessage($feedbackMessageUpdated)
-                    ->setIssue(Model\RequestTaskFeedbackUpdate::ISSUE_MISC)
+                    ->setIssue(Model\PayloadTaskFeedbackUpdate::ISSUE_MISC)
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
@@ -437,7 +437,7 @@ class ItemTaskMinuteTest extends TestCase {
                 ->getMessage()
         );
         $this->assertEquals(
-            Model\RequestTaskFeedbackUpdate::ISSUE_MISC,
+            Model\PayloadTaskFeedbackUpdate::ISSUE_MISC,
             $task
                 ->getMinute()
                 ->getFeedback()[0]
@@ -458,7 +458,7 @@ class ItemTaskMinuteTest extends TestCase {
                     ->getFeedback()[0]
                     ->getId(),
                 $this->orgId,
-                (new Model\RequestTaskFeedbackReply())->setReply($feedbackReply)
+                (new Model\PayloadTaskFeedbackReply())->setReply($feedbackReply)
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
