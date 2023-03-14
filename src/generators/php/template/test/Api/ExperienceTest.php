@@ -61,7 +61,19 @@ class ExperienceTest extends TestCase {
             ->accountRead();
 
         // Get the first organization ID
-        $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+        if (!count($this->account->getRoleOrg())) {
+            $organization = $this->sdk
+                ->api()
+                ->organizations()
+                ->organizationCreate(
+                    (new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc.")
+                );
+            $this->assertInstanceOf(Model\Organization::class, $organization);
+            $this->assertEquals(0, count($organization->listProps()));
+            $this->orgId = $organization->getId();
+        } else {
+            $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+        }
 
         // Create the notion
         $this->notion = $this->sdk

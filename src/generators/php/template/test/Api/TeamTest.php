@@ -292,7 +292,19 @@ class TeamTest extends TestCase {
             ->accountRead();
 
         // Get the first organization ID
-        $orgId = current($account->getRoleOrg())->getOrgId();
+        if (!count($account->getRoleOrg())) {
+            $organization = $this->sdk
+                ->api()
+                ->organizations()
+                ->organizationCreate(
+                    (new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc.")
+                );
+            $this->assertInstanceOf(Model\Organization::class, $organization);
+            $this->assertEquals(0, count($organization->listProps()));
+            $orgId = $organization->getId();
+        } else {
+            $orgId = current($account->getRoleOrg())->getOrgId();
+        }
 
         // Create a new team
         $team = $this->sdk
