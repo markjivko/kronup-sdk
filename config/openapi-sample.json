@@ -467,7 +467,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of value items",
+                        "description": "List of Value Items",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -496,6 +496,7 @@
                                         },
                                         "items": {
                                             "type": "array",
+                                            "description": "Value Items",
                                             "items": {
                                                 "$ref": "#/components/schemas/ValueItem"
                                             }
@@ -709,7 +710,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of user experience",
+                        "description": "List of Experiences",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -738,6 +739,7 @@
                                         },
                                         "experiences": {
                                             "type": "array",
+                                            "description": "Experiences",
                                             "items": {
                                                 "$ref": "#/components/schemas/Experience"
                                             }
@@ -1198,7 +1200,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of invitations for organization",
+                        "description": "List of Invitations",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1227,6 +1229,7 @@
                                         },
                                         "invitations": {
                                             "type": "array",
+                                            "description": "Invitations",
                                             "items": {
                                                 "$ref": "#/components/schemas/Invitation"
                                             }
@@ -1867,7 +1870,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of value items",
+                        "description": "List of Value Items",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1896,6 +1899,7 @@
                                         },
                                         "items": {
                                             "type": "array",
+                                            "description": "Value Items",
                                             "items": {
                                                 "$ref": "#/components/schemas/ValueItem"
                                             }
@@ -2661,7 +2665,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of assumptions",
+                        "description": "List of Assumptions",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2690,6 +2694,7 @@
                                         },
                                         "assumptions": {
                                             "type": "array",
+                                            "description": "Assumptions",
                                             "items": {
                                                 "$ref": "#/components/schemas/Assumption"
                                             }
@@ -3523,7 +3528,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of tasks",
+                        "description": "List of Tasks",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3552,6 +3557,7 @@
                                         },
                                         "tasks": {
                                             "type": "array",
+                                            "description": "Tasks",
                                             "items": {
                                                 "$ref": "#/components/schemas/Task"
                                             }
@@ -5622,7 +5628,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of notions that match the search",
+                        "description": "List of Notions",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -5651,6 +5657,7 @@
                                         },
                                         "notions": {
                                             "type": "array",
+                                            "description": "Notions",
                                             "items": {
                                                 "$ref": "#/components/schemas/Notion"
                                             }
@@ -6965,7 +6972,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of teams for organization",
+                        "description": "List of Teams",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6994,6 +7001,7 @@
                                         },
                                         "teams": {
                                             "type": "array",
+                                            "description": "Teams",
                                             "items": {
                                                 "$ref": "#/components/schemas/Team"
                                             }
@@ -7923,7 +7931,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of users in organization",
+                        "description": "List of Users",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7952,6 +7960,7 @@
                                         },
                                         "users": {
                                             "type": "array",
+                                            "description": "Users",
                                             "items": {
                                                 "$ref": "#/components/schemas/User"
                                             }
@@ -8148,6 +8157,7 @@
                     },
                     "teams": {
                         "type": "array",
+                        "description": "User Teams",
                         "items": {
                             "type": "object",
                             "title": "User Team",
@@ -8159,7 +8169,7 @@
                                 },
                                 "channelIds": {
                                     "type": "array",
-                                    "description": "Channels",
+                                    "description": "Channels IDs",
                                     "items": {
                                         "type": "string",
                                         "description": "Channel ID",
@@ -8180,6 +8190,7 @@
                     },
                     "roleOrg": {
                         "type": "array",
+                        "description": "Organization roles",
                         "items": {
                             "type": "object",
                             "title": "User Role Org",
@@ -8489,7 +8500,7 @@
                     },
                     "tasks": {
                         "type": "array",
-                        "description": "List of Tasks",
+                        "description": "Tasks",
                         "items": {
                             "$ref": "#/components/schemas/Task"
                         }
@@ -8538,6 +8549,7 @@
                         "properties": {
                             "authorIds": {
                                 "type": "array",
+                                "description": "Author IDs",
                                 "items": {
                                     "$ref": "#/components/schemas/AuthorId"
                                 }
@@ -8612,7 +8624,7 @@
                     },
                     "notionIds": {
                         "type": "array",
-                        "description": "Notions",
+                        "description": "Notion IDs",
                         "items": {
                             "type": "string",
                             "title": "Notion ID",
@@ -8756,7 +8768,7 @@
                     },
                     "tasks": {
                         "type": "array",
-                        "description": "List of expanded Tasks",
+                        "description": "Expanded Tasks",
                         "items": {
                             "$ref": "#/components/schemas/TaskExpanded"
                         }
@@ -8816,7 +8828,7 @@
                     },
                     "feedback": {
                         "type": "array",
-                        "description": "Feedback",
+                        "description": "Feedback items",
                         "items": {
                             "type": "object",
                             "title": "Minute Feedback",
@@ -9033,6 +9045,7 @@
                     },
                     "teams": {
                         "type": "array",
+                        "description": "User Teams",
                         "items": {
                             "type": "object",
                             "title": "User Team",
@@ -9044,7 +9057,7 @@
                                 },
                                 "channelIds": {
                                     "type": "array",
-                                    "description": "Channels",
+                                    "description": "Channels IDs",
                                     "items": {
                                         "type": "string",
                                         "description": "Channel ID",
@@ -9065,6 +9078,7 @@
                     },
                     "roleOrg": {
                         "type": "array",
+                        "description": "Organization roles",
                         "items": {
                             "type": "object",
                             "title": "User Role Org",
