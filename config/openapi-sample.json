@@ -231,7 +231,7 @@
                 "tags": [
                     "Deep Context"
                 ],
-                "summary": "Fetch value item",
+                "summary": "Fetch expanded value item",
                 "description": "Retrieve value item model",
                 "operationId": "deepContextRead",
                 "parameters": [
@@ -258,7 +258,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Value item found",
+                        "description": "Expanded Value Item",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1958,8 +1958,8 @@
                 "tags": [
                     "Value items"
                 ],
-                "summary": "Fetch value item",
-                "description": "Retrieve value item model",
+                "summary": "Fetch Value Item",
+                "description": "Retrieve Value Item model",
                 "operationId": "valueItemRead",
                 "parameters": [
                     {
