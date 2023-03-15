@@ -80,7 +80,7 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Account model found",
+                        "description": "Account model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -122,7 +122,7 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Account model updated",
+                        "description": "Account model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -258,7 +258,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Expanded Value Item",
+                        "description": "Expanded Value Item model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -467,7 +467,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Value Items",
+                        "description": "Value Item models",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -592,7 +592,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Experience found",
+                        "description": "Experience model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -710,7 +710,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Experiences",
+                        "description": "Experience models",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -847,7 +847,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Self-evaluation successfull",
+                        "description": "Experience model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -964,7 +964,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "User evaluated successfully",
+                        "description": "Experience model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1049,7 +1049,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Invitation created successfully",
+                        "description": "Invitation model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1200,7 +1200,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Invitations",
+                        "description": "Invitation models",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1305,7 +1305,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Invitation found",
+                        "description": "Invitation model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1383,7 +1383,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Invitation updated successfully",
+                        "description": "Invitation model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1600,7 +1600,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Invitation accepted successfully",
+                        "description": "Invitation model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1705,7 +1705,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Value item created successfully",
+                        "description": "Value Item model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1870,7 +1870,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Value Items",
+                        "description": "Value Item models",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1958,8 +1958,8 @@
                 "tags": [
                     "Value items"
                 ],
-                "summary": "Fetch Value Item",
-                "description": "Retrieve Value Item model",
+                "summary": "Fetch value item",
+                "description": "Retrieve value item model",
                 "operationId": "valueItemRead",
                 "parameters": [
                     {
@@ -2005,7 +2005,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Value item found",
+                        "description": "Value Item model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2118,7 +2118,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Value item updated successfully",
+                        "description": "Value Item model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2393,7 +2393,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Value item advanced successfully",
+                        "description": "Value Item model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2508,7 +2508,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Assumption created successfully",
+                        "description": "Assumption model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2665,7 +2665,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Assumptions",
+                        "description": "Assumption models",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2820,7 +2820,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Assumption found",
+                        "description": "Assumption model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2943,7 +2943,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Assumption updated successfully",
+                        "description": "Assumption model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3212,7 +3212,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Assumption updated successfully",
+                        "description": "Assumption model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3366,7 +3366,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Task created successfully",
+                        "description": "Expanded Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3528,7 +3528,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Tasks",
+                        "description": "Task models",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3683,7 +3683,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Task found",
+                        "description": "Expanded Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3806,7 +3806,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Task updated successfully",
+                        "description": "Expanded Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4099,7 +4099,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Task assigned",
+                        "description": "Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4234,7 +4234,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Notion added successfully",
+                        "description": "Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4492,7 +4492,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Discovery created successfully",
+                        "description": "Expanded Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4647,7 +4647,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Discovery updated successfully",
+                        "description": "Expanded Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4925,7 +4925,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Feedback created successfully",
+                        "description": "Expanded Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -5094,7 +5094,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Feedback updated successfully",
+                        "description": "Expanded Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -5397,7 +5397,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Feedback reply updated successfully",
+                        "description": "Expanded Task model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -5503,7 +5503,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Notion added successfully",
+                        "description": "Notion model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -5628,7 +5628,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Notions",
+                        "description": "Notion models",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -5743,7 +5743,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Notion found",
+                        "description": "Notion model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -5836,7 +5836,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Notion updated successfully",
+                        "description": "Notion model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6023,7 +6023,7 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Organization created successfully",
+                        "description": "Organization model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6119,7 +6119,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Organization updated successfully",
+                        "description": "Organization model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6298,7 +6298,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team created successfully",
+                        "description": "Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6422,7 +6422,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team created successfully",
+                        "description": "Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6649,7 +6649,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team updated successfully",
+                        "description": "User model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6847,7 +6847,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team created successfully",
+                        "description": "Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -6972,7 +6972,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Teams",
+                        "description": "Team models",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7087,7 +7087,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team found",
+                        "description": "Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7180,7 +7180,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team updated successfully",
+                        "description": "Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7404,7 +7404,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team updated successfully",
+                        "description": "User model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7592,7 +7592,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "User model found",
+                        "description": "User model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7685,7 +7685,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "User updated. Returns updated fields and their new values",
+                        "description": "User Roles model",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7931,7 +7931,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of Users",
+                        "description": "User models",
                         "content": {
                             "application/json": {
                                 "schema": {
