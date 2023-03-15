@@ -159,6 +159,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Account Update",
+                                "description": "Payload object required to update an Account",
                                 "properties": {
                                     "userName": {
                                         "type": "string",
@@ -1093,6 +1094,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Invitation Create",
+                                "description": "Payload object required to create an Invitation",
                                 "properties": {
                                     "inviteName": {
                                         "type": "string",
@@ -1425,6 +1427,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Invitation Update",
+                                "description": "Payload object required to update an Invitation",
                                 "properties": {
                                     "inviteName": {
                                         "type": "string",
@@ -1746,6 +1749,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Value Item Create",
+                                "description": "Payload object required to create a Value Item",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -2167,6 +2171,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Value Item Update",
+                                "description": "Payload object required to update a Value Item",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -2556,6 +2561,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Assm Create",
+                                "description": "Payload object required to create a Value Item assumption",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -2989,6 +2995,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Assm Update",
+                                "description": "Payload object required to update a Value Item assumption",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -3257,6 +3264,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Assm Validate",
+                                "description": "Payload object required to validate a Value Item assumption",
                                 "properties": {
                                     "confirmed": {
                                         "type": "boolean",
@@ -3410,6 +3418,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Task Create",
+                                "description": "Payload object required to create a Task",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -3848,6 +3857,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Task Update",
+                                "description": "Payload object required to update a Task",
                                 "properties": {
                                     "digest": {
                                         "type": "string",
@@ -4533,6 +4543,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Task Discovery Create",
+                                "description": "Payload object required to create a Task discovery",
                                 "properties": {
                                     "details": {
                                         "type": "string",
@@ -4687,6 +4698,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Task Discovery Update",
+                                "description": "Payload object required to update a Task discovery",
                                 "properties": {
                                     "details": {
                                         "type": "string",
@@ -4964,6 +4976,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Task Feedback Create",
+                                "description": "Payload object required to add feedback to a Task",
                                 "properties": {
                                     "message": {
                                         "type": "string",
@@ -5132,6 +5145,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Task Feedback Update",
+                                "description": "Payload object required to update feedback given to a Task",
                                 "properties": {
                                     "message": {
                                         "type": "string",
@@ -5434,6 +5448,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Task Feedback Reply",
+                                "description": "Payload object required to reply to feedback given to a Task",
                                 "properties": {
                                     "reply": {
                                         "type": "string",
@@ -5529,6 +5544,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Notion Create",
+                                "description": "Payload object required to create a Notion",
                                 "properties": {
                                     "value": {
                                         "type": "string",
@@ -5870,6 +5886,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Notion Update",
+                                "description": "Payload object required to update a Notion",
                                 "properties": {
                                     "value": {
                                         "type": "string",
@@ -6046,6 +6063,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Organization Create",
+                                "description": "Payload object required to create an Organization",
                                 "properties": {
                                     "orgName": {
                                         "type": "string",
@@ -6141,6 +6159,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Organization Update",
+                                "description": "Payload object required to update an Organization",
                                 "properties": {
                                     "orgName": {
                                         "type": "string",
@@ -6319,6 +6338,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Channel Create",
+                                "description": "Payload object required to create a Channel",
                                 "properties": {
                                     "channelName": {
                                         "type": "string",
@@ -6442,6 +6462,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Channel Update",
+                                "description": "Payload object required to update a Channel",
                                 "properties": {
                                     "channelName": {
                                         "type": "string",
@@ -6866,6 +6887,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Team Create",
+                                "description": "Payload object required to create a Team",
                                 "properties": {
                                     "teamName": {
                                         "type": "string",
@@ -7207,6 +7229,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload Team Update",
+                                "description": "Payload object required to update a Team",
                                 "properties": {
                                     "teamName": {
                                         "type": "string",
@@ -7732,6 +7755,7 @@
                             "schema": {
                                 "type": "object",
                                 "title": "Payload User Role Update",
+                                "description": "Payload object required to update User roles",
                                 "properties": {
                                     "roleSite": {
                                         "type": "string",
