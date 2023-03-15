@@ -8224,30 +8224,10 @@
                     },
                     "orgs": {
                         "type": "array",
+                        "description": "Organizations",
                         "items": {
                             "$ref": "#/components/schemas/Organization"
                         }
-                    }
-                }
-            },
-            "Cache": {
-                "type": "object",
-                "title": "Cache",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Item ID",
-                        "example": "key"
-                    },
-                    "value": {
-                        "type": "string",
-                        "description": "Item value",
-                        "example": "value"
-                    },
-                    "expiresAt": {
-                        "type": "string",
-                        "description": "Expiration timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
             },
@@ -8924,7 +8904,7 @@
                     },
                     "orgOwners": {
                         "type": "array",
-                        "description": "Organization owners",
+                        "description": "Organization owner IDs",
                         "items": {
                             "type": "string",
                             "title": "User ID",
