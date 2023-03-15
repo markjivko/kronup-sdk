@@ -328,6 +328,19 @@ class DeepContextTest extends TestCase {
                 ->getNotions()[0]
                 ->getValue()
         );
+
+        // Assert valid dates in the past
+        $this->assertIsString($item->getUpdatedAt());
+        $this->assertGreaterThan(0, strlen($item->getUpdatedAt()));
+        $itemTime = strtotime($item->getUpdatedAt());
+        $this->assertGreaterThan(0, $itemTime);
+        $this->assertLessThanOrEqual($itemTime, time());
+
+        $this->assertIsString($item->getCreatedAt());
+        $this->assertGreaterThan(0, strlen($item->getCreatedAt()));
+        $itemTime = strtotime($item->getCreatedAt());
+        $this->assertGreaterThan(0, $itemTime);
+        $this->assertLessThanOrEqual($itemTime, time());
     }
 
     /**

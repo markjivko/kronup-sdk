@@ -49,7 +49,7 @@
         },
         {
             "name": "Assumptions",
-            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **100** Assumptions.\n\nLess is more, so focus on having smaller value items with fewer assumptions per item.\n\nAssumptions need to be validated by running experiments or by relying on past results."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **100** Assumptions.\n\nLess is more, so focus on having smaller value items with fewer assumptions per item.\n\nAssumptions need to be validated by running new experiments or by relying on past results."
         },
         {
             "name": "Tasks",
@@ -1763,7 +1763,7 @@
                                     },
                                     "type": {
                                         "type": "string",
-                                        "description": "Value item type   * f - Feature  * b - Bug fix  * c - Chore",
+                                        "description": "Value item type",
                                         "enum": [
                                             "feature",
                                             "bug fix",
@@ -1773,7 +1773,7 @@
                                     },
                                     "priority": {
                                         "type": "string",
-                                        "description": "Value item MoSCoW priority  * m - Must-have  * s - Should-have  * c - Could-have  * w - Will NOT have",
+                                        "description": "Value item MoSCoW priority",
                                         "enum": [
                                             "must",
                                             "shoud",
@@ -2184,7 +2184,7 @@
                                     },
                                     "type": {
                                         "type": "string",
-                                        "description": "Value item type:  * f - Feature  * b - Bug fix  * c - Chore",
+                                        "description": "Value item type",
                                         "enum": [
                                             "feature",
                                             "bug fix",
@@ -2194,7 +2194,7 @@
                                     },
                                     "priority": {
                                         "type": "string",
-                                        "description": "Value item MoSCoW priority:  * m - Must-have  * s - Should-have  * c - Could-have  * w - Will NOT have",
+                                        "description": "Value item MoSCoW priority",
                                         "enum": [
                                             "must",
                                             "should",
@@ -3276,7 +3276,7 @@
                                     },
                                     "state": {
                                         "type": "string",
-                                        "description": "Experiment state:  * i - Idle  * r - Running  * d - Done",
+                                        "description": "Experiment state",
                                         "enum": [
                                             "idle",
                                             "running",
@@ -8253,9 +8253,9 @@
                                 "description": "Average value",
                                 "example": "8.500000"
                             },
-                            "last10": {
+                            "recent": {
                                 "type": "array",
-                                "description": "Last 10 values",
+                                "description": "Recent grades",
                                 "items": {
                                     "type": "number",
                                     "min": 1,
@@ -8283,9 +8283,9 @@
                                 "description": "Average value",
                                 "example": "9.500000"
                             },
-                            "last10": {
+                            "recent": {
                                 "type": "array",
-                                "description": "Last 10 values",
+                                "description": "Recent grades",
                                 "items": {
                                     "type": "number",
                                     "min": 1,
@@ -8421,7 +8421,7 @@
                     },
                     "stage": {
                         "type": "string",
-                        "description": "Value Item Stage\n\n  * `planning` - Planning\n  * `validation` - Validation\n  * `execution` - Execution\n  * `deep context` - Deep Context",
+                        "description": "Value Item Stage",
                         "enum": [
                             "planning",
                             "validation",
@@ -8432,12 +8432,12 @@
                     },
                     "canAdvance": {
                         "type": "boolean",
-                        "description": "Value Item can advance to the next stage\n  * In Planning: at least 1 Assumption was added\n  * In Validation: all Assumptions were validated\n  * In Execution: all Tasks were completed",
+                        "description": "Conditions for Value Items to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Value Items become read-only; they can only be deleted by an Organization manager or administrator",
                         "default": false
                     },
                     "type": {
                         "type": "string",
-                        "description": "Value Item Type\n\n  * `feature` - Feature\n  * `bug fix` - Bug fix\n  * `chore` - Chore",
+                        "description": "Value Item Type",
                         "enum": [
                             "feature",
                             "bug fix",
@@ -8447,7 +8447,7 @@
                     },
                     "priority": {
                         "type": "string",
-                        "description": "Value Item Priority using MoSCoW\n\n  * `must` - Must-have\n  * `should` - Should-have\n  * `could` - Could-have\n  * `will not` - Will NOT have",
+                        "description": "Value Item Priority using MoSCoW",
                         "enum": [
                             "must",
                             "should",
@@ -8469,6 +8469,16 @@
                         "items": {
                             "$ref": "#/components/schemas/Task"
                         }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
             },
@@ -8496,11 +8506,6 @@
                         "example": "Electron.js supports Windows 7",
                         "minLength": 1,
                         "maxLength": 256
-                    },
-                    "validated": {
-                        "type": "boolean",
-                        "description": "Assumption was validated by experiments",
-                        "default": false
                     },
                     "experiment": {
                         "type": "object",
@@ -8533,7 +8538,7 @@
                             },
                             "state": {
                                 "type": "string",
-                                "description": "Experiment state\n\n  * `idle` - Idle\n  * `running` - Running\n  * `done` - Done",
+                                "description": "Experiment state",
                                 "enum": [
                                     "idle",
                                     "running",
@@ -8572,7 +8577,7 @@
                     },
                     "state": {
                         "type": "string",
-                        "description": "Task state\n\n  * `idle` - Idle\n  * `in progress` - In progress\n  * `in review` - In review\n  * `done` - Done",
+                        "description": "Task state",
                         "enum": [
                             "idle",
                             "in progress",
@@ -8594,7 +8599,7 @@
             },
             "TaskExpanded": {
                 "type": "object",
-                "title": "Task",
+                "title": "Task - Expanded",
                 "description": "Task model without Minutes",
                 "properties": {
                     "id": {
@@ -8619,7 +8624,7 @@
                     },
                     "state": {
                         "type": "string",
-                        "description": "Task state\n\n  * `idle` - Idle\n  * `in progress` - In progress\n  * `in review` - In review\n  * `done` - Done",
+                        "description": "Task state",
                         "enum": [
                             "idle",
                             "in progress",
@@ -8642,7 +8647,7 @@
             },
             "ValueItemExpanded": {
                 "type": "object",
-                "title": "Value Item Expanded",
+                "title": "Value Item - Expanded",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -8683,7 +8688,7 @@
                     },
                     "stage": {
                         "type": "string",
-                        "description": "Value Item Stage\n\n  * `planning` - Planning\n  * `validation` - Validation\n  * `execution` - Execution\n  * `deep context` - Deep Context",
+                        "description": "Value Item Stage",
                         "enum": [
                             "planning",
                             "validation",
@@ -8694,12 +8699,12 @@
                     },
                     "canAdvance": {
                         "type": "boolean",
-                        "description": "Value Item can advance to the next stage\n  * In Planning: at least 1 Assumption was added\n  * In Validation: all Assumptions were validated\n  * In Execution: all Tasks were completed",
+                        "description": "Conditions for Value Items to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Value Items become read-only; they can only be deleted by an Organization manager or administrator",
                         "default": false
                     },
                     "type": {
                         "type": "string",
-                        "description": "Value Item Type\n\n  * `feature` - Feature\n  * `bug fix` - Bug fix\n  * `chore` - Chore",
+                        "description": "Value Item Type",
                         "enum": [
                             "feature",
                             "bug fix",
@@ -8709,7 +8714,7 @@
                     },
                     "priority": {
                         "type": "string",
-                        "description": "Value Item Priority using MoSCoW\n\n  * `must` - Must-have\n  * `should` - Should-have\n  * `could` - Could-have\n  * `will not` - Will NOT have",
+                        "description": "Value Item Priority using MoSCoW",
                         "enum": [
                             "must",
                             "should",
@@ -8731,6 +8736,16 @@
                         "items": {
                             "$ref": "#/components/schemas/TaskExpanded"
                         }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
             },
@@ -8799,7 +8814,7 @@
                                 },
                                 "issue": {
                                     "type": "string",
-                                    "description": "Feedback issue\n\n  * `value` - Value\n  * `complexity` - Complexity\n  * `flexibility` - Flexibility\n  * `testing` - Testing\n  * `security` - Security\n  * `ci/cd` - CI/CD\n  * `standards` - Standards\n  * `misc` - Miscellaneous",
+                                    "description": "Feedback issue",
                                     "enum": [
                                         "value",
                                         "complexity",
