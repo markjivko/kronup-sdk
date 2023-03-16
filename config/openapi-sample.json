@@ -66,6 +66,10 @@
         {
             "name": "Deep Context",
             "description": "Once all [Tasks](#tag/Tasks) are marked as done, [Value items](#tag/Value-items) can be advanced further to Deep Context.\n        \nOnce in Deep Context, Value items can no longer be modified or restored to an active state."
+        },
+        {
+            "name": "Notifications",
+            "description": "Each [User](#tag/Users) can receive at most **100** Notifications for each [Organization](#tag/Organizations) they are a part of."
         }
     ],
     "paths": {
@@ -222,6 +226,134 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                    }
+                ]
+            }
+        },
+        "/account/notifications": {
+            "get": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "List notifications",
+                "description": "Get a list of notification models",
+                "operationId": "notificationList",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "maximum": 500,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notification models",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Notifications List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1,
+                                            "default": 1,
+                                            "min": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "min": 1,
+                                            "max": 500
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total",
+                                            "example": 10
+                                        },
+                                        "notifications": {
+                                            "type": "array",
+                                            "description": "Notifications",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Notification"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/account/notifications?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -8034,7 +8166,7 @@
                     "message": {
                         "type": "string",
                         "title": "Error 400 message",
-                        "description": "400 Error message (supports i18n)",
+                        "description": "400 Error message",
                         "example": "Invalid arguments provided"
                     }
                 },
@@ -8056,7 +8188,7 @@
                     "message": {
                         "type": "string",
                         "title": "Error 401 message",
-                        "description": "401 Error message (supports i18n)",
+                        "description": "401 Error message",
                         "example": "Authorization error"
                     }
                 },
@@ -8078,7 +8210,7 @@
                     "message": {
                         "type": "string",
                         "title": "Error 402 message",
-                        "description": "402 Error message (supports i18n)",
+                        "description": "402 Error message",
                         "example": "Payment required error"
                     }
                 },
@@ -8100,7 +8232,7 @@
                     "message": {
                         "type": "string",
                         "title": "Error 403 message",
-                        "description": "403 Error message (supports i18n)",
+                        "description": "403 Error message",
                         "example": "Not allowed"
                     }
                 },
@@ -8122,7 +8254,7 @@
                     "message": {
                         "type": "string",
                         "title": "Error 404 message",
-                        "description": "404 Error message (supports i18n)",
+                        "description": "404 Error message",
                         "example": "Not found"
                     }
                 },
@@ -8431,8 +8563,8 @@
                         "maxLength": 4096,
                         "example": "Item detailed description ***"
                     },
-                    "authorId": {
-                        "$ref": "#/components/schemas/AuthorId"
+                    "authorUserId": {
+                        "$ref": "#/components/schemas/UserId"
                     },
                     "stage": {
                         "type": "string",
@@ -8497,10 +8629,10 @@
                     }
                 }
             },
-            "AuthorId": {
+            "UserId": {
                 "type": "string",
-                "title": "Author",
-                "description": "Author ID",
+                "title": "User ID",
+                "description": "User ID",
                 "example": "user-id-***"
             },
             "Assumption": {
@@ -8512,8 +8644,8 @@
                         "description": "Value item ID",
                         "example": "value-item-id-***"
                     },
-                    "authorId": {
-                        "$ref": "#/components/schemas/AuthorId"
+                    "authorUserId": {
+                        "$ref": "#/components/schemas/UserId"
                     },
                     "digest": {
                         "type": "string",
@@ -8527,11 +8659,11 @@
                         "title": "Experiment",
                         "description": "Experiment meant to validate assumption",
                         "properties": {
-                            "authorIds": {
+                            "authorUserIds": {
                                 "type": "array",
                                 "description": "Author IDs",
                                 "items": {
-                                    "$ref": "#/components/schemas/AuthorId"
+                                    "$ref": "#/components/schemas/UserId"
                                 }
                             },
                             "confirmed": {
@@ -8576,8 +8708,8 @@
                         "description": "Task ID",
                         "example": "task-id-***"
                     },
-                    "assigneeId": {
-                        "$ref": "#/components/schemas/AuthorId"
+                    "assigneeUserId": {
+                        "$ref": "#/components/schemas/UserId"
                     },
                     "digest": {
                         "type": "string",
@@ -8623,8 +8755,8 @@
                         "description": "Task ID",
                         "example": "task-id-***"
                     },
-                    "assigneeId": {
-                        "$ref": "#/components/schemas/AuthorId"
+                    "assigneeUserId": {
+                        "$ref": "#/components/schemas/UserId"
                     },
                     "digest": {
                         "type": "string",
@@ -8699,8 +8831,8 @@
                         "maxLength": 4096,
                         "example": "Item detailed description ***"
                     },
-                    "authorId": {
-                        "$ref": "#/components/schemas/AuthorId"
+                    "authorUserId": {
+                        "$ref": "#/components/schemas/UserId"
                     },
                     "stage": {
                         "type": "string",
@@ -8794,8 +8926,8 @@
                                     "min": 1,
                                     "default": 1
                                 },
-                                "authorId": {
-                                    "$ref": "#/components/schemas/AuthorId"
+                                "authorUserId": {
+                                    "$ref": "#/components/schemas/UserId"
                                 },
                                 "details": {
                                     "type": "string",
@@ -8825,8 +8957,8 @@
                                     "min": 1,
                                     "default": 1
                                 },
-                                "authorId": {
-                                    "$ref": "#/components/schemas/AuthorId"
+                                "authorUserId": {
+                                    "$ref": "#/components/schemas/UserId"
                                 },
                                 "issue": {
                                     "type": "string",
@@ -8857,6 +8989,91 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "Notification": {
+                "type": "object",
+                "title": "Notification",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Notification ID",
+                        "example": "notification-id-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "org-id-***"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Notification type",
+                        "enum": [
+                            "items",
+                            "assumptions",
+                            "tasks",
+                            "experience"
+                        ]
+                    },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***",
+                        "default": null
+                    },
+                    "channelId": {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "example": "channel-id-***",
+                        "default": null
+                    },
+                    "experienceId": {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "example": "channel-id-***",
+                        "default": null
+                    },
+                    "itemId": {
+                        "type": "string",
+                        "description": "Item ID",
+                        "example": "item-id-***",
+                        "default": null
+                    },
+                    "assmId": {
+                        "type": "string",
+                        "description": "Assumption ID",
+                        "example": "assm-id-***",
+                        "default": null
+                    },
+                    "taskId": {
+                        "type": "string",
+                        "description": "Task ID",
+                        "example": "task-id-***",
+                        "default": null
+                    },
+                    "diff": {
+                        "type": "array",
+                        "description": "Difference",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": []
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
             },
@@ -9117,7 +9334,8 @@
                 "Tasks",
                 "Notions",
                 "Experiences",
-                "Deep Context"
+                "Deep Context",
+                "Notifications"
             ]
         }
     ]

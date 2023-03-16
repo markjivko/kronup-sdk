@@ -394,8 +394,8 @@ class ItemTaskTest extends TestCase {
         $this->assertInstanceOf(Model\Task::class, $taskAssigned);
         $this->assertEquals(0, count($taskAssigned->listProps()));
 
-        $this->assertIsString($taskAssigned->getAssigneeId());
-        $this->assertEquals($this->account->getId(), $taskAssigned->getAssigneeId());
+        $this->assertIsString($taskAssigned->getAssigneeUserId());
+        $this->assertEquals($this->account->getId(), $taskAssigned->getAssigneeUserId());
     }
 
     /**

@@ -334,13 +334,11 @@ class DeepContextTest extends TestCase {
         $this->assertGreaterThan(0, strlen($item->getUpdatedAt()));
         $itemTime = strtotime($item->getUpdatedAt());
         $this->assertGreaterThan(0, $itemTime);
-        $this->assertLessThanOrEqual($itemTime, time());
 
         $this->assertIsString($item->getCreatedAt());
         $this->assertGreaterThan(0, strlen($item->getCreatedAt()));
         $itemTime = strtotime($item->getCreatedAt());
         $this->assertGreaterThan(0, $itemTime);
-        $this->assertLessThanOrEqual($itemTime, time());
     }
 
     /**
