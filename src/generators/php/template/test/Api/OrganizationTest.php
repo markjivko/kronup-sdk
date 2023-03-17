@@ -200,33 +200,33 @@ class OrganizationTest extends TestCase {
         $this->sdk
             ->api()
             ->assumptions()
-            ->assumptionValidate(
+            ->assumptionExperiment(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->dcItem->getId(),
                 $assm->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmValidate())
+                (new Model\PayloadAssmExperiment())
                     ->setDigest("Experiment digest")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
-                    ->setState(Model\PayloadAssmValidate::STATE_DONE)
+                    ->setState(Model\PayloadAssmExperiment::STATE_DONE)
             );
 
         $this->sdk
             ->api()
             ->assumptions()
-            ->assumptionValidate(
+            ->assumptionExperiment(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
                 $assm2->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmValidate())
+                (new Model\PayloadAssmExperiment())
                     ->setDigest("Second experiment digest")
                     ->setDetails("Second experiment details")
                     ->setConfirmed(true)
-                    ->setState(Model\PayloadAssmValidate::STATE_DONE)
+                    ->setState(Model\PayloadAssmExperiment::STATE_DONE)
             );
 
         // Advance to execution

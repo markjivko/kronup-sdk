@@ -222,17 +222,17 @@ class ItemAssmTest extends TestCase {
         $assmUpdatedExp = $this->sdk
             ->api()
             ->assumptions()
-            ->assumptionValidate(
+            ->assumptionExperiment(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
                 $assm->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmValidate())
+                (new Model\PayloadAssmExperiment())
                     ->setDigest("Experiment digest")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
-                    ->setState(Model\PayloadAssmValidate::STATE_DONE)
+                    ->setState(Model\PayloadAssmExperiment::STATE_DONE)
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmUpdatedExp);
         $this->assertEquals(0, count($assmUpdatedExp->listProps()));
@@ -243,7 +243,7 @@ class ItemAssmTest extends TestCase {
         $this->assertEquals("Experiment digest", $assmUpdatedExp->getExperiment()->getDigest());
         $this->assertEquals("Experiment details", $assmUpdatedExp->getExperiment()->getDetails());
         $this->assertTrue($assmUpdatedExp->getExperiment()->getConfirmed());
-        $this->assertEquals(Model\PayloadAssmValidate::STATE_DONE, $assmUpdatedExp->getExperiment()->getState());
+        $this->assertEquals(Model\PayloadAssmExperiment::STATE_DONE, $assmUpdatedExp->getExperiment()->getState());
 
         // Delete
         $deleted = $this->sdk

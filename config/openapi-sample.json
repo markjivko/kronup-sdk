@@ -3283,9 +3283,9 @@
                 "tags": [
                     "Assumptions"
                 ],
-                "summary": "Validate",
+                "summary": "Experiment",
                 "description": "Update experiment details",
-                "operationId": "assumptionValidate",
+                "operationId": "assumptionExperiment",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -3396,8 +3396,8 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "title": "Payload Assm Validate",
-                                "description": "Payload object required to validate a Value Item assumption",
+                                "title": "Payload Assm Experiment",
+                                "description": "Payload object for assumption experiment",
                                 "properties": {
                                     "confirmed": {
                                         "type": "boolean",
@@ -3411,7 +3411,7 @@
                                     },
                                     "details": {
                                         "type": "string",
-                                        "description": "Experiment findings",
+                                        "description": "Experiment detailed findings",
                                         "minLength": 1,
                                         "maxLength": 4096
                                     },
