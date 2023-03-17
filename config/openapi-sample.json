@@ -21,7 +21,7 @@
     "tags": [
         {
             "name": "Account",
-            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account and Service Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **100** Notifications for each [Organization](#tag/Organizations) they are a part of."
+            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account and Service Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **250** Events for each [Organization](#tag/Organizations) they are a part of."
         },
         {
             "name": "Users",
@@ -45,7 +45,7 @@
         },
         {
             "name": "Value items",
-            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly.\n\nIn order to prevent information overload, each [Channel](#tag/Channels) can hold at most **50** 'value items'."
+            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly.\n\nIn order to prevent information overload, each [Channel](#tag/Channels) can hold at most **10** 'value items'."
         },
         {
             "name": "Assumptions",
@@ -53,7 +53,7 @@
         },
         {
             "name": "Tasks",
-            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **100** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **10** [Notions](#tag/Notions), **100** discoveries, and **250** feedback items."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **100** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **25** [Notions](#tag/Notions), **100** discoveries, and **250** feedback items."
         },
         {
             "name": "Notions",
@@ -226,14 +226,14 @@
                 ]
             }
         },
-        "/account/notifications": {
+        "/account/events": {
             "get": {
                 "tags": [
                     "Account"
                 ],
-                "summary": "List notifications",
-                "description": "Get a list of notification models",
-                "operationId": "notificationList",
+                "summary": "List events",
+                "description": "Get a list of event models",
+                "operationId": "eventList",
                 "parameters": [
                     {
                         "name": "x-org-id",
@@ -271,11 +271,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Notification models",
+                        "description": "Event models",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Notifications List",
+                                    "title": "Events List",
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
@@ -283,26 +283,26 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of events",
                                             "example": 10
                                         },
-                                        "notifications": {
+                                        "events": {
                                             "type": "array",
-                                            "description": "Notifications",
+                                            "description": "Events",
                                             "items": {
-                                                "$ref": "#/components/schemas/Notification"
+                                                "$ref": "#/components/schemas/Event"
                                             }
                                         }
                                     }
@@ -349,7 +349,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/account/notifications?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/account/events?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -607,19 +607,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of value items",
                                             "example": 10
                                         },
                                         "items": {
@@ -850,19 +850,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of experiences",
                                             "example": 10
                                         },
                                         "experiences": {
@@ -958,8 +958,8 @@
                             "type": "string"
                         },
                         "description": "Grade between 1 and 10",
-                        "min": 1,
-                        "max": 10,
+                        "minimum": 1,
+                        "maximum": 10,
                         "example": 10
                     },
                     {
@@ -1075,8 +1075,8 @@
                             "type": "string"
                         },
                         "description": "Grade between 1 and 10",
-                        "min": 1,
-                        "max": 10,
+                        "minimum": 1,
+                        "maximum": 10,
                         "example": 10
                     },
                     {
@@ -1340,19 +1340,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of invitations",
                                             "example": 10
                                         },
                                         "invitations": {
@@ -2010,19 +2010,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of value items",
                                             "example": 10
                                         },
                                         "items": {
@@ -2805,19 +2805,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of assumptions",
                                             "example": 10
                                         },
                                         "assumptions": {
@@ -3668,19 +3668,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of tasks",
                                             "example": 10
                                         },
                                         "tasks": {
@@ -5768,19 +5768,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of notions",
                                             "example": 10
                                         },
                                         "notions": {
@@ -7112,19 +7112,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of teams",
                                             "example": 10
                                         },
                                         "teams": {
@@ -8071,19 +8071,19 @@
                                             "description": "Page number",
                                             "example": 1,
                                             "default": 1,
-                                            "min": 1
+                                            "minimum": 1
                                         },
                                         "pageSize": {
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
                                             "default": 100,
-                                            "min": 1,
-                                            "max": 500
+                                            "minimum": 1,
+                                            "maximum": 500
                                         },
                                         "total": {
                                             "type": "integer",
-                                            "description": "Total",
+                                            "description": "Total number of users",
                                             "example": 10
                                         },
                                         "users": {
@@ -8359,6 +8359,98 @@
                     }
                 }
             },
+            "Event": {
+                "type": "object",
+                "title": "Event",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Event ID",
+                        "example": "event-id-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "org-id-***"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Event type",
+                        "enum": [
+                            "items",
+                            "assumptions",
+                            "tasks",
+                            "self-evaluation",
+                            "peer evaluation"
+                        ]
+                    },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***",
+                        "default": null
+                    },
+                    "channelId": {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "example": "channel-id-***",
+                        "default": null
+                    },
+                    "notionId": {
+                        "type": "string",
+                        "description": "Notion ID",
+                        "example": "notion-id-***",
+                        "default": null
+                    },
+                    "peerUserId": {
+                        "type": "string",
+                        "description": "Peer User ID",
+                        "example": "user-id-***",
+                        "default": null
+                    },
+                    "itemId": {
+                        "type": "string",
+                        "description": "Item ID",
+                        "example": "item-id-***",
+                        "default": null
+                    },
+                    "assmId": {
+                        "type": "string",
+                        "description": "Assumption ID",
+                        "example": "assm-id-***",
+                        "default": null
+                    },
+                    "taskId": {
+                        "type": "string",
+                        "description": "Task ID",
+                        "example": "task-id-***",
+                        "default": null
+                    },
+                    "diff": {
+                        "type": "array",
+                        "description": "Difference",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": []
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    }
+                }
+            },
             "Experience": {
                 "type": "object",
                 "title": "Experience",
@@ -8388,7 +8480,7 @@
                             "count": {
                                 "type": "number",
                                 "description": "Total number of evaluations",
-                                "min": 0,
+                                "minimum": 0,
                                 "example": 2
                             },
                             "average": {
@@ -8401,8 +8493,8 @@
                                 "description": "Recent grades",
                                 "items": {
                                     "type": "number",
-                                    "min": 1,
-                                    "max": 10
+                                    "minimum": 1,
+                                    "maximum": 10
                                 },
                                 "example": [
                                     7,
@@ -8418,7 +8510,7 @@
                             "count": {
                                 "type": "number",
                                 "description": "Total number of evaluations",
-                                "min": 0,
+                                "minimum": 0,
                                 "example": 2
                             },
                             "average": {
@@ -8431,8 +8523,8 @@
                                 "description": "Recent grades",
                                 "items": {
                                     "type": "number",
-                                    "min": 1,
-                                    "max": 10
+                                    "minimum": 1,
+                                    "maximum": 10
                                 },
                                 "example": [
                                     9,
@@ -8487,20 +8579,20 @@
                     },
                     "inviteUses": {
                         "type": "integer",
-                        "min": 0,
+                        "minimum": 0,
                         "description": "Number of uses",
                         "example": 0
                     },
                     "inviteUsesMax": {
                         "type": "integer",
-                        "min": 0,
-                        "max": 10000,
+                        "minimum": 0,
+                        "maximum": 10000,
                         "description": "Maximum number of uses",
                         "example": 0
                     },
                     "inviteViews": {
                         "type": "integer",
-                        "min": 0,
+                        "minimum": 0,
                         "description": "Number of views",
                         "example": 0
                     },
@@ -8900,7 +8992,7 @@
                     "iteration": {
                         "type": "number",
                         "description": "Iteration number",
-                        "min": 1,
+                        "minimum": 1,
                         "default": 1
                     },
                     "discoveries": {
@@ -8919,7 +9011,7 @@
                                 "iteration": {
                                     "type": "number",
                                     "description": "Iteration number",
-                                    "min": 1,
+                                    "minimum": 1,
                                     "default": 1
                                 },
                                 "authorUserId": {
@@ -8950,7 +9042,7 @@
                                 "iteration": {
                                     "type": "number",
                                     "description": "Iteration number",
-                                    "min": 1,
+                                    "minimum": 1,
                                     "default": 1
                                 },
                                 "authorUserId": {
@@ -8985,92 +9077,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "Notification": {
-                "type": "object",
-                "title": "Notification",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Notification ID",
-                        "example": "notification-id-***"
-                    },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
-                    },
-                    "userId": {
-                        "type": "string",
-                        "description": "User ID",
-                        "example": "user-id-***"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Notification type",
-                        "enum": [
-                            "items",
-                            "assumptions",
-                            "tasks",
-                            "self-evaluation",
-                            "peer evaluation"
-                        ]
-                    },
-                    "teamId": {
-                        "type": "string",
-                        "description": "Team ID",
-                        "example": "team-id-***",
-                        "default": null
-                    },
-                    "channelId": {
-                        "type": "string",
-                        "description": "Channel ID",
-                        "example": "channel-id-***",
-                        "default": null
-                    },
-                    "notionId": {
-                        "type": "string",
-                        "description": "Notion ID",
-                        "example": "notion-id-***",
-                        "default": null
-                    },
-                    "itemId": {
-                        "type": "string",
-                        "description": "Item ID",
-                        "example": "item-id-***",
-                        "default": null
-                    },
-                    "assmId": {
-                        "type": "string",
-                        "description": "Assumption ID",
-                        "example": "assm-id-***",
-                        "default": null
-                    },
-                    "taskId": {
-                        "type": "string",
-                        "description": "Task ID",
-                        "example": "task-id-***",
-                        "default": null
-                    },
-                    "diff": {
-                        "type": "array",
-                        "description": "Difference",
-                        "items": {
-                            "type": "string"
-                        },
-                        "default": []
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "description": "Created timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "description": "Updated timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
             },

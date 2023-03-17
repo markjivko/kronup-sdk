@@ -131,16 +131,16 @@ class ItemTest extends TestCase {
         $this->assertInstanceOf(Model\ValueItem::class, $item);
         $this->assertEquals(0, count($item->listProps()));
 
-        // Get the notifications
+        // Get the events
         $notifs = $this->sdk
             ->api()
             ->account()
-            ->notificationList($this->orgId);
-        $this->assertInstanceOf(Model\NotificationsList::class, $notifs);
+            ->eventList($this->orgId);
+        $this->assertInstanceOf(Model\EventsList::class, $notifs);
         $this->assertEquals(0, count($notifs->listProps()));
 
-        $this->assertIsArray($notifs->getNotifications());
-        $this->assertGreaterThanOrEqual(1, count($notifs->getNotifications()));
+        $this->assertIsArray($notifs->getEvents());
+        $this->assertGreaterThanOrEqual(1, count($notifs->getEvents()));
 
         // Get the list
         $items = $this->sdk
