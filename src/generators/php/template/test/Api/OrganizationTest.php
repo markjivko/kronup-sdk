@@ -143,7 +143,7 @@ class OrganizationTest extends TestCase {
                 (new Model\PayloadValueItemCreate())
                     ->setDigest("The digest information here")
                     ->setDetails("The details")
-                    ->setPriority(Model\PayloadValueItemCreate::PRIORITY_COULD)
+                    ->setPriority(4)
             );
 
         // Add second item
@@ -157,7 +157,7 @@ class OrganizationTest extends TestCase {
                 (new Model\PayloadValueItemCreate())
                     ->setDigest("Second item digest")
                     ->setDetails("Second item details")
-                    ->setPriority(Model\PayloadValueItemCreate::PRIORITY_COULD)
+                    ->setPriority(4)
             );
 
         // Add an assumption
@@ -342,7 +342,7 @@ class OrganizationTest extends TestCase {
         $this->experience = $this->sdk
             ->api()
             ->experiences()
-            ->experienceEvaluateSelf($this->notion->getId(), mt_rand(1, 10), $this->orgId);
+            ->experienceEvaluateSelf($this->notion->getId(), mt_rand(1, 5), $this->orgId);
         $this->assertInstanceOf(Model\Experience::class, $this->experience);
         $this->assertEquals(0, count($this->experience->listProps()));
     }

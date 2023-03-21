@@ -117,7 +117,7 @@ class ItemAssmTest extends TestCase {
                 (new Model\PayloadValueItemCreate())
                     ->setDigest("The digest")
                     ->setDetails("The details")
-                    ->setPriority(Model\PayloadValueItemCreate::PRIORITY_COULD)
+                    ->setPriority(4)
             );
     }
 

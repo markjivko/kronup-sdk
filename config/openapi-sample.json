@@ -24,6 +24,10 @@
             "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account and Service Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **250** Events for each [Organization](#tag/Organizations) they are a part of."
         },
         {
+            "name": "Service accounts",
+            "description": "Manage service accounts.\n        \nThese accounts have the same abilities as regular [Users](#tag/Users), but they work remotely through API calls.\n\nService accounts are **free**. [Organizations](#tag/Organizations) cannot have more service accounts than user accounts."
+        },
+        {
             "name": "Users",
             "description": "Manage users within the scope of an [Organization](#tag/Organizations).\n\nThere are 3 site-level roles: **admin**, **moderator** and **user**.\n\nAdmins and moderators have access to account data outside of their organization (read as **A can B**):\n\n\n|  | B: admin | B: moderator | B: user |\n|---|---|---|---|\n| A: admin | read/write | read/write | read/write |\n| A: moderator | read | read/write | read/write |\n| A: user | - | - | - |\n\n\nThere are 3 organization-level roles: **owner**, **manager** and **member**.\n\nWithin the same organization, account actions are limited (read as **A can B**):\n\n\n|  | B: owner | B: manager | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: manager | read | read/write | read/write |\n| A: member | read | read | read |\n\n\n\n* Any account has **read/write** permissions over **itself**\n* Site-level roles have priority over organization-level roles for **write** rules\n* Organization-level roles have priority over site-level roles for **read** rules"
         },
@@ -957,10 +961,10 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Grade between 1 and 10",
+                        "description": "Grade between 1 and 5",
                         "minimum": 1,
-                        "maximum": 10,
-                        "example": 10
+                        "maximum": 5,
+                        "example": 5
                     },
                     {
                         "name": "x-org-id",
@@ -1033,7 +1037,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/grade/10' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/grade/5' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -1074,10 +1078,10 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Grade between 1 and 10",
+                        "description": "Grade between 1 and 5",
                         "minimum": 1,
-                        "maximum": 10,
-                        "example": 10
+                        "maximum": 5,
+                        "example": 5
                     },
                     {
                         "name": "x-org-id",
@@ -1150,7 +1154,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***/grade/10' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***/grade/5' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -1787,799 +1791,6 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
-                    }
-                ]
-            }
-        },
-        "/teams/{teamId}/channels/{channelId}/items": {
-            "post": {
-                "tags": [
-                    "Value items"
-                ],
-                "summary": "Create value item",
-                "description": "Add a value item to planning",
-                "operationId": "valueItemCreate",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Value Item model",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValueItem"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    }
-                },
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "title": "Payload Value Item Create",
-                                "description": "Payload object required to create a Value Item",
-                                "properties": {
-                                    "digest": {
-                                        "type": "string",
-                                        "description": "Value item digest",
-                                        "minLength": 1,
-                                        "maxLength": 256,
-                                        "example": "Feature name"
-                                    },
-                                    "details": {
-                                        "type": "string",
-                                        "description": "Value item description",
-                                        "minLength": 1,
-                                        "maxLength": 4096,
-                                        "example": "Feature description"
-                                    },
-                                    "type": {
-                                        "type": "string",
-                                        "description": "Value item type",
-                                        "enum": [
-                                            "feature",
-                                            "bug fix",
-                                            "chore"
-                                        ],
-                                        "example": "feature"
-                                    },
-                                    "priority": {
-                                        "type": "string",
-                                        "description": "Value item MoSCoW priority",
-                                        "enum": [
-                                            "must",
-                                            "shoud",
-                                            "could",
-                                            "will not"
-                                        ],
-                                        "example": "must"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":\"must\"}'"
-                    }
-                ]
-            },
-            "get": {
-                "tags": [
-                    "Value items"
-                ],
-                "summary": "List value items",
-                "description": "Get a list of value item models",
-                "operationId": "valueItemList",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "pageNumber",
-                        "in": "query",
-                        "description": "Pagination: page number",
-                        "schema": {
-                            "type": "integer",
-                            "default": 1,
-                            "minimum": 1,
-                            "example": 1
-                        }
-                    },
-                    {
-                        "name": "pageSize",
-                        "in": "query",
-                        "description": "Pagination: page size",
-                        "schema": {
-                            "type": "integer",
-                            "default": 100,
-                            "minimum": 1,
-                            "maximum": 500,
-                            "example": 100
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Value Item models",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "title": "Value Items List",
-                                    "type": "object",
-                                    "properties": {
-                                        "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
-                                        },
-                                        "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 100,
-                                            "minimum": 1,
-                                            "maximum": 500
-                                        },
-                                        "total": {
-                                            "type": "integer",
-                                            "description": "Total number of value items",
-                                            "example": 10
-                                        },
-                                        "items": {
-                                            "type": "array",
-                                            "description": "Value Items",
-                                            "items": {
-                                                "$ref": "#/components/schemas/ValueItem"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
-                    }
-                ]
-            }
-        },
-        "/teams/{teamId}/channels/{channelId}/items/{itemId}": {
-            "get": {
-                "tags": [
-                    "Value items"
-                ],
-                "summary": "Fetch value item",
-                "description": "Retrieve value item model",
-                "operationId": "valueItemRead",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "itemId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Value item ID",
-                        "example": "value-item-id-***"
-                    },
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Value Item model",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValueItem"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Value items"
-                ],
-                "summary": "Update value item",
-                "description": "Update value item details",
-                "operationId": "valueItemUpdate",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "itemId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Value item ID",
-                        "example": "value-item-id-***"
-                    },
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Value Item model",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValueItem"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "title": "Payload Value Item Update",
-                                "description": "Payload object required to update a Value Item",
-                                "properties": {
-                                    "digest": {
-                                        "type": "string",
-                                        "description": "Value item digest",
-                                        "minLength": 1,
-                                        "maxLength": 256,
-                                        "example": "Feature name"
-                                    },
-                                    "details": {
-                                        "type": "string",
-                                        "description": "Value item description",
-                                        "minLength": 1,
-                                        "maxLength": 4096,
-                                        "example": "Feature description"
-                                    },
-                                    "type": {
-                                        "type": "string",
-                                        "description": "Value item type",
-                                        "enum": [
-                                            "feature",
-                                            "bug fix",
-                                            "chore"
-                                        ],
-                                        "example": "feature"
-                                    },
-                                    "priority": {
-                                        "type": "string",
-                                        "description": "Value item MoSCoW priority",
-                                        "enum": [
-                                            "must",
-                                            "should",
-                                            "could",
-                                            "will not"
-                                        ],
-                                        "example": "must"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":\"must\"}'"
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Value items"
-                ],
-                "summary": "Delete value item",
-                "description": "Delete a value item from the flow",
-                "operationId": "valueItemDelete",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "itemId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Value item ID",
-                        "example": "value-item-id-***"
-                    },
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/OK"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Value items"
-                ],
-                "summary": "Advance value item",
-                "description": "Advance a value item",
-                "operationId": "valueItemAdvance",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "itemId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Value item ID",
-                        "example": "value-item-id-***"
-                    },
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Value Item model",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValueItem"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -5609,6 +4820,791 @@
                 ]
             }
         },
+        "/teams/{teamId}/channels/{channelId}/items": {
+            "post": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Create value item",
+                "description": "Add a value item to planning",
+                "operationId": "valueItemCreate",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value Item model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItem"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload Value Item Create",
+                                "description": "Payload object required to create a Value Item",
+                                "properties": {
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Value item digest",
+                                        "minLength": 1,
+                                        "maxLength": 256,
+                                        "example": "Feature name"
+                                    },
+                                    "details": {
+                                        "type": "string",
+                                        "description": "Value item description",
+                                        "minLength": 1,
+                                        "maxLength": 4096,
+                                        "example": "Feature description"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "description": "Value item type",
+                                        "enum": [
+                                            "feature",
+                                            "bug fix",
+                                            "chore"
+                                        ],
+                                        "example": "feature"
+                                    },
+                                    "priority": {
+                                        "type": "number",
+                                        "description": "Value item priority",
+                                        "minimum": 1,
+                                        "maximum": 5,
+                                        "example": 5
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":5}'"
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "List value items",
+                "description": "Get a list of value item models",
+                "operationId": "valueItemList",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "maximum": 500,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value Item models",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Value Items List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1,
+                                            "default": 1,
+                                            "minimum": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "minimum": 1,
+                                            "maximum": 500
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total number of value items",
+                                            "example": 10
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "description": "Value Items",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ValueItem"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/items/{itemId}": {
+            "get": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Fetch value item",
+                "description": "Retrieve value item model",
+                "operationId": "valueItemRead",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value Item model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItem"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Update value item",
+                "description": "Update value item details",
+                "operationId": "valueItemUpdate",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value Item model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItem"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload Value Item Update",
+                                "description": "Payload object required to update a Value Item",
+                                "properties": {
+                                    "digest": {
+                                        "type": "string",
+                                        "description": "Value item digest",
+                                        "minLength": 1,
+                                        "maxLength": 256,
+                                        "example": "Feature name"
+                                    },
+                                    "details": {
+                                        "type": "string",
+                                        "description": "Value item description",
+                                        "minLength": 1,
+                                        "maxLength": 4096,
+                                        "example": "Feature description"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "description": "Value item type",
+                                        "enum": [
+                                            "feature",
+                                            "bug fix",
+                                            "chore"
+                                        ],
+                                        "example": "feature"
+                                    },
+                                    "priority": {
+                                        "type": "number",
+                                        "description": "Value item priority",
+                                        "minimum": 1,
+                                        "maximum": 5,
+                                        "example": 5
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":5}'"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Delete value item",
+                "description": "Delete a value item from the flow",
+                "operationId": "valueItemDelete",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OK"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Value items"
+                ],
+                "summary": "Advance value item",
+                "description": "Advance a value item",
+                "operationId": "valueItemAdvance",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Value Item model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValueItem"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
         "/notions": {
             "post": {
                 "tags": [
@@ -6390,6 +6386,639 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                    }
+                ]
+            }
+        },
+        "/service-accounts": {
+            "post": {
+                "tags": [
+                    "Service accounts"
+                ],
+                "summary": "Create service account",
+                "description": "Create a new service account for this Organization",
+                "operationId": "serviceAccountCreate",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service Account model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceAccount"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload Service Account Create",
+                                "description": "Payload object required to create a Service Account",
+                                "properties": {
+                                    "roleOrg": {
+                                        "type": "string",
+                                        "description": "Service Account organization role",
+                                        "enum": [
+                                            "manager",
+                                            "member"
+                                        ]
+                                    },
+                                    "userName": {
+                                        "type": "string",
+                                        "description": "Service account name",
+                                        "example": "John Doe"
+                                    }
+                                },
+                                "required": [
+                                    "roleOrg",
+                                    "userName"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/service-accounts \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"roleOrg\":\"manager\",\"userName\":\"John Doe\"}'"
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Service accounts"
+                ],
+                "summary": "List service acounts",
+                "description": "Get a list of service account models",
+                "operationId": "serviceAccountList",
+                "parameters": [
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "maximum": 500,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service Account models",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Service Accounts List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1,
+                                            "default": 1,
+                                            "minimum": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "minimum": 1,
+                                            "maximum": 500
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total number of service accounts",
+                                            "example": 10
+                                        },
+                                        "serviceAccounts": {
+                                            "type": "array",
+                                            "description": "Service Accounts",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ServiceAccount"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/service-accounts?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/service-accounts/{accountId}": {
+            "get": {
+                "tags": [
+                    "Service accounts"
+                ],
+                "summary": "Fetch service account",
+                "description": "Retrieve service account model",
+                "operationId": "serviceAccountRead",
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Service Account ID",
+                        "example": "service-account-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service Account model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceAccount"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Service accounts"
+                ],
+                "summary": "Update service account",
+                "description": "Update service account details",
+                "operationId": "serviceAccountUpdate",
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Service account ID",
+                        "example": "service-account-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service Account model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceAccount"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload Service Account Update",
+                                "description": "Payload object required to update a Service Account",
+                                "properties": {
+                                    "roleOrg": {
+                                        "type": "string",
+                                        "description": "Service Account organization role",
+                                        "enum": [
+                                            "manager",
+                                            "member"
+                                        ]
+                                    },
+                                    "userName": {
+                                        "type": "string",
+                                        "description": "Service account name",
+                                        "example": "John Doe"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"roleOrg\":\"manager\",\"userName\":\"John Doe\"}'"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Service accounts"
+                ],
+                "summary": "Delete service account",
+                "description": "Remove service account",
+                "operationId": "serviceAccountDelete",
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Service account ID",
+                        "example": "service-account-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OK"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Service accounts"
+                ],
+                "summary": "Regenerate service account",
+                "description": "Regenerate service account JSON web token",
+                "operationId": "serviceAccountRegenerate",
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Service account ID",
+                        "example": "service-account-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service Account model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceAccount"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -8259,106 +8888,6 @@
                     "message"
                 ]
             },
-            "Account": {
-                "type": "object",
-                "title": "Account",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "User ID",
-                        "example": "user-id-***"
-                    },
-                    "userEmail": {
-                        "type": "string",
-                        "description": "User e-mail address",
-                        "example": "john@example.com"
-                    },
-                    "userName": {
-                        "type": "string",
-                        "description": "User name",
-                        "example": "John Doe"
-                    },
-                    "userIcon": {
-                        "type": "string",
-                        "description": "User icon URL",
-                        "example": "https://***"
-                    },
-                    "teams": {
-                        "type": "array",
-                        "description": "User Teams",
-                        "items": {
-                            "type": "object",
-                            "title": "User Team",
-                            "properties": {
-                                "teamId": {
-                                    "type": "string",
-                                    "description": "Team ID",
-                                    "example": "team-id-***"
-                                },
-                                "channelIds": {
-                                    "type": "array",
-                                    "description": "Channels IDs",
-                                    "items": {
-                                        "type": "string",
-                                        "description": "Channel ID",
-                                        "example": "channel-id-***"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "roleSite": {
-                        "type": "string",
-                        "description": "User site role",
-                        "enum": [
-                            "admin",
-                            "moderator",
-                            "user"
-                        ]
-                    },
-                    "roleOrg": {
-                        "type": "array",
-                        "description": "Organization roles",
-                        "items": {
-                            "type": "object",
-                            "title": "User Role Org",
-                            "properties": {
-                                "role": {
-                                    "type": "string",
-                                    "description": "User organization role",
-                                    "enum": [
-                                        "owner",
-                                        "manager",
-                                        "member"
-                                    ]
-                                },
-                                "orgId": {
-                                    "type": "string",
-                                    "description": "Organization ID",
-                                    "example": "org-id-***"
-                                }
-                            }
-                        }
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "description": "Created timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "description": "Updated timestamp",
-                        "example": "2001-01-01T08:08:08.000+00:00"
-                    },
-                    "orgs": {
-                        "type": "array",
-                        "description": "Organizations",
-                        "items": {
-                            "$ref": "#/components/schemas/Organization"
-                        }
-                    }
-                }
-            },
             "Event": {
                 "type": "object",
                 "title": "Event",
@@ -8486,7 +9015,7 @@
                             "average": {
                                 "type": "string",
                                 "description": "Average value",
-                                "example": "8.500000"
+                                "example": "4.500000"
                             },
                             "recent": {
                                 "type": "array",
@@ -8494,11 +9023,11 @@
                                 "items": {
                                     "type": "number",
                                     "minimum": 1,
-                                    "maximum": 10
+                                    "maximum": 5
                                 },
                                 "example": [
-                                    7,
-                                    10
+                                    4,
+                                    5
                                 ]
                             }
                         }
@@ -8516,7 +9045,7 @@
                             "average": {
                                 "type": "string",
                                 "description": "Average value",
-                                "example": "9.500000"
+                                "example": "4.500000"
                             },
                             "recent": {
                                 "type": "array",
@@ -8524,11 +9053,11 @@
                                 "items": {
                                     "type": "number",
                                     "minimum": 1,
-                                    "maximum": 10
+                                    "maximum": 5
                                 },
                                 "example": [
-                                    9,
-                                    10
+                                    4,
+                                    5
                                 ]
                             }
                         }
@@ -8681,15 +9210,11 @@
                         "example": "feature"
                     },
                     "priority": {
-                        "type": "string",
-                        "description": "Value Item Priority using MoSCoW",
-                        "enum": [
-                            "must",
-                            "should",
-                            "could",
-                            "will not"
-                        ],
-                        "example": "must"
+                        "type": "number",
+                        "description": "Value Item Priority",
+                        "minimum": 1,
+                        "maximum": 5,
+                        "default": 5
                     },
                     "assumptions": {
                         "type": "array",
@@ -8949,15 +9474,11 @@
                         "example": "feature"
                     },
                     "priority": {
-                        "type": "string",
-                        "description": "Value Item Priority using MoSCoW",
-                        "enum": [
-                            "must",
-                            "should",
-                            "could",
-                            "will not"
-                        ],
-                        "example": "must"
+                        "type": "number",
+                        "description": "Value Item Priority",
+                        "minimum": 1,
+                        "maximum": 5,
+                        "default": 5
                     },
                     "assumptions": {
                         "type": "array",
@@ -9236,12 +9757,24 @@
                     "userName": {
                         "type": "string",
                         "description": "User name",
+                        "minLength": 3,
+                        "maxLength": 64,
                         "example": "John Doe"
                     },
                     "userIcon": {
                         "type": "string",
                         "description": "User icon URL",
                         "example": "https://***"
+                    },
+                    "serviceAccount": {
+                        "type": "boolean",
+                        "description": "Service accounts can only perform actions through API calls",
+                        "default": false
+                    },
+                    "puppetAccount": {
+                        "type": "boolean",
+                        "description": "Puppet accounts replace users removed from organizations. Puppets can no longer perform any actions",
+                        "default": false
                     },
                     "teams": {
                         "type": "array",
@@ -9311,6 +9844,227 @@
                         "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
+            },
+            "Account": {
+                "type": "object",
+                "title": "Account",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    "userEmail": {
+                        "type": "string",
+                        "description": "User e-mail address",
+                        "example": "john@example.com"
+                    },
+                    "userName": {
+                        "type": "string",
+                        "description": "User name",
+                        "minLength": 3,
+                        "maxLength": 64,
+                        "example": "John Doe"
+                    },
+                    "userIcon": {
+                        "type": "string",
+                        "description": "User icon URL",
+                        "example": "https://***"
+                    },
+                    "serviceAccount": {
+                        "type": "boolean",
+                        "description": "Service accounts can only perform actions through API calls",
+                        "default": false
+                    },
+                    "puppetAccount": {
+                        "type": "boolean",
+                        "description": "Puppet accounts replace users removed from organizations. Puppets can no longer perform any actions",
+                        "default": false
+                    },
+                    "teams": {
+                        "type": "array",
+                        "description": "User Teams",
+                        "items": {
+                            "type": "object",
+                            "title": "User Team",
+                            "properties": {
+                                "teamId": {
+                                    "type": "string",
+                                    "description": "Team ID",
+                                    "example": "team-id-***"
+                                },
+                                "channelIds": {
+                                    "type": "array",
+                                    "description": "Channels IDs",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Channel ID",
+                                        "example": "channel-id-***"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "roleSite": {
+                        "type": "string",
+                        "description": "User site role",
+                        "enum": [
+                            "admin",
+                            "moderator",
+                            "user"
+                        ]
+                    },
+                    "roleOrg": {
+                        "type": "array",
+                        "description": "Organization roles",
+                        "items": {
+                            "type": "object",
+                            "title": "User Role Org",
+                            "properties": {
+                                "role": {
+                                    "type": "string",
+                                    "description": "User organization role",
+                                    "enum": [
+                                        "owner",
+                                        "manager",
+                                        "member"
+                                    ]
+                                },
+                                "orgId": {
+                                    "type": "string",
+                                    "description": "Organization ID",
+                                    "example": "org-id-***"
+                                }
+                            }
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "orgs": {
+                        "type": "array",
+                        "description": "Organizations",
+                        "items": {
+                            "$ref": "#/components/schemas/Organization"
+                        }
+                    }
+                }
+            },
+            "ServiceAccount": {
+                "type": "object",
+                "title": "Service Account",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    "userEmail": {
+                        "type": "string",
+                        "description": "User e-mail address",
+                        "example": "john@example.com"
+                    },
+                    "userName": {
+                        "type": "string",
+                        "description": "User name",
+                        "minLength": 3,
+                        "maxLength": 64,
+                        "example": "John Doe"
+                    },
+                    "userIcon": {
+                        "type": "string",
+                        "description": "User icon URL",
+                        "example": "https://***"
+                    },
+                    "serviceAccount": {
+                        "type": "boolean",
+                        "description": "Service accounts can only perform actions through API calls",
+                        "default": false
+                    },
+                    "puppetAccount": {
+                        "type": "boolean",
+                        "description": "Puppet accounts replace users removed from organizations. Puppets can no longer perform any actions",
+                        "default": false
+                    },
+                    "teams": {
+                        "type": "array",
+                        "description": "User Teams",
+                        "items": {
+                            "type": "object",
+                            "title": "User Team",
+                            "properties": {
+                                "teamId": {
+                                    "type": "string",
+                                    "description": "Team ID",
+                                    "example": "team-id-***"
+                                },
+                                "channelIds": {
+                                    "type": "array",
+                                    "description": "Channels IDs",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Channel ID",
+                                        "example": "channel-id-***"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "roleSite": {
+                        "type": "string",
+                        "description": "User site role",
+                        "enum": [
+                            "admin",
+                            "moderator",
+                            "user"
+                        ]
+                    },
+                    "roleOrg": {
+                        "type": "array",
+                        "description": "Organization roles",
+                        "items": {
+                            "type": "object",
+                            "title": "User Role Org",
+                            "properties": {
+                                "role": {
+                                    "type": "string",
+                                    "description": "User organization role",
+                                    "enum": [
+                                        "owner",
+                                        "manager",
+                                        "member"
+                                    ]
+                                },
+                                "orgId": {
+                                    "type": "string",
+                                    "description": "Organization ID",
+                                    "example": "org-id-***"
+                                }
+                            }
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "serviceToken": {
+                        "type": "string",
+                        "description": "Service Account API key - bearer JSON Web Token"
+                    }
+                }
             }
         },
         "securitySchemes": {
@@ -9327,6 +10081,7 @@
             "name": "API",
             "tags": [
                 "Account",
+                "Service accounts",
                 "Users",
                 "Invitations",
                 "Organizations",
