@@ -192,7 +192,7 @@
                     "Account"
                 ],
                 "summary": "Delete account",
-                "description": "Delete the current account. This action is reversible only if you sign back in within 14 days. API calls and service accounts cannot restore deleted accounts.",
+                "description": "Delete the current account. This action is reversible only if you sign back in within 14 days.",
                 "operationId": "accountDelete",
                 "parameters": [],
                 "responses": {
@@ -6500,7 +6500,7 @@
                     "Service accounts"
                 ],
                 "summary": "List service acounts",
-                "description": "Get a list of service account models",
+                "description": "Get a list of all service account models, including those that were closed",
                 "operationId": "serviceAccountList",
                 "parameters": [
                     {
@@ -6840,9 +6840,9 @@
                 "tags": [
                     "Service accounts"
                 ],
-                "summary": "Delete service account",
-                "description": "Remove service account",
-                "operationId": "serviceAccountDelete",
+                "summary": "Close service account",
+                "description": "Close this service account. This action can be reversed by an Organization manager.",
+                "operationId": "serviceAccountClose",
                 "parameters": [
                     {
                         "name": "accountId",
@@ -6933,8 +6933,8 @@
                 "tags": [
                     "Service accounts"
                 ],
-                "summary": "Regenerate service account",
-                "description": "Regenerate service account JSON web token",
+                "summary": "Regenerate",
+                "description": "Re-open service account if previously closed and regenerate service account JSON Web Token",
                 "operationId": "serviceAccountRegenerate",
                 "parameters": [
                     {

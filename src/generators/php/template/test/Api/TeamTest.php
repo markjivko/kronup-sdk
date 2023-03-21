@@ -33,6 +33,24 @@ class TeamTest extends TestCase {
      */
     public function setUp(): void {
         $this->sdk = new Sdk(getenv("KRONUP_API_KEY"));
+
+        // Fetch account data
+        $account = $this->sdk
+            ->api()
+            ->account()
+            ->accountRead();
+
+        // Get the first organization ID
+        if (!count($account->getRoleOrg())) {
+            $organization = $this->sdk
+                ->api()
+                ->organizations()
+                ->organizationCreate(
+                    (new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc.")
+                );
+            $this->assertInstanceOf(Model\Organization::class, $organization);
+            $this->assertEquals(0, count($organization->listProps()));
+        }
     }
 
     /**

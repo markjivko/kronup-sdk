@@ -83,26 +83,23 @@ class ServiceAccountTest extends TestCase {
         } else {
             $this->orgId = current($this->account->getRoleOrg())->getOrgId();
         }
-
-        // Fetch existing service accounts
-        $serviceAccounts = $this->sdk
-            ->api()
-            ->serviceAccounts()
-            ->serviceAccountList($this->orgId);
-
-        // Remove them
-        foreach ($serviceAccounts->getServiceAccounts() as $serviceAccount) {
-            $this->sdk
-                ->api()
-                ->serviceAccounts()
-                ->serviceAccountDelete($serviceAccount->getId(), $this->orgId);
-        }
     }
 
     /**
-     * Read & Update
+     * Remove the organization
      */
-    public function testCreateRead(): void {
+    public function tearDown(): void {
+        $deleted = $this->sdk
+            ->api()
+            ->organizations()
+            ->organizationDelete($this->orgId);
+        $this->assertTrue($deleted);
+    }
+
+    /**
+     * Create, read, list, update, delete, use
+     */
+    public function testAll(): void {
         $serviceAccount = $this->sdk
             ->api()
             ->serviceAccounts()
@@ -180,7 +177,7 @@ class ServiceAccountTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountDelete($serviceAccount->getId(), $this->orgId);
+            ->serviceAccountClose($serviceAccount->getId(), $this->orgId);
         $this->assertTrue($deleted);
 
         $this->expectExceptionObject(new ApiException("Not Found", 404));
