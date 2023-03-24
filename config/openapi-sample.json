@@ -6840,9 +6840,9 @@
                 "tags": [
                     "Service accounts"
                 ],
-                "summary": "Close service account",
-                "description": "Close this service account. This action can be reversed by an Organization manager.",
-                "operationId": "serviceAccountClose",
+                "summary": "Delete service account",
+                "description": "Delete this service account. This action cannot be reversed.",
+                "operationId": "serviceAccountDelete",
                 "parameters": [
                     {
                         "name": "accountId",
@@ -6867,11 +6867,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Puppet Account model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OK"
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -8580,11 +8580,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Puppet Account model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/OK"
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
