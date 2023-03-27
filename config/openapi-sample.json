@@ -4939,8 +4939,8 @@
                                         "type": "number",
                                         "description": "Value item priority",
                                         "minimum": 1,
-                                        "maximum": 5,
-                                        "example": 5
+                                        "maximum": 10,
+                                        "example": 10
                                     }
                                 }
                             }
@@ -4955,7 +4955,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":5}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
                     }
                 ]
             },
@@ -5358,8 +5358,8 @@
                                         "type": "number",
                                         "description": "Value item priority",
                                         "minimum": 1,
-                                        "maximum": 5,
-                                        "example": 5
+                                        "maximum": 10,
+                                        "example": 10
                                     }
                                 }
                             }
@@ -5374,7 +5374,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":5}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
                     }
                 ]
             },
@@ -6934,7 +6934,7 @@
                     "Service accounts"
                 ],
                 "summary": "Regenerate",
-                "description": "Re-open service account if previously closed and regenerate service account JSON Web Token",
+                "description": "Regenerate service account JSON Web Token and re-open service account if previously closed",
                 "operationId": "serviceAccountRegenerate",
                 "parameters": [
                     {
@@ -9061,6 +9061,16 @@
                                 ]
                             }
                         }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
                     }
                 }
             },
@@ -9213,8 +9223,8 @@
                         "type": "number",
                         "description": "Value Item Priority",
                         "minimum": 1,
-                        "maximum": 5,
-                        "default": 5
+                        "maximum": 10,
+                        "default": 10
                     },
                     "assumptions": {
                         "type": "array",
@@ -9477,8 +9487,8 @@
                         "type": "number",
                         "description": "Value Item Priority",
                         "minimum": 1,
-                        "maximum": 5,
-                        "default": 5
+                        "maximum": 10,
+                        "default": 10
                     },
                     "assumptions": {
                         "type": "array",
