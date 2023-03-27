@@ -82,7 +82,7 @@ try {
         ->{{{operationId}}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}$arg_{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$payload{{/vendorExtensions.x-group-parameters}});
     {{#returnType}}
 
-    var_dump($response);
+    var_export($response);
     {{/returnType}}
 
 } catch (\Kronup\Sdk\ApiException $apiExc) {

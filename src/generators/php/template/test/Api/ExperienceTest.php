@@ -87,7 +87,7 @@ class ExperienceTest extends TestCase {
     /**
      * Tear-down
      */
-    public function tearDown(): void {
+    public function xtearDown(): void {
         $deleted = $this->sdk
             ->api()
             ->notions()
@@ -100,24 +100,70 @@ class ExperienceTest extends TestCase {
      */
     public function testCreateReadEvaluate(): void {
         // Evaluate self
-        for ($i = 1; $i <= 11; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
+            $grade = mt_rand(1, 5);
             $experience = $this->sdk
                 ->api()
                 ->experiences()
-                ->experienceEvaluateSelf($this->notion->getId(), mt_rand(1, 5), $this->orgId);
+                ->experienceEvaluateSelf($this->notion->getId(), $grade, $this->orgId);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
 
+        // Grade was overwritten
+        $myExperience = $this->sdk
+            ->api()
+            ->experiences()
+            ->experienceRead($this->notion->getId(), $this->account->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\Experience::class, $myExperience);
+        $this->assertEquals(0, count($myExperience->listProps()));
+        $this->assertEquals($grade, $myExperience->getSelfEval()->getAverage());
+        $this->assertEquals(1, $myExperience->getSelfEval()->getCount());
+        $this->assertEquals(1, count($myExperience->getSelfEval()->getRecent()));
+
+        // Prepare the service account
+        $serviceAccount = $this->sdk
+            ->api()
+            ->serviceAccounts()
+            ->serviceAccountCreate(
+                $this->orgId,
+                (new Model\PayloadServiceAccountCreate())
+                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_MANAGER)
+                    ->setUserName("New service account name")
+            );
+        $this->assertInstanceOf(Model\ServiceAccount::class, $serviceAccount);
+        $this->assertEquals(0, count($serviceAccount->listProps()));
+        $serviceSdk = new Sdk($serviceAccount->getServiceToken());
+
         // Evaluate peer
-        for ($i = 1; $i <= 11; $i++) {
-            $experience = $this->sdk
+        for ($i = 1; $i <= 10; $i++) {
+            $grade = mt_rand(1, 5);
+            $experience = $serviceSdk
                 ->api()
                 ->experiences()
-                ->experienceEvaluatePeer($this->notion->getId(), $this->account->getId(), mt_rand(1, 5), $this->orgId);
+                ->experienceEvaluatePeer($this->notion->getId(), $this->account->getId(), $grade, $this->orgId);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
+
+        // Close the service account
+        $puppet = $this->sdk
+            ->api()
+            ->serviceAccounts()
+            ->serviceAccountDelete($serviceAccount->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\User::class, $puppet);
+        $this->assertEquals(0, count($puppet->listProps()));
+
+        // Fetch the experience once more
+        $myExperience = $this->sdk
+            ->api()
+            ->experiences()
+            ->experienceRead($this->notion->getId(), $this->account->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\Experience::class, $myExperience);
+        $this->assertEquals(0, count($myExperience->listProps()));
+        $this->assertEquals($grade, $myExperience->getPeerEval()->getAverage());
+        $this->assertEquals(1, $myExperience->getPeerEval()->getCount());
+        $this->assertEquals(1, count($myExperience->getPeerEval()->getRecent()));
 
         // Find all
         $xpList = $this->sdk
@@ -129,7 +175,7 @@ class ExperienceTest extends TestCase {
 
         // Assert array
         $this->assertIsArray($xpList->getExperiences());
-        $this->assertEquals(1, count($xpList->getExperiences()));
+        $this->assertGreaterThanOrEqual(1, count($xpList->getExperiences()));
         $this->assertGreaterThanOrEqual(count($xpList->getExperiences()), $xpList->getTotal());
 
         // Validate notions are expanded

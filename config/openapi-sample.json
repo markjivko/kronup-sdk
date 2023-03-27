@@ -941,7 +941,7 @@
                     "Experiences"
                 ],
                 "summary": "Self-evaluation",
-                "description": "Evaluate yourself on a notion",
+                "description": "Evaluate yourself on a notion. Only the last evaluation is kept in a 24 hours interval.",
                 "operationId": "experienceEvaluateSelf",
                 "parameters": [
                     {
@@ -1048,7 +1048,7 @@
                     "Experiences"
                 ],
                 "summary": "Evaluate peer",
-                "description": "Anonymously evaluate another user on this notion",
+                "description": "Anonymously evaluate another user on this notion. Only the last evaluation is kept in a 24 hours interval.",
                 "operationId": "experienceEvaluatePeer",
                 "parameters": [
                     {
@@ -9007,21 +9007,22 @@
                         "title": "Evaluations: self",
                         "properties": {
                             "count": {
-                                "type": "number",
+                                "type": "integer",
                                 "description": "Total number of evaluations",
                                 "minimum": 0,
                                 "example": 2
                             },
                             "average": {
-                                "type": "string",
+                                "type": "number",
+                                "format": "float",
                                 "description": "Average value",
-                                "example": "4.500000"
+                                "example": 4.5
                             },
                             "recent": {
                                 "type": "array",
                                 "description": "Recent grades",
                                 "items": {
-                                    "type": "number",
+                                    "type": "integer",
                                     "minimum": 1,
                                     "maximum": 5
                                 },
@@ -9037,21 +9038,22 @@
                         "title": "Evaluations: peers",
                         "properties": {
                             "count": {
-                                "type": "number",
+                                "type": "integer",
                                 "description": "Total number of evaluations",
                                 "minimum": 0,
                                 "example": 2
                             },
                             "average": {
-                                "type": "string",
+                                "type": "number",
+                                "format": "float",
                                 "description": "Average value",
-                                "example": "4.500000"
+                                "example": 4.5
                             },
                             "recent": {
                                 "type": "array",
                                 "description": "Recent grades",
                                 "items": {
-                                    "type": "number",
+                                    "type": "integer",
                                     "minimum": 1,
                                     "maximum": 5
                                 },

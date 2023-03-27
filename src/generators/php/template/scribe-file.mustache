@@ -63,7 +63,7 @@ try {
         ->{{{methodName}}}({{#methodArgs}}$arg_{{argName}}{{^-last}}, {{/-last}}{{/methodArgs}});
     {{#methodReturn.returnType}}
 
-    var_dump($result);
+    var_export($result);
     {{/methodReturn.returnType}}
 
 } catch (\Exception $exc) {
