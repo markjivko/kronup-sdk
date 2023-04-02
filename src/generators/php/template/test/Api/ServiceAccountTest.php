@@ -162,7 +162,7 @@ class ServiceAccountTest extends TestCase {
 
         $this->assertInstanceOf(Model\Account::class, $remoteAccount);
         $this->assertEquals(0, count($remoteAccount->listProps()));
-        $this->assertEquals($serviceAccount->getUserEmail(), $remoteAccount->getUserEmail());
+        $this->assertEquals($serviceAccount->getId(), $remoteAccount->getId());
 
         // Regenerate
         $regenerated = $this->sdk
