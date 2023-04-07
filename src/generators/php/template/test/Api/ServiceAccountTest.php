@@ -113,8 +113,7 @@ class ServiceAccountTest extends TestCase {
         $this->assertInstanceOf(Model\ServiceAccount::class, $serviceAccount);
         $this->assertEquals(0, count($serviceAccount->listProps()));
 
-        $this->assertInstanceOf(Model\UserRoleOrg::class, $serviceAccount->getRoleOrg()[0]);
-        $this->assertEquals(0, count($serviceAccount->getRoleOrg()[0]->listProps()));
+        $this->assertIsString($serviceAccount->getRoleOrg());
 
         // Fetch the account
         $serviceAccountRead = $this->sdk
@@ -125,8 +124,7 @@ class ServiceAccountTest extends TestCase {
         $this->assertInstanceOf(Model\ServiceAccount::class, $serviceAccountRead);
         $this->assertEquals(0, count($serviceAccountRead->listProps()));
 
-        $this->assertInstanceOf(Model\UserRoleOrg::class, $serviceAccountRead->getRoleOrg()[0]);
-        $this->assertEquals(0, count($serviceAccountRead->getRoleOrg()[0]->listProps()));
+        $this->assertIsString($serviceAccountRead->getRoleOrg());
         $this->assertEquals($serviceAccount->getServiceToken(), $serviceAccountRead->getServiceToken());
 
         // Fetch all

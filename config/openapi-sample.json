@@ -41,7 +41,7 @@
         },
         {
             "name": "Teams",
-            "description": "Each [Organization](#tag/Organizations) has at least **1** and at most **100** Teams."
+            "description": "Each [Organization](#tag/Organizations) has at least **1** and at most **250** Teams."
         },
         {
             "name": "Channels",
@@ -6281,6 +6281,16 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
                     }
                 },
                 "requestBody": {
@@ -6386,6 +6396,110 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                    }
+                ]
+            }
+        },
+        "/organizations/{orgId}/logo": {
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Update logo",
+                "description": "Update organization logo",
+                "operationId": "organizationLogo",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Organization ID",
+                        "example": "org-id-***"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Organization model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Organization"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload Organization Logo",
+                                "description": "Payload object required to update an Organization logo",
+                                "properties": {
+                                    "logo": {
+                                        "type": "string",
+                                        "description": "Logo - must be a PNG file, exactly 256x256 pixels, smaller than 200KB",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***/logo' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: multipart/form-data' \\\n  --form logo=string"
                     }
                 ]
             }
@@ -8345,6 +8459,16 @@
                         },
                         "description": "User ID",
                         "example": "user-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -8407,7 +8531,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             },
@@ -9694,10 +9818,10 @@
                         "description": "Organization name",
                         "example": "Organization, Inc."
                     },
-                    "orgIcon": {
+                    "orgIconId": {
                         "type": "string",
-                        "description": "Organization logo URL",
-                        "example": "https://***"
+                        "description": "Organization logo ID",
+                        "example": "org-logo-id-***"
                     },
                     "orgOwners": {
                         "type": "array",
@@ -9866,28 +9990,13 @@
                         ]
                     },
                     "roleOrg": {
-                        "type": "array",
-                        "description": "Organization roles",
-                        "items": {
-                            "type": "object",
-                            "title": "User Role Org",
-                            "properties": {
-                                "role": {
-                                    "type": "string",
-                                    "description": "User organization role",
-                                    "enum": [
-                                        "owner",
-                                        "manager",
-                                        "member"
-                                    ]
-                                },
-                                "orgId": {
-                                    "type": "string",
-                                    "description": "Organization ID",
-                                    "example": "org-id-***"
-                                }
-                            }
-                        }
+                        "type": "string",
+                        "description": "User organization role",
+                        "enum": [
+                            "owner",
+                            "manager",
+                            "member"
+                        ]
                     },
                     "createdAt": {
                         "type": "string",
@@ -9939,11 +10048,16 @@
                     },
                     "teams": {
                         "type": "array",
-                        "description": "User Teams",
+                        "description": "Account Teams",
                         "items": {
                             "type": "object",
-                            "title": "User Team",
+                            "title": "Account Team",
                             "properties": {
+                                "orgId": {
+                                    "type": "string",
+                                    "description": "Organization ID",
+                                    "example": "org-id-***"
+                                },
                                 "teamId": {
                                     "type": "string",
                                     "description": "Team ID",
@@ -9975,8 +10089,13 @@
                         "description": "Organization roles",
                         "items": {
                             "type": "object",
-                            "title": "User Role Org",
+                            "title": "Account Role Org",
                             "properties": {
+                                "orgId": {
+                                    "type": "string",
+                                    "description": "Organization ID",
+                                    "example": "org-id-***"
+                                },
                                 "role": {
                                     "type": "string",
                                     "description": "User organization role",
@@ -9985,11 +10104,6 @@
                                         "manager",
                                         "member"
                                     ]
-                                },
-                                "orgId": {
-                                    "type": "string",
-                                    "description": "Organization ID",
-                                    "example": "org-id-***"
                                 }
                             }
                         }
@@ -10083,28 +10197,13 @@
                         ]
                     },
                     "roleOrg": {
-                        "type": "array",
-                        "description": "Organization roles",
-                        "items": {
-                            "type": "object",
-                            "title": "User Role Org",
-                            "properties": {
-                                "role": {
-                                    "type": "string",
-                                    "description": "User organization role",
-                                    "enum": [
-                                        "owner",
-                                        "manager",
-                                        "member"
-                                    ]
-                                },
-                                "orgId": {
-                                    "type": "string",
-                                    "description": "Organization ID",
-                                    "example": "org-id-***"
-                                }
-                            }
-                        }
+                        "type": "string",
+                        "description": "User organization role",
+                        "enum": [
+                            "owner",
+                            "manager",
+                            "member"
+                        ]
                     },
                     "createdAt": {
                         "type": "string",

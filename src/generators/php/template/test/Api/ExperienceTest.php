@@ -87,7 +87,7 @@ class ExperienceTest extends TestCase {
     /**
      * Tear-down
      */
-    public function xtearDown(): void {
+    public function tearDown(): void {
         $deleted = $this->sdk
             ->api()
             ->notions()

@@ -64,6 +64,9 @@ class InvitationTest extends TestCase {
         $this->assertInstanceOf(Model\Invitation::class, $invitationModelRead);
         $this->assertEquals(0, count($invitationModelRead->listProps()));
 
+        // Validate views increment
+        $this->assertEquals($invitationModel->getInviteViews() + 1, $invitationModelRead->getInviteViews());
+
         // List all invitations
         $invitationsList = $this->sdk
             ->api()

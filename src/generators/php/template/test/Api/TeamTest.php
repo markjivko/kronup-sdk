@@ -92,7 +92,6 @@ class TeamTest extends TestCase {
 
         $this->assertIsArray($teamsList->getTeams());
         $this->assertGreaterThanOrEqual(1, count($teamsList->getTeams()));
-
         $this->assertGreaterThanOrEqual(count($teamsList->getTeams()), $teamsList->getTotal());
 
         // Update team details
@@ -161,7 +160,7 @@ class TeamTest extends TestCase {
         $modelUser2 = $this->sdk
             ->api()
             ->users()
-            ->userRead($account->getId());
+            ->userRead($account->getId(), $orgId);
         $this->assertInstanceOf(Model\User::class, $modelUser2);
         $this->assertEquals(0, count($modelUser2->listProps()));
 
@@ -179,7 +178,7 @@ class TeamTest extends TestCase {
         $modelUser3 = $this->sdk
             ->api()
             ->users()
-            ->userRead($account->getId());
+            ->userRead($account->getId(), $orgId);
 
         // Fetch the teams
         $userTeams = array_map(function ($item) {
@@ -341,6 +340,20 @@ class TeamTest extends TestCase {
             return $item->getTeamId();
         }, $user->getTeams());
         $this->assertContains($team->getId(), $teamIds);
+
+        // Validate user teams
+        $this->assertIsArray($user->getTeams());
+        $this->assertInstanceOf(Model\UserTeam::class, $user->getTeams()[0]);
+        $this->assertEquals(0, count($user->getTeams()[0]->listProps()));
+
+        // Validate account teams
+        $account = $this->sdk
+            ->api()
+            ->account()
+            ->accountRead();
+        $this->assertIsArray($account->getTeams());
+        $this->assertInstanceOf(Model\AccountTeam::class, $account->getTeams()[0]);
+        $this->assertEquals(0, count($account->getTeams()[0]->listProps()));
 
         // Delete the team
         $deleted = $this->sdk
