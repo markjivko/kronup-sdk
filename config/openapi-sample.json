@@ -6586,6 +6586,8 @@
                                     "userName": {
                                         "type": "string",
                                         "description": "Service account name",
+                                        "minLength": 3,
+                                        "maxLength": 64,
                                         "example": "John Doe"
                                     }
                                 },
@@ -6931,6 +6933,8 @@
                                     "userName": {
                                         "type": "string",
                                         "description": "Service account name",
+                                        "minLength": 3,
+                                        "maxLength": 64,
                                         "example": "John Doe"
                                     }
                                 }
@@ -9998,6 +10002,12 @@
                             "member"
                         ]
                     },
+                    "closedTime": {
+                        "type": "number",
+                        "minimum": 0,
+                        "default": 0,
+                        "description": "Account closed UNIX timestamp; 0 means the account is active"
+                    },
                     "createdAt": {
                         "type": "string",
                         "description": "Created timestamp",
@@ -10108,6 +10118,12 @@
                             }
                         }
                     },
+                    "closedTime": {
+                        "type": "number",
+                        "minimum": 0,
+                        "default": 0,
+                        "description": "Account closed UNIX timestamp; 0 means the account is active"
+                    },
                     "createdAt": {
                         "type": "string",
                         "description": "Created timestamp",
@@ -10123,6 +10139,20 @@
                         "description": "Organizations",
                         "items": {
                             "$ref": "#/components/schemas/Organization"
+                        }
+                    },
+                    "apiCalls": {
+                        "type": "object",
+                        "description": "List of daily API Calls from this account",
+                        "additionalProperties": {
+                            "x-additionalPropertiesName": "Date string (YYYY-MM-DD)",
+                            "description": "Approximate number of API calls",
+                            "title": "API Calls",
+                            "type": "number",
+                            "minimum": 0
+                        },
+                        "example": {
+                            "2020-12-21": 2200
                         }
                     }
                 }
@@ -10205,6 +10235,12 @@
                             "member"
                         ]
                     },
+                    "closedTime": {
+                        "type": "number",
+                        "minimum": 0,
+                        "default": 0,
+                        "description": "Account closed UNIX timestamp; 0 means the account is active"
+                    },
                     "createdAt": {
                         "type": "string",
                         "description": "Created timestamp",
@@ -10218,6 +10254,20 @@
                     "serviceToken": {
                         "type": "string",
                         "description": "Service Account API key - bearer JSON Web Token"
+                    },
+                    "apiCalls": {
+                        "type": "object",
+                        "description": "List of daily API Calls from this service account",
+                        "additionalProperties": {
+                            "x-additionalPropertiesName": "Date string (YYYY-MM-DD)",
+                            "description": "Approximate number of API calls",
+                            "title": "API Calls",
+                            "type": "number",
+                            "minimum": 0
+                        },
+                        "example": {
+                            "2020-12-21": 2200
+                        }
                     }
                 }
             }
