@@ -191,9 +191,9 @@
                 "tags": [
                     "Account"
                 ],
-                "summary": "Delete account",
-                "description": "Delete the current account. This action is reversible only if you sign back in within 14 days.",
-                "operationId": "accountDelete",
+                "summary": "Close account",
+                "description": "Close the current account. This action is reversible only if you sign back in within 14 days. You must first abandon or delete all the organizations you own to perform this action.",
+                "operationId": "accountClose",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -206,12 +206,32 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
                                 }
                             }
                         }
