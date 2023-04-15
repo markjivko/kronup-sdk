@@ -378,6 +378,99 @@
                 ]
             }
         },
+        "/account/avatar": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Update avatar",
+                "description": "Update account avatar",
+                "operationId": "accountAvatar",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Account model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload Account Avatar",
+                                "description": "Payload object required to update an Account avatar",
+                                "properties": {
+                                    "avatar": {
+                                        "type": "string",
+                                        "description": "Avatar - must be a PNG file, exactly 256x256 pixels, smaller than 200KB",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/account/avatar \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: multipart/form-data' \\\n  --form avatar=string"
+                    }
+                ]
+            }
+        },
         "/deep-context/{itemId}": {
             "get": {
                 "tags": [
@@ -9967,7 +10060,9 @@
                     },
                     "userIcon": {
                         "type": "string",
-                        "description": "User icon URL",
+                        "description": "User icon - either a full URL or a resource ID",
+                        "minLength": 0,
+                        "maxLength": 1024,
                         "example": "https://***"
                     },
                     "serviceAccount": {
@@ -10063,7 +10158,9 @@
                     },
                     "userIcon": {
                         "type": "string",
-                        "description": "User icon URL",
+                        "description": "User icon - either a full URL or a resource ID",
+                        "minLength": 0,
+                        "maxLength": 1024,
                         "example": "https://***"
                     },
                     "serviceAccount": {
@@ -10200,7 +10297,9 @@
                     },
                     "userIcon": {
                         "type": "string",
-                        "description": "User icon URL",
+                        "description": "User icon - either a full URL or a resource ID",
+                        "minLength": 0,
+                        "maxLength": 1024,
                         "example": "https://***"
                     },
                     "serviceAccount": {
