@@ -10058,12 +10058,25 @@
                         "maxLength": 64,
                         "example": "John Doe"
                     },
-                    "userIcon": {
+                    "userAvatarId": {
                         "type": "string",
-                        "description": "User icon - either a full URL or a resource ID",
-                        "minLength": 0,
-                        "maxLength": 1024,
-                        "example": "https://***"
+                        "description": "User avatar ID",
+                        "example": "user-avatar-id-***"
+                    },
+                    "userColor": {
+                        "type": "string",
+                        "description": "User profile color",
+                        "enum": [
+                            "clear",
+                            "red",
+                            "orange",
+                            "yellow",
+                            "green",
+                            "blue",
+                            "pink",
+                            "violet"
+                        ],
+                        "example": "red"
                     },
                     "serviceAccount": {
                         "type": "boolean",
@@ -10156,12 +10169,25 @@
                         "maxLength": 64,
                         "example": "John Doe"
                     },
-                    "userIcon": {
+                    "userAvatarId": {
                         "type": "string",
-                        "description": "User icon - either a full URL or a resource ID",
-                        "minLength": 0,
-                        "maxLength": 1024,
-                        "example": "https://***"
+                        "description": "User avatar ID",
+                        "example": "user-avatar-id-***"
+                    },
+                    "userColor": {
+                        "type": "string",
+                        "description": "User profile color",
+                        "enum": [
+                            "clear",
+                            "red",
+                            "orange",
+                            "yellow",
+                            "green",
+                            "blue",
+                            "pink",
+                            "violet"
+                        ],
+                        "example": "red"
                     },
                     "serviceAccount": {
                         "type": "boolean",
@@ -10295,12 +10321,25 @@
                         "maxLength": 64,
                         "example": "John Doe"
                     },
-                    "userIcon": {
+                    "userAvatarId": {
                         "type": "string",
-                        "description": "User icon - either a full URL or a resource ID",
-                        "minLength": 0,
-                        "maxLength": 1024,
-                        "example": "https://***"
+                        "description": "User avatar ID",
+                        "example": "user-avatar-id-***"
+                    },
+                    "userColor": {
+                        "type": "string",
+                        "description": "User profile color",
+                        "enum": [
+                            "clear",
+                            "red",
+                            "orange",
+                            "yellow",
+                            "green",
+                            "blue",
+                            "pink",
+                            "violet"
+                        ],
+                        "example": "red"
                     },
                     "serviceAccount": {
                         "type": "boolean",
