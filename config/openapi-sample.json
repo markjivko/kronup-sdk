@@ -7935,6 +7935,15 @@
                         }
                     },
                     {
+                        "name": "userId",
+                        "in": "query",
+                        "description": "User ID - optionally restrict teams and channels to this user",
+                        "example": "user-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "pageNumber",
                         "in": "query",
                         "description": "Pagination: page number",
@@ -8028,6 +8037,16 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -8038,7 +8057,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams?userId=user-id-***&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
