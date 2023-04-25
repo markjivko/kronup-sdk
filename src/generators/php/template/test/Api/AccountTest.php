@@ -68,6 +68,12 @@ class AccountTest extends TestCase {
         $this->assertInstanceOf(Model\AccountRoleOrg::class, $account->getRoleOrg()[0]);
         $this->assertEquals(0, count($account->getRoleOrg()[0]->listProps()));
 
+        // Validate organizations list
+        $this->assertIsArray($account->getOrgs());
+        $this->assertGreaterThanOrEqual(1, count($account->getOrgs()));
+        $this->assertInstanceOf(Model\Organization::class, $account->getOrgs()[0]);
+        $this->assertEquals(0, count($account->getOrgs()[0]->listProps()));
+
         $userName = $account->getUserName();
 
         // Update the account

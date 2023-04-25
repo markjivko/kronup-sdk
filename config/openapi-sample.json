@@ -10303,6 +10303,30 @@
                             "$ref": "#/components/schemas/Organization"
                         }
                     },
+                    "orgsTeams": {
+                        "type": "array",
+                        "description": "Organization Teams",
+                        "items": {
+                            "type": "object",
+                            "title": "Organization Teams",
+                            "properties": {
+                                "orgId": {
+                                    "type": "string",
+                                    "description": "Organization ID",
+                                    "example": "org-id-***"
+                                },
+                                "teamIds": {
+                                    "type": "array",
+                                    "description": "Team IDs",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Team ID",
+                                        "example": "team-id-***"
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "apiCalls": {
                         "type": "object",
                         "description": "List of daily API Calls from this account",

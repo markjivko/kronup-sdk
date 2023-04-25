@@ -139,6 +139,18 @@ class TeamTest extends TestCase {
                     ->setChannelDesc("The 2nd channel description")
             );
 
+        // Re-fetch account
+        $account = $this->sdk
+            ->api()
+            ->account()
+            ->accountRead();
+
+        // Validate organizations teams lit
+        $this->assertIsArray($account->getOrgsTeams());
+        $this->assertGreaterThanOrEqual(1, count($account->getOrgsTeams()));
+        $this->assertInstanceOf(Model\OrganizationTeams::class, $account->getOrgsTeams()[0]);
+        $this->assertEquals(0, count($account->getOrgsTeams()[0]->listProps()));
+
         // Assign the secondary channel
         $modelUser = $this->sdk
             ->api()
