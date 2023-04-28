@@ -71,7 +71,7 @@ class TeamTest extends TestCase {
             ->api()
             ->teams()
             ->teamCreate($orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
-        $this->assertInstanceOf(Model\Team::class, $teamModel);
+        $this->assertInstanceOf(Model\TeamExtended::class, $teamModel);
         $this->assertEquals(0, count($teamModel->listProps()));
 
         // Read the team data
@@ -79,20 +79,23 @@ class TeamTest extends TestCase {
             ->api()
             ->teams()
             ->teamRead($teamModel->getId(), $orgId);
-        $this->assertInstanceOf(Model\Team::class, $teamModelRead);
+        $this->assertInstanceOf(Model\TeamExtended::class, $teamModelRead);
         $this->assertEquals(0, count($teamModelRead->listProps()));
 
         // List all teams
         $teamsList = $this->sdk
             ->api()
             ->teams()
-            ->teamList($orgId);
+            ->teamListAll($orgId);
         $this->assertInstanceOf(Model\TeamsList::class, $teamsList);
         $this->assertEquals(0, count($teamsList->listProps()));
 
         $this->assertIsArray($teamsList->getTeams());
         $this->assertGreaterThanOrEqual(1, count($teamsList->getTeams()));
         $this->assertGreaterThanOrEqual(count($teamsList->getTeams()), $teamsList->getTotal());
+
+        $this->assertInstanceOf(Model\Team::class, $teamsList->getTeams()[0]);
+        $this->assertEquals(0, count($teamsList->getTeams()[0]->listProps()));
 
         // Update team details
         $teamModelUpdated = $this->sdk
@@ -103,7 +106,7 @@ class TeamTest extends TestCase {
                 $orgId,
                 (new Model\PayloadTeamUpdate())->setTeamName("Another team name")->setTeamDesc("A colorful description")
             );
-        $this->assertInstanceOf(Model\Team::class, $teamModelUpdated);
+        $this->assertInstanceOf(Model\TeamExtended::class, $teamModelUpdated);
         $this->assertEquals(0, count($teamModelUpdated->listProps()));
 
         $this->assertEquals("Another team name", $teamModelUpdated->getTeamName());
@@ -120,7 +123,7 @@ class TeamTest extends TestCase {
                     ->setChannelName("A new channel")
                     ->setChannelDesc("The channel description")
             );
-        $this->assertInstanceOf(Model\Team::class, $team);
+        $this->assertInstanceOf(Model\TeamExtended::class, $team);
         $this->assertEquals(0, count($team->listProps()));
 
         $this->assertIsArray($team->getChannels());
@@ -138,6 +141,53 @@ class TeamTest extends TestCase {
                     ->setChannelName("A new channel 2")
                     ->setChannelDesc("The 2nd channel description")
             );
+
+        // Sign me up
+        $this->sdk
+            ->api()
+            ->teams()
+            ->teamAssign($team->getId(), $account->getId(), $orgId);
+
+        // Fetch user teams
+        $listUser = $this->sdk
+            ->api()
+            ->teams()
+            ->teamListUser($account->getId(), $orgId);
+        $this->assertInstanceOf(Model\TeamsExtendedList::class, $listUser);
+        $this->assertEquals(0, count($listUser->listProps()));
+        $this->assertIsArray($listUser->getTeams());
+        $this->assertGreaterThanOrEqual(1, count($listUser->getTeams()));
+        $this->assertInstanceOf(Model\TeamExtended::class, $listUser->getTeams()[0]);
+        $this->assertEquals(0, count($listUser->getTeams()[0]->listProps()));
+
+        // Validate channels
+        $this->assertIsArray($listUser->getTeams()[0]->getChannels());
+        $this->assertGreaterThanOrEqual(1, count($listUser->getTeams()[0]->getChannels()));
+        $this->assertInstanceOf(Model\Channel::class, $listUser->getTeams()[0]->getChannels()[0]);
+        $this->assertEquals(
+            0,
+            count(
+                $listUser
+                    ->getTeams()[0]
+                    ->getChannels()[0]
+                    ->listProps()
+            )
+        );
+
+        // Fetch channel members
+        $channelMembers = $this->sdk
+            ->api()
+            ->channels()
+            ->channelListMembers($team->getId(), $team->getChannels()[0]->getId(), $orgId);
+        $this->assertInstanceOf(Model\ChannelMembersList::class, $channelMembers);
+
+        $this->assertEquals(0, count($channelMembers->listProps()));
+        $this->assertIsArray($channelMembers->getMembers());
+        $this->assertGreaterThanOrEqual(1, count($channelMembers->getMembers()));
+
+        $this->assertInstanceOf(Model\User::class, $channelMembers->getMembers()[0]);
+        $this->assertEquals(0, count($channelMembers->getMembers()[0]->listProps()));
+        $this->assertEquals($channelMembers->getMembers()[0]->getId(), $account->getId());
 
         // Re-fetch account
         $account = $this->sdk
@@ -273,7 +323,7 @@ class TeamTest extends TestCase {
             ->api()
             ->teams()
             ->teamCreate($orgId, (new Model\PayloadTeamCreate())->setTeamName("Test"));
-        $this->assertInstanceOf(Model\Team::class, $team);
+        $this->assertInstanceOf(Model\TeamExtended::class, $team);
         $this->assertEquals(0, count($team->listProps()));
 
         // Update: Name too long
@@ -340,7 +390,7 @@ class TeamTest extends TestCase {
             ->api()
             ->teams()
             ->teamCreate($orgId, (new Model\PayloadTeamCreate())->setTeamName("Test"));
-        $this->assertInstanceOf(Model\Team::class, $team);
+        $this->assertInstanceOf(Model\TeamExtended::class, $team);
         $this->assertEquals(0, count($team->listProps()));
 
         // Assign team to user

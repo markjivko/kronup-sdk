@@ -46,7 +46,7 @@ class DeepContextTest extends TestCase {
     /**
      * Team model
      *
-     * @var Model\Team
+     * @var Model\TeamExtended
      */
     protected $team;
 

@@ -12,7 +12,7 @@ additionalProperties:
   composerProjectName: "sdk"
   licenseInfo: "MIT"
   copyright: "(c) 2022-2023 kronup.com"
-  
+
 files:
   .gitignore.mustache:
     folder: ""

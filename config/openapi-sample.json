@@ -7286,11 +7286,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team model",
+                        "description": "Extended Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/TeamExtended"
                                 }
                             }
                         }
@@ -7410,11 +7410,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team model",
+                        "description": "Extended Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/TeamExtended"
                                 }
                             }
                         }
@@ -7581,6 +7581,162 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "List members",
+                "description": "List all channel members",
+                "operationId": "channelListMembers",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "maximum": 500,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Channel members",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Channel Members List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1,
+                                            "default": 1,
+                                            "minimum": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "minimum": 1,
+                                            "maximum": 500
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total number of members",
+                                            "example": 10
+                                        },
+                                        "members": {
+                                            "type": "array",
+                                            "description": "User models",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -7835,11 +7991,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team model",
+                        "description": "Extended Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/TeamExtended"
                                 }
                             }
                         }
@@ -7920,9 +8076,9 @@
                 "tags": [
                     "Teams"
                 ],
-                "summary": "List teams",
-                "description": "Get a list of team models",
-                "operationId": "teamList",
+                "summary": "List all teams",
+                "description": "Get a list of all organization team models",
+                "operationId": "teamListAll",
                 "parameters": [
                     {
                         "name": "x-org-id",
@@ -7930,15 +8086,6 @@
                         "description": "Organization ID",
                         "required": true,
                         "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "userId",
-                        "in": "query",
-                        "description": "User ID - optionally restrict teams and channels to this user",
-                        "example": "user-id-***",
                         "schema": {
                             "type": "string"
                         }
@@ -8057,7 +8204,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams?userId=user-id-***&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -8094,11 +8241,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team model",
+                        "description": "Extended Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/TeamExtended"
                                 }
                             }
                         }
@@ -8187,11 +8334,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team model",
+                        "description": "Extended Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Team"
+                                    "$ref": "#/components/schemas/TeamExtended"
                                 }
                             }
                         }
@@ -8365,6 +8512,154 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/teams/users/{userId}": {
+            "get": {
+                "tags": [
+                    "Teams"
+                ],
+                "summary": "List user teams",
+                "description": "Get a list of extended team models for this user",
+                "operationId": "teamListUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "maximum": 500,
+                            "example": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Extended Team models",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Teams Extended List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1,
+                                            "default": 1,
+                                            "minimum": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 100,
+                                            "minimum": 1,
+                                            "maximum": 500
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total number of teams",
+                                            "example": 10
+                                        },
+                                        "teams": {
+                                            "type": "array",
+                                            "description": "Teams",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TeamExtended"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/users/user-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -10008,13 +10303,6 @@
                         "maxLength": 256,
                         "example": ""
                     },
-                    "channels": {
-                        "type": "array",
-                        "description": "Channels",
-                        "items": {
-                            "$ref": "#/components/schemas/Channel"
-                        }
-                    },
                     "createdAt": {
                         "type": "string",
                         "description": "Created timestamp",
@@ -10053,6 +10341,53 @@
                         "minLength": 0,
                         "maxLength": 256,
                         "example": ""
+                    }
+                }
+            },
+            "TeamExtended": {
+                "type": "object",
+                "title": "Team",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    "orgId": {
+                        "type": "string",
+                        "description": "Organization ID",
+                        "example": "org-id-***"
+                    },
+                    "teamName": {
+                        "type": "string",
+                        "description": "Team name",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "example": "UX"
+                    },
+                    "teamDesc": {
+                        "type": "string",
+                        "description": "Team description",
+                        "minLength": 0,
+                        "maxLength": 256,
+                        "example": ""
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "channels": {
+                        "type": "array",
+                        "description": "Channels",
+                        "items": {
+                            "$ref": "#/components/schemas/Channel"
+                        }
                     }
                 }
             },
