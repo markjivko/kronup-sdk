@@ -38,16 +38,14 @@ class AccountTest extends TestCase {
         $account = $this->sdk
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
 
         // Get the first organization ID
         if (!count($account->getRoleOrg())) {
             $organization = $this->sdk
                 ->api()
                 ->organizations()
-                ->organizationCreate(
-                    (new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc.")
-                );
+                ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
         }
@@ -61,7 +59,7 @@ class AccountTest extends TestCase {
         $account = $this->sdk
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
         $this->assertInstanceOf(Model\Account::class, $account);
         $this->assertEquals(0, count($account->listProps()));
 
@@ -80,7 +78,7 @@ class AccountTest extends TestCase {
         $updatedAccount = $this->sdk
             ->api()
             ->account()
-            ->accountUpdate((new Model\PayloadAccountUpdate())->setUserName("$userName 2"));
+            ->update((new Model\PayloadAccountUpdate())->setUserName("$userName 2"));
         $this->assertInstanceOf(Model\Account::class, $updatedAccount);
         $this->assertEquals(0, count($updatedAccount->listProps()));
 
@@ -90,6 +88,6 @@ class AccountTest extends TestCase {
         $this->sdk
             ->api()
             ->account()
-            ->accountUpdate((new Model\PayloadAccountUpdate())->setUserName($userName));
+            ->update((new Model\PayloadAccountUpdate())->setUserName($userName));
     }
 }

@@ -109,6 +109,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -180,6 +181,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -242,6 +244,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "close",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -257,7 +260,7 @@
                 ],
                 "summary": "List events",
                 "description": "Get a list of event models",
-                "operationId": "eventList",
+                "operationId": "accountEventList",
                 "parameters": [
                     {
                         "name": "x-org-id",
@@ -370,6 +373,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "eventList",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -463,6 +467,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "avatar",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -558,6 +563,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -651,6 +657,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -787,6 +794,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "search",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -892,6 +900,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -907,7 +916,7 @@
                 ],
                 "summary": "Fetch all experiences",
                 "description": "Retrieve all experience models for this user",
-                "operationId": "experiencesList",
+                "operationId": "experienceList",
                 "parameters": [
                     {
                         "name": "userId",
@@ -1040,6 +1049,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "list",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1147,6 +1157,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "evaluateSelf",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1264,6 +1275,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "evaluatePeer",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1394,6 +1406,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1520,6 +1533,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "list",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1590,6 +1604,7 @@
                         }
                     }
                 },
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1724,6 +1739,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1817,6 +1833,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1900,6 +1917,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "accept",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -2036,6 +2054,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -2202,6 +2221,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "list",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -2327,6 +2347,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -2471,6 +2492,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -2594,6 +2616,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -2758,6 +2781,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "experiment",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -2899,6 +2923,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -3065,6 +3090,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "list",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -3190,6 +3216,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -3348,6 +3375,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -3471,6 +3499,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -3606,6 +3635,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "assign",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -3741,6 +3771,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "notionAdd",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -3874,6 +3905,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "notionRemove",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -4019,6 +4051,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "discoveryCreate",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -4174,6 +4207,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "discoveryUpdate",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -4307,6 +4341,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "discoveryDelete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -4466,6 +4501,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "feedbackCreate",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -4636,6 +4672,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "feedbackUpdate",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -4769,6 +4806,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "feedbackDelete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -4925,6 +4963,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "feedbackReply",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -5065,6 +5104,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -5211,6 +5251,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "list",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -5326,6 +5367,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -5484,6 +5526,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -5597,6 +5640,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -5710,6 +5754,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "advance",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -5806,6 +5851,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -5940,6 +5986,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "search",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6035,6 +6082,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6148,6 +6196,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6241,6 +6290,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6326,6 +6376,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6432,6 +6483,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6505,6 +6557,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6609,6 +6662,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "logo",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6717,6 +6771,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6843,6 +6898,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "list",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -6938,6 +6994,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -7060,6 +7117,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -7153,6 +7211,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -7246,6 +7305,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "regenerate",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -7360,6 +7420,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -7484,6 +7545,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -7577,13 +7639,246 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
                         "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/users/{userId}": {
+            "put": {
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Assign to channel",
+                "description": "Assign a user to a channel",
+                "operationId": "channelAssign",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "x-method": "assign",
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
             },
+            "delete": {
+                "tags": [
+                    "Channels"
+                ],
+                "summary": "Unassign from channel",
+                "description": "Remove a user from a channel",
+                "operationId": "channelUnassign",
+                "parameters": [
+                    {
+                        "name": "teamId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    {
+                        "name": "channelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    },
+                    {
+                        "name": "x-org-id",
+                        "in": "header",
+                        "description": "Organization ID",
+                        "required": true,
+                        "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OK"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "x-method": "unassign",
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                    }
+                ]
+            }
+        },
+        "/teams/{teamId}/channels/{channelId}/users": {
             "get": {
                 "tags": [
                     "Channels"
@@ -7733,238 +8028,11 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "listMembers",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
-                    }
-                ]
-            }
-        },
-        "/teams/{teamId}/channels/{channelId}/users/{userId}": {
-            "put": {
-                "tags": [
-                    "Channels"
-                ],
-                "summary": "Assign to channel",
-                "description": "Assign a user to a channel",
-                "operationId": "channelAssign",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "User ID",
-                        "example": "user-id-***"
-                    },
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User model",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Channels"
-                ],
-                "summary": "Unassign from channel",
-                "description": "Remove a user from a channel",
-                "operationId": "channelUnassign",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "User ID",
-                        "example": "user-id-***"
-                    },
-                    {
-                        "name": "x-org-id",
-                        "in": "header",
-                        "description": "Organization ID",
-                        "required": true,
-                        "example": "org-id-***",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/OK"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -8045,12 +8113,6 @@
                                         "description": "Team name",
                                         "minLength": 3,
                                         "maxLength": 64
-                                    },
-                                    "teamDesc": {
-                                        "type": "string",
-                                        "description": "Team description",
-                                        "maxLength": 256,
-                                        "default": ""
                                     }
                                 },
                                 "required": [
@@ -8065,10 +8127,11 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "create",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"teamName\":\"string\",\"teamDesc\":\"\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"teamName\":\"string\"}'"
                     }
                 ]
             },
@@ -8201,6 +8264,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "listAll",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -8296,6 +8360,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -8398,12 +8463,6 @@
                                         "description": "Team name",
                                         "minLength": 3,
                                         "maxLength": 64
-                                    },
-                                    "teamDesc": {
-                                        "type": "string",
-                                        "description": "Team description",
-                                        "maxLength": 256,
-                                        "default": ""
                                     }
                                 }
                             }
@@ -8415,10 +8474,11 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "update",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"teamName\":\"string\",\"teamDesc\":\"\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"teamName\":\"string\"}'"
                     }
                 ]
             },
@@ -8508,6 +8568,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "delete",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -8522,7 +8583,7 @@
                     "Teams"
                 ],
                 "summary": "List user teams",
-                "description": "Get a list of extended team models for this user",
+                "description": "Get a list of all teams this user is a part of",
                 "operationId": "teamListUser",
                 "parameters": [
                     {
@@ -8656,6 +8717,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "listUser",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -8761,6 +8823,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "assign",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -8864,6 +8927,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "unassign",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -8959,6 +9023,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "read",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -9097,6 +9162,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "updateRole",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -9190,6 +9256,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "remove",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -9318,6 +9385,7 @@
                         "jwt": []
                     }
                 ],
+                "x-method": "list",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -10296,13 +10364,6 @@
                         "maxLength": 64,
                         "example": "UX"
                     },
-                    "teamDesc": {
-                        "type": "string",
-                        "description": "Team description",
-                        "minLength": 0,
-                        "maxLength": 256,
-                        "example": ""
-                    },
                     "createdAt": {
                         "type": "string",
                         "description": "Created timestamp",
@@ -10364,13 +10425,6 @@
                         "minLength": 1,
                         "maxLength": 64,
                         "example": "UX"
-                    },
-                    "teamDesc": {
-                        "type": "string",
-                        "description": "Team description",
-                        "minLength": 0,
-                        "maxLength": 256,
-                        "example": ""
                     },
                     "createdAt": {
                         "type": "string",

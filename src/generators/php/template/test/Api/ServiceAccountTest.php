@@ -67,16 +67,14 @@ class ServiceAccountTest extends TestCase {
         $this->account = $this->sdk
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
 
         // Get the first organization ID
         if (!count($this->account->getRoleOrg())) {
             $organization = $this->sdk
                 ->api()
                 ->organizations()
-                ->organizationCreate(
-                    (new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc.")
-                );
+                ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
             $this->orgId = $organization->getId();
@@ -92,7 +90,7 @@ class ServiceAccountTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->organizations()
-            ->organizationDelete($this->orgId);
+            ->delete($this->orgId);
         $this->assertTrue($deleted);
     }
 
@@ -103,7 +101,7 @@ class ServiceAccountTest extends TestCase {
         $serviceAccount = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountCreate(
+            ->create(
                 $this->orgId,
                 (new Model\PayloadServiceAccountCreate())
                     ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_MANAGER)
@@ -119,7 +117,7 @@ class ServiceAccountTest extends TestCase {
         $serviceAccountRead = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountRead($serviceAccount->getId(), $this->orgId);
+            ->read($serviceAccount->getId(), $this->orgId);
 
         $this->assertInstanceOf(Model\ServiceAccount::class, $serviceAccountRead);
         $this->assertEquals(0, count($serviceAccountRead->listProps()));
@@ -131,7 +129,7 @@ class ServiceAccountTest extends TestCase {
         $serviceAccountList = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountList($this->orgId);
+            ->list($this->orgId);
         $this->assertInstanceOf(Model\ServiceAccountsList::class, $serviceAccountList);
         $this->assertEquals(0, count($serviceAccountList->listProps()));
 
@@ -142,7 +140,7 @@ class ServiceAccountTest extends TestCase {
         $serviceAccountUpdated = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountUpdate(
+            ->update(
                 $serviceAccount->getId(),
                 $this->orgId,
                 (new Model\PayloadServiceAccountUpdate())->setUserName("New name")
@@ -156,7 +154,7 @@ class ServiceAccountTest extends TestCase {
         $remoteAccount = $sdkService
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
 
         $this->assertInstanceOf(Model\Account::class, $remoteAccount);
         $this->assertEquals(0, count($remoteAccount->listProps()));
@@ -166,7 +164,7 @@ class ServiceAccountTest extends TestCase {
         $regenerated = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountRegenerate($serviceAccount->getId(), $this->orgId);
+            ->regenerate($serviceAccount->getId(), $this->orgId);
         $this->assertInstanceOf(Model\ServiceAccount::class, $regenerated);
         $this->assertEquals(0, count($regenerated->listProps()));
         $this->assertNotEquals($serviceAccount->getServiceToken(), $regenerated->getServiceToken());
@@ -175,7 +173,7 @@ class ServiceAccountTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountDelete($serviceAccount->getId(), $this->orgId);
+            ->delete($serviceAccount->getId(), $this->orgId);
         $this->assertInstanceOf(Model\User::class, $deleted);
         $this->assertEquals(0, count($deleted->listProps()));
 
@@ -183,6 +181,6 @@ class ServiceAccountTest extends TestCase {
         $serviceAccountRead = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountRead($serviceAccount->getId(), $this->orgId);
+            ->read($serviceAccount->getId(), $this->orgId);
     }
 }

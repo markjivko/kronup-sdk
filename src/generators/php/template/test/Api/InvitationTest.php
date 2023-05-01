@@ -43,7 +43,7 @@ class InvitationTest extends TestCase {
         $account = $this->sdk
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
 
         // Get the first organization ID
         $orgId = current($account->getRoleOrg())->getOrgId();
@@ -52,7 +52,7 @@ class InvitationTest extends TestCase {
         $invitationModel = $this->sdk
             ->api()
             ->invitations()
-            ->invitationCreate($orgId, (new Model\PayloadInvitationCreate())->setInviteName("New invitation"));
+            ->create($orgId, (new Model\PayloadInvitationCreate())->setInviteName("New invitation"));
         $this->assertInstanceOf(Model\Invitation::class, $invitationModel);
         $this->assertEquals(0, count($invitationModel->listProps()));
 
@@ -60,7 +60,7 @@ class InvitationTest extends TestCase {
         $invitationModelRead = $this->sdk
             ->api()
             ->invitations()
-            ->invitationRead($invitationModel->getId());
+            ->read($invitationModel->getId());
         $this->assertInstanceOf(Model\Invitation::class, $invitationModelRead);
         $this->assertEquals(0, count($invitationModelRead->listProps()));
 
@@ -71,7 +71,7 @@ class InvitationTest extends TestCase {
         $invitationsList = $this->sdk
             ->api()
             ->invitations()
-            ->invitationList($orgId);
+            ->list($orgId);
         $this->assertInstanceOf(Model\InvitationsList::class, $invitationsList);
         $this->assertEquals(0, count($invitationsList->listProps()));
 
@@ -83,7 +83,7 @@ class InvitationTest extends TestCase {
         $invitationModelUpdated = $this->sdk
             ->api()
             ->invitations()
-            ->invitationUpdate(
+            ->update(
                 $invitationModel->getId(),
                 $orgId,
                 (new Model\PayloadInvitationUpdate())
@@ -100,7 +100,7 @@ class InvitationTest extends TestCase {
         $invitationDeleted = $this->sdk
             ->api()
             ->invitations()
-            ->invitationDelete($invitationModel->getId(), $orgId);
+            ->delete($invitationModel->getId(), $orgId);
         $this->assertTrue($invitationDeleted);
     }
 
@@ -112,7 +112,7 @@ class InvitationTest extends TestCase {
         $account = $this->sdk
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
 
         // Get the first organization ID
         $orgId = current($account->getRoleOrg())->getOrgId();
@@ -122,7 +122,7 @@ class InvitationTest extends TestCase {
             $this->sdk
                 ->api()
                 ->invitations()
-                ->invitationCreate($orgId, new Model\PayloadInvitationCreate(["inviteName" => str_repeat("x ", 33)]));
+                ->create($orgId, new Model\PayloadInvitationCreate(["inviteName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "invitations.create(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
             $this->assertEquals("invalid-argument-inviteName", $exc->getResponseObject()["id"]);
@@ -132,7 +132,7 @@ class InvitationTest extends TestCase {
         $invitation = $this->sdk
             ->api()
             ->invitations()
-            ->invitationCreate($orgId, (new Model\PayloadInvitationCreate())->setInviteName("Test"));
+            ->create($orgId, (new Model\PayloadInvitationCreate())->setInviteName("Test"));
         $this->assertInstanceOf(Model\Invitation::class, $invitation);
         $this->assertEquals(0, count($invitation->listProps()));
 
@@ -141,7 +141,7 @@ class InvitationTest extends TestCase {
             $this->sdk
                 ->api()
                 ->invitations()
-                ->invitationUpdate(
+                ->update(
                     $invitation->getId(),
                     $orgId,
                     new Model\PayloadInvitationUpdate(["inviteName" => str_repeat("x ", 33)])
@@ -155,7 +155,7 @@ class InvitationTest extends TestCase {
         $invitationDeleted = $this->sdk
             ->api()
             ->invitations()
-            ->invitationDelete($invitation->getId(), $orgId);
+            ->delete($invitation->getId(), $orgId);
         $this->assertTrue($invitationDeleted);
     }
 
@@ -167,7 +167,7 @@ class InvitationTest extends TestCase {
         $account = $this->sdk
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
 
         // Get the first organization ID
         $orgId = current($account->getRoleOrg())->getOrgId();
@@ -176,7 +176,7 @@ class InvitationTest extends TestCase {
         $invitation = $this->sdk
             ->api()
             ->invitations()
-            ->invitationCreate($orgId, (new Model\PayloadInvitationCreate())->setInviteName("Test"));
+            ->create($orgId, (new Model\PayloadInvitationCreate())->setInviteName("Test"));
         $this->assertInstanceOf(Model\Invitation::class, $invitation);
         $this->assertEquals(0, count($invitation->listProps()));
 
@@ -184,7 +184,7 @@ class InvitationTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->invitations()
-            ->invitationDelete($invitation->getId(), $orgId);
+            ->delete($invitation->getId(), $orgId);
         $this->assertTrue($deleted);
     }
 }

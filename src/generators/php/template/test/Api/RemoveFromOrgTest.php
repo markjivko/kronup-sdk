@@ -67,7 +67,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->account = $this->sdk
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
 
         // Remove organization if found
         if (count($this->account->getRoleOrg())) {
@@ -75,7 +75,7 @@ class RemoveFromOrgTest extends TestCase {
             $deleted = $this->sdk
                 ->api()
                 ->organizations()
-                ->organizationDelete($this->orgId);
+                ->delete($this->orgId);
             $this->assertTrue($deleted);
         }
 
@@ -83,9 +83,7 @@ class RemoveFromOrgTest extends TestCase {
         $organization = $this->sdk
             ->api()
             ->organizations()
-            ->organizationCreate(
-                (new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc.")
-            );
+            ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
         $this->assertInstanceOf(Model\Organization::class, $organization);
         $this->assertEquals(0, count($organization->listProps()));
         $this->orgId = $organization->getId();
@@ -94,7 +92,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->serviceAccount = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountCreate(
+            ->create(
                 $this->orgId,
                 (new Model\PayloadServiceAccountCreate())
                     ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_MANAGER)
@@ -112,7 +110,7 @@ class RemoveFromOrgTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->organizations()
-            ->organizationDelete($this->orgId);
+            ->delete($this->orgId);
         $this->assertTrue($deleted);
     }
 
@@ -124,7 +122,7 @@ class RemoveFromOrgTest extends TestCase {
         $invite = $this->serviceSdk
             ->api()
             ->invitations()
-            ->invitationCreate($this->orgId, (new Model\PayloadInvitationCreate())->setInviteName("new invitation"));
+            ->create($this->orgId, (new Model\PayloadInvitationCreate())->setInviteName("new invitation"));
         $this->assertInstanceOf(Model\Invitation::class, $invite);
         $this->assertEquals(0, count($invite->listProps()));
 
@@ -132,7 +130,7 @@ class RemoveFromOrgTest extends TestCase {
         $puppet = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountDelete($this->serviceAccount->getId(), $this->orgId);
+            ->delete($this->serviceAccount->getId(), $this->orgId);
         $this->assertInstanceOf(Model\User::class, $puppet);
         $this->assertEquals(0, count($puppet->listProps()));
 
@@ -141,7 +139,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->sdk
             ->api()
             ->invitations()
-            ->invitationRead($invite->getId());
+            ->read($invite->getId());
     }
 
     /**
@@ -152,7 +150,7 @@ class RemoveFromOrgTest extends TestCase {
         $notion = $this->serviceSdk
             ->api()
             ->notions()
-            ->notionCreate($this->orgId, (new Model\PayloadNotionCreate())->setValue("a notion " . mt_rand(1, 9999)));
+            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue("a notion " . mt_rand(1, 9999)));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
 
@@ -160,7 +158,7 @@ class RemoveFromOrgTest extends TestCase {
         $experience = $this->serviceSdk
             ->api()
             ->experiences()
-            ->experienceEvaluateSelf($notion->getId(), 5, $this->orgId);
+            ->evaluateSelf($notion->getId(), 5, $this->orgId);
         $this->assertInstanceOf(Model\Experience::class, $experience);
         $this->assertEquals(0, count($experience->listProps()));
 
@@ -168,7 +166,7 @@ class RemoveFromOrgTest extends TestCase {
         $experienceMain = $this->sdk
             ->api()
             ->experiences()
-            ->experienceEvaluateSelf($notion->getId(), 5, $this->orgId);
+            ->evaluateSelf($notion->getId(), 5, $this->orgId);
         $this->assertInstanceOf(Model\Experience::class, $experienceMain);
         $this->assertEquals(0, count($experienceMain->listProps()));
 
@@ -176,7 +174,7 @@ class RemoveFromOrgTest extends TestCase {
         $puppet = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountDelete($this->serviceAccount->getId(), $this->orgId);
+            ->delete($this->serviceAccount->getId(), $this->orgId);
         $this->assertInstanceOf(Model\User::class, $puppet);
         $this->assertEquals(0, count($puppet->listProps()));
 
@@ -184,7 +182,7 @@ class RemoveFromOrgTest extends TestCase {
         $experienceMainRead = $this->sdk
             ->api()
             ->experiences()
-            ->experienceRead($notion->getId(), $this->account->getId(), $this->orgId);
+            ->read($notion->getId(), $this->account->getId(), $this->orgId);
         $this->assertInstanceOf(Model\Experience::class, $experienceMainRead);
         $this->assertEquals(0, count($experienceMainRead->listProps()));
         $this->assertEquals($experienceMain->getNotion()->getValue(), $experienceMainRead->getNotion()->getValue());
@@ -194,7 +192,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->sdk
             ->api()
             ->experiences()
-            ->experienceRead($notion->getId(), $this->serviceAccount->getId(), $this->orgId);
+            ->read($notion->getId(), $this->serviceAccount->getId(), $this->orgId);
     }
 
     public function testEvents() {
@@ -202,7 +200,7 @@ class RemoveFromOrgTest extends TestCase {
         $notion = $this->serviceSdk
             ->api()
             ->notions()
-            ->notionCreate($this->orgId, (new Model\PayloadNotionCreate())->setValue("a notion " . mt_rand(1, 9999)));
+            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue("a notion " . mt_rand(1, 9999)));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
 
@@ -210,7 +208,7 @@ class RemoveFromOrgTest extends TestCase {
         $team = $this->serviceSdk
             ->api()
             ->teams()
-            ->teamCreate($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("Test team"));
+            ->create($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("Test team"));
         $this->assertInstanceOf(Model\TeamExtended::class, $team);
         $this->assertEquals(0, count($team->listProps()));
 
@@ -218,11 +216,7 @@ class RemoveFromOrgTest extends TestCase {
         $teamUpdated = $this->serviceSdk
             ->api()
             ->channels()
-            ->channelCreate(
-                $team->getId(),
-                $this->orgId,
-                (new Model\PayloadChannelCreate())->setChannelName("Test channel")
-            );
+            ->create($team->getId(), $this->orgId, (new Model\PayloadChannelCreate())->setChannelName("Test channel"));
         $this->assertInstanceOf(Model\TeamExtended::class, $teamUpdated);
         $this->assertEquals(0, count($teamUpdated->listProps()));
         $channel = $teamUpdated->getChannels()[0];
@@ -231,13 +225,13 @@ class RemoveFromOrgTest extends TestCase {
         $assigned = $this->serviceSdk
             ->api()
             ->channels()
-            ->channelAssign($team->getId(), $channel->getId(), $this->serviceAccount->getId(), $this->orgId);
+            ->assign($team->getId(), $channel->getId(), $this->serviceAccount->getId(), $this->orgId);
         $this->assertInstanceOf(Model\User::class, $assigned);
         $this->assertEquals(0, count($assigned->listProps()));
         $assigned = $this->serviceSdk
             ->api()
             ->channels()
-            ->channelAssign($team->getId(), $channel->getId(), $this->account->getId(), $this->orgId);
+            ->assign($team->getId(), $channel->getId(), $this->account->getId(), $this->orgId);
         $this->assertInstanceOf(Model\User::class, $assigned);
         $this->assertEquals(0, count($assigned->listProps()));
 
@@ -245,7 +239,7 @@ class RemoveFromOrgTest extends TestCase {
         $item = $this->serviceSdk
             ->api()
             ->valueItems()
-            ->valueItemCreate(
+            ->create(
                 $team->getId(),
                 $channel->getId(),
                 $this->orgId,
@@ -258,7 +252,7 @@ class RemoveFromOrgTest extends TestCase {
         $assm = $this->serviceSdk
             ->api()
             ->assumptions()
-            ->assumptionCreate(
+            ->create(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -272,7 +266,7 @@ class RemoveFromOrgTest extends TestCase {
         $assm2 = $this->sdk
             ->api()
             ->assumptions()
-            ->assumptionCreate(
+            ->create(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -286,13 +280,13 @@ class RemoveFromOrgTest extends TestCase {
         $this->serviceSdk
             ->api()
             ->valueItems()
-            ->valueItemAdvance($team->getId(), $channel->getId(), $item->getId(), $this->orgId);
+            ->advance($team->getId(), $channel->getId(), $item->getId(), $this->orgId);
 
         // Validate assumption with experiment
         $this->serviceSdk
             ->api()
             ->assumptions()
-            ->assumptionExperiment(
+            ->experiment(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -309,7 +303,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->sdk
             ->api()
             ->assumptions()
-            ->assumptionExperiment(
+            ->experiment(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -324,7 +318,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->sdk
             ->api()
             ->assumptions()
-            ->assumptionExperiment(
+            ->experiment(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -341,12 +335,12 @@ class RemoveFromOrgTest extends TestCase {
         $this->serviceSdk
             ->api()
             ->valueItems()
-            ->valueItemAdvance($team->getId(), $channel->getId(), $item->getId(), $this->orgId);
+            ->advance($team->getId(), $channel->getId(), $item->getId(), $this->orgId);
 
         $task = $this->serviceSdk
             ->api()
             ->tasks()
-            ->taskCreate(
+            ->create(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -360,7 +354,7 @@ class RemoveFromOrgTest extends TestCase {
         $taskNotion = $this->serviceSdk
             ->api()
             ->tasks()
-            ->taskNotionAdd(
+            ->notionAdd(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -388,7 +382,7 @@ class RemoveFromOrgTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->taskAssign(
+            ->assign(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -403,7 +397,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->serviceSdk
             ->api()
             ->tasks()
-            ->taskDiscoveryCreate(
+            ->discoveryCreate(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -414,7 +408,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->sdk
             ->api()
             ->tasks()
-            ->taskDiscoveryCreate(
+            ->discoveryCreate(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -427,7 +421,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->serviceSdk
             ->api()
             ->tasks()
-            ->taskFeedbackCreate(
+            ->feedbackCreate(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -438,7 +432,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->sdk
             ->api()
             ->tasks()
-            ->taskFeedbackCreate(
+            ->feedbackCreate(
                 $team->getId(),
                 $channel->getId(),
                 $item->getId(),
@@ -451,7 +445,7 @@ class RemoveFromOrgTest extends TestCase {
         $puppet = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->serviceAccountDelete($this->serviceAccount->getId(), $this->orgId);
+            ->delete($this->serviceAccount->getId(), $this->orgId);
         $this->assertInstanceOf(Model\User::class, $puppet);
         $this->assertEquals(0, count($puppet->listProps()));
 
@@ -463,7 +457,7 @@ class RemoveFromOrgTest extends TestCase {
         $item = $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemRead($team->getId(), $channel->getId(), $item->getId(), $this->orgId);
+            ->read($team->getId(), $channel->getId(), $item->getId(), $this->orgId);
         $this->assertInstanceOf(Model\ValueItem::class, $item);
         $this->assertEquals(0, count($item->listProps()));
 
@@ -494,7 +488,7 @@ class RemoveFromOrgTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->taskRead($team->getId(), $channel->getId(), $item->getId(), $task->getId(), $this->orgId);
+            ->read($team->getId(), $channel->getId(), $item->getId(), $task->getId(), $this->orgId);
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 

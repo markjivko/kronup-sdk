@@ -67,16 +67,14 @@ class ItemTest extends TestCase {
         $this->account = $this->sdk
             ->api()
             ->account()
-            ->accountRead();
+            ->read();
 
         // Get the first organization ID
         if (!count($this->account->getRoleOrg())) {
             $organization = $this->sdk
                 ->api()
                 ->organizations()
-                ->organizationCreate(
-                    (new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc.")
-                );
+                ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
             $this->orgId = $organization->getId();
@@ -88,7 +86,7 @@ class ItemTest extends TestCase {
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->teamCreate($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
+            ->create($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -97,7 +95,7 @@ class ItemTest extends TestCase {
         $this->sdk
             ->api()
             ->teams()
-            ->teamAssign($this->team->getId(), $this->account->getId(), $this->orgId);
+            ->assign($this->team->getId(), $this->account->getId(), $this->orgId);
     }
 
     /**
@@ -108,7 +106,7 @@ class ItemTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->teams()
-            ->teamDelete($this->team->getId(), $this->orgId);
+            ->delete($this->team->getId(), $this->orgId);
         $this->assertTrue($deleted);
     }
 
@@ -119,7 +117,7 @@ class ItemTest extends TestCase {
         $item = $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemCreate(
+            ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
@@ -146,7 +144,7 @@ class ItemTest extends TestCase {
         $items = $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemList($this->team->getId(), $this->channel->getId(), $this->orgId);
+            ->list($this->team->getId(), $this->channel->getId(), $this->orgId);
         $this->assertInstanceOf(Model\ValueItemsList::class, $items);
         $this->assertEquals(0, count($items->listProps()));
 
@@ -162,7 +160,7 @@ class ItemTest extends TestCase {
         $item = $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemCreate(
+            ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
@@ -176,7 +174,7 @@ class ItemTest extends TestCase {
         $itemUpdated = $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemUpdate(
+            ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $item->getId(),
@@ -192,7 +190,7 @@ class ItemTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemDelete($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
+            ->delete($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
         $this->assertTrue($deleted);
 
         // Expect to fail (item was removed)
@@ -200,7 +198,7 @@ class ItemTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemRead($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
     }
 
     /**
@@ -210,7 +208,7 @@ class ItemTest extends TestCase {
         $item = $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemCreate(
+            ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->orgId,
@@ -227,6 +225,6 @@ class ItemTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->valueItemAdvance($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
     }
 }

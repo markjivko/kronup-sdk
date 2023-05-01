@@ -36,7 +36,7 @@ class {{classname}} extends AbstractApi {
      * {{{summary}}}
 {{/summary}}
 {{^summary}}
-     * Operation {{{operationId}}}
+     * Operation {{{vendorExtensions.x-method}}}
 {{/summary}}
 {{#description}}
      *
@@ -57,7 +57,7 @@ class {{classname}} extends AbstractApi {
      * 
      * @return {{#returnType}}{{.}}{{/returnType}}{{^returnType}}void{{/returnType}}
      */
-    public function {{operationId}}({{#hasParams}}{{^vendorExtensions.x-group-parameters}}{{#allParams}}{{#isContainer}}array {{/isContainer}}${{paramName}}{{^required}} = {{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$array{{/vendorExtensions.x-group-parameters}}{{/hasParams}}) {
+    public function {{vendorExtensions.x-method}}({{#hasParams}}{{^vendorExtensions.x-group-parameters}}{{#allParams}}{{#isContainer}}array {{/isContainer}}${{paramName}}{{^required}} = {{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$array{{/vendorExtensions.x-group-parameters}}{{/hasParams}}) {
         {{#vendorExtensions.x-group-parameters}}
         {{#allParams}}
         ${{paramName}} = array_key_exists("{{paramName}}", $array) ? $array["{{paramName}}"] : {{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}};
@@ -68,7 +68,7 @@ class {{classname}} extends AbstractApi {
         {{#isContainer}}
         if (empty(${{paramName}})) {
             throw new IAE(
-                'Missing the required parameter ${{paramName}} when calling {{operationId}}'
+                'Missing the required parameter ${{paramName}} when calling {{vendorExtensions.x-method}}'
             );
         }
         
@@ -77,43 +77,43 @@ class {{classname}} extends AbstractApi {
         {{#hasValidation}}
         {{#maxLength}}
         if ({{^required}}isset(${{paramName}}) && {{/required}}strlen(${{paramName}}) > {{maxLength}}) {
-            throw new IAE('Invalid length for "${{paramName}}" when calling {{classname}}.{{operationId}}, must be smaller than or equal to {{maxLength}}');
+            throw new IAE('Invalid length for "${{paramName}}" when calling {{classname}}.{{vendorExtensions.x-method}}, must be smaller than or equal to {{maxLength}}');
         }
 
         {{/maxLength}}
         {{#minLength}}
         if ({{^required}}isset(${{paramName}}) && {{/required}}strlen(${{paramName}}) < {{minLength}}) {
-            throw new IAE('Invalid length for "${{paramName}}" when calling {{classname}}.{{operationId}}, must be bigger than or equal to {{minLength}}');
+            throw new IAE('Invalid length for "${{paramName}}" when calling {{classname}}.{{vendorExtensions.x-method}}, must be bigger than or equal to {{minLength}}');
         }
 
         {{/minLength}}
         {{#maximum}}
         if ({{^required}}isset(${{paramName}}) && {{/required}}${{paramName}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}) {
-            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{maximum}}');
+            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{vendorExtensions.x-method}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{maximum}}');
         }
 
         {{/maximum}}
         {{#minimum}}
         if ({{^required}}isset(${{paramName}}) && {{/required}}${{paramName}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}) {
-            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, must be bigger than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{minimum}}.');
+            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{vendorExtensions.x-method}}, must be bigger than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{minimum}}.');
         }
 
         {{/minimum}}
         {{#pattern}}
         if ({{^required}}isset(${{paramName}}) && {{/required}}!preg_match("{{{pattern}}}", ${{paramName}})) {
-            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, must conform to the pattern {{{pattern}}}');
+            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{vendorExtensions.x-method}}, must conform to the pattern {{{pattern}}}');
         }
 
         {{/pattern}}
         {{#maxItems}}
         if ({{^required}}isset(${{paramName}}) && {{/required}}count(${{paramName}}) > {{maxItems}}) {
-            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, number of items must be less than or equal to {{maxItems}}');
+            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{vendorExtensions.x-method}}, number of items must be less than or equal to {{maxItems}}');
         }
 
         {{/maxItems}}
         {{#minItems}}
         if ({{^required}}isset(${{paramName}}) && {{/required}}count(${{paramName}}) < {{minItems}}) {
-            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{operationId}}, number of items must be greater than or equal to {{minItems}}');
+            throw new IAE('Invalid value for "${{paramName}}" when calling {{classname}}.{{vendorExtensions.x-method}}, number of items must be greater than or equal to {{minItems}}');
         }
 
         {{/minItems}}

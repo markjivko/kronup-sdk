@@ -24,20 +24,21 @@ $sdk->api()->{{classVarName}}();
 
 Method | Description
 ------------- | -------------
-{{#operations}}{{#operation}}{{^isDeprecated}}[**{{operationId}}()**](#{{operationIdLowerCase}}) | {{#summary}}((#tableCell)){{{summary}}}((/tableCell)){{/summary}}
+{{#operations}}{{#operation}}{{^isDeprecated}}[**{{vendorExtensions.x-method}}()**](#((#anchorText)){{vendorExtensions.x-method}}((/anchorText))) | {{#summary}}((#tableCell)){{{summary}}}((/tableCell)){{/summary}}
 {{/isDeprecated}}{{/operation}}{{/operations}}{{#operations}}{{#operation}}{{^isDeprecated}}
 
-## `{{{operationId}}}()`
+
+## `{{{vendorExtensions.x-method}}}()`
 
 ### Example
 
-<!---kronup-example file="Api/{{classname}}/{{{operationId}}}.php"--->
+<!---kronup-example file="Api/{{classname}}/{{{vendorExtensions.x-method}}}.php"--->
 ```php
 <?php
 /**
  * Copyright {{copyright}}
  * 
- * @link    https://kronup.github.io/kronup-php/Api/{{classname}}/#{{{operationIdLowerCase}}}
+ * @link    https://kronup.github.io/kronup-php/Api/{{classname}}/#((#anchorText)){{vendorExtensions.x-method}}((/anchorText))
  * @license MIT
  * @author  Mark Jivko
  * 
@@ -70,7 +71,6 @@ $payload["{{paramName}}"] = {{{example}}};
 {{/allParams}}
 {{/vendorExtensions.x-group-parameters}}
 try {
-
     /**
      * {{httpMethod}} ((#stripHash)){{path}}((/stripHash)){{#returnType}}
      * 
@@ -79,20 +79,19 @@ try {
     {{#returnType}}$response = {{/returnType}}$sdk
         ->api()
         ->{{classVarName}}()
-        ->{{{operationId}}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}$arg_{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$payload{{/vendorExtensions.x-group-parameters}});
+        ->{{{vendorExtensions.x-method}}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}$arg_{{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$payload{{/vendorExtensions.x-group-parameters}});
     {{#returnType}}
 
     var_export($response);
     {{/returnType}}
-
 } catch (\Kronup\Sdk\ApiException $apiExc) {
     echo sprintf(
-        "API Exception when calling api()->{{classVarName}}()->{{operationId}}(): %s\n", 
+        "API Exception when calling api()->{{classVarName}}()->{{vendorExtensions.x-method}}(): %s\n", 
         var_export($apiExc->getResponseObject(), true)
     );
 } catch (\Exception $exc) {
     echo sprintf(
-        "Exception when calling api()->{{classVarName}}()->{{operationId}}(): %s\n", 
+        "Exception when calling api()->{{classVarName}}()->{{vendorExtensions.x-method}}(): %s\n", 
         $exc->getMessage()
     );
 }
@@ -106,7 +105,7 @@ try {
 ### Type signature
 
 ```php
-(new \Kronup\Sdk())->api()->{{classVarName}}()->{{{operationId}}}{{^hasParams}}(){{/hasParams}}{{#hasParams}}({{#allParams}}
+(new \Kronup\Sdk())->api()->{{classVarName}}()->{{{vendorExtensions.x-method}}}{{^hasParams}}(){{/hasParams}}{{#hasParams}}({{#allParams}}
     {{^required}}[ {{/required}}{{dataType}} ${{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{^-last}},{{/-last}}{{^required}} ]{{/required}}{{/allParams}}
 ){{/hasParams}}{{#returnType}}: {{{returnType}}}{{/returnType}}
 ```
