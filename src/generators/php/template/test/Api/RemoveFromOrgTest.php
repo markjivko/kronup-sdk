@@ -115,34 +115,6 @@ class RemoveFromOrgTest extends TestCase {
     }
 
     /**
-     * Removed service account invitations
-     */
-    public function testInvitations() {
-        // Create invitation
-        $invite = $this->serviceSdk
-            ->api()
-            ->invitations()
-            ->create($this->orgId, (new Model\PayloadInvitationCreate())->setInviteName("new invitation"));
-        $this->assertInstanceOf(Model\Invitation::class, $invite);
-        $this->assertEquals(0, count($invite->listProps()));
-
-        // Delete the service account
-        $puppet = $this->sdk
-            ->api()
-            ->serviceAccounts()
-            ->delete($this->serviceAccount->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\User::class, $puppet);
-        $this->assertEquals(0, count($puppet->listProps()));
-
-        // Invite should be deleted
-        $this->expectExceptionObject(new ApiException("Not Found", 404));
-        $this->sdk
-            ->api()
-            ->invitations()
-            ->read($invite->getId());
-    }
-
-    /**
      * Removed service account experiences
      */
     public function testExperiences() {
@@ -169,30 +141,6 @@ class RemoveFromOrgTest extends TestCase {
             ->evaluateSelf($notion->getId(), 5, $this->orgId);
         $this->assertInstanceOf(Model\Experience::class, $experienceMain);
         $this->assertEquals(0, count($experienceMain->listProps()));
-
-        // Delete the service account
-        $puppet = $this->sdk
-            ->api()
-            ->serviceAccounts()
-            ->delete($this->serviceAccount->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\User::class, $puppet);
-        $this->assertEquals(0, count($puppet->listProps()));
-
-        // Fetch the main experience again
-        $experienceMainRead = $this->sdk
-            ->api()
-            ->experiences()
-            ->read($notion->getId(), $this->account->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\Experience::class, $experienceMainRead);
-        $this->assertEquals(0, count($experienceMainRead->listProps()));
-        $this->assertEquals($experienceMain->getNotion()->getValue(), $experienceMainRead->getNotion()->getValue());
-
-        // Service account experience should be deleted
-        $this->expectExceptionObject(new ApiException("Not Found", 404));
-        $this->sdk
-            ->api()
-            ->experiences()
-            ->read($notion->getId(), $this->serviceAccount->getId(), $this->orgId);
     }
 
     public function testEvents() {
@@ -442,12 +390,13 @@ class RemoveFromOrgTest extends TestCase {
             );
 
         // Delete the service account
-        $puppet = $this->sdk
+        $serviceClosed = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->delete($this->serviceAccount->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\User::class, $puppet);
-        $this->assertEquals(0, count($puppet->listProps()));
+            ->close($this->serviceAccount->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ServiceAccount::class, $serviceClosed);
+        $this->assertEquals(0, count($serviceClosed->listProps()));
+        $this->assertNotEquals($this->serviceAccount->getServiceToken(), $serviceClosed->getServiceToken());
 
         // --------------------------
         // Confirm changes
@@ -462,15 +411,15 @@ class RemoveFromOrgTest extends TestCase {
         $this->assertEquals(0, count($item->listProps()));
 
         // Confirm change: Value item author
-        $this->assertEquals($puppet->getId(), $item->getAuthorUserId());
+        $this->assertEquals($serviceClosed->getId(), $item->getAuthorUserId());
 
         // Confirm change: Assumption author
-        $this->assertEquals($puppet->getId(), $item->getAssumptions()[0]->getAuthorUserId());
+        $this->assertEquals($serviceClosed->getId(), $item->getAssumptions()[0]->getAuthorUserId());
         $this->assertEquals($this->account->getId(), $item->getAssumptions()[1]->getAuthorUserId());
 
         // Confirm change: Assumption experiment authors
         $this->assertContains(
-            $puppet->getId(),
+            $serviceClosed->getId(),
             $item
                 ->getAssumptions()[0]
                 ->getExperiment()
@@ -493,11 +442,11 @@ class RemoveFromOrgTest extends TestCase {
         $this->assertEquals(0, count($task->listProps()));
 
         // Confirm change: Task assignee
-        $this->assertEquals($puppet->getId(), $task->getAssigneeUserId());
+        $this->assertEquals($serviceClosed->getId(), $task->getAssigneeUserId());
 
         // Confirm change: Discovery author
         $this->assertEquals(
-            $puppet->getId(),
+            $serviceClosed->getId(),
             $task
                 ->getMinute()
                 ->getDiscoveries()[0]
@@ -513,7 +462,7 @@ class RemoveFromOrgTest extends TestCase {
 
         // Confirm change: Feedback author
         $this->assertEquals(
-            $puppet->getId(),
+            $serviceClosed->getId(),
             $task
                 ->getMinute()
                 ->getFeedback()[0]

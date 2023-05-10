@@ -7129,9 +7129,9 @@
                 "tags": [
                     "Service accounts"
                 ],
-                "summary": "Delete service account",
-                "description": "Delete this service account. This action cannot be reversed.",
-                "operationId": "serviceAccountDelete",
+                "summary": "Close service account",
+                "description": "Close this service account. This action is always reversible. You can re-open it anytime with \"regenerate\".",
+                "operationId": "serviceAccountClose",
                 "parameters": [
                     {
                         "name": "accountId",
@@ -7156,11 +7156,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Puppet Account model",
+                        "description": "Service Account model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/ServiceAccount"
                                 }
                             }
                         }
@@ -7211,7 +7211,7 @@
                         "jwt": []
                     }
                 ],
-                "x-method": "delete",
+                "x-method": "close",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",

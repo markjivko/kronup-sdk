@@ -145,12 +145,13 @@ class ExperienceTest extends TestCase {
         }
 
         // Close the service account
-        $puppet = $this->sdk
+        $deleted = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->delete($serviceAccount->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\User::class, $puppet);
-        $this->assertEquals(0, count($puppet->listProps()));
+            ->close($serviceAccount->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ServiceAccount::class, $deleted);
+        $this->assertEquals(0, count($deleted->listProps()));
+        $this->assertNotEquals($serviceAccount->getServiceToken(), $deleted->getServiceToken());
 
         // Fetch the experience once more
         $myExperience = $this->sdk

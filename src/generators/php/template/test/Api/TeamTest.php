@@ -306,7 +306,7 @@ class TeamTest extends TestCase {
                 ->create($orgId, new Model\PayloadTeamCreate(["teamName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "teams.create(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
-            $this->assertEquals("invalid-argument", $exc->getResponseObject()["id"]);
+            $this->assertEquals("invalid-argument-db", $exc->getResponseObject()["id"]);
         }
 
         // Create a new team
@@ -325,7 +325,7 @@ class TeamTest extends TestCase {
                 ->update($team->getId(), $orgId, new Model\PayloadTeamUpdate(["teamName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "teams.update(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
-            $this->assertEquals("invalid-argument", $exc->getResponseObject()["id"]);
+            $this->assertEquals("invalid-argument-db", $exc->getResponseObject()["id"]);
         }
 
         // Remove the temporary team

@@ -173,9 +173,10 @@ class ServiceAccountTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->delete($serviceAccount->getId(), $this->orgId);
-        $this->assertInstanceOf(Model\User::class, $deleted);
+            ->close($serviceAccount->getId(), $this->orgId);
+        $this->assertInstanceOf(Model\ServiceAccount::class, $deleted);
         $this->assertEquals(0, count($deleted->listProps()));
+        $this->assertNotEquals($serviceAccount->getServiceToken(), $deleted->getServiceToken());
 
         $this->expectExceptionObject(new ApiException("Not Found", 404));
         $serviceAccountRead = $this->sdk
