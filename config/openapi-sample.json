@@ -1355,17 +1355,16 @@
                                 "title": "Payload Invitation Create",
                                 "description": "Payload object required to create an Invitation",
                                 "properties": {
+                                    "teamId": {
+                                        "type": "string",
+                                        "description": "Team ID",
+                                        "example": "team-id-***"
+                                    },
                                     "inviteName": {
                                         "type": "string",
                                         "description": "Invitation name",
                                         "minLength": 3,
                                         "maxLength": 64
-                                    },
-                                    "inviteDomain": {
-                                        "type": "string",
-                                        "description": "User email domain name. If specified, restrict access to e-mail addresses belonging to this domain.",
-                                        "maxLength": 64,
-                                        "default": ""
                                     },
                                     "inviteOrgRole": {
                                         "type": "string",
@@ -1379,23 +1378,24 @@
                                     },
                                     "inviteExpireDays": {
                                         "type": "integer",
-                                        "description": "The invitation expires after this many days. 0 = no expiration",
-                                        "minimum": 0,
-                                        "maximum": 365,
-                                        "default": 0,
+                                        "description": "The invitation expires after this many days",
+                                        "minimum": 1,
+                                        "maximum": 30,
+                                        "default": 1,
                                         "example": 5
                                     },
                                     "inviteUsesMax": {
                                         "type": "integer",
-                                        "description": "The invitation expires after being used this many times. 0 = no expiration",
+                                        "description": "The invitation expires after being used this many times. 0 = no limit",
                                         "minimum": 0,
-                                        "maximum": 10000,
+                                        "maximum": 1000,
                                         "default": 0,
                                         "example": 10
                                     }
                                 },
                                 "required": [
-                                    "inviteName"
+                                    "inviteName",
+                                    "teamId"
                                 ]
                             }
                         }
@@ -1410,7 +1410,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"inviteName\":\"string\",\"inviteDomain\":\"\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"teamId\":\"team-id-***\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
                     }
                 ]
             },
@@ -1692,17 +1692,16 @@
                                 "title": "Payload Invitation Update",
                                 "description": "Payload object required to update an Invitation",
                                 "properties": {
+                                    "teamId": {
+                                        "type": "string",
+                                        "description": "Team ID",
+                                        "example": "team-id-***"
+                                    },
                                     "inviteName": {
                                         "type": "string",
                                         "description": "Invitation name",
                                         "minLength": 3,
                                         "maxLength": 64
-                                    },
-                                    "inviteDomain": {
-                                        "type": "string",
-                                        "description": "User email domain name. If specified, restrict access to e-mail addresses belonging to this domain.",
-                                        "maxLength": 64,
-                                        "default": ""
                                     },
                                     "inviteOrgRole": {
                                         "type": "string",
@@ -1716,16 +1715,17 @@
                                     },
                                     "inviteExpireDays": {
                                         "type": "integer",
-                                        "description": "The invitation expires after this many days. 0 = no expiration",
-                                        "minimum": 0,
-                                        "default": 0,
+                                        "description": "The invitation expires after this many days",
+                                        "minimum": 1,
+                                        "maximum": 30,
+                                        "default": 1,
                                         "example": 5
                                     },
                                     "inviteUsesMax": {
                                         "type": "integer",
-                                        "description": "The invitation expires after being used this many times. 0 = no expiration",
+                                        "description": "The invitation expires after being used this many times. 0 = no limit",
                                         "minimum": 0,
-                                        "maximum": 10000,
+                                        "maximum": 1000,
                                         "default": 0,
                                         "example": 10
                                     }
@@ -1743,7 +1743,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"inviteName\":\"string\",\"inviteDomain\":\"\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"teamId\":\"team-id-***\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
                     }
                 ]
             },
@@ -9863,6 +9863,11 @@
                         "description": "Organization ID",
                         "example": "org-id-***"
                     },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
                     "userId": {
                         "type": "string",
                         "description": "User ID",
@@ -9872,11 +9877,6 @@
                         "type": "string",
                         "description": "Invitation name",
                         "example": "General public"
-                    },
-                    "inviteDomain": {
-                        "type": "string",
-                        "description": "Invitation domain",
-                        "example": "example.com"
                     },
                     "inviteOrgRole": {
                         "type": "string",

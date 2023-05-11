@@ -391,6 +391,17 @@ class TeamTest extends TestCase {
         $this->assertInstanceOf(Model\AccountTeam::class, $account->getTeams()[0]);
         $this->assertEquals(0, count($account->getTeams()[0]->listProps()));
 
+        // Create the invitation
+        $invitationModel = $this->sdk
+            ->api()
+            ->invitations()
+            ->create(
+                $orgId,
+                (new Model\PayloadInvitationCreate())->setTeamId($team->getId())->setInviteName("New invitation")
+            );
+        $this->assertInstanceOf(Model\Invitation::class, $invitationModel);
+        $this->assertEquals(0, count($invitationModel->listProps()));
+
         // Delete the team
         $deleted = $this->sdk
             ->api()
@@ -409,5 +420,16 @@ class TeamTest extends TestCase {
 
         // Check that the user is no longer part of the deleted team
         $this->assertNotContains($team->getId(), $teamIds);
+
+        // Fetch the invitation again
+        try {
+            $this->sdk
+                ->api()
+                ->invitations()
+                ->read($invitationModel->getId());
+            $this->fail("Shold have deleted invitation as well");
+        } catch (\Exception $exc) {
+            $this->assertInstanceOf(Sdk\ApiException::class, $exc);
+        }
     }
 }
