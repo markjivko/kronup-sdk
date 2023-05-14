@@ -126,7 +126,7 @@ class ExperienceTest extends TestCase {
             ->create(
                 $this->orgId,
                 (new Model\PayloadServiceAccountCreate())
-                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_MANAGER)
+                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
                     ->setUserName("New service account name")
             );
         $this->assertInstanceOf(Model\ServiceAccount::class, $serviceAccount);

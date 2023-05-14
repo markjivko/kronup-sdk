@@ -29,7 +29,7 @@
         },
         {
             "name": "Users",
-            "description": "Manage users within the scope of an [Organization](#tag/Organizations).\n\nThere are 3 site-level roles: **admin**, **moderator** and **user**.\n\nAdmins and moderators have access to account data outside of their organization (read as **A can B**):\n\n\n|  | B: admin | B: moderator | B: user |\n|---|---|---|---|\n| A: admin | read/write | read/write | read/write |\n| A: moderator | read | read/write | read/write |\n| A: user | - | - | - |\n\n\nThere are 3 organization-level roles: **owner**, **manager** and **member**.\n\nWithin the same organization, account actions are limited (read as **A can B**):\n\n\n|  | B: owner | B: manager | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: manager | read | read/write | read/write |\n| A: member | read | read | read |\n\n\n\n* Any account has **read/write** permissions over **itself**\n* Site-level roles have priority over organization-level roles for **write** rules\n* Organization-level roles have priority over site-level roles for **read** rules"
+            "description": "Manage users within the scope of an [Organization](#tag/Organizations).\n\nThere are 3 site-level roles: **admin**, **moderator** and **user**.\n\nSite admins and site moderators have access to account data outside of their organization (read as **A can B**):\n\n\n|  | B: admin | B: moderator | B: user |\n|---|---|---|---|\n| A: admin | read/write | read/write | read/write |\n| A: moderator | read | read/write | read/write |\n| A: user | - | - | - |\n\n\nThere are 3 organization-level roles: **owner**, **admin** and **member**.\n\nWithin the same organization, account actions are limited (read as **A can B**):\n\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\n\n\n\n* Any account has **read/write** permissions over **itself**\n* Site-level roles have priority over organization-level roles for **write** rules\n* Organization-level roles have priority over site-level roles for **read** rules"
         },
         {
             "name": "Invitations",
@@ -37,7 +37,7 @@
         },
         {
             "name": "Organizations",
-            "description": "Each [Account](#tag/Account) owns at most **50** Organizations.\n\nThese are the role-based access control rules for organizations:\n\n| Organization Role \\ Action | Read * | Write * | Delete ** |\n|---|---|---|---|\n| Owner | yes | yes | yes |\n| Manager | yes | yes | no |\n| Member | yes | no | no |\n\n\n(*) The **read** and **write** actions refer to all endpoints that require the **x-org-id** header.\n\n(**) The **delete** action refers to removing the Organization model."
+            "description": "Each [Account](#tag/Account) owns at most **50** Organizations.\n\nThese are the role-based access control rules for organizations:\n\n| Organization Role \\ Action | Read * | Write * | Delete ** |\n|---|---|---|---|\n| Owner | yes | yes | yes |\n| Admin | yes | yes | no |\n| Member | yes | no | no |\n\n\n(*) The **read** and **write** actions refer to all endpoints that require the **x-org-id** header.\n\n(**) The **delete** action refers to removing the Organization model."
         },
         {
             "name": "Teams",
@@ -576,7 +576,7 @@
                     "Deep Context"
                 ],
                 "summary": "Delete value item",
-                "description": "Delete a value item from Deep Context\";",
+                "description": "Delete a value item from Deep Context",
                 "operationId": "deepContextDelete",
                 "parameters": [
                     {
@@ -1370,7 +1370,7 @@
                                         "type": "string",
                                         "description": "User role",
                                         "enum": [
-                                            "manager",
+                                            "admin",
                                             "member"
                                         ],
                                         "default": "member",
@@ -1707,7 +1707,7 @@
                                         "type": "string",
                                         "description": "User role",
                                         "enum": [
-                                            "manager",
+                                            "admin",
                                             "member"
                                         ],
                                         "default": "member",
@@ -6746,7 +6746,7 @@
                                         "type": "string",
                                         "description": "Service Account organization role",
                                         "enum": [
-                                            "manager",
+                                            "admin",
                                             "member"
                                         ]
                                     },
@@ -6775,7 +6775,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/service-accounts \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"roleOrg\":\"manager\",\"userName\":\"John Doe\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/service-accounts \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"roleOrg\":\"admin\",\"userName\":\"John Doe\"}'"
                     }
                 ]
             },
@@ -7096,7 +7096,7 @@
                                         "type": "string",
                                         "description": "Service Account organization role",
                                         "enum": [
-                                            "manager",
+                                            "admin",
                                             "member"
                                         ]
                                     },
@@ -7121,7 +7121,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"roleOrg\":\"manager\",\"userName\":\"John Doe\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"roleOrg\":\"admin\",\"userName\":\"John Doe\"}'"
                     }
                 ]
             },
@@ -9189,7 +9189,7 @@
                                             "description": "User organization role",
                                             "enum": [
                                                 "owner",
-                                                "manager",
+                                                "admin",
                                                 "member"
                                             ]
                                         }
@@ -9882,7 +9882,7 @@
                         "type": "string",
                         "description": "Invitation user role",
                         "enum": [
-                            "manager",
+                            "admin",
                             "member"
                         ]
                     },
@@ -9981,7 +9981,7 @@
                     },
                     "canAdvance": {
                         "type": "boolean",
-                        "description": "Conditions for Value Items to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Value Items become read-only; they can only be deleted by an Organization manager or administrator",
+                        "description": "Conditions for Value Items to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Value Items become read-only; they can only be deleted by an Organization owner or administrator",
                         "default": false
                     },
                     "type": {
@@ -10245,7 +10245,7 @@
                     },
                     "canAdvance": {
                         "type": "boolean",
-                        "description": "Conditions for Value Items to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Value Items become read-only; they can only be deleted by an Organization manager or administrator",
+                        "description": "Conditions for Value Items to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Value Items become read-only; they can only be deleted by an Organization owner or administrator",
                         "default": false
                     },
                     "type": {
@@ -10640,7 +10640,7 @@
                         "description": "User organization role",
                         "enum": [
                             "owner",
-                            "manager",
+                            "admin",
                             "member"
                         ]
                     },
@@ -10768,7 +10768,7 @@
                                     "description": "User organization role",
                                     "enum": [
                                         "owner",
-                                        "manager",
+                                        "admin",
                                         "member"
                                     ]
                                 }
@@ -10927,7 +10927,7 @@
                         "description": "User organization role",
                         "enum": [
                             "owner",
-                            "manager",
+                            "admin",
                             "member"
                         ]
                     },

@@ -104,7 +104,7 @@ class ServiceAccountTest extends TestCase {
             ->create(
                 $this->orgId,
                 (new Model\PayloadServiceAccountCreate())
-                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_MANAGER)
+                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
                     ->setUserName("New account name")
             );
 

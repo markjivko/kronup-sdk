@@ -95,7 +95,7 @@ class RemoveFromOrgTest extends TestCase {
             ->create(
                 $this->orgId,
                 (new Model\PayloadServiceAccountCreate())
-                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_MANAGER)
+                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
                     ->setUserName("Service name")
             );
         $this->assertInstanceOf(Model\ServiceAccount::class, $this->serviceAccount);
