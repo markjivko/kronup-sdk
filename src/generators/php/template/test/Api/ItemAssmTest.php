@@ -113,7 +113,7 @@ class ItemAssmTest extends TestCase {
                 $this->channel->getId(),
                 $this->orgId,
                 (new Model\PayloadValueItemCreate())
-                    ->setDigest("The digest")
+                    ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
@@ -143,7 +143,7 @@ class ItemAssmTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmCreate())->setDigest("X can be done")
+                (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
@@ -156,7 +156,7 @@ class ItemAssmTest extends TestCase {
         $this->assertInstanceOf(Model\Assumption::class, $assmRead);
         $this->assertEquals(0, count($assmRead->listProps()));
 
-        $this->assertEquals($assm->getDigest(), $assmRead->getDigest());
+        $this->assertEquals($assm->getHeading(), $assmRead->getHeading());
 
         // List
         $assmList = $this->sdk
@@ -183,7 +183,7 @@ class ItemAssmTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmCreate())->setDigest("X can be done")
+                (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
@@ -198,11 +198,11 @@ class ItemAssmTest extends TestCase {
                 $this->item->getId(),
                 $assm->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmUpdate())->setDigest("New assumption")
+                (new Model\PayloadAssmUpdate())->setHeading("New assumption")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmUpdated);
         $this->assertEquals(0, count($assmUpdated->listProps()));
-        $this->assertEquals("New assumption", $assmUpdated->getDigest());
+        $this->assertEquals("New assumption", $assmUpdated->getHeading());
 
         // Advance
         $this->sdk
@@ -221,7 +221,7 @@ class ItemAssmTest extends TestCase {
                 $assm->getId(),
                 $this->orgId,
                 (new Model\PayloadAssmExperiment())
-                    ->setDigest("Experiment digest")
+                    ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -232,7 +232,7 @@ class ItemAssmTest extends TestCase {
         $this->assertInstanceOf(Model\Experiment::class, $assmUpdatedExp->getExperiment());
         $this->assertEquals(0, count($assmUpdatedExp->getExperiment()->listProps()));
 
-        $this->assertEquals("Experiment digest", $assmUpdatedExp->getExperiment()->getDigest());
+        $this->assertEquals("Experiment heading", $assmUpdatedExp->getExperiment()->getHeading());
         $this->assertEquals("Experiment details", $assmUpdatedExp->getExperiment()->getDetails());
         $this->assertTrue($assmUpdatedExp->getExperiment()->getConfirmed());
         $this->assertEquals(Model\PayloadAssmExperiment::STATE_DONE, $assmUpdatedExp->getExperiment()->getState());

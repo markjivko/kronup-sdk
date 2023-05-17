@@ -191,7 +191,7 @@ class RemoveFromOrgTest extends TestCase {
                 $team->getId(),
                 $channel->getId(),
                 $this->orgId,
-                (new Model\PayloadValueItemCreate())->setDigest("A value item digest")
+                (new Model\PayloadValueItemCreate())->setHeading("A value item heading")
             );
         $this->assertInstanceOf(Model\ValueItem::class, $item);
         $this->assertEquals(0, count($item->listProps()));
@@ -205,7 +205,7 @@ class RemoveFromOrgTest extends TestCase {
                 $channel->getId(),
                 $item->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmCreate())->setDigest("X can be done")
+                (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
@@ -219,7 +219,7 @@ class RemoveFromOrgTest extends TestCase {
                 $channel->getId(),
                 $item->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmCreate())->setDigest("Y can be done")
+                (new Model\PayloadAssmCreate())->setHeading("Y can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm2);
         $this->assertEquals(0, count($assm2->listProps()));
@@ -241,7 +241,7 @@ class RemoveFromOrgTest extends TestCase {
                 $assm->getId(),
                 $this->orgId,
                 (new Model\PayloadAssmExperiment())
-                    ->setDigest("Experiment digest")
+                    ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -258,7 +258,7 @@ class RemoveFromOrgTest extends TestCase {
                 $assm->getId(),
                 $this->orgId,
                 (new Model\PayloadAssmExperiment())
-                    ->setDigest("Experiment digest 2")
+                    ->setHeading("Experiment heading 2")
                     ->setDetails("Experiment details 2")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -273,7 +273,7 @@ class RemoveFromOrgTest extends TestCase {
                 $assm2->getId(),
                 $this->orgId,
                 (new Model\PayloadAssmExperiment())
-                    ->setDigest("Experiment 2 digest 2")
+                    ->setHeading("Experiment 2 heading 2")
                     ->setDetails("Experiment 2 details 2")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -293,7 +293,7 @@ class RemoveFromOrgTest extends TestCase {
                 $channel->getId(),
                 $item->getId(),
                 $this->orgId,
-                (new Model\PayloadTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+                (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));

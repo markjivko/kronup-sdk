@@ -122,7 +122,7 @@ class ItemTest extends TestCase {
                 $this->channel->getId(),
                 $this->orgId,
                 (new Model\PayloadValueItemCreate())
-                    ->setDigest("The digest")
+                    ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
@@ -165,7 +165,7 @@ class ItemTest extends TestCase {
                 $this->channel->getId(),
                 $this->orgId,
                 (new Model\PayloadValueItemCreate())
-                    ->setDigest("The digest")
+                    ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
@@ -179,12 +179,12 @@ class ItemTest extends TestCase {
                 $this->channel->getId(),
                 $item->getId(),
                 $this->orgId,
-                (new Model\PayloadValueItemUpdate())->setDigest("The new digest")
+                (new Model\PayloadValueItemUpdate())->setHeading("The new heading")
             );
         $this->assertInstanceOf(Model\ValueItem::class, $itemUpdated);
         $this->assertEquals(0, count($itemUpdated->listProps()));
 
-        $this->assertEquals("The new digest", $itemUpdated->getDigest());
+        $this->assertEquals("The new heading", $itemUpdated->getHeading());
 
         // Delete the item
         $deleted = $this->sdk
@@ -213,7 +213,7 @@ class ItemTest extends TestCase {
                 $this->channel->getId(),
                 $this->orgId,
                 (new Model\PayloadValueItemCreate())
-                    ->setDigest("The digest")
+                    ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
             );

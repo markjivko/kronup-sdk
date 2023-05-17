@@ -139,7 +139,7 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->orgId,
                 (new Model\PayloadValueItemCreate())
-                    ->setDigest("The digest information here")
+                    ->setHeading("The heading information here")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
@@ -153,7 +153,7 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->orgId,
                 (new Model\PayloadValueItemCreate())
-                    ->setDigest("Second item digest")
+                    ->setHeading("Second item heading")
                     ->setDetails("Second item details")
                     ->setPriority(4)
             );
@@ -167,7 +167,7 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->dcItem->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmCreate())->setDigest("X can be done")
+                (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
@@ -181,7 +181,7 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmCreate())->setDigest("X can be done a second time")
+                (new Model\PayloadAssmCreate())->setHeading("X can be done a second time")
             );
 
         // Advance to validation
@@ -205,7 +205,7 @@ class OrganizationTest extends TestCase {
                 $assm->getId(),
                 $this->orgId,
                 (new Model\PayloadAssmExperiment())
-                    ->setDigest("Experiment digest")
+                    ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -221,7 +221,7 @@ class OrganizationTest extends TestCase {
                 $assm2->getId(),
                 $this->orgId,
                 (new Model\PayloadAssmExperiment())
-                    ->setDigest("Second experiment digest")
+                    ->setHeading("Second experiment heading")
                     ->setDetails("Second experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -253,7 +253,7 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->dcItem->getId(),
                 $this->orgId,
-                (new Model\PayloadTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+                (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
@@ -268,7 +268,7 @@ class OrganizationTest extends TestCase {
                 $this->item->getId(),
                 $this->orgId,
                 (new Model\PayloadTaskCreate())
-                    ->setDigest("Second task one")
+                    ->setHeading("Second task one")
                     ->setDetails("Second item task one details")
             );
 
@@ -311,13 +311,13 @@ class OrganizationTest extends TestCase {
                 $task->getId(),
                 $this->orgId,
                 (new Model\PayloadTaskUpdate())
-                    ->setDigest("New task title")
+                    ->setHeading("New task title")
                     ->setState(Model\PayloadTaskUpdate::STATE_DONE)
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $taskUpdated);
         $this->assertEquals(0, count($taskUpdated->listProps()));
 
-        $this->assertEquals("New task title", $taskUpdated->getDigest());
+        $this->assertEquals("New task title", $taskUpdated->getHeading());
         $this->assertEquals(Model\PayloadTaskUpdate::STATE_DONE, $taskUpdated->getState());
         $this->assertInstanceOf(Model\Minute::class, $taskUpdated->getMinute());
         $this->assertEquals(0, count($taskUpdated->getMinute()->listProps()));

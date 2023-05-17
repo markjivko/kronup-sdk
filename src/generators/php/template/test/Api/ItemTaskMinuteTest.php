@@ -127,7 +127,7 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->channel->getId(),
                 $this->orgId,
                 (new Model\PayloadValueItemCreate())
-                    ->setDigest("The digest")
+                    ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
@@ -141,7 +141,7 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\PayloadAssmCreate())->setDigest("X can be done")
+                (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
@@ -163,7 +163,7 @@ class ItemTaskMinuteTest extends TestCase {
                 $assm->getId(),
                 $this->orgId,
                 (new Model\PayloadAssmExperiment())
-                    ->setDigest("Experiment digest")
+                    ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -192,7 +192,7 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $this->orgId,
-                (new Model\PayloadTaskCreate())->setDigest("Task one")->setDetails("Details of task one")
+                (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $this->task);
         $this->assertEquals(0, count($this->task->listProps()));

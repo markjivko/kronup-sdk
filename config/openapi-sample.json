@@ -49,7 +49,7 @@
         },
         {
             "name": "Value items",
-            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly.\n\nIn order to prevent information overload, each [Channel](#tag/Channels) can hold at most **10** 'value items'."
+            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly.\n\nIn order to prevent information overload, each [Channel](#tag/Channels) can hold at most **undefined** 'value items'."
         },
         {
             "name": "Assumptions",
@@ -61,7 +61,7 @@
         },
         {
             "name": "Notions",
-            "description": "Each [Task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task.\n\nEach [Organization](#tag/Organizations) can define at most **100000** Notions."
+            "description": "Each [Task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task.\n\nEach [Organization](#tag/Organizations) can define at most **50000** Notions."
         },
         {
             "name": "Experiences",
@@ -2037,9 +2037,9 @@
                                 "title": "Payload Assm Create",
                                 "description": "Payload object required to create a Value Item assumption",
                                 "properties": {
-                                    "digest": {
+                                    "heading": {
                                         "type": "string",
-                                        "description": "Assumption digest",
+                                        "description": "Assumption heading",
                                         "minLength": 1,
                                         "maxLength": 256,
                                         "example": "This thing is possible"
@@ -2058,7 +2058,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"This thing is possible\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"heading\":\"This thing is possible\"}'"
                     }
                 ]
             },
@@ -2475,9 +2475,9 @@
                                 "title": "Payload Assm Update",
                                 "description": "Payload object required to update a Value Item assumption",
                                 "properties": {
-                                    "digest": {
+                                    "heading": {
                                         "type": "string",
-                                        "description": "Assumption digest",
+                                        "description": "Assumption heading",
                                         "minLength": 1,
                                         "maxLength": 256,
                                         "example": "Feature name"
@@ -2496,7 +2496,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"heading\":\"Feature name\"}'"
                     }
                 ]
             },
@@ -2750,9 +2750,9 @@
                                         "type": "boolean",
                                         "description": "Experiment confirms assumption"
                                     },
-                                    "digest": {
+                                    "heading": {
                                         "type": "string",
-                                        "description": "Experiment digest",
+                                        "description": "Experiment heading",
                                         "minLength": 1,
                                         "maxLength": 256
                                     },
@@ -2785,7 +2785,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"confirmed\":true,\"digest\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"confirmed\":true,\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
                     }
                 ]
             }
@@ -2901,9 +2901,9 @@
                                 "title": "Payload Task Create",
                                 "description": "Payload object required to create a Task",
                                 "properties": {
-                                    "digest": {
+                                    "heading": {
                                         "type": "string",
-                                        "description": "Task digest",
+                                        "description": "Task heading",
                                         "minLength": 1,
                                         "maxLength": 256
                                     },
@@ -2927,7 +2927,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\"}'"
                     }
                 ]
             },
@@ -3344,9 +3344,9 @@
                                 "title": "Payload Task Update",
                                 "description": "Payload object required to update a Task",
                                 "properties": {
-                                    "digest": {
+                                    "heading": {
                                         "type": "string",
-                                        "description": "Task digest",
+                                        "description": "Task heading",
                                         "minLength": 1,
                                         "maxLength": 256
                                     },
@@ -3379,7 +3379,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
                     }
                 ]
             },
@@ -5063,9 +5063,9 @@
                                 "title": "Payload Value Item Create",
                                 "description": "Payload object required to create a Value Item",
                                 "properties": {
-                                    "digest": {
+                                    "heading": {
                                         "type": "string",
-                                        "description": "Value item digest",
+                                        "description": "Value item heading",
                                         "minLength": 1,
                                         "maxLength": 256,
                                         "example": "Feature name"
@@ -5108,7 +5108,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
                     }
                 ]
             },
@@ -5146,6 +5146,21 @@
                         "description": "Organization ID",
                         "required": true,
                         "example": "org-id-***",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "stage",
+                        "in": "query",
+                        "description": "Value item stage",
+                        "enum": [
+                            "planning",
+                            "validation",
+                            "execution",
+                            "deep-context"
+                        ],
+                        "example": "planning",
                         "schema": {
                             "type": "string"
                         }
@@ -5255,7 +5270,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?stage=planning&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'x-org-id: org-id-***'"
                     }
                 ]
             }
@@ -5485,9 +5500,9 @@
                                 "title": "Payload Value Item Update",
                                 "description": "Payload object required to update a Value Item",
                                 "properties": {
-                                    "digest": {
+                                    "heading": {
                                         "type": "string",
-                                        "description": "Value item digest",
+                                        "description": "Value item heading",
                                         "minLength": 1,
                                         "maxLength": 256,
                                         "example": "Feature name"
@@ -5530,7 +5545,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"digest\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --header 'x-org-id: org-id-***' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
                     }
                 ]
             },
@@ -9951,9 +9966,9 @@
                         "description": "Channel ID",
                         "example": "channel-id-***"
                     },
-                    "digest": {
+                    "heading": {
                         "type": "string",
-                        "description": "Value item digest",
+                        "description": "Value item heading",
                         "minLength": 1,
                         "maxLength": 256,
                         "example": "Value item number 1"
@@ -10045,7 +10060,7 @@
                     "authorUserId": {
                         "$ref": "#/components/schemas/UserId"
                     },
-                    "digest": {
+                    "heading": {
                         "type": "string",
                         "description": "Assumptions are formulated as simple statements that can be proven true or false; avoid questions and opinions.\n\n> ❌ What are the features?\n> \n> ❌ Does this feature exist?\n> \n> ❌ I don't like this feature.\n> \n> ✅ This feature exists.",
                         "example": "Electron.js supports Windows 7",
@@ -10069,7 +10084,7 @@
                                 "description": "Experiment confirms assumption",
                                 "default": false
                             },
-                            "digest": {
+                            "heading": {
                                 "type": "string",
                                 "description": "Experiment findings formulated in one sentence",
                                 "minLength": 1,
@@ -10109,7 +10124,7 @@
                     "assigneeUserId": {
                         "$ref": "#/components/schemas/UserId"
                     },
-                    "digest": {
+                    "heading": {
                         "type": "string",
                         "description": "Task title",
                         "minLength": 1,
@@ -10156,7 +10171,7 @@
                     "assigneeUserId": {
                         "$ref": "#/components/schemas/UserId"
                     },
-                    "digest": {
+                    "heading": {
                         "type": "string",
                         "description": "Task title",
                         "minLength": 1,
@@ -10215,9 +10230,9 @@
                         "description": "Channel ID",
                         "example": "channel-id-***"
                     },
-                    "digest": {
+                    "heading": {
                         "type": "string",
-                        "description": "Value item digest",
+                        "description": "Value item heading",
                         "minLength": 1,
                         "maxLength": 256,
                         "example": "Value item number 1"
