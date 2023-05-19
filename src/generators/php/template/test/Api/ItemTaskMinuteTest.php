@@ -175,6 +175,11 @@ class ItemTaskMinuteTest extends TestCase {
             ->valueItems()
             ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
 
+        $this->item = $this->sdk
+            ->api()
+            ->valueItems()
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+
         // Prepare the notion
         $this->notion = $this->sdk
             ->api()
