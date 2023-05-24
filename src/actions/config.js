@@ -146,7 +146,7 @@ const tools = {
         const go = async () => {
             const start = new Date().getTime();
             try {
-                const changesMade = await tools.handleFetch("sample");
+                const changesMade = await tools.handleFetch("sample", true);
 
                 if (changesMade) {
                     // Prepare the timestamp
@@ -254,9 +254,10 @@ const tools = {
      * Fetch OpenApi specification from server
      *
      * @param {string} name (optional) Configuration name
+     * @param {boolean} devMode (optional) openapi.json should store the development version
      * @return {boolean}
      */
-    handleFetch: async name => {
+    handleFetch: async (name, devMode = false) => {
         let changesMade = false;
 
         // Prepare the paths
@@ -280,10 +281,30 @@ const tools = {
         // Fix specification issues
         treatSpec(openApiObject.data);
 
+        // Development mode
+        let openApiDevObject = null;
+        if (devMode) {
+            openApiDevObject = await axios.get(`http://localhost:3000/openapi-dev.json`);
+
+            // Invalid response
+            if ("object" !== typeof openApiDevObject || null === openApiDevObject) {
+                throw new Error("Invalid server response (development version)");
+            }
+
+            // Invalid payload
+            if ("string" !== typeof openApiDevObject.data.openapi) {
+                throw new Error("Unknown specification format (development version)");
+            }
+
+            // Fix specification issues
+            treatSpec(openApiDevObject.data);
+        }
+
         // Prepare the data
         const jsonMain = fs.existsSync(pathConfigMain) ? fs.readFileSync(pathConfigMain).toString() : "";
         const jsonFetchedOld = fs.existsSync(pathConfigFetched) ? fs.readFileSync(pathConfigFetched).toString() : "";
         const jsonFetchedNew = JSON.stringify(openApiObject.data, null, 4);
+        const jsonMainNew = devMode ? JSON.stringify(openApiDevObject.data, null, 4) : jsonFetchedNew;
 
         // Update the fetched configuration file
         if (jsonFetchedOld !== jsonFetchedNew) {
@@ -293,8 +314,8 @@ const tools = {
         }
 
         // Auto-switch
-        if (jsonMain !== jsonFetchedNew) {
-            fs.copyFileSync(pathConfigFetched, pathConfigMain);
+        if (jsonMain !== jsonMainNew) {
+            fs.writeFileSync(pathConfigMain, jsonMainNew);
             logger.success(`✨ Updated "openapi.json"`);
             changesMade = true;
         }

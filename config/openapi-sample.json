@@ -21,7 +21,7 @@
     "tags": [
         {
             "name": "Account",
-            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account and Service Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **250** Events for each [Organization](#tag/Organizations) they are a part of."
+            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account and Service Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **100** Events for each [Organization](#tag/Organizations) they are a part of."
         },
         {
             "name": "Service accounts",
@@ -33,11 +33,11 @@
         },
         {
             "name": "Invitations",
-            "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **250** invitations."
+            "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **100** invitations."
         },
         {
             "name": "Organizations",
-            "description": "Each [Account](#tag/Account) owns at most **50** Organizations.\n\nThese are the role-based access control rules for organizations:\n\n| Organization Role \\ Action | Read * | Write * | Delete ** |\n|---|---|---|---|\n| Owner | yes | yes | yes |\n| Admin | yes | yes | no |\n| Member | yes | no | no |\n\n\n(*) The **read** and **write** actions refer to all endpoints that require the **x-org-id** header.\n\n(**) The **delete** action refers to removing the Organization model."
+            "description": "Each [Account](#tag/Account) owns at most **50** Organizations.\n\nThese are the role-based access control rules for organizations:\n\n| Organization Role \\ Action | Read | Write | Delete * |\n|---|---|---|---|\n| Owner | yes | yes | yes |\n| Admin | yes | yes | no |\n| Member | yes | no | no |\n\n\n(*) The **delete** action refers to removing the Organization model."
         },
         {
             "name": "Teams",
@@ -53,11 +53,11 @@
         },
         {
             "name": "Assumptions",
-            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **100** Assumptions.\n\nLess is more, so focus on having smaller value items with fewer assumptions per item.\n\nAssumptions need to be validated by running new experiments or by relying on past results."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **50** Assumptions.\n\nLess is more, so focus on having smaller value items with fewer assumptions per item.\n\nAssumptions need to be validated by running new experiments or by relying on past results."
         },
         {
             "name": "Tasks",
-            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **100** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **25** [Notions](#tag/Notions), **100** discoveries, and **250** feedback items."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **50** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **25** [Notions](#tag/Notions), **50** discoveries, and **50** feedback items."
         },
         {
             "name": "Notions",
@@ -2760,7 +2760,7 @@
                                         "type": "string",
                                         "description": "Experiment detailed findings",
                                         "minLength": 1,
-                                        "maxLength": 4096
+                                        "maxLength": 2048
                                     },
                                     "state": {
                                         "type": "string",
@@ -2911,7 +2911,7 @@
                                         "type": "string",
                                         "description": "Task details",
                                         "minLength": 1,
-                                        "maxLength": 4096
+                                        "maxLength": 2048
                                     }
                                 }
                             }
@@ -3354,7 +3354,7 @@
                                         "type": "string",
                                         "description": "Task details",
                                         "minLength": 1,
-                                        "maxLength": 4096
+                                        "maxLength": 2048
                                     },
                                     "state": {
                                         "type": "string",
@@ -4039,7 +4039,7 @@
                                         "type": "string",
                                         "description": "Discovery details",
                                         "minLength": 1,
-                                        "maxLength": 1024
+                                        "maxLength": 512
                                     }
                                 }
                             }
@@ -4195,7 +4195,7 @@
                                         "type": "string",
                                         "description": "Discovery details",
                                         "minLength": 1,
-                                        "maxLength": 1024
+                                        "maxLength": 512
                                     }
                                 }
                             }
@@ -4475,7 +4475,7 @@
                                         "type": "string",
                                         "description": "Feedback details",
                                         "minLength": 1,
-                                        "maxLength": 1024
+                                        "maxLength": 512
                                     },
                                     "issue": {
                                         "type": "string",
@@ -4645,7 +4645,7 @@
                                         "type": "string",
                                         "description": "Feedback details",
                                         "minLength": 1,
-                                        "maxLength": 1024,
+                                        "maxLength": 512,
                                         "required": "true"
                                     },
                                     "issue": {
@@ -4950,7 +4950,7 @@
                                         "type": "string",
                                         "description": "Feedback reply",
                                         "minLength": 1,
-                                        "maxLength": 1024,
+                                        "maxLength": 512,
                                         "required": "true"
                                     }
                                 }
@@ -5074,7 +5074,7 @@
                                         "type": "string",
                                         "description": "Value item description",
                                         "minLength": 1,
-                                        "maxLength": 4096,
+                                        "maxLength": 2048,
                                         "example": "Feature description"
                                     },
                                     "type": {
@@ -5083,7 +5083,7 @@
                                         "enum": [
                                             "feature",
                                             "bug fix",
-                                            "chore"
+                                            "routine"
                                         ],
                                         "example": "feature"
                                     },
@@ -5511,7 +5511,7 @@
                                         "type": "string",
                                         "description": "Value item description",
                                         "minLength": 1,
-                                        "maxLength": 4096,
+                                        "maxLength": 2048,
                                         "example": "Feature description"
                                     },
                                     "type": {
@@ -5520,7 +5520,7 @@
                                         "enum": [
                                             "feature",
                                             "bug fix",
-                                            "chore"
+                                            "routine"
                                         ],
                                         "example": "feature"
                                     },
@@ -9977,7 +9977,7 @@
                         "type": "string",
                         "description": "Value item description",
                         "minLength": 1,
-                        "maxLength": 4096,
+                        "maxLength": 2048,
                         "example": "Item detailed description ***"
                     },
                     "authorUserId": {
@@ -10005,7 +10005,7 @@
                         "enum": [
                             "feature",
                             "bug fix",
-                            "chore"
+                            "routine"
                         ],
                         "example": "feature"
                     },
@@ -10095,7 +10095,7 @@
                                 "type": "string",
                                 "description": "Experiment details",
                                 "minLength": 1,
-                                "maxLength": 4096
+                                "maxLength": 2048
                             },
                             "state": {
                                 "type": "string",
@@ -10134,7 +10134,7 @@
                         "type": "string",
                         "description": "Task description",
                         "minLength": 1,
-                        "maxLength": 4096
+                        "maxLength": 2048
                     },
                     "state": {
                         "type": "string",
@@ -10181,7 +10181,7 @@
                         "type": "string",
                         "description": "Task description",
                         "minLength": 1,
-                        "maxLength": 4096
+                        "maxLength": 2048
                     },
                     "state": {
                         "type": "string",
@@ -10241,7 +10241,7 @@
                         "type": "string",
                         "description": "Value item description",
                         "minLength": 1,
-                        "maxLength": 4096,
+                        "maxLength": 2048,
                         "example": "Item detailed description ***"
                     },
                     "authorUserId": {
@@ -10269,7 +10269,7 @@
                         "enum": [
                             "feature",
                             "bug fix",
-                            "chore"
+                            "routine"
                         ],
                         "example": "feature"
                     },
@@ -10342,7 +10342,7 @@
                                     "type": "string",
                                     "description": "Discovery details",
                                     "minLength": 1,
-                                    "maxLength": 1024
+                                    "maxLength": 512
                                 }
                             }
                         }
@@ -10388,13 +10388,13 @@
                                     "type": "string",
                                     "description": "Feedback details",
                                     "minLength": 1,
-                                    "maxLength": 1024
+                                    "maxLength": 512
                                 },
                                 "reply": {
                                     "type": "string",
                                     "description": "Reply from assignee",
                                     "minLength": 1,
-                                    "maxLength": 1024
+                                    "maxLength": 512
                                 }
                             }
                         }
