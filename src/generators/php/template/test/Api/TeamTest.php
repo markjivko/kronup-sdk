@@ -62,13 +62,13 @@ class TeamTest extends TestCase {
             ->read();
 
         // Get the first organization ID
-        $orgId = current($account->getRoleOrg())->getOrgId();
+        $this->sdk->config()->setOrgId(current($account->getRoleOrg())->getOrgId());
 
         // Create the team
         $teamModel = $this->sdk
             ->api()
             ->teams()
-            ->create($orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
+            ->create((new Model\PayloadTeamCreate())->setTeamName("New team"));
         $this->assertInstanceOf(Model\TeamExtended::class, $teamModel);
         $this->assertEquals(0, count($teamModel->listProps()));
 
@@ -76,7 +76,7 @@ class TeamTest extends TestCase {
         $teamModelRead = $this->sdk
             ->api()
             ->teams()
-            ->read($teamModel->getId(), $orgId);
+            ->read($teamModel->getId());
         $this->assertInstanceOf(Model\TeamExtended::class, $teamModelRead);
         $this->assertEquals(0, count($teamModelRead->listProps()));
 
@@ -84,7 +84,7 @@ class TeamTest extends TestCase {
         $teamsList = $this->sdk
             ->api()
             ->teams()
-            ->listAll($orgId);
+            ->listAll();
         $this->assertInstanceOf(Model\TeamsList::class, $teamsList);
         $this->assertEquals(0, count($teamsList->listProps()));
 
@@ -99,7 +99,7 @@ class TeamTest extends TestCase {
         $teamModelUpdated = $this->sdk
             ->api()
             ->teams()
-            ->update($teamModel->getId(), $orgId, (new Model\PayloadTeamUpdate())->setTeamName("Another team name"));
+            ->update($teamModel->getId(), (new Model\PayloadTeamUpdate())->setTeamName("Another team name"));
         $this->assertInstanceOf(Model\TeamExtended::class, $teamModelUpdated);
         $this->assertEquals(0, count($teamModelUpdated->listProps()));
 
@@ -111,7 +111,6 @@ class TeamTest extends TestCase {
             ->channels()
             ->create(
                 $teamModel->getId(),
-                $orgId,
                 (new Model\PayloadChannelCreate())
                     ->setChannelName("A new channel")
                     ->setChannelDesc("The channel description")
@@ -129,7 +128,6 @@ class TeamTest extends TestCase {
             ->update(
                 $team->getId(),
                 $team->getChannels()[1]->getId(),
-                $orgId,
                 (new Model\PayloadChannelUpdate())
                     ->setChannelName("A new channel 2")
                     ->setChannelDesc("The 2nd channel description")
@@ -139,7 +137,7 @@ class TeamTest extends TestCase {
         $prospectsList = $this->sdk
             ->api()
             ->channels()
-            ->listProspects($team->getId(), $team->getChannels()[0]->getId(), $orgId);
+            ->listProspects($team->getId(), $team->getChannels()[0]->getId());
         $this->assertInstanceOf(Model\ChannelProspectsList::class, $prospectsList);
         $this->assertEquals(0, count($prospectsList->listProps()));
         $this->assertIsArray($prospectsList->getProspects());
@@ -151,13 +149,13 @@ class TeamTest extends TestCase {
         $this->sdk
             ->api()
             ->teams()
-            ->assign($team->getId(), $account->getId(), $orgId);
+            ->assign($team->getId(), $account->getId());
 
         // Fetch user teams
         $listUser = $this->sdk
             ->api()
             ->teams()
-            ->listUser($account->getId(), $orgId);
+            ->listUser($account->getId());
         $this->assertInstanceOf(Model\TeamsExtendedList::class, $listUser);
         $this->assertEquals(0, count($listUser->listProps()));
         $this->assertIsArray($listUser->getTeams());
@@ -183,7 +181,7 @@ class TeamTest extends TestCase {
         $channelMembers = $this->sdk
             ->api()
             ->channels()
-            ->listMembers($team->getId(), $team->getChannels()[0]->getId(), $orgId);
+            ->listMembers($team->getId(), $team->getChannels()[0]->getId());
         $this->assertInstanceOf(Model\ChannelMembersList::class, $channelMembers);
 
         $this->assertEquals(0, count($channelMembers->listProps()));
@@ -210,7 +208,7 @@ class TeamTest extends TestCase {
         $modelUser = $this->sdk
             ->api()
             ->channels()
-            ->assign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+            ->assign($team->getId(), $team->getChannels()[1]->getId(), $account->getId());
         $this->assertInstanceOf(Model\User::class, $modelUser);
         $this->assertEquals(0, count($modelUser->listProps()));
 
@@ -220,14 +218,14 @@ class TeamTest extends TestCase {
         $channelUnassigned = $this->sdk
             ->api()
             ->channels()
-            ->unassign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+            ->unassign($team->getId(), $team->getChannels()[1]->getId(), $account->getId());
         $this->assertTrue($channelUnassigned);
 
         // Fetch the model
         $modelUser2 = $this->sdk
             ->api()
             ->users()
-            ->read($account->getId(), $orgId);
+            ->read($account->getId());
         $this->assertInstanceOf(Model\User::class, $modelUser2);
         $this->assertEquals(0, count($modelUser2->listProps()));
 
@@ -238,14 +236,14 @@ class TeamTest extends TestCase {
         $teamUnassigned = $this->sdk
             ->api()
             ->teams()
-            ->unassign($team->getId(), $account->getId(), $orgId);
+            ->unassign($team->getId(), $account->getId());
         $this->assertTrue($teamUnassigned);
 
         // Fetch the user model
         $modelUser3 = $this->sdk
             ->api()
             ->users()
-            ->read($account->getId(), $orgId);
+            ->read($account->getId());
 
         // Fetch the teams
         $userTeams = array_map(function ($item) {
@@ -257,7 +255,7 @@ class TeamTest extends TestCase {
         $modelUser4 = $this->sdk
             ->api()
             ->teams()
-            ->assign($team->getId(), $account->getId(), $orgId);
+            ->assign($team->getId(), $account->getId());
         $this->assertInstanceOf(Model\User::class, $modelUser4);
         $this->assertEquals(0, count($modelUser4->listProps()));
 
@@ -270,18 +268,18 @@ class TeamTest extends TestCase {
         $this->sdk
             ->api()
             ->channels()
-            ->assign($team->getId(), $team->getChannels()[1]->getId(), $account->getId(), $orgId);
+            ->assign($team->getId(), $team->getChannels()[1]->getId(), $account->getId());
         $channelDeleted = $this->sdk
             ->api()
             ->channels()
-            ->delete($team->getId(), $team->getChannels()[1]->getId(), $orgId);
+            ->delete($team->getId(), $team->getChannels()[1]->getId());
         $this->assertTrue($channelDeleted);
 
         // Remove the team
         $teamDeleted = $this->sdk
             ->api()
             ->teams()
-            ->delete($teamModel->getId(), $orgId);
+            ->delete($teamModel->getId());
         $this->assertTrue($teamDeleted);
     }
 
@@ -296,14 +294,14 @@ class TeamTest extends TestCase {
             ->read();
 
         // Get the first organization ID
-        $orgId = current($account->getRoleOrg())->getOrgId();
+        $this->sdk->config()->setOrgId(current($account->getRoleOrg())->getOrgId());
 
         // Create: Name too long
         try {
             $this->sdk
                 ->api()
                 ->teams()
-                ->create($orgId, new Model\PayloadTeamCreate(["teamName" => str_repeat("x ", 33)]));
+                ->create(new Model\PayloadTeamCreate(["teamName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "teams.create(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
             $this->assertEquals("invalid-argument-db", $exc->getResponseObject()["id"]);
@@ -313,7 +311,7 @@ class TeamTest extends TestCase {
         $team = $this->sdk
             ->api()
             ->teams()
-            ->create($orgId, (new Model\PayloadTeamCreate())->setTeamName("Test"));
+            ->create((new Model\PayloadTeamCreate())->setTeamName("Test"));
         $this->assertInstanceOf(Model\TeamExtended::class, $team);
         $this->assertEquals(0, count($team->listProps()));
 
@@ -322,7 +320,7 @@ class TeamTest extends TestCase {
             $this->sdk
                 ->api()
                 ->teams()
-                ->update($team->getId(), $orgId, new Model\PayloadTeamUpdate(["teamName" => str_repeat("x ", 33)]));
+                ->update($team->getId(), new Model\PayloadTeamUpdate(["teamName" => str_repeat("x ", 33)]));
             $this->assertTrue(false, "teams.update(name) should throw an error");
         } catch (Sdk\ApiException $exc) {
             $this->assertEquals("invalid-argument-db", $exc->getResponseObject()["id"]);
@@ -332,7 +330,7 @@ class TeamTest extends TestCase {
         $teamDeleted = $this->sdk
             ->api()
             ->teams()
-            ->delete($team->getId(), $orgId);
+            ->delete($team->getId());
         $this->assertTrue($teamDeleted);
     }
 
@@ -354,16 +352,16 @@ class TeamTest extends TestCase {
                 ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
-            $orgId = $organization->getId();
+            $this->sdk->config()->setOrgId($organization->getId());
         } else {
-            $orgId = current($account->getRoleOrg())->getOrgId();
+            $this->sdk->config()->setOrgId(current($account->getRoleOrg())->getOrgId());
         }
 
         // Create a new team
         $team = $this->sdk
             ->api()
             ->teams()
-            ->create($orgId, (new Model\PayloadTeamCreate())->setTeamName("Test"));
+            ->create((new Model\PayloadTeamCreate())->setTeamName("Test"));
         $this->assertInstanceOf(Model\TeamExtended::class, $team);
         $this->assertEquals(0, count($team->listProps()));
 
@@ -371,7 +369,7 @@ class TeamTest extends TestCase {
         $user = $this->sdk
             ->api()
             ->teams()
-            ->assign($team->getId(), $account->getId(), $orgId);
+            ->assign($team->getId(), $account->getId());
         $teamIds = array_map(function ($item) {
             return $item->getTeamId();
         }, $user->getTeams());
@@ -395,10 +393,7 @@ class TeamTest extends TestCase {
         $invitationModel = $this->sdk
             ->api()
             ->invitations()
-            ->create(
-                $orgId,
-                (new Model\PayloadInvitationCreate())->setTeamId($team->getId())->setInviteName("New invitation")
-            );
+            ->create((new Model\PayloadInvitationCreate())->setTeamId($team->getId())->setInviteName("New invitation"));
         $this->assertInstanceOf(Model\Invitation::class, $invitationModel);
         $this->assertEquals(0, count($invitationModel->listProps()));
 
@@ -406,7 +401,7 @@ class TeamTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->teams()
-            ->delete($team->getId(), $orgId);
+            ->delete($team->getId());
         $this->assertTrue($deleted);
 
         // Fetch the user model again

@@ -37,13 +37,6 @@ class ItemAssmTest extends TestCase {
     protected $account;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    protected $orgId;
-
-    /**
      * Team model
      *
      * @var Model\TeamExtended
@@ -84,16 +77,16 @@ class ItemAssmTest extends TestCase {
                 ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
-            $this->orgId = $organization->getId();
+            $this->sdk->config()->setOrgId($organization->getId());
         } else {
-            $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+            $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
 
         // Set-up a new team
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->create($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
+            ->create((new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -102,7 +95,7 @@ class ItemAssmTest extends TestCase {
         $this->sdk
             ->api()
             ->teams()
-            ->assign($this->team->getId(), $this->account->getId(), $this->orgId);
+            ->assign($this->team->getId(), $this->account->getId());
 
         // Store the value item
         $this->item = $this->sdk
@@ -111,7 +104,6 @@ class ItemAssmTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
@@ -127,7 +119,7 @@ class ItemAssmTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->teams()
-            ->delete($this->team->getId(), $this->orgId);
+            ->delete($this->team->getId());
         $this->assertTrue($deleted);
     }
 
@@ -142,7 +134,6 @@ class ItemAssmTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -152,7 +143,7 @@ class ItemAssmTest extends TestCase {
         $assmRead = $this->sdk
             ->api()
             ->assumptions()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId());
         $this->assertInstanceOf(Model\Assumption::class, $assmRead);
         $this->assertEquals(0, count($assmRead->listProps()));
 
@@ -162,7 +153,7 @@ class ItemAssmTest extends TestCase {
         $assmList = $this->sdk
             ->api()
             ->assumptions()
-            ->list($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->list($this->team->getId(), $this->channel->getId(), $this->item->getId());
         $this->assertInstanceOf(Model\AssumptionsList::class, $assmList);
         $this->assertEquals(0, count($assmList->listProps()));
 
@@ -182,7 +173,6 @@ class ItemAssmTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -197,7 +187,6 @@ class ItemAssmTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $assm->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmUpdate())->setHeading("New assumption")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assmUpdated);
@@ -208,7 +197,7 @@ class ItemAssmTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Validate assumption with experiment
         $assmUpdatedExp = $this->sdk
@@ -219,7 +208,6 @@ class ItemAssmTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $assm->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmExperiment())
                     ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
@@ -241,13 +229,13 @@ class ItemAssmTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->assumptions()
-            ->delete($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId(), $this->orgId);
+            ->delete($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId());
         $this->assertTrue($deleted);
 
         $this->expectExceptionObject(new ApiException("Not Found", 404));
         $this->sdk
             ->api()
             ->assumptions()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId());
     }
 }

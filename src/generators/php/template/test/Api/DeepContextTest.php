@@ -37,13 +37,6 @@ class DeepContextTest extends TestCase {
     protected $account;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    protected $orgId;
-
-    /**
      * Team model
      *
      * @var Model\TeamExtended
@@ -91,16 +84,16 @@ class DeepContextTest extends TestCase {
                 ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
-            $this->orgId = $organization->getId();
+            $this->sdk->config()->setOrgId($organization->getId());
         } else {
-            $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+            $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
 
         // Set-up a new team
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->create($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
+            ->create((new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -109,7 +102,7 @@ class DeepContextTest extends TestCase {
         $this->sdk
             ->api()
             ->teams()
-            ->assign($this->team->getId(), $this->account->getId(), $this->orgId);
+            ->assign($this->team->getId(), $this->account->getId());
 
         // Add value item
         $this->item = $this->sdk
@@ -118,7 +111,6 @@ class DeepContextTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemCreate())
                     ->setHeading("The heading information here")
                     ->setDetails("The details")
@@ -133,7 +125,6 @@ class DeepContextTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -143,7 +134,7 @@ class DeepContextTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Validate assumption with experiment
         $this->sdk
@@ -154,7 +145,6 @@ class DeepContextTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $assm->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmExperiment())
                     ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
@@ -166,13 +156,13 @@ class DeepContextTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Prepare the notion
         $this->notion = $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
+            ->create((new Model\PayloadNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
         $this->assertInstanceOf(Model\Notion::class, $this->notion);
         $this->assertEquals(0, count($this->notion->listProps()));
 
@@ -183,7 +173,6 @@ class DeepContextTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -198,8 +187,7 @@ class DeepContextTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $this->notion->getId(),
-                $this->orgId
+                $this->notion->getId()
             );
         $this->assertInstanceOf(Model\Task::class, $task);
         $this->assertEquals(0, count($task->listProps()));
@@ -213,7 +201,6 @@ class DeepContextTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskUpdate())
                     ->setHeading("New task title")
                     ->setState(Model\PayloadTaskUpdate::STATE_DONE)
@@ -237,7 +224,7 @@ class DeepContextTest extends TestCase {
         $this->item = $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
         $this->assertInstanceOf(Model\ValueItem::class, $this->item);
         $this->assertEquals(0, count($this->item->listProps()));
     }
@@ -250,14 +237,14 @@ class DeepContextTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->teams()
-            ->delete($this->team->getId(), $this->orgId);
+            ->delete($this->team->getId());
         $this->assertTrue($deleted);
 
         // Remove the notion
         $deletedNotion = $this->sdk
             ->api()
             ->notions()
-            ->delete($this->notion->getId(), $this->orgId);
+            ->delete($this->notion->getId());
         $this->assertTrue($deletedNotion);
     }
 
@@ -269,7 +256,7 @@ class DeepContextTest extends TestCase {
         $item = $this->sdk
             ->api()
             ->deepContext()
-            ->read($this->item->getId(), $this->orgId);
+            ->read($this->item->getId());
 
         $this->assertInstanceOf(Model\ValueItemExpanded::class, $item);
         $this->assertEquals(0, count($item->listProps()));
@@ -346,7 +333,7 @@ class DeepContextTest extends TestCase {
         $search = $this->sdk
             ->api()
             ->deepContext()
-            ->search($this->orgId, "heading");
+            ->search("heading");
 
         $this->assertInstanceOf(Model\DeepContextList::class, $search);
         $this->assertEquals(0, count($search->listProps()));
@@ -374,13 +361,13 @@ class DeepContextTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->deepContext()
-            ->delete($this->item->getId(), $this->orgId);
+            ->delete($this->item->getId());
         $this->assertTrue($deleted);
 
         $this->expectExceptionObject(new ApiException("Not Found", 404));
         $this->sdk
             ->api()
             ->deepContext()
-            ->read($this->item->getId(), $this->orgId);
+            ->read($this->item->getId());
     }
 }

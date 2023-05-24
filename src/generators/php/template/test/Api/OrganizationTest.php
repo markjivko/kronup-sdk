@@ -42,13 +42,6 @@ class OrganizationTest extends TestCase {
     protected $account;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    protected $orgId;
-
-    /**
      * Team model
      *
      * @var Model\TeamExtended
@@ -110,16 +103,16 @@ class OrganizationTest extends TestCase {
                 ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
-            $this->orgId = $organization->getId();
+            $this->sdk->config()->setOrgId($organization->getId());
         } else {
-            $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+            $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
 
         // Set-up a new team
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->create($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
+            ->create((new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -128,7 +121,7 @@ class OrganizationTest extends TestCase {
         $this->sdk
             ->api()
             ->teams()
-            ->assign($this->team->getId(), $this->account->getId(), $this->orgId);
+            ->assign($this->team->getId(), $this->account->getId());
 
         // Add value item
         $this->dcItem = $this->sdk
@@ -137,7 +130,6 @@ class OrganizationTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemCreate())
                     ->setHeading("The heading information here")
                     ->setDetails("The details")
@@ -151,7 +143,6 @@ class OrganizationTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemCreate())
                     ->setHeading("Second item heading")
                     ->setDetails("Second item details")
@@ -166,7 +157,6 @@ class OrganizationTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->dcItem->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -180,7 +170,6 @@ class OrganizationTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmCreate())->setHeading("X can be done a second time")
             );
 
@@ -188,11 +177,11 @@ class OrganizationTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId());
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Validate assumption with experiment
         $this->sdk
@@ -203,7 +192,6 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->dcItem->getId(),
                 $assm->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmExperiment())
                     ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
@@ -219,7 +207,6 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $assm2->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmExperiment())
                     ->setHeading("Second experiment heading")
                     ->setDetails("Second experiment details")
@@ -231,17 +218,17 @@ class OrganizationTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId());
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Prepare the notion
         $this->notion = $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
+            ->create((new Model\PayloadNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
         $this->assertInstanceOf(Model\Notion::class, $this->notion);
         $this->assertEquals(0, count($this->notion->listProps()));
 
@@ -252,7 +239,6 @@ class OrganizationTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->dcItem->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -266,7 +252,6 @@ class OrganizationTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())
                     ->setHeading("Second task one")
                     ->setDetails("Second item task one details")
@@ -281,8 +266,7 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->dcItem->getId(),
                 $task->getId(),
-                $this->notion->getId(),
-                $this->orgId
+                $this->notion->getId()
             );
         $this->assertInstanceOf(Model\Task::class, $task);
         $this->assertEquals(0, count($task->listProps()));
@@ -296,8 +280,7 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task2->getId(),
-                $this->notion->getId(),
-                $this->orgId
+                $this->notion->getId()
             );
 
         // Update task
@@ -309,7 +292,6 @@ class OrganizationTest extends TestCase {
                 $this->channel->getId(),
                 $this->dcItem->getId(),
                 $task->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskUpdate())
                     ->setHeading("New task title")
                     ->setState(Model\PayloadTaskUpdate::STATE_DONE)
@@ -333,14 +315,14 @@ class OrganizationTest extends TestCase {
         $this->dcItem = $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId());
         $this->assertInstanceOf(Model\ValueItem::class, $this->dcItem);
         $this->assertEquals(0, count($this->dcItem->listProps()));
 
         $this->experience = $this->sdk
             ->api()
             ->experiences()
-            ->evaluateSelf($this->notion->getId(), mt_rand(1, 5), $this->orgId);
+            ->evaluateSelf($this->notion->getId(), mt_rand(1, 5));
         $this->assertInstanceOf(Model\Experience::class, $this->experience);
         $this->assertEquals(0, count($this->experience->listProps()));
     }
@@ -354,14 +336,14 @@ class OrganizationTest extends TestCase {
             $deleted = $this->sdk
                 ->api()
                 ->teams()
-                ->delete($this->team->getId(), $this->orgId);
+                ->delete($this->team->getId());
             $this->assertTrue($deleted);
 
             // Remove the notion
             $deletedNotion = $this->sdk
                 ->api()
                 ->notions()
-                ->delete($this->notion->getId(), $this->orgId);
+                ->delete($this->notion->getId());
             $this->assertTrue($deletedNotion);
         }
     }
@@ -375,7 +357,7 @@ class OrganizationTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->organizations()
-            ->delete($this->orgId);
+            ->delete($this->sdk->config()->getOrgId());
         $this->assertTrue($deleted);
 
         // Create another organization
@@ -385,6 +367,6 @@ class OrganizationTest extends TestCase {
             ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
         $this->assertInstanceOf(Model\Organization::class, $organization);
         $this->assertEquals(0, count($organization->listProps()));
-        $this->orgId = $organization->getId();
+        $this->sdk->config()->setOrgId($organization->getId());
     }
 }

@@ -37,13 +37,6 @@ class ItemTest extends TestCase {
     protected $account;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    protected $orgId;
-
-    /**
      * Team model
      *
      * @var Model\TeamExtended
@@ -77,16 +70,16 @@ class ItemTest extends TestCase {
                 ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
-            $this->orgId = $organization->getId();
+            $this->sdk->config()->setOrgId($organization->getId());
         } else {
-            $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+            $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
 
         // Set-up a new team
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->create($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
+            ->create((new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -95,7 +88,7 @@ class ItemTest extends TestCase {
         $this->sdk
             ->api()
             ->teams()
-            ->assign($this->team->getId(), $this->account->getId(), $this->orgId);
+            ->assign($this->team->getId(), $this->account->getId());
     }
 
     /**
@@ -106,7 +99,7 @@ class ItemTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->teams()
-            ->delete($this->team->getId(), $this->orgId);
+            ->delete($this->team->getId());
         $this->assertTrue($deleted);
     }
 
@@ -120,7 +113,6 @@ class ItemTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
@@ -133,7 +125,7 @@ class ItemTest extends TestCase {
         $notifs = $this->sdk
             ->api()
             ->account()
-            ->eventList($this->orgId);
+            ->eventList();
         $this->assertInstanceOf(Model\EventsList::class, $notifs);
         $this->assertEquals(0, count($notifs->listProps()));
 
@@ -144,7 +136,7 @@ class ItemTest extends TestCase {
         $items = $this->sdk
             ->api()
             ->valueItems()
-            ->list($this->team->getId(), $this->channel->getId(), $this->orgId);
+            ->list($this->team->getId(), $this->channel->getId());
         $this->assertInstanceOf(Model\ValueItemsList::class, $items);
         $this->assertEquals(0, count($items->listProps()));
 
@@ -163,7 +155,6 @@ class ItemTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
@@ -178,7 +169,6 @@ class ItemTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $item->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemUpdate())->setHeading("The new heading")
             );
         $this->assertInstanceOf(Model\ValueItem::class, $itemUpdated);
@@ -190,7 +180,7 @@ class ItemTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->valueItems()
-            ->delete($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
+            ->delete($this->team->getId(), $this->channel->getId(), $item->getId());
         $this->assertTrue($deleted);
 
         // Expect to fail (item was removed)
@@ -198,7 +188,7 @@ class ItemTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $item->getId());
     }
 
     /**
@@ -211,7 +201,6 @@ class ItemTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
@@ -225,6 +214,6 @@ class ItemTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $item->getId());
     }
 }

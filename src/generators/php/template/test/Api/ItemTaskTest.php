@@ -37,13 +37,6 @@ class ItemTaskTest extends TestCase {
     protected $account;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    protected $orgId;
-
-    /**
      * Team model
      *
      * @var Model\TeamExtended
@@ -91,16 +84,16 @@ class ItemTaskTest extends TestCase {
                 ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
-            $this->orgId = $organization->getId();
+            $this->sdk->config()->setOrgId($organization->getId());
         } else {
-            $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+            $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
 
         // Set-up a new team
         $this->team = $this->sdk
             ->api()
             ->teams()
-            ->create($this->orgId, (new Model\PayloadTeamCreate())->setTeamName("New team"));
+            ->create((new Model\PayloadTeamCreate())->setTeamName("New team"));
 
         // Store the default channel
         $this->channel = $this->team->getChannels()[0];
@@ -109,7 +102,7 @@ class ItemTaskTest extends TestCase {
         $this->sdk
             ->api()
             ->teams()
-            ->assign($this->team->getId(), $this->account->getId(), $this->orgId);
+            ->assign($this->team->getId(), $this->account->getId());
 
         // Add value item
         $this->item = $this->sdk
@@ -118,7 +111,6 @@ class ItemTaskTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->orgId,
                 (new Model\PayloadValueItemCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
@@ -133,7 +125,6 @@ class ItemTaskTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -143,7 +134,7 @@ class ItemTaskTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Validate assumption with experiment
         $this->sdk
@@ -154,7 +145,6 @@ class ItemTaskTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $assm->getId(),
-                $this->orgId,
                 (new Model\PayloadAssmExperiment())
                     ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
@@ -166,13 +156,13 @@ class ItemTaskTest extends TestCase {
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Prepare the notion
         $this->notion = $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
+            ->create((new Model\PayloadNotionCreate())->setValue("notion-" . mt_rand(1, 999)));
         $this->assertInstanceOf(Model\Notion::class, $this->notion);
         $this->assertEquals(0, count($this->notion->listProps()));
     }
@@ -185,14 +175,14 @@ class ItemTaskTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->teams()
-            ->delete($this->team->getId(), $this->orgId);
+            ->delete($this->team->getId());
         $this->assertTrue($deleted);
 
         // Remove the notion
         $deletedNotion = $this->sdk
             ->api()
             ->notions()
-            ->delete($this->notion->getId(), $this->orgId);
+            ->delete($this->notion->getId());
         $this->assertTrue($deletedNotion);
     }
 
@@ -207,7 +197,6 @@ class ItemTaskTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -220,7 +209,7 @@ class ItemTaskTest extends TestCase {
         $read = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $read);
         $this->assertEquals(0, count($read->listProps()));
 
@@ -233,7 +222,7 @@ class ItemTaskTest extends TestCase {
         $taskList = $this->sdk
             ->api()
             ->tasks()
-            ->list($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->list($this->team->getId(), $this->channel->getId(), $this->item->getId());
         $this->assertInstanceOf(Model\TasksList::class, $taskList);
         $this->assertEquals(0, count($taskList->listProps()));
 
@@ -248,7 +237,7 @@ class ItemTaskTest extends TestCase {
         $itemList = $this->sdk
             ->api()
             ->valueItems()
-            ->list($this->team->getId(), $this->channel->getId(), $this->orgId);
+            ->list($this->team->getId(), $this->channel->getId());
         $this->assertInstanceOf(Model\ValueItemsList::class, $itemList);
         $this->assertEquals(0, count($itemList->listProps()));
 
@@ -279,7 +268,6 @@ class ItemTaskTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -294,7 +282,6 @@ class ItemTaskTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskUpdate())
                     ->setHeading("New task title")
                     ->setState(Model\PayloadTaskUpdate::STATE_DONE)
@@ -311,20 +298,20 @@ class ItemTaskTest extends TestCase {
         $this->item = $this->sdk
             ->api()
             ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Advance
         $this->sdk
             ->api()
             ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->orgId);
+            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
 
         // Task can no longer be loaded (now in deep context)
         $this->expectExceptionObject(new ApiException("Not Found", 404));
         $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
     }
 
     /**
@@ -338,7 +325,6 @@ class ItemTaskTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -359,7 +345,6 @@ class ItemTaskTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -374,8 +359,7 @@ class ItemTaskTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $this->account->getId(),
-                $this->orgId
+                $this->account->getId()
             );
         $this->assertInstanceOf(Model\Task::class, $taskAssigned);
         $this->assertEquals(0, count($taskAssigned->listProps()));
@@ -395,7 +379,6 @@ class ItemTaskTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -410,8 +393,7 @@ class ItemTaskTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $this->notion->getId(),
-                $this->orgId
+                $this->notion->getId()
             );
         $this->assertInstanceOf(Model\Task::class, $taskNotion);
         $this->assertEquals(0, count($taskNotion->listProps()));
@@ -423,7 +405,7 @@ class ItemTaskTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
@@ -444,8 +426,7 @@ class ItemTaskTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $this->notion->getId(),
-                $this->orgId
+                $this->notion->getId()
             );
         $this->assertTrue($removed);
 
@@ -453,7 +434,7 @@ class ItemTaskTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
@@ -469,7 +450,7 @@ class ItemTaskTest extends TestCase {
         $notion = $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue("new-notion-" . mt_rand(1, 999)));
+            ->create((new Model\PayloadNotionCreate())->setValue("new-notion-" . mt_rand(1, 999)));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
 
@@ -480,7 +461,6 @@ class ItemTaskTest extends TestCase {
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
-                $this->orgId,
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -495,8 +475,7 @@ class ItemTaskTest extends TestCase {
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $notion->getId(),
-                $this->orgId
+                $notion->getId()
             );
         $this->assertInstanceOf(Model\Task::class, $taskNotion);
         $this->assertEquals(0, count($taskNotion->listProps()));
@@ -508,7 +487,7 @@ class ItemTaskTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
@@ -524,14 +503,14 @@ class ItemTaskTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->notions()
-            ->delete($notion->getId(), $this->orgId);
+            ->delete($notion->getId());
         $this->assertTrue($deleted);
 
         // Read the task
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId(), $this->orgId);
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 

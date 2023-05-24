@@ -37,13 +37,6 @@ class ExperienceTest extends TestCase {
     protected $account;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    protected $orgId;
-
-    /**
      * Notion model
      */
     protected $notion;
@@ -68,16 +61,16 @@ class ExperienceTest extends TestCase {
                 ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
-            $this->orgId = $organization->getId();
+            $this->sdk->config()->setOrgId($organization->getId());
         } else {
-            $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+            $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
 
         // Create the notion
         $this->notion = $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue(uniqid()));
+            ->create((new Model\PayloadNotionCreate())->setValue(uniqid()));
         $this->assertInstanceOf(Model\Notion::class, $this->notion);
         $this->assertEquals(0, count($this->notion->listProps()));
     }
@@ -89,7 +82,7 @@ class ExperienceTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->notions()
-            ->delete($this->notion->getId(), $this->orgId);
+            ->delete($this->notion->getId());
         $this->assertTrue($deleted);
     }
 
@@ -103,7 +96,7 @@ class ExperienceTest extends TestCase {
             $experience = $this->sdk
                 ->api()
                 ->experiences()
-                ->evaluateSelf($this->notion->getId(), $grade, $this->orgId);
+                ->evaluateSelf($this->notion->getId(), $grade);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
@@ -112,7 +105,7 @@ class ExperienceTest extends TestCase {
         $myExperience = $this->sdk
             ->api()
             ->experiences()
-            ->read($this->notion->getId(), $this->account->getId(), $this->orgId);
+            ->read($this->notion->getId(), $this->account->getId());
         $this->assertInstanceOf(Model\Experience::class, $myExperience);
         $this->assertEquals(0, count($myExperience->listProps()));
         $this->assertEquals($grade, $myExperience->getSelfEval()->getAverage());
@@ -124,7 +117,6 @@ class ExperienceTest extends TestCase {
             ->api()
             ->serviceAccounts()
             ->create(
-                $this->orgId,
                 (new Model\PayloadServiceAccountCreate())
                     ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
                     ->setUserName("New service account name")
@@ -139,7 +131,7 @@ class ExperienceTest extends TestCase {
             $experience = $serviceSdk
                 ->api()
                 ->experiences()
-                ->evaluatePeer($this->notion->getId(), $this->account->getId(), $grade, $this->orgId);
+                ->evaluatePeer($this->notion->getId(), $this->account->getId(), $grade);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
@@ -148,7 +140,7 @@ class ExperienceTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->close($serviceAccount->getId(), $this->orgId);
+            ->close($serviceAccount->getId());
         $this->assertInstanceOf(Model\ServiceAccount::class, $deleted);
         $this->assertEquals(0, count($deleted->listProps()));
         $this->assertNotEquals($serviceAccount->getServiceToken(), $deleted->getServiceToken());
@@ -157,7 +149,7 @@ class ExperienceTest extends TestCase {
         $myExperience = $this->sdk
             ->api()
             ->experiences()
-            ->read($this->notion->getId(), $this->account->getId(), $this->orgId);
+            ->read($this->notion->getId(), $this->account->getId());
         $this->assertInstanceOf(Model\Experience::class, $myExperience);
         $this->assertEquals(0, count($myExperience->listProps()));
         $this->assertEquals($grade, $myExperience->getPeerEval()->getAverage());
@@ -168,7 +160,7 @@ class ExperienceTest extends TestCase {
         $xpList = $this->sdk
             ->api()
             ->experiences()
-            ->list($this->account->getId(), $this->orgId);
+            ->list($this->account->getId());
         $this->assertInstanceOf(Model\ExperiencesList::class, $xpList);
         $this->assertEquals(0, count($xpList->listProps()));
 
@@ -190,7 +182,7 @@ class ExperienceTest extends TestCase {
         $xpRead = $this->sdk
             ->api()
             ->experiences()
-            ->read($this->notion->getId(), $this->account->getId(), $this->orgId);
+            ->read($this->notion->getId(), $this->account->getId());
         $this->assertInstanceOf(Model\Experience::class, $xpRead);
         $this->assertEquals(0, count($xpRead->listProps()));
 
@@ -206,7 +198,7 @@ class ExperienceTest extends TestCase {
         $notion = $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue("new-notion-" . mt_rand(1, 999)));
+            ->create((new Model\PayloadNotionCreate())->setValue("new-notion-" . mt_rand(1, 999)));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
 
@@ -214,7 +206,7 @@ class ExperienceTest extends TestCase {
         $experience = $this->sdk
             ->api()
             ->experiences()
-            ->evaluateSelf($notion->getId(), mt_rand(1, 5), $this->orgId);
+            ->evaluateSelf($notion->getId(), mt_rand(1, 5));
         $this->assertInstanceOf(Model\Experience::class, $experience);
         $this->assertEquals(0, count($experience->listProps()));
 
@@ -222,7 +214,7 @@ class ExperienceTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->notions()
-            ->delete($notion->getId(), $this->orgId);
+            ->delete($notion->getId());
         $this->assertTrue($deleted);
 
         // Fetch the experience
@@ -230,6 +222,6 @@ class ExperienceTest extends TestCase {
         $this->sdk
             ->api()
             ->experiences()
-            ->read($notion->getId(), $this->account->getId(), $this->orgId);
+            ->read($notion->getId(), $this->account->getId());
     }
 }

@@ -37,13 +37,6 @@ class NotionTest extends TestCase {
     protected $account;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    protected $orgId;
-
-    /**
      * Notion id
      *
      * @var string
@@ -70,9 +63,9 @@ class NotionTest extends TestCase {
                 ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
             $this->assertInstanceOf(Model\Organization::class, $organization);
             $this->assertEquals(0, count($organization->listProps()));
-            $this->orgId = $organization->getId();
+            $this->sdk->config()->setOrgId($organization->getId());
         } else {
-            $this->orgId = current($this->account->getRoleOrg())->getOrgId();
+            $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
     }
 
@@ -84,7 +77,7 @@ class NotionTest extends TestCase {
             $deleted = $this->sdk
                 ->api()
                 ->notions()
-                ->delete($this->notionId, $this->orgId);
+                ->delete($this->notionId);
             $this->assertTrue($deleted);
         }
     }
@@ -97,7 +90,7 @@ class NotionTest extends TestCase {
         $notion = $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue($notionValue));
+            ->create((new Model\PayloadNotionCreate())->setValue($notionValue));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
         $this->notionId = $notion->getId();
@@ -106,7 +99,7 @@ class NotionTest extends TestCase {
         $notionRead = $this->sdk
             ->api()
             ->notions()
-            ->read($notion->getId(), $this->orgId);
+            ->read($notion->getId());
         $this->assertInstanceOf(Model\Notion::class, $notionRead);
         $this->assertEquals(0, count($notionRead->listProps()));
         $this->assertEquals($notion->getValue(), $notionRead->getValue());
@@ -116,7 +109,7 @@ class NotionTest extends TestCase {
         $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue($notionValue));
+            ->create((new Model\PayloadNotionCreate())->setValue($notionValue));
     }
 
     /**
@@ -127,7 +120,7 @@ class NotionTest extends TestCase {
         $notion = $this->sdk
             ->api()
             ->notions()
-            ->create($this->orgId, (new Model\PayloadNotionCreate())->setValue($notionValue));
+            ->create((new Model\PayloadNotionCreate())->setValue($notionValue));
         $this->assertInstanceOf(Model\Notion::class, $notion);
         $this->assertEquals(0, count($notion->listProps()));
 
@@ -135,11 +128,7 @@ class NotionTest extends TestCase {
         $notionUpdated = $this->sdk
             ->api()
             ->notions()
-            ->update(
-                $notion->getId(),
-                $this->orgId,
-                (new Model\PayloadNotionUpdate())->setValue($notionValue . "-updated")
-            );
+            ->update($notion->getId(), (new Model\PayloadNotionUpdate())->setValue($notionValue . "-updated"));
         $this->assertInstanceOf(Model\Notion::class, $notionUpdated);
         $this->assertEquals(0, count($notionUpdated->listProps()));
         $this->assertEquals($notionValue . "-updated", $notionUpdated->getValue());
@@ -148,7 +137,7 @@ class NotionTest extends TestCase {
         $notionList = $this->sdk
             ->api()
             ->notions()
-            ->search($this->orgId, substr($notionValue, 0, 4), 1, 10);
+            ->search(substr($notionValue, 0, 4), 1, 10);
         $this->assertInstanceOf(Model\NotionsList::class, $notionList);
         $this->assertEquals(0, count($notionList->listProps()));
 
@@ -158,7 +147,7 @@ class NotionTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->notions()
-            ->delete($notion->getId(), $this->orgId);
+            ->delete($notion->getId());
         $this->assertTrue($deleted);
 
         // Attempt to read it again
@@ -166,6 +155,6 @@ class NotionTest extends TestCase {
         $this->sdk
             ->api()
             ->notions()
-            ->read($notion->getId(), $this->orgId);
+            ->read($notion->getId());
     }
 }
