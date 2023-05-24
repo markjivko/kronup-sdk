@@ -110,9 +110,11 @@ class Config {
         $jwtParts = explode(".", $this->_apiKey);
 
         // Find the organization ID
-        $body = @json_decode(base64_decode($jwtParts[1]), true);
-        if (isset($body["org_id"])) {
-            $this->_orgId = $body["org_id"];
+        if (3 === count($jwtParts)) {    
+            $body = @json_decode(base64_decode($jwtParts[1]), true);
+            if (isset($body["org_id"])) {
+                $this->_orgId = $body["org_id"];
+            }
         }
 
         return $this;
