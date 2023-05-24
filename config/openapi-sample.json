@@ -3,7 +3,7 @@
     "info": {
         "version": "0.0.1",
         "title": "kronup / api",
-        "description": "# API reference\n\nThe kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/).\n\n# Authorization\n\nOur API uses a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) for authentication. \n\nYou can get your token form the settings page.\n\n```\n$ curl -H \"Authorization: Bearer YOUR.JWT.KEY\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
+        "description": "# API reference\n\nThe kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/). \n\n# Authorization\n\nOur API uses a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) authentication scheme. \n\nYou can manage your API keys from 👉 [Organization > Service Accounts](https://go.kronup.com/organization/#/tab:service-accounts).\n\n```\n$ curl --header \"Authorization: Bearer <YOUR.API.KEY>\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
         "x-logo": {
             "url": "/img/banner.svg",
             "altText": "kronup"
@@ -113,7 +113,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -185,7 +185,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"userName\":\"John Doe\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"userName\":\"John Doe\"}'"
                     }
                 ]
             },
@@ -248,7 +248,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/account \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -367,7 +367,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/account/events?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/account/events?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -461,7 +461,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/account/avatar \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: multipart/form-data' \\\n  --form avatar=string"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/account/avatar \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: multipart/form-data' \\\n  --form avatar=string"
                     }
                 ]
             }
@@ -547,7 +547,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/deep-context/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/deep-context/value-item-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -631,7 +631,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/deep-context/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/deep-context/value-item-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -758,7 +758,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/deep-context?searchTerm=SOME_STRING_VALUE&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/deep-context?searchTerm=SOME_STRING_VALUE&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -854,7 +854,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -993,7 +993,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/users/user-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/users/user-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1091,7 +1091,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/grade/5' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/grade/5' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1199,7 +1199,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***/grade/5' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***/grade/5' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1319,7 +1319,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamId\":\"team-id-***\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamId\":\"team-id-***\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
                     }
                 ]
             },
@@ -1436,7 +1436,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/invitations?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/invitations?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1632,7 +1632,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamId\":\"team-id-***\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamId\":\"team-id-***\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
                     }
                 ]
             },
@@ -1716,7 +1716,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -1800,7 +1800,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/invitations/invitation-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1927,7 +1927,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"This thing is possible\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"This thing is possible\"}'"
                     }
                 ]
             },
@@ -2084,7 +2084,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -2200,7 +2200,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -2335,7 +2335,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\"}'"
                     }
                 ]
             },
@@ -2449,7 +2449,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -2604,7 +2604,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"confirmed\":true,\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"confirmed\":true,\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
                     }
                 ]
             }
@@ -2736,7 +2736,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\"}'"
                     }
                 ]
             },
@@ -2893,7 +2893,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -3009,7 +3009,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -3158,7 +3158,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
                     }
                 ]
             },
@@ -3272,7 +3272,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -3398,7 +3398,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -3524,7 +3524,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/notions/notion-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -3648,7 +3648,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/notions/notion-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -3784,7 +3784,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/discoveries' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"details\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/discoveries' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"details\":\"string\"}'"
                     }
                 ]
             }
@@ -3930,7 +3930,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/discoveries/discovery-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"details\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/discoveries/discovery-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"details\":\"string\"}'"
                     }
                 ]
             },
@@ -4054,7 +4054,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/discoveries/discovery-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/discoveries/discovery-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -4204,7 +4204,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
                     }
                 ]
             }
@@ -4365,7 +4365,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback/feedback-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback/feedback-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
                     }
                 ]
             },
@@ -4489,7 +4489,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback/feedback-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback/feedback-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -4636,7 +4636,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback/feedback-id-***/reply' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"reply\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/feedback/feedback-id-***/reply' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"reply\":\"string\"}'"
                     }
                 ]
             }
@@ -4767,7 +4767,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
                     }
                 ]
             },
@@ -4919,7 +4919,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?stage=planning&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items?stage=planning&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -5025,7 +5025,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -5174,7 +5174,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
                     }
                 ]
             },
@@ -5278,7 +5278,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -5382,7 +5382,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -5468,7 +5468,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/notions \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":\"electron.js\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/notions \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":\"electron.js\"}'"
                     }
                 ]
             },
@@ -5593,7 +5593,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/notions?searchTerm=SOME_STRING_VALUE&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/notions?searchTerm=SOME_STRING_VALUE&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -5679,7 +5679,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -5783,7 +5783,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":\"string\"}'"
                     }
                 ]
             },
@@ -5867,7 +5867,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/notions/notion-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -5953,7 +5953,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/organizations \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"orgName\":\"Example, Inc.\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/organizations \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"orgName\":\"Example, Inc.\"}'"
                     }
                 ]
             }
@@ -6060,7 +6060,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"orgName\":\"Example, Inc.\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"orgName\":\"Example, Inc.\"}'"
                     }
                 ]
             },
@@ -6134,7 +6134,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -6239,7 +6239,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***/logo' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: multipart/form-data' \\\n  --form logo=string"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/organizations/org-id-***/logo' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: multipart/form-data' \\\n  --form logo=string"
                     }
                 ]
             }
@@ -6337,7 +6337,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/service-accounts \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleOrg\":\"admin\",\"userName\":\"John Doe\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/service-accounts \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleOrg\":\"admin\",\"userName\":\"John Doe\"}'"
                     }
                 ]
             },
@@ -6454,7 +6454,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/service-accounts?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/service-accounts?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -6540,7 +6540,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -6653,7 +6653,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleOrg\":\"admin\",\"userName\":\"John Doe\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleOrg\":\"admin\",\"userName\":\"John Doe\"}'"
                     }
                 ]
             },
@@ -6737,7 +6737,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -6821,7 +6821,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/service-accounts/service-account-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -6926,7 +6926,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
                     }
                 ]
             }
@@ -7041,7 +7041,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
                     }
                 ]
             },
@@ -7125,7 +7125,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -7231,7 +7231,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -7335,7 +7335,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -7474,7 +7474,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -7580,7 +7580,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/prospects?userName=John%20Doe' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/prospects?userName=John%20Doe' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -7668,7 +7668,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamName\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamName\":\"string\"}'"
                     }
                 ]
             },
@@ -7795,7 +7795,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -7881,7 +7881,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -7985,7 +7985,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamName\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamName\":\"string\"}'"
                     }
                 ]
             },
@@ -8069,7 +8069,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8208,7 +8208,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/users/user-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/users/user-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8304,7 +8304,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -8398,7 +8398,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8484,7 +8484,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -8613,7 +8613,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleSite\":\"user\",\"roleOrg\":\"member\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleSite\":\"user\",\"roleOrg\":\"member\"}'"
                     }
                 ]
             },
@@ -8697,7 +8697,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8816,7 +8816,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
