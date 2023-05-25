@@ -9252,11 +9252,6 @@
                         "description": "Value item ID",
                         "example": "value-item-id-***"
                     },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
-                    },
                     "teamId": {
                         "type": "string",
                         "description": "Team ID",
@@ -9516,11 +9511,6 @@
                         "description": "Value item ID",
                         "example": "value-item-id-***"
                     },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
-                    },
                     "teamId": {
                         "type": "string",
                         "description": "Team ID",
@@ -9769,11 +9759,6 @@
                         "description": "Team ID",
                         "example": "team-id-***"
                     },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
-                    },
                     "teamName": {
                         "type": "string",
                         "description": "Team name",
@@ -9830,11 +9815,6 @@
                         "type": "string",
                         "description": "Team ID",
                         "example": "team-id-***"
-                    },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
                     },
                     "teamName": {
                         "type": "string",
