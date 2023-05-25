@@ -9083,11 +9083,6 @@
                         "description": "Team ID",
                         "example": "team-id-***"
                     },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
-                    },
                     "userId": {
                         "type": "string",
                         "description": "User ID",
@@ -9715,11 +9710,6 @@
                         "type": "string",
                         "description": "Notion ID",
                         "example": "notion-id-***"
-                    },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization Id",
-                        "example": "org-id-***"
                     },
                     "value": {
                         "type": "string",
