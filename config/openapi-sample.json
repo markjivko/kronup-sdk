@@ -29,7 +29,7 @@
         },
         {
             "name": "Users",
-            "description": "Manage users within the scope of an [Organization](#tag/Organizations).\n\nThere are 3 site-level roles: **admin**, **moderator** and **user**.\n\nSite admins and site moderators have access to account data outside of their organization (read as **A can B**):\n\n\n|  | B: admin | B: moderator | B: user |\n|---|---|---|---|\n| A: admin | read/write | read/write | read/write |\n| A: moderator | read | read/write | read/write |\n| A: user | - | - | - |\n\n\nThere are 3 organization-level roles: **owner**, **admin** and **member**.\n\nWithin the same organization, account actions are limited (read as **A can B**):\n\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\n\n\n\n* Any account has **read/write** permissions over **itself**\n* Site-level roles have priority over organization-level roles for **write** rules\n* Organization-level roles have priority over site-level roles for **read** rules"
+            "description": "Manage users within the scope of an [Organization](#tag/Organizations).\n\nThere are 3 site-level roles: **founder**, **moderator** and **user**.\n\nSite founders and site moderators have access to account data outside of their organization (read as **A can B**):\n\n\n|  | B: founder | B: moderator | B: user |\n|---|---|---|---|\n| A: founder | read/write | read/write | read/write |\n| A: moderator | read | read/write | read/write |\n| A: user | - | - | - |\n\n\nThere are 3 organization-level roles: **owner**, **admin** and **member**.\n\nWithin the same organization, account actions are limited (read as **A can B**):\n\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\n\n\n\n* Any account has **read/write** permissions over **itself**\n* Site-level roles have priority over organization-level roles for **write** rules\n* Organization-level roles have priority over site-level roles for **read** rules"
         },
         {
             "name": "Invitations",
@@ -8520,7 +8520,7 @@
                                             "type": "string",
                                             "description": "User site role",
                                             "enum": [
-                                                "admin",
+                                                "founder",
                                                 "moderator",
                                                 "user"
                                             ]
@@ -9920,7 +9920,7 @@
                         "type": "string",
                         "description": "User site role",
                         "enum": [
-                            "admin",
+                            "founder",
                             "moderator",
                             "user"
                         ]
@@ -10035,7 +10035,7 @@
                         "type": "string",
                         "description": "User site role",
                         "enum": [
-                            "admin",
+                            "founder",
                             "moderator",
                             "user"
                         ]
@@ -10205,7 +10205,7 @@
                         "type": "string",
                         "description": "User site role",
                         "enum": [
-                            "admin",
+                            "founder",
                             "moderator",
                             "user"
                         ]
