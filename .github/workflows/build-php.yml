@@ -2,6 +2,11 @@ name: Build PHP SDK
 
 on:
   workflow_dispatch:
+    inputs:
+      message:
+        description: "Commit message"
+        required: true
+        default: "[code] Minor changes"
   push:
     branches: ["main"]
   pull_request:
@@ -53,4 +58,4 @@ jobs:
           target-github-branch: "main"
           commit-email: "114984107+kronup@users.noreply.github.com"
           commit-name: "Kronup"
-          commit-message: ${{ github.event.head_commit.message }}
+          commit-message: ${{ github.event.head_commit.message || github.event.inputs.message }}
