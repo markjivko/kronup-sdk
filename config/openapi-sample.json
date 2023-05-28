@@ -4840,7 +4840,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Value Item models",
+                        "description": "List of Lite Value Item models",
                         "content": {
                             "application/json": {
                                 "schema": {

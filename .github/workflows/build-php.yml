@@ -2,54 +2,54 @@ name: Build PHP SDK
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-test-publish:
     if: "contains(github.event.head_commit.message, '[build-php]')"
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
-    - run: npm install
-    - run: npm run build php
-    - name: Use PHP 7.4
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: "7.4"
-        extensions: dom, curl, json, mbstring
-    - run: npm run test php
-    - name: Use PHP 8.0
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: "8.0"
-        extensions: dom, curl, json, mbstring
-    - run: npm run test php
-    - name: Use PHP 8.1
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: "8.1"
-        extensions: dom, curl, json, mbstring
-    - run: npm run test php
-    - name: Use PHP 8.2
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: "8.2"
-        extensions: dom, curl, json, mbstring
-    - run: npm run test php
-    - uses: markjivko/push-to-github@main
-      env:
-        GITHUB_SSH_KEY: ${{ secrets.KRONUP_SDK_SSH }}
-      with:
-        source-directory: "out/php"
-        target-github-username: "kronup"
-        target-github-repository: "kronup-php"
-        target-github-branch: "main"
-        commit-email: "114984107+kronup@users.noreply.github.com"
-        commit-name: "Kronup"
-        commit-message: ${{ github.event.head_commit.message }}
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: npm install
+      - run: npm run build php
+      - name: Use PHP 7.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          extensions: dom, curl, json, mbstring
+      - run: npm run test php
+      - name: Use PHP 8.0
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.0"
+          extensions: dom, curl, json, mbstring
+      - run: npm run test php
+      - name: Use PHP 8.1
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          extensions: dom, curl, json, mbstring
+      - run: npm run test php
+      - name: Use PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: dom, curl, json, mbstring
+      - run: npm run test php
+      - uses: markjivko/push-to-github@main
+        env:
+          GITHUB_SSH_KEY: ${{ secrets.KRONUP_SDK_SSH_PHP }}
+        with:
+          source-directory: "out/php"
+          target-github-username: "kronup"
+          target-github-repository: "kronup-php"
+          target-github-branch: "main"
+          commit-email: "114984107+kronup@users.noreply.github.com"
+          commit-name: "Kronup"
+          commit-message: ${{ github.event.head_commit.message }}
