@@ -4869,9 +4869,9 @@
                                         },
                                         "items": {
                                             "type": "array",
-                                            "description": "Value Items",
+                                            "description": "Value Items - Lite version",
                                             "items": {
-                                                "$ref": "#/components/schemas/ValueItem"
+                                                "$ref": "#/components/schemas/ValueItemLite"
                                             }
                                         }
                                     }
@@ -9594,6 +9594,173 @@
                         "type": "string",
                         "description": "Updated timestamp",
                         "example": "2001-01-01T08:08:08.000+00:00"
+                    }
+                }
+            },
+            "ValueItemLite": {
+                "type": "object",
+                "title": "Value Item - Lite version",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    "teamId": {
+                        "type": "string",
+                        "description": "Team ID",
+                        "example": "team-id-***"
+                    },
+                    "channelId": {
+                        "type": "string",
+                        "description": "Channel ID",
+                        "example": "channel-id-***"
+                    },
+                    "heading": {
+                        "type": "string",
+                        "description": "Value item heading",
+                        "minLength": 1,
+                        "maxLength": 110,
+                        "example": "Value item number 1"
+                    },
+                    "authorUserId": {
+                        "$ref": "#/components/schemas/UserId"
+                    },
+                    "stage": {
+                        "type": "string",
+                        "description": "Value Item Stage",
+                        "enum": [
+                            "planning",
+                            "validation",
+                            "execution",
+                            "deep context"
+                        ],
+                        "example": "planning"
+                    },
+                    "canAdvance": {
+                        "type": "boolean",
+                        "description": "Conditions for Value Items to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Value Items become read-only; they can only be deleted by an Organization owner or administrator",
+                        "default": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Value Item Type",
+                        "enum": [
+                            "feature",
+                            "bug fix",
+                            "routine"
+                        ],
+                        "example": "feature"
+                    },
+                    "priority": {
+                        "type": "number",
+                        "description": "Value Item Priority",
+                        "minimum": 1,
+                        "maximum": 10,
+                        "default": 1
+                    },
+                    "assumptions": {
+                        "type": "array",
+                        "description": "Assumptions - Lite version",
+                        "items": {
+                            "$ref": "#/components/schemas/AssumptionLite"
+                        }
+                    },
+                    "tasks": {
+                        "type": "array",
+                        "description": "Tasks - Lite version",
+                        "items": {
+                            "$ref": "#/components/schemas/TaskLite"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Created timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Updated timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
+                    }
+                }
+            },
+            "AssumptionLite": {
+                "type": "object",
+                "description": "Value Item Assumption",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Value item ID",
+                        "example": "value-item-id-***"
+                    },
+                    "authorUserId": {
+                        "$ref": "#/components/schemas/UserId"
+                    },
+                    "experiment": {
+                        "type": "object",
+                        "title": "Experiment Lite",
+                        "description": "Experiment meant to validate assumption",
+                        "properties": {
+                            "authorUserIds": {
+                                "type": "array",
+                                "description": "Author IDs",
+                                "items": {
+                                    "$ref": "#/components/schemas/UserId"
+                                }
+                            },
+                            "confirmed": {
+                                "type": "boolean",
+                                "description": "Experiment confirms assumption",
+                                "default": false
+                            },
+                            "state": {
+                                "type": "string",
+                                "description": "Experiment state",
+                                "enum": [
+                                    "idle",
+                                    "running",
+                                    "done"
+                                ],
+                                "default": "idle"
+                            }
+                        }
+                    }
+                },
+                "title": "Assumption - Lite version"
+            },
+            "TaskLite": {
+                "type": "object",
+                "title": "Task - Lite version",
+                "description": "Task model without Minutes",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Task ID",
+                        "example": "task-id-***"
+                    },
+                    "assigneeUserId": {
+                        "$ref": "#/components/schemas/UserId"
+                    },
+                    "state": {
+                        "type": "string",
+                        "description": "Task state",
+                        "enum": [
+                            "idle",
+                            "in progress",
+                            "in review",
+                            "done"
+                        ],
+                        "default": "idle"
+                    },
+                    "notionIds": {
+                        "type": "array",
+                        "description": "Notion IDs",
+                        "items": {
+                            "type": "string",
+                            "title": "Notion ID",
+                            "example": "notion-id-***"
+                        }
                     }
                 }
             },

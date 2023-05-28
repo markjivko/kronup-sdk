@@ -143,6 +143,9 @@ class ItemTest extends TestCase {
         $this->assertIsArray($items->getItems());
         $this->assertGreaterThan(0, count($items->getItems()));
         $this->assertGreaterThanOrEqual(count($items->getItems()), $items->getTotal());
+
+        $this->assertInstanceOf(Model\ValueItemLite::class, $items->getItems()[0]);
+        $this->assertEquals(0, count($items->getItems()[0]->listProps()));
     }
 
     /**

@@ -160,6 +160,37 @@ class ItemAssmTest extends TestCase {
         $this->assertIsArray($assmList->getAssumptions());
         $this->assertGreaterThan(0, count($assmList->getAssumptions()));
         $this->assertGreaterThanOrEqual(count($assmList->getAssumptions()), $assmList->getTotal());
+
+        // Item list - tasks must not have minutes
+        $itemList = $this->sdk
+            ->api()
+            ->valueItems()
+            ->list($this->team->getId(), $this->channel->getId());
+        $this->assertInstanceOf(Model\ValueItemsList::class, $itemList);
+        $this->assertEquals(0, count($itemList->listProps()));
+
+        $this->assertIsArray($itemList->getItems());
+        $this->assertGreaterThan(0, count($itemList->getItems()));
+        $this->assertInstanceOf(Model\ValueItemLite::class, $itemList->getItems()[0]);
+        $this->assertEquals(0, count($itemList->getItems()[0]->listProps()));
+        $this->assertIsArray($itemList->getItems()[0]->getAssumptions());
+        $this->assertGreaterThan(0, count($itemList->getItems()[0]->getAssumptions()));
+        $this->assertInstanceOf(Model\AssumptionLite::class, $itemList->getItems()[0]->getAssumptions()[0]);
+        $this->assertEquals(
+            0,
+            count(
+                $itemList
+                    ->getItems()[0]
+                    ->getAssumptions()[0]
+                    ->listProps()
+            )
+        );
+        $experimentLite = $itemList
+            ->getItems()[0]
+            ->getAssumptions()[0]
+            ->getExperiment();
+        $this->assertInstanceOf(Model\ExperimentLite::class, $experimentLite);
+        $this->assertEquals(0, count($experimentLite->listProps()));
     }
 
     /**
