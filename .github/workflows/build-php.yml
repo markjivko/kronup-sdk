@@ -2,6 +2,11 @@ name: Build PHP SDK
 
 on:
   workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish"
+        required: false
+        default: true
   push:
     branches: ["main"]
   pull_request:
@@ -9,7 +14,7 @@ on:
 
 jobs:
   build-test-publish:
-    if: "contains(github.event.head_commit.message, '[build-php]')"
+    if: "contains(github.event.head_commit.message, '[build-php]') || github.event.inputs.publish"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
