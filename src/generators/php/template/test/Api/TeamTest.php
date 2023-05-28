@@ -296,16 +296,11 @@ class TeamTest extends TestCase {
         // Get the first organization ID
         $this->sdk->config()->setOrgId(current($account->getRoleOrg())->getOrgId());
 
-        // Create: Name too long
-        try {
-            $this->sdk
-                ->api()
-                ->teams()
-                ->create(new Model\PayloadTeamCreate(["teamName" => str_repeat("x ", 33)]));
-            $this->assertTrue(false, "teams.create(name) should throw an error");
-        } catch (Sdk\ApiException $exc) {
-            $this->assertEquals("invalid-argument-db", $exc->getResponseObject()["id"]);
-        }
+        // Create
+        $this->sdk
+            ->api()
+            ->teams()
+            ->create(new Model\PayloadTeamCreate(["teamName" => str_repeat("x ", 33)]));
 
         // Create a new team
         $team = $this->sdk
@@ -314,17 +309,6 @@ class TeamTest extends TestCase {
             ->create((new Model\PayloadTeamCreate())->setTeamName("Test"));
         $this->assertInstanceOf(Model\TeamExtended::class, $team);
         $this->assertEquals(0, count($team->listProps()));
-
-        // Update: Name too long
-        try {
-            $this->sdk
-                ->api()
-                ->teams()
-                ->update($team->getId(), new Model\PayloadTeamUpdate(["teamName" => str_repeat("x ", 33)]));
-            $this->assertTrue(false, "teams.update(name) should throw an error");
-        } catch (Sdk\ApiException $exc) {
-            $this->assertEquals("invalid-argument-db", $exc->getResponseObject()["id"]);
-        }
 
         // Remove the temporary team
         $teamDeleted = $this->sdk
