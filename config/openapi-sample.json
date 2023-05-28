@@ -3,7 +3,7 @@
     "info": {
         "version": "0.0.1",
         "title": "kronup / api",
-        "description": "# API reference\n\nThe kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Frameworks\n\nYou can start building your kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/). \n\n# Authorization\n\nOur API uses a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) authentication scheme. \n\nYou can manage your API keys from 👉 [Organization > Service Accounts](https://go.kronup.com/organization/#/tab:service-accounts).\n\n```\n$ curl --header \"Authorization: Bearer <YOUR.API.KEY>\"\n```\n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
+        "description": "# API reference\n\nThe kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Authorization\n\nOur API uses a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) authentication scheme. \n\nYou can manage your API keys from 👉 [Organization > Service Accounts](https://go.kronup.com/organization/#/tab:service-accounts).\n\n```\n$ curl --header \"Authorization: Bearer <YOUR.API.KEY>\"\n```\n\n# RBAC\n\nThere are 3 [Account](#tag/Account) roles: **owner**, **admin** and **member**.\n\nWithin the same [Organization](#tag/Organizations), account actions are limited (read as **A can B**):\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\\n\\n\n\nAccounts have **read/write** permissions over **themselves**.\n\n# SDKs\n\nYou can start building your kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/). \n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
         "x-logo": {
             "url": "/img/banner.svg",
             "altText": "kronup"
@@ -29,7 +29,7 @@
         },
         {
             "name": "Users",
-            "description": "Manage users within the scope of an [Organization](#tag/Organizations).\n\nThere are 3 site-level roles: **founder**, **moderator** and **user**.\n\nSite founders and site moderators have access to account data outside of their organization (read as **A can B**):\n\n\n|  | B: founder | B: moderator | B: user |\n|---|---|---|---|\n| A: founder | read/write | read/write | read/write |\n| A: moderator | read | read/write | read/write |\n| A: user | - | - | - |\n\n\nThere are 3 organization-level roles: **owner**, **admin** and **member**.\n\nWithin the same organization, account actions are limited (read as **A can B**):\n\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\n\n\n\n* Any account has **read/write** permissions over **itself**\n* Site-level roles have priority over organization-level roles for **write** rules\n* Organization-level roles have priority over site-level roles for **read** rules"
+            "description": "Manage users within the scope of an [Organization](#tag/Organizations)"
         },
         {
             "name": "Invitations",
@@ -1910,7 +1910,7 @@
                                         "type": "string",
                                         "description": "Assumption heading",
                                         "minLength": 1,
-                                        "maxLength": 256,
+                                        "maxLength": 110,
                                         "example": "This thing is possible"
                                     }
                                 }
@@ -2318,7 +2318,7 @@
                                         "type": "string",
                                         "description": "Assumption heading",
                                         "minLength": 1,
-                                        "maxLength": 256,
+                                        "maxLength": 110,
                                         "example": "Feature name"
                                     }
                                 }
@@ -2573,7 +2573,7 @@
                                         "type": "string",
                                         "description": "Experiment heading",
                                         "minLength": 1,
-                                        "maxLength": 256
+                                        "maxLength": 110
                                     },
                                     "details": {
                                         "type": "string",
@@ -2714,7 +2714,7 @@
                                         "type": "string",
                                         "description": "Task heading",
                                         "minLength": 1,
-                                        "maxLength": 256
+                                        "maxLength": 110
                                     },
                                     "details": {
                                         "type": "string",
@@ -3127,7 +3127,7 @@
                                         "type": "string",
                                         "description": "Task heading",
                                         "minLength": 1,
-                                        "maxLength": 256
+                                        "maxLength": 110
                                     },
                                     "details": {
                                         "type": "string",
@@ -4726,7 +4726,7 @@
                                         "type": "string",
                                         "description": "Value item heading",
                                         "minLength": 1,
-                                        "maxLength": 256,
+                                        "maxLength": 110,
                                         "example": "Feature name"
                                     },
                                     "details": {
@@ -4751,7 +4751,7 @@
                                         "description": "Value item priority",
                                         "minimum": 1,
                                         "maximum": 10,
-                                        "example": 10
+                                        "example": 1
                                     }
                                 }
                             }
@@ -4767,7 +4767,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":1}'"
                     }
                 ]
             },
@@ -5133,7 +5133,7 @@
                                         "type": "string",
                                         "description": "Value item heading",
                                         "minLength": 1,
-                                        "maxLength": 256,
+                                        "maxLength": 110,
                                         "example": "Feature name"
                                     },
                                     "details": {
@@ -5158,7 +5158,7 @@
                                         "description": "Value item priority",
                                         "minimum": 1,
                                         "maximum": 10,
-                                        "example": 10
+                                        "example": 1
                                     }
                                 }
                             }
@@ -5174,7 +5174,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":10}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":1}'"
                     }
                 ]
             },
@@ -9266,7 +9266,7 @@
                         "type": "string",
                         "description": "Value item heading",
                         "minLength": 1,
-                        "maxLength": 256,
+                        "maxLength": 110,
                         "example": "Value item number 1"
                     },
                     "details": {
@@ -9310,7 +9310,7 @@
                         "description": "Value Item Priority",
                         "minimum": 1,
                         "maximum": 10,
-                        "default": 10
+                        "default": 1
                     },
                     "assumptions": {
                         "type": "array",
@@ -9361,7 +9361,7 @@
                         "description": "Assumptions are formulated as simple statements that can be proven true or false; avoid questions and opinions.\n\n> ❌ What are the features?\n> \n> ❌ Does this feature exist?\n> \n> ❌ I don't like this feature.\n> \n> ✅ This feature exists.",
                         "example": "Electron.js supports Windows 7",
                         "minLength": 1,
-                        "maxLength": 256
+                        "maxLength": 110
                     },
                     "experiment": {
                         "type": "object",
@@ -9384,7 +9384,7 @@
                                 "type": "string",
                                 "description": "Experiment findings formulated in one sentence",
                                 "minLength": 1,
-                                "maxLength": 256,
+                                "maxLength": 110,
                                 "example": "Tested latest version successfully with a virtual machine"
                             },
                             "details": {
@@ -9424,7 +9424,7 @@
                         "type": "string",
                         "description": "Task title",
                         "minLength": 1,
-                        "maxLength": 256
+                        "maxLength": 110
                     },
                     "details": {
                         "type": "string",
@@ -9471,7 +9471,7 @@
                         "type": "string",
                         "description": "Task title",
                         "minLength": 1,
-                        "maxLength": 256
+                        "maxLength": 110
                     },
                     "details": {
                         "type": "string",
@@ -9525,7 +9525,7 @@
                         "type": "string",
                         "description": "Value item heading",
                         "minLength": 1,
-                        "maxLength": 256,
+                        "maxLength": 110,
                         "example": "Value item number 1"
                     },
                     "details": {
@@ -9569,7 +9569,7 @@
                         "description": "Value Item Priority",
                         "minimum": 1,
                         "maximum": 10,
-                        "default": 10
+                        "default": 1
                     },
                     "assumptions": {
                         "type": "array",
