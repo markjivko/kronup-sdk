@@ -5,8 +5,9 @@ on:
     inputs:
       publish:
         description: "Publish"
-        required: false
+        required: true
         default: true
+        type: boolean
   push:
     branches: ["main"]
   pull_request:
