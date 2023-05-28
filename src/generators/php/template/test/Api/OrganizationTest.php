@@ -2,7 +2,7 @@
 /**
  * Organization Test
  *
- * @copyright (c) 2022-2023 kronup.com
+ * @copyright (c) 2022-2023 kronup.io
  * @license   MIT
  * @package   kronup
  * @author    Mark Jivko

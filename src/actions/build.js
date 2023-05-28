@@ -2,7 +2,7 @@
  * kronup sdk Builder
  *
  * @desc      Build SDK client
- * @copyright (c) 2022-2023 kronup.com
+ * @copyright (c) 2022-2023 kronup.io
  * @author    Mark Jivko
  */
 const inquirer = require("inquirer");

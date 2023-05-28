@@ -1,7 +1,7 @@
 /**
  * kronup sdk Configuration manager
  *
- * @copyright (c) 2022-2023 kronup.com
+ * @copyright (c) 2022-2023 kronup.io
  * @author    Mark Jivko
  */
 const inquirer = require("inquirer");

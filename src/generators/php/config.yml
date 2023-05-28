@@ -1,8 +1,8 @@
 additionalProperties:
   theGitUserId: "kronup"
   theGitRepoId: "kronup-php"
-  theAuthorName: "kronup.com"
-  theAuthorUrl: "https://kronup.com/"
+  theAuthorName: "kronup.io"
+  theAuthorUrl: "https://kronup.io/"
   packagePath: "Kronup"
   artifactVersion: "1.0.0"
   invokerPackage: "Kronup"
@@ -11,7 +11,7 @@ additionalProperties:
   composerVendorName: "kronup"
   composerProjectName: "sdk"
   licenseInfo: "MIT"
-  copyright: "(c) 2022-2023 kronup.com"
+  copyright: "(c) 2022-2023 kronup.io"
 
 files:
   .gitignore.mustache:

@@ -9599,7 +9599,7 @@
             },
             "ValueItemLite": {
                 "type": "object",
-                "title": "Value Item - Lite version",
+                "title": "Value Item - Lite",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -9661,14 +9661,14 @@
                     },
                     "assumptions": {
                         "type": "array",
-                        "description": "Assumptions - Lite version",
+                        "description": "Assumptions - Lite",
                         "items": {
                             "$ref": "#/components/schemas/AssumptionLite"
                         }
                     },
                     "tasks": {
                         "type": "array",
-                        "description": "Tasks - Lite version",
+                        "description": "Tasks - Lite",
                         "items": {
                             "$ref": "#/components/schemas/TaskLite"
                         }
@@ -9727,11 +9727,11 @@
                         }
                     }
                 },
-                "title": "Assumption - Lite version"
+                "title": "Assumption - Lite"
             },
             "TaskLite": {
                 "type": "object",
-                "title": "Task - Lite version",
+                "title": "Task - Lite",
                 "description": "Task model without Minutes",
                 "properties": {
                     "id": {

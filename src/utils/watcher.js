@@ -2,7 +2,7 @@
  * File watcher utility
  *
  * @desc      File watcher
- * @copyright (c) 2022-2023 kronup.com
+ * @copyright (c) 2022-2023 kronup.io
  * @author    Mark Jivko
  */
 const fs = require("fs-extra");

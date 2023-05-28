@@ -2,7 +2,7 @@
  * kronup sdk Tester
  *
  * @desc      Run unit tests
- * @copyright (c) 2022-2023 kronup.com
+ * @copyright (c) 2022-2023 kronup.io
  * @author    Mark Jivko
  */
 const logger = require("../utils/logger");

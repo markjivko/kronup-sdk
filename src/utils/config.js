@@ -2,7 +2,7 @@
  * Configuration
  *
  * @desc      Common configuration utility
- * @copyright (c) 2022-2023 kronup.com
+ * @copyright (c) 2022-2023 kronup.io
  * @author    Mark Jivko
  */
 const path = require("path");
