@@ -240,7 +240,6 @@ class ItemAssmTest extends TestCase {
                 $this->item->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
-                    ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -251,7 +250,6 @@ class ItemAssmTest extends TestCase {
         $this->assertInstanceOf(Model\Experiment::class, $assmUpdatedExp->getExperiment());
         $this->assertEquals(0, count($assmUpdatedExp->getExperiment()->listProps()));
 
-        $this->assertEquals("Experiment heading", $assmUpdatedExp->getExperiment()->getHeading());
         $this->assertEquals("Experiment details", $assmUpdatedExp->getExperiment()->getDetails());
         $this->assertTrue($assmUpdatedExp->getExperiment()->getConfirmed());
         $this->assertEquals(Model\PayloadAssmExperiment::STATE_DONE, $assmUpdatedExp->getExperiment()->getState());

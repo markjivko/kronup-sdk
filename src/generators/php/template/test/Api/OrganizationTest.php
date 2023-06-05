@@ -193,7 +193,6 @@ class OrganizationTest extends TestCase {
                 $this->dcItem->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
-                    ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -208,7 +207,6 @@ class OrganizationTest extends TestCase {
                 $this->item->getId(),
                 $assm2->getId(),
                 (new Model\PayloadAssmExperiment())
-                    ->setHeading("Second experiment heading")
                     ->setDetails("Second experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)

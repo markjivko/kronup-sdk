@@ -146,7 +146,6 @@ class ItemTaskTest extends TestCase {
                 $this->item->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
-                    ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)

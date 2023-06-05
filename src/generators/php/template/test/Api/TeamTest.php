@@ -296,12 +296,6 @@ class TeamTest extends TestCase {
         // Get the first organization ID
         $this->sdk->config()->setOrgId(current($account->getRoleOrg())->getOrgId());
 
-        // Create
-        $this->sdk
-            ->api()
-            ->teams()
-            ->create(new Model\PayloadTeamCreate(["teamName" => str_repeat("x ", 33)]));
-
         // Create a new team
         $team = $this->sdk
             ->api()

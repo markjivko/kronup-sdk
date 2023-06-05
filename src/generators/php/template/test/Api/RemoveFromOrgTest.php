@@ -229,7 +229,6 @@ class RemoveFromOrgTest extends TestCase {
                 $item->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
-                    ->setHeading("Experiment heading")
                     ->setDetails("Experiment details")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -245,7 +244,6 @@ class RemoveFromOrgTest extends TestCase {
                 $item->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
-                    ->setHeading("Experiment heading 2")
                     ->setDetails("Experiment details 2")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)
@@ -259,7 +257,6 @@ class RemoveFromOrgTest extends TestCase {
                 $item->getId(),
                 $assm2->getId(),
                 (new Model\PayloadAssmExperiment())
-                    ->setHeading("Experiment 2 heading 2")
                     ->setDetails("Experiment 2 details 2")
                     ->setConfirmed(true)
                     ->setState(Model\PayloadAssmExperiment::STATE_DONE)

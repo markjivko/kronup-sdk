@@ -1910,7 +1910,7 @@
                                         "type": "string",
                                         "description": "Assumption heading",
                                         "minLength": 1,
-                                        "maxLength": 110,
+                                        "maxLength": 200,
                                         "example": "This thing is possible"
                                     }
                                 }
@@ -2318,7 +2318,7 @@
                                         "type": "string",
                                         "description": "Assumption heading",
                                         "minLength": 1,
-                                        "maxLength": 110,
+                                        "maxLength": 200,
                                         "example": "Feature name"
                                     }
                                 }
@@ -2569,12 +2569,6 @@
                                         "type": "boolean",
                                         "description": "Experiment confirms assumption"
                                     },
-                                    "heading": {
-                                        "type": "string",
-                                        "description": "Experiment heading",
-                                        "minLength": 1,
-                                        "maxLength": 110
-                                    },
                                     "details": {
                                         "type": "string",
                                         "description": "Experiment detailed findings",
@@ -2604,7 +2598,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"confirmed\":true,\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/assms/assm-id-***/exp' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"confirmed\":true,\"details\":\"string\",\"state\":\"idle\"}'"
                     }
                 ]
             }
@@ -2714,7 +2708,7 @@
                                         "type": "string",
                                         "description": "Task heading",
                                         "minLength": 1,
-                                        "maxLength": 110
+                                        "maxLength": 200
                                     },
                                     "details": {
                                         "type": "string",
@@ -3127,7 +3121,7 @@
                                         "type": "string",
                                         "description": "Task heading",
                                         "minLength": 1,
-                                        "maxLength": 110
+                                        "maxLength": 200
                                     },
                                     "details": {
                                         "type": "string",
@@ -4726,7 +4720,7 @@
                                         "type": "string",
                                         "description": "Value item heading",
                                         "minLength": 1,
-                                        "maxLength": 110,
+                                        "maxLength": 200,
                                         "example": "Feature name"
                                     },
                                     "details": {
@@ -5133,7 +5127,7 @@
                                         "type": "string",
                                         "description": "Value item heading",
                                         "minLength": 1,
-                                        "maxLength": 110,
+                                        "maxLength": 200,
                                         "example": "Feature name"
                                     },
                                     "details": {
@@ -9266,13 +9260,13 @@
                         "type": "string",
                         "description": "Value item heading",
                         "minLength": 1,
-                        "maxLength": 110,
+                        "maxLength": 200,
                         "example": "Value item number 1"
                     },
                     "details": {
                         "type": "string",
                         "description": "Value item description",
-                        "minLength": 1,
+                        "minLength": 0,
                         "maxLength": 2048,
                         "example": "Item detailed description ***"
                     },
@@ -9361,7 +9355,7 @@
                         "description": "Assumptions are formulated as simple statements that can be proven true or false; avoid questions and opinions.\n\n> ❌ What are the features?\n> \n> ❌ Does this feature exist?\n> \n> ❌ I don't like this feature.\n> \n> ✅ This feature exists.",
                         "example": "Electron.js supports Windows 7",
                         "minLength": 1,
-                        "maxLength": 110
+                        "maxLength": 200
                     },
                     "experiment": {
                         "type": "object",
@@ -9380,17 +9374,10 @@
                                 "description": "Experiment confirms assumption",
                                 "default": false
                             },
-                            "heading": {
-                                "type": "string",
-                                "description": "Experiment findings formulated in one sentence",
-                                "minLength": 1,
-                                "maxLength": 110,
-                                "example": "Tested latest version successfully with a virtual machine"
-                            },
                             "details": {
                                 "type": "string",
                                 "description": "Experiment details",
-                                "minLength": 1,
+                                "minLength": 0,
                                 "maxLength": 2048
                             },
                             "state": {
@@ -9424,12 +9411,12 @@
                         "type": "string",
                         "description": "Task title",
                         "minLength": 1,
-                        "maxLength": 110
+                        "maxLength": 200
                     },
                     "details": {
                         "type": "string",
                         "description": "Task description",
-                        "minLength": 1,
+                        "minLength": 0,
                         "maxLength": 2048
                     },
                     "state": {
@@ -9471,12 +9458,12 @@
                         "type": "string",
                         "description": "Task title",
                         "minLength": 1,
-                        "maxLength": 110
+                        "maxLength": 200
                     },
                     "details": {
                         "type": "string",
                         "description": "Task description",
-                        "minLength": 1,
+                        "minLength": 0,
                         "maxLength": 2048
                     },
                     "state": {
@@ -9525,13 +9512,13 @@
                         "type": "string",
                         "description": "Value item heading",
                         "minLength": 1,
-                        "maxLength": 110,
+                        "maxLength": 200,
                         "example": "Value item number 1"
                     },
                     "details": {
                         "type": "string",
                         "description": "Value item description",
-                        "minLength": 1,
+                        "minLength": 0,
                         "maxLength": 2048,
                         "example": "Item detailed description ***"
                     },
@@ -9620,7 +9607,7 @@
                         "type": "string",
                         "description": "Value item heading",
                         "minLength": 1,
-                        "maxLength": 110,
+                        "maxLength": 200,
                         "example": "Value item number 1"
                     },
                     "authorUserId": {
@@ -9799,7 +9786,7 @@
                                 "details": {
                                     "type": "string",
                                     "description": "Discovery details",
-                                    "minLength": 1,
+                                    "minLength": 0,
                                     "maxLength": 512
                                 }
                             }
@@ -9844,7 +9831,7 @@
                                 },
                                 "message": {
                                     "type": "string",
-                                    "description": "Feedback details",
+                                    "description": "Feedback for assignee",
                                     "minLength": 1,
                                     "maxLength": 512
                                 },
