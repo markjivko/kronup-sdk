@@ -9413,12 +9413,6 @@
                         "minLength": 1,
                         "maxLength": 200
                     },
-                    "details": {
-                        "type": "string",
-                        "description": "Task description",
-                        "minLength": 0,
-                        "maxLength": 2048
-                    },
                     "state": {
                         "type": "string",
                         "description": "Task state",
@@ -9460,12 +9454,6 @@
                         "minLength": 1,
                         "maxLength": 200
                     },
-                    "details": {
-                        "type": "string",
-                        "description": "Task description",
-                        "minLength": 0,
-                        "maxLength": 2048
-                    },
                     "state": {
                         "type": "string",
                         "description": "Task state",
@@ -9476,6 +9464,12 @@
                             "done"
                         ],
                         "default": "idle"
+                    },
+                    "details": {
+                        "type": "string",
+                        "description": "Task description",
+                        "minLength": 0,
+                        "maxLength": 2048
                     },
                     "minute": {
                         "$ref": "#/components/schemas/Minute"

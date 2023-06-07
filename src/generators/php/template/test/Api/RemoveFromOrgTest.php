@@ -378,14 +378,14 @@ class RemoveFromOrgTest extends TestCase {
         $this->assertEquals($serviceClosed->getId(), $item->getAuthorUserId());
 
         // Confirm change: Assumption author
-        $this->assertEquals($serviceClosed->getId(), $item->getAssumptions()[0]->getAuthorUserId());
-        $this->assertEquals($this->account->getId(), $item->getAssumptions()[1]->getAuthorUserId());
+        $this->assertEquals($this->account->getId(), $item->getAssumptions()[0]->getAuthorUserId());
+        $this->assertEquals($serviceClosed->getId(), $item->getAssumptions()[1]->getAuthorUserId());
 
         // Confirm change: Assumption experiment authors
         $this->assertContains(
             $serviceClosed->getId(),
             $item
-                ->getAssumptions()[0]
+                ->getAssumptions()[1]
                 ->getExperiment()
                 ->getAuthorUserIds()
         );
