@@ -3131,6 +3131,7 @@
                                     },
                                     "state": {
                                         "type": "string",
+                                        "description": "Task state",
                                         "enum": [
                                             "idle",
                                             "in progress",
