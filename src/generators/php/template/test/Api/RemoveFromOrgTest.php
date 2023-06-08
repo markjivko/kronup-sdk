@@ -149,7 +149,7 @@ class RemoveFromOrgTest extends TestCase {
             ->api()
             ->teams()
             ->create((new Model\PayloadTeamCreate())->setTeamName("Test team"));
-        $this->assertInstanceOf(Model\TeamExtended::class, $team);
+        $this->assertInstanceOf(Model\TeamExpanded::class, $team);
         $this->assertEquals(0, count($team->listProps()));
 
         // Create a channel
@@ -157,7 +157,7 @@ class RemoveFromOrgTest extends TestCase {
             ->api()
             ->channels()
             ->create($team->getId(), (new Model\PayloadChannelCreate())->setChannelName("Test channel"));
-        $this->assertInstanceOf(Model\TeamExtended::class, $teamUpdated);
+        $this->assertInstanceOf(Model\TeamExpanded::class, $teamUpdated);
         $this->assertEquals(0, count($teamUpdated->listProps()));
         $channel = $teamUpdated->getChannels()[0];
 

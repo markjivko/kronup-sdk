@@ -39,7 +39,7 @@ class ItemAssmTest extends TestCase {
     /**
      * Team model
      *
-     * @var Model\TeamExtended
+     * @var Model\TeamExpanded
      */
     protected $team;
 

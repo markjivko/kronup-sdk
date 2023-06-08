@@ -38,7 +38,7 @@ class InvitationTest extends TestCase {
     /**
      * Team model
      *
-     * @var Model\TeamExtended
+     * @var Model\TeamExpanded
      */
     protected $team;
 
@@ -72,7 +72,7 @@ class InvitationTest extends TestCase {
             ->api()
             ->teams()
             ->create((new Model\PayloadTeamCreate())->setTeamName("New team"));
-        $this->assertInstanceOf(Model\TeamExtended::class, $this->team);
+        $this->assertInstanceOf(Model\TeamExpanded::class, $this->team);
         $this->assertEquals(0, count($this->team->listProps()));
     }
 

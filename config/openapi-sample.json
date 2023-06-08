@@ -6601,11 +6601,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Extended Team model",
+                        "description": "Expanded Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TeamExtended"
+                                    "$ref": "#/components/schemas/TeamExpanded"
                                 }
                             }
                         }
@@ -6716,11 +6716,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Extended Team model",
+                        "description": "Expanded Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TeamExtended"
+                                    "$ref": "#/components/schemas/TeamExpanded"
                                 }
                             }
                         }
@@ -7349,11 +7349,11 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Extended Team model",
+                        "description": "Expanded Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TeamExtended"
+                                    "$ref": "#/components/schemas/TeamExpanded"
                                 }
                             }
                         }
@@ -7575,11 +7575,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Extended Team model",
+                        "description": "Expanded Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TeamExtended"
+                                    "$ref": "#/components/schemas/TeamExpanded"
                                 }
                             }
                         }
@@ -7659,11 +7659,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Extended Team model",
+                        "description": "Expanded Team model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TeamExtended"
+                                    "$ref": "#/components/schemas/TeamExpanded"
                                 }
                             }
                         }
@@ -7872,11 +7872,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Extended Team models",
+                        "description": "Expanded Team models",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Teams Extended List",
+                                    "title": "Teams Expanded List",
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
@@ -7903,7 +7903,7 @@
                                             "type": "array",
                                             "description": "Teams",
                                             "items": {
-                                                "$ref": "#/components/schemas/TeamExtended"
+                                                "$ref": "#/components/schemas/TeamExpanded"
                                             }
                                         }
                                     }
@@ -9439,7 +9439,7 @@
                     },
                     "experiment": {
                         "type": "object",
-                        "title": "Experiment Lite",
+                        "title": "Experiment - Lite",
                         "description": "Experiment meant to validate assumption",
                         "properties": {
                             "authorUserIds": {
@@ -9715,9 +9715,9 @@
                     }
                 }
             },
-            "TeamExtended": {
+            "TeamExpanded": {
                 "type": "object",
-                "title": "Team",
+                "title": "Team - Expanded",
                 "properties": {
                     "id": {
                         "type": "string",
