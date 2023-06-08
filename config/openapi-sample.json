@@ -3137,6 +3137,14 @@
                                             "in review",
                                             "done"
                                         ]
+                                    },
+                                    "notionIds": {
+                                        "type": "array",
+                                        "description": "Notion IDs",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "notion-id-***"
+                                        }
                                     }
                                 }
                             }
@@ -3152,7 +3160,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\"}'"
+                        "source": "curl --request POST \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\",\"notionIds\":[\"notion-id-***\"]}'"
                     }
                 ]
             },
@@ -3393,256 +3401,6 @@
                     {
                         "lang": "$ curl",
                         "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
-                    }
-                ]
-            }
-        },
-        "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/notions/{notionId}": {
-            "put": {
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "Add notion",
-                "description": "Add a notion to task",
-                "operationId": "taskNotionAdd",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "itemId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Value Item ID",
-                        "example": "value-item-id-***"
-                    },
-                    {
-                        "name": "taskId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Task ID",
-                        "example": "task-id-***"
-                    },
-                    {
-                        "name": "notionId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Notion ID",
-                        "example": "notion-id-***"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Task model",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Task"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "x-method": "notionAdd",
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/notions/notion-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Tasks"
-                ],
-                "summary": "Remove notion",
-                "description": "Remove a notion from task",
-                "operationId": "taskNotionRemove",
-                "parameters": [
-                    {
-                        "name": "teamId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Team ID",
-                        "example": "team-id-***"
-                    },
-                    {
-                        "name": "channelId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Channel ID",
-                        "example": "channel-id-***"
-                    },
-                    {
-                        "name": "itemId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Value Item ID",
-                        "example": "value-item-id-***"
-                    },
-                    {
-                        "name": "taskId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Task ID",
-                        "example": "task-id-***"
-                    },
-                    {
-                        "name": "notionId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Notion ID",
-                        "example": "notion-id-***"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/OK"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error400"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error401"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error403"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error404"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "x-method": "notionRemove",
-                "x-codeSamples": [
-                    {
-                        "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url 'https://api.kronup.com/v1/teams/team-id-***/channels/channel-id-***/items/value-item-id-***/tasks/task-id-***/notions/notion-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }

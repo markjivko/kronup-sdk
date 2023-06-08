@@ -259,26 +259,26 @@ class OrganizationTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->notionAdd(
+            ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->dcItem->getId(),
                 $task->getId(),
-                $this->notion->getId()
+                (new Model\PayloadTaskUpdate())->setNotionIds([$this->notion->getId()])
             );
-        $this->assertInstanceOf(Model\Task::class, $task);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
         // Append notion to task 2
         $this->sdk
             ->api()
             ->tasks()
-            ->notionAdd(
+            ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task2->getId(),
-                $this->notion->getId()
+                (new Model\PayloadTaskUpdate())->setNotionIds([$this->notion->getId()])
             );
 
         // Update task

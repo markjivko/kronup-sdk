@@ -284,12 +284,18 @@ class RemoveFromOrgTest extends TestCase {
         $taskNotion = $this->serviceSdk
             ->api()
             ->tasks()
-            ->notionAdd($team->getId(), $channel->getId(), $item->getId(), $task->getId(), $notion->getId());
-        $this->assertInstanceOf(Model\Task::class, $taskNotion);
+            ->update(
+                $team->getId(),
+                $channel->getId(),
+                $item->getId(),
+                $task->getId(),
+                (new Model\PayloadTaskUpdate())->setNotionIds([$notion->getId()])
+            );
+        $this->assertInstanceOf(Model\TaskExpanded::class, $taskNotion);
         $this->assertEquals(0, count($taskNotion->listProps()));
 
-        $this->assertIsArray($taskNotion->getNotionIds());
-        $this->assertEquals(1, count($taskNotion->getNotionIds()));
+        $this->assertIsArray($taskNotion->getNotions());
+        $this->assertEquals(1, count($taskNotion->getNotions()));
 
         // Fetch events
         $events = $this->serviceSdk

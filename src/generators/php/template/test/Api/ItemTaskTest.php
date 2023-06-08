@@ -389,18 +389,18 @@ class ItemTaskTest extends TestCase {
         $taskNotion = $this->sdk
             ->api()
             ->tasks()
-            ->notionAdd(
+            ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $this->notion->getId()
+                (new Model\PayloadTaskUpdate())->setNotionIds([$this->notion->getId()])
             );
-        $this->assertInstanceOf(Model\Task::class, $taskNotion);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($taskNotion->listProps()));
 
-        $this->assertIsArray($taskNotion->getNotionIds());
-        $this->assertEquals(1, count($taskNotion->getNotionIds()));
+        $this->assertIsArray($taskNotion->getNotions());
+        $this->assertEquals(1, count($taskNotion->getNotions()));
 
         // Read the task
         $task = $this->sdk
@@ -419,17 +419,20 @@ class ItemTaskTest extends TestCase {
         $this->assertEquals($this->notion->getValue(), $task->getNotions()[0]->getValue());
 
         // Remove the notion
-        $removed = $this->sdk
+        $taskEmptyNotions = $this->sdk
             ->api()
             ->tasks()
-            ->notionRemove(
+            ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $this->notion->getId()
+                (new Model\PayloadTaskUpdate())->setNotionIds([])
             );
-        $this->assertTrue($removed);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $taskEmptyNotions);
+        $this->assertEquals(0, count($taskEmptyNotions->listProps()));
+        $this->assertIsArray($taskEmptyNotions->getNotions());
+        $this->assertEquals(0, count($taskEmptyNotions->getNotions()));
 
         // Read the task
         $task = $this->sdk
@@ -438,9 +441,70 @@ class ItemTaskTest extends TestCase {
             ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
-
         $this->assertIsArray($task->getNotions());
         $this->assertEquals(0, count($task->getNotions()));
+    }
+
+    /**
+     * Attempt to assign more notions than allowed
+     */
+    public function testNotionsLimit(): void {
+        $task = $this->sdk
+            ->api()
+            ->tasks()
+            ->create(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                (new Model\PayloadTaskCreate())->setHeading("Task two")->setDetails("Details of task two")
+            );
+        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertEquals(0, count($task->listProps()));
+
+        // Prepare the notions
+        $notionIds = [];
+        for ($i = 1; $i <= 26; $i++) {
+            $notion = $this->sdk
+                ->api()
+                ->notions()
+                ->create((new Model\PayloadNotionCreate())->setValue(uniqid()));
+            $this->assertInstanceOf(Model\Notion::class, $notion);
+            $this->assertEquals(0, count($notion->listProps()));
+            $notionIds[] = $notion->getId();
+        }
+
+        try {
+            $this->sdk
+                ->api()
+                ->tasks()
+                ->update(
+                    $this->team->getId(),
+                    $this->channel->getId(),
+                    $this->item->getId(),
+                    $task->getId(),
+                    (new Model\PayloadTaskUpdate())->setNotionIds($notionIds)
+                );
+            $this->fail("Shold have failed updating task notions");
+        } catch (\Exception $exc) {
+            $this->assertInstanceOf(ApiException::class, $exc);
+            $this->assertEquals("limit-reached", $exc->getResponseObject()["id"]);
+        }
+
+        // Remove the notions
+        foreach ($notionIds as $notionId) {
+            $deleted = $this->sdk
+                ->api()
+                ->notions()
+                ->delete($notionId);
+            $this->assertTrue($deleted);
+        }
+
+        // Remove the task
+        $taskDeleted = $this->sdk
+            ->api()
+            ->tasks()
+            ->delete($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
+        $this->assertTrue($taskDeleted);
     }
 
     /**
@@ -471,18 +535,18 @@ class ItemTaskTest extends TestCase {
         $taskNotion = $this->sdk
             ->api()
             ->tasks()
-            ->notionAdd(
+            ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
                 $this->item->getId(),
                 $task->getId(),
-                $notion->getId()
+                (new Model\PayloadTaskUpdate())->setNotionIds([$notion->getId()])
             );
-        $this->assertInstanceOf(Model\Task::class, $taskNotion);
+        $this->assertInstanceOf(Model\TaskExpanded::class, $taskNotion);
         $this->assertEquals(0, count($taskNotion->listProps()));
 
-        $this->assertIsArray($taskNotion->getNotionIds());
-        $this->assertEquals(1, count($taskNotion->getNotionIds()));
+        $this->assertIsArray($taskNotion->getNotions());
+        $this->assertEquals(1, count($taskNotion->getNotions()));
 
         // Read the task
         $task = $this->sdk

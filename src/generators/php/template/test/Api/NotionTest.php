@@ -104,12 +104,22 @@ class NotionTest extends TestCase {
         $this->assertEquals(0, count($notionRead->listProps()));
         $this->assertEquals($notion->getValue(), $notionRead->getValue());
 
-        // Must fail
-        $this->expectExceptionObject(new ApiException("Forbidden", 403));
-        $this->sdk
+        // Must not fail on create
+        $notionRefetched = $this->sdk
             ->api()
             ->notions()
             ->create((new Model\PayloadNotionCreate())->setValue($notionValue));
+        $this->assertInstanceOf(Model\Notion::class, $notionRefetched);
+        $this->assertEquals(0, count($notionRefetched->listProps()));
+        $this->assertEquals($notion->getValue(), $notionRefetched->getValue());
+    }
+
+    public function testInvalidNotion() {
+        $this->expectExceptionObject(new ApiException("Bad Request", 400));
+        $this->sdk
+            ->api()
+            ->notions()
+            ->create((new Model\PayloadNotionCreate())->setValue(str_repeat("x", 65)));
     }
 
     /**
