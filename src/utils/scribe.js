@@ -51,6 +51,13 @@ const operations = {
     },
     removeHashLinks: str => str.replace(/<a\s+href\s*=\s*"#.*?>(.*?)<\s*\/\s*a>/gi, "$1"),
     tableCell: str => operations.removeHashLinks(str).replace(/\|/gi, "/").trim(),
+    modelHeading: str => (str.match(/^payload/i) ? "Payload setters" : "Model getters"),
+    modelArgLabel: str => (str.match(/^payload/i) ? "Argument type" : "Return type"),
+    modelPrefix: str => {
+        const [model, method] = `${str}`.split(",");
+
+        return model.match(/^payload/i) ? method.replace(/^get/, "set") : method;
+    },
     shortLine: str => {
         str = operations.removeHashLinks(str);
 

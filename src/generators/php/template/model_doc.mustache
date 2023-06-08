@@ -1,7 +1,7 @@
 {{#models}}
 {{#model}}
 ---
-title: {{classname}}
+title: {{title}}
 parent: Model
 layout: page
 ---
@@ -12,12 +12,12 @@ layout: page
 {{{description}}}
 {{/description}}
 
-## Model getters
+## ((#modelHeading)){{{classname}}}((/modelHeading))
 
-Method name | Return type | Description
+Method name | ((#modelArgLabel)){{{classname}}}((/modelArgLabel)) | Description
 ------------ | ------------- | -------------
 {{^vars}}**getData()** | mixed | {{{dataType}}} | [mixed type]
-{{/vars}}{{#vars}}**{{getter}}()** | {{#isPrimitiveType}}**{{{dataType}}}**{{/isPrimitiveType}}{{^isPrimitiveType}}[**{{{dataType}}}**](../{{complexType}}){{/isPrimitiveType}} | ((#tableCell)){{{description}}} {{#isEnum}}( {{#_enum}}`{{.}}`, {{/_enum}}){{/isEnum}} {{#defaultValue}} [default to `{{{.}}}`]{{/defaultValue}}((/tableCell))
+{{/vars}}{{#vars}}**((#modelPrefix)){{{classname}}},{{getter}}((/modelPrefix))()** | {{#isPrimitiveType}}**{{{dataType}}}**{{/isPrimitiveType}}{{^isPrimitiveType}}[**{{{dataType}}}**](../{{complexType}}){{/isPrimitiveType}} | ((#tableCell)){{{description}}} {{#isEnum}}( {{#_enum}}`{{.}}` {{/_enum}}){{/isEnum}} {{#defaultValue}} [default to `{{{.}}}`]{{/defaultValue}}((/tableCell))
 {{/vars}}
 
 {{/model}}
