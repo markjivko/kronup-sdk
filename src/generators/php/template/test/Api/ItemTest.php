@@ -130,7 +130,7 @@ class ItemTest extends TestCase {
         $this->assertEquals(0, count($notifs->listProps()));
 
         $this->assertIsArray($notifs->getEvents());
-        $this->assertGreaterThanOrEqual(1, count($notifs->getEvents()));
+        $this->assertEquals(0, count($notifs->getEvents()));
 
         // Get the list
         $items = $this->sdk

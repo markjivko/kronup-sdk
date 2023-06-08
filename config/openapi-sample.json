@@ -8744,16 +8744,6 @@
                         "description": "Event ID",
                         "example": "event-id-***"
                     },
-                    "orgId": {
-                        "type": "string",
-                        "description": "Organization ID",
-                        "example": "org-id-***"
-                    },
-                    "userId": {
-                        "type": "string",
-                        "description": "User ID",
-                        "example": "user-id-***"
-                    },
                     "type": {
                         "type": "string",
                         "description": "Event type",
@@ -8814,6 +8804,17 @@
                             "type": "string"
                         },
                         "default": []
+                    },
+                    "stage": {
+                        "type": "string",
+                        "description": "Value Item Stage",
+                        "enum": [
+                            "planning",
+                            "validation",
+                            "execution",
+                            "deep context"
+                        ],
+                        "example": "planning"
                     },
                     "createdAt": {
                         "type": "string",

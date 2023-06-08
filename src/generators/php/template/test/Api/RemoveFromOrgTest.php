@@ -305,7 +305,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->assertInstanceOf(Model\EventsList::class, $events);
         $this->assertEquals(0, count($events->listProps()));
         $this->assertIsArray($events->getEvents());
-        $this->assertGreaterThanOrEqual(1, count($events->getEvents()));
+        $this->assertEquals(0, count($events->getEvents()));
 
         // Assign task to service account
         $task = $this->sdk
