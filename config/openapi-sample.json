@@ -9156,7 +9156,7 @@
             "Task": {
                 "type": "object",
                 "title": "Task",
-                "description": "Task model without Minutes",
+                "description": "Task model",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -9197,7 +9197,7 @@
             "TaskExpanded": {
                 "type": "object",
                 "title": "Task - Expanded",
-                "description": "Task model without Minutes",
+                "description": "Task model",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -9472,7 +9472,7 @@
             "TaskLite": {
                 "type": "object",
                 "title": "Task - Lite",
-                "description": "Task model without Minutes",
+                "description": "Task model",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -9506,7 +9506,8 @@
             },
             "Minute": {
                 "type": "object",
-                "title": "Task Minute",
+                "title": "Minute",
+                "description": "Details associated with a Task",
                 "properties": {
                     "iteration": {
                         "type": "number",
