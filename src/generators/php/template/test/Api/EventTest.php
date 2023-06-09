@@ -89,13 +89,6 @@ class EventTest extends TestCase {
             $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
 
-        // Clear all events
-        $eventsCleared = $this->sdk
-            ->api()
-            ->account()
-            ->eventsClear();
-        $this->assertTrue($eventsCleared);
-
         $serviceAccountList = $this->sdk
             ->api()
             ->serviceAccounts()

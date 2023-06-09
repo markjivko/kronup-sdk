@@ -190,6 +190,10 @@ class DeepContextTest extends TestCase {
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
+        $this->sdk
+            ->api()
+            ->experiences()
+            ->evaluateSelf($this->notion->getId(), 5);
 
         // Update task
         $taskUpdated = $this->sdk
