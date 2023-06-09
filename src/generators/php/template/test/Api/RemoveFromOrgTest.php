@@ -313,7 +313,7 @@ class RemoveFromOrgTest extends TestCase {
         $events = $this->serviceSdk
             ->api()
             ->account()
-            ->eventList();
+            ->eventsList();
         $this->assertInstanceOf(Model\EventsList::class, $events);
         $this->assertEquals(0, count($events->listProps()));
         $this->assertIsArray($events->getEvents());

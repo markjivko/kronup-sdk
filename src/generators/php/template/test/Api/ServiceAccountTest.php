@@ -162,7 +162,7 @@ class ServiceAccountTest extends TestCase {
         $remoteEventList = $sdkService
             ->api()
             ->account()
-            ->eventList();
+            ->eventsList();
         $this->assertInstanceOf(Model\EventsList::class, $remoteEventList);
         $this->assertEquals(0, count($remoteEventList->listProps()));
 
