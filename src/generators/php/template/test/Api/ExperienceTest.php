@@ -112,15 +112,27 @@ class ExperienceTest extends TestCase {
         $this->assertEquals(1, $myExperience->getSelfEval()->getCount());
         $this->assertEquals(1, count($myExperience->getSelfEval()->getRecent()));
 
-        // Prepare the service account
-        $serviceAccount = $this->sdk
+        // Fetch teh service accounts
+        $serviceAccountList = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->create(
-                (new Model\PayloadServiceAccountCreate())
-                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
-                    ->setUserName("New service account name")
-            );
+            ->list();
+        $this->assertInstanceOf(Model\ServiceAccountsList::class, $serviceAccountList);
+        $this->assertEquals(0, count($serviceAccountList->listProps()));
+        $this->assertIsArray($serviceAccountList->getServiceAccounts());
+
+        // Prepare the service account
+        $serviceAccount =
+            0 !== count($serviceAccountList->getServiceAccounts())
+                ? $serviceAccountList->getServiceAccounts()[0]
+                : $this->sdk
+                    ->api()
+                    ->serviceAccounts()
+                    ->create(
+                        (new Model\PayloadServiceAccountCreate())
+                            ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
+                            ->setUserName("New service account name")
+                    );
         $this->assertInstanceOf(Model\ServiceAccount::class, $serviceAccount);
         $this->assertEquals(0, count($serviceAccount->listProps()));
         $serviceSdk = new Sdk($serviceAccount->getServiceToken());

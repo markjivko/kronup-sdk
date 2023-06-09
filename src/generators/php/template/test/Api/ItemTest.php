@@ -122,15 +122,13 @@ class ItemTest extends TestCase {
         $this->assertEquals(0, count($item->listProps()));
 
         // Get the events
-        $notifs = $this->sdk
+        $events = $this->sdk
             ->api()
             ->account()
             ->eventList();
-        $this->assertInstanceOf(Model\EventsList::class, $notifs);
-        $this->assertEquals(0, count($notifs->listProps()));
-
-        $this->assertIsArray($notifs->getEvents());
-        $this->assertEquals(0, count($notifs->getEvents()));
+        $this->assertInstanceOf(Model\EventsList::class, $events);
+        $this->assertEquals(0, count($events->listProps()));
+        $this->assertIsArray($events->getEvents());
 
         // Get the list
         $items = $this->sdk

@@ -8700,7 +8700,7 @@
                             "execution",
                             "deep context"
                         ],
-                        "example": "planning"
+                        "default": null
                     },
                     "createdAt": {
                         "type": "string",

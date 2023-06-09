@@ -81,15 +81,27 @@ class RemoveFromOrgTest extends TestCase {
         $this->assertEquals(0, count($organization->listProps()));
         $this->sdk->config()->setOrgId($organization->getId());
 
-        // Prepare a service account
-        $this->serviceAccount = $this->sdk
+        // Fetch teh service accounts
+        $serviceAccountList = $this->sdk
             ->api()
             ->serviceAccounts()
-            ->create(
-                (new Model\PayloadServiceAccountCreate())
-                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
-                    ->setUserName("Service name")
-            );
+            ->list();
+        $this->assertInstanceOf(Model\ServiceAccountsList::class, $serviceAccountList);
+        $this->assertEquals(0, count($serviceAccountList->listProps()));
+        $this->assertIsArray($serviceAccountList->getServiceAccounts());
+
+        // Prepare a service account
+        $this->serviceAccount =
+            0 !== count($serviceAccountList->getServiceAccounts())
+                ? $serviceAccountList->getServiceAccounts()[0]
+                : $this->sdk
+                    ->api()
+                    ->serviceAccounts()
+                    ->create(
+                        (new Model\PayloadServiceAccountCreate())
+                            ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
+                            ->setUserName("Service name")
+                    );
         $this->assertInstanceOf(Model\ServiceAccount::class, $this->serviceAccount);
         $this->assertEquals(0, count($this->serviceAccount->listProps()));
         $this->serviceSdk = new Sdk($this->serviceAccount->getServiceToken());
@@ -305,7 +317,12 @@ class RemoveFromOrgTest extends TestCase {
         $this->assertInstanceOf(Model\EventsList::class, $events);
         $this->assertEquals(0, count($events->listProps()));
         $this->assertIsArray($events->getEvents());
-        $this->assertEquals(0, count($events->getEvents()));
+
+        // Found our self-eval event
+        $this->assertEquals(1, count($events->getEvents()));
+        $this->assertInstanceOf(Model\Event::class, $events->getEvents()[0]);
+        $this->assertEquals(0, count($events->getEvents()[0]->listProps()));
+        $this->assertEquals($notion->getId(), $events->getEvents()[0]->getNotionId());
 
         // Assign task to service account
         $task = $this->sdk
