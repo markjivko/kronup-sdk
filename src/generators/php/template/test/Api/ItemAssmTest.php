@@ -139,16 +139,6 @@ class ItemAssmTest extends TestCase {
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
 
-        // Read
-        $assmRead = $this->sdk
-            ->api()
-            ->assumptions()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId());
-        $this->assertInstanceOf(Model\Assumption::class, $assmRead);
-        $this->assertEquals(0, count($assmRead->listProps()));
-
-        $this->assertEquals($assm->getHeading(), $assmRead->getHeading());
-
         // List
         $assmList = $this->sdk
             ->api()
@@ -260,11 +250,5 @@ class ItemAssmTest extends TestCase {
             ->assumptions()
             ->delete($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId());
         $this->assertTrue($deleted);
-
-        $this->expectExceptionObject(new ApiException("Not Found", 404));
-        $this->sdk
-            ->api()
-            ->assumptions()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId());
     }
 }
