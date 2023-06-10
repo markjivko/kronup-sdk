@@ -284,6 +284,17 @@
                             "maximum": 500,
                             "example": 100
                         }
+                    },
+                    {
+                        "name": "aggregate",
+                        "in": "query",
+                        "description": "Aggregate notion events",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 0,
+                            "maximum": 1
+                        }
                     }
                 ],
                 "responses": {
@@ -306,9 +317,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 1500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -367,7 +378,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/account/events?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/account/events?pageNumber=1&pageSize=100&aggregate=SOME_INTEGER_VALUE' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -697,9 +708,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -922,9 +933,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -1003,7 +1014,7 @@
                 "tags": [
                     "Experiences"
                 ],
-                "summary": "Self-evaluation",
+                "summary": "Evaluate myself",
                 "description": "Evaluate yourself on a notion. Only the last evaluation is kept in a 24 hours interval.",
                 "operationId": "experienceEvaluateSelf",
                 "parameters": [
@@ -1101,7 +1112,7 @@
                 "tags": [
                     "Experiences"
                 ],
-                "summary": "Evaluate peer",
+                "summary": "Evaluate peers",
                 "description": "Anonymously evaluate another user on this notion. Only the last evaluation is kept in a 24 hours interval.",
                 "operationId": "experienceEvaluatePeer",
                 "parameters": [
@@ -1375,9 +1386,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -2013,9 +2024,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -2702,9 +2713,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -4497,9 +4508,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -5171,9 +5182,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -6032,9 +6043,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -7052,9 +7063,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -7363,9 +7374,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -7776,9 +7787,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -8394,9 +8405,9 @@
                                             "type": "integer",
                                             "description": "Page size",
                                             "example": 100,
-                                            "default": 100,
+                                            "default": 500,
                                             "minimum": 1,
-                                            "maximum": 500
+                                            "maximum": 1500
                                         },
                                         "total": {
                                             "type": "integer",
@@ -8634,11 +8645,11 @@
                         "type": "string",
                         "description": "Event type",
                         "enum": [
-                            "items",
-                            "assumptions",
-                            "tasks",
-                            "self-evaluation",
-                            "peer evaluation"
+                            "i",
+                            "a",
+                            "t",
+                            "s",
+                            "p"
                         ]
                     },
                     "teamId": {
@@ -8661,7 +8672,7 @@
                     },
                     "peerUserId": {
                         "type": "string",
-                        "description": "Peer User ID",
+                        "description": "Peers User ID",
                         "example": "user-id-***",
                         "default": null
                     },
