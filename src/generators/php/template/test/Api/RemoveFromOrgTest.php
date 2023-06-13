@@ -134,7 +134,7 @@ class RemoveFromOrgTest extends TestCase {
         $experience = $this->serviceSdk
             ->api()
             ->experiences()
-            ->evaluateSelf($notion->getId(), 5);
+            ->evaluate($notion->getId(), mt_rand(1, 10));
         $this->assertInstanceOf(Model\Experience::class, $experience);
         $this->assertEquals(0, count($experience->listProps()));
 
@@ -142,7 +142,7 @@ class RemoveFromOrgTest extends TestCase {
         $experienceMain = $this->sdk
             ->api()
             ->experiences()
-            ->evaluateSelf($notion->getId(), 5);
+            ->evaluate($notion->getId(), mt_rand(1, 10));
         $this->assertInstanceOf(Model\Experience::class, $experienceMain);
         $this->assertEquals(0, count($experienceMain->listProps()));
     }

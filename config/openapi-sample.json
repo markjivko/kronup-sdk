@@ -21,7 +21,7 @@
     "tags": [
         {
             "name": "Account",
-            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **100** Item Events and **1000** Evaluation Events for each [Organization](#tag/Organizations) they are a part of.\n\nUsers are asked to re-evaluate notions after **30** days."
+            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **110** Item Events and **1100** Evaluation Events for each [Organization](#tag/Organizations) they are a part of.\n\nUsers are asked to re-evaluate notions after **30** days."
         },
         {
             "name": "Service accounts",
@@ -774,43 +774,76 @@
                 ]
             }
         },
-        "/xp/notions/{notionId}/users/{userId}": {
+        "/xp": {
             "get": {
                 "tags": [
                     "Experiences"
                 ],
-                "summary": "Fetch notion experience",
-                "description": "Retrieve experience model for specified Notion",
-                "operationId": "experienceRead",
+                "summary": "Fetch my experiences",
+                "description": "Retrieve all my experience models",
+                "operationId": "experienceList",
                 "parameters": [
                     {
-                        "name": "notionId",
-                        "in": "path",
-                        "required": true,
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "Pagination: page number",
                         "schema": {
-                            "type": "string"
-                        },
-                        "description": "Notion ID",
-                        "example": "notion-id-***"
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "example": 1
+                        }
                     },
                     {
-                        "name": "userId",
-                        "in": "path",
-                        "required": true,
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Pagination: page size",
                         "schema": {
-                            "type": "string"
-                        },
-                        "description": "User ID",
-                        "example": "user-id-***"
+                            "type": "integer",
+                            "default": 100,
+                            "minimum": 1,
+                            "maximum": 500,
+                            "example": 100
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Experience model",
+                        "description": "Experience models",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Experience"
+                                    "title": "Experiences List",
+                                    "type": "object",
+                                    "properties": {
+                                        "pageNumber": {
+                                            "type": "integer",
+                                            "description": "Page number",
+                                            "example": 1,
+                                            "default": 1,
+                                            "minimum": 1
+                                        },
+                                        "pageSize": {
+                                            "type": "integer",
+                                            "description": "Page size",
+                                            "example": 100,
+                                            "default": 500,
+                                            "minimum": 1,
+                                            "maximum": 1500
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "description": "Total number of experiences",
+                                            "example": 10
+                                        },
+                                        "experiences": {
+                                            "type": "array",
+                                            "description": "Experiences",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Experience"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -861,11 +894,11 @@
                         "jwt": []
                     }
                 ],
-                "x-method": "read",
+                "x-method": "list",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -875,9 +908,9 @@
                 "tags": [
                     "Experiences"
                 ],
-                "summary": "Fetch all experiences",
+                "summary": "Fetch peer experiences",
                 "description": "Retrieve all experience models for this user",
-                "operationId": "experienceList",
+                "operationId": "experienceListPeer",
                 "parameters": [
                     {
                         "name": "userId",
@@ -1000,11 +1033,193 @@
                         "jwt": []
                     }
                 ],
-                "x-method": "list",
+                "x-method": "listPeer",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
                         "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/users/user-id-***?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                    }
+                ]
+            }
+        },
+        "/xp/notions/{notionId}": {
+            "get": {
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "Fetch my notion experience",
+                "description": "Retrieve my experience model for specified Notion",
+                "operationId": "experienceRead",
+                "parameters": [
+                    {
+                        "name": "notionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Experience model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Experience"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "x-method": "read",
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                    }
+                ]
+            }
+        },
+        "/xp/notions/{notionId}/users/{userId}": {
+            "get": {
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "Fetch peer notion experience",
+                "description": "Retrieve peer experience model for specified Notion",
+                "operationId": "experienceReadPeer",
+                "parameters": [
+                    {
+                        "name": "notionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Notion ID",
+                        "example": "notion-id-***"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID",
+                        "example": "user-id-***"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Experience model",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Experience"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error400"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error401"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error403"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error404"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "x-method": "readPeer",
+                "x-codeSamples": [
+                    {
+                        "lang": "$ curl",
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1016,7 +1231,7 @@
                 ],
                 "summary": "Evaluate myself",
                 "description": "Evaluate yourself on a notion. Only the last evaluation is kept in a 24 hours interval.",
-                "operationId": "experienceEvaluateSelf",
+                "operationId": "experienceEvaluate",
                 "parameters": [
                     {
                         "name": "notionId",
@@ -1098,7 +1313,7 @@
                         "jwt": []
                     }
                 ],
-                "x-method": "evaluateSelf",
+                "x-method": "evaluate",
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
@@ -1107,13 +1322,13 @@
                 ]
             }
         },
-        "/xp/notions/{notionId}/users/{userId}/grade/{grade}": {
+        "/xp/notions/{notionId}/grade/{grade}/users/{userId}": {
             "put": {
                 "tags": [
                     "Experiences"
                 ],
                 "summary": "Evaluate peers",
-                "description": "Anonymously evaluate another user on this notion. Only the last evaluation is kept in a 24 hours interval.",
+                "description": "Anonymously evaluate another peer on this notion. Only the last evaluation is kept in a 24 hours interval.",
                 "operationId": "experienceEvaluatePeer",
                 "parameters": [
                     {
@@ -1127,16 +1342,6 @@
                         "example": "notion-id-***"
                     },
                     {
-                        "name": "userId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "User ID",
-                        "example": "user-id-***"
-                    },
-                    {
                         "name": "grade",
                         "in": "path",
                         "required": true,
@@ -1147,6 +1352,16 @@
                         "minimum": 1,
                         "maximum": 10,
                         "example": 5
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "User ID",
+                        "example": "user-id-***"
                     }
                 ],
                 "responses": {
@@ -1210,7 +1425,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/users/user-id-***/grade/5' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url 'https://api.kronup.com/v1/xp/notions/notion-id-***/grade/5/users/user-id-***' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }

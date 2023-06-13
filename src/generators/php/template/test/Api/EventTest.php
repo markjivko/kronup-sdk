@@ -652,7 +652,7 @@ class EventTest extends TestCase {
         $experience = $this->sdk
             ->api()
             ->experiences()
-            ->evaluateSelf($notion->getId(), 5);
+            ->evaluate($notion->getId(), mt_rand(1, 10));
         $this->assertInstanceOf(Model\Experience::class, $experience);
         $this->assertEquals(0, count($experience->listProps()));
 
@@ -686,7 +686,7 @@ class EventTest extends TestCase {
         $experience = $this->sdkService
             ->api()
             ->experiences()
-            ->evaluateSelf($notion->getId(), 5);
+            ->evaluate($notion->getId(), mt_rand(1, 10));
         $this->assertInstanceOf(Model\Experience::class, $experience);
         $this->assertEquals(0, count($experience->listProps()));
 
@@ -747,7 +747,7 @@ class EventTest extends TestCase {
         $experience = $this->sdk
             ->api()
             ->experiences()
-            ->evaluatePeer($notion->getId(), $this->serviceAccount->getId(), 5);
+            ->evaluatePeer($notion->getId(), 5, $this->serviceAccount->getId());
         $this->assertInstanceOf(Model\Experience::class, $experience);
         $this->assertEquals(0, count($experience->listProps()));
 

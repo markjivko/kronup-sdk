@@ -92,11 +92,11 @@ class ExperienceTest extends TestCase {
     public function testCreateReadEvaluate(): void {
         // Evaluate self
         for ($i = 1; $i <= 10; $i++) {
-            $grade = mt_rand(1, 5);
+            $grade = mt_rand(1, 10);
             $experience = $this->sdk
                 ->api()
                 ->experiences()
-                ->evaluateSelf($this->notion->getId(), $grade);
+                ->evaluate($this->notion->getId(), $grade);
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
@@ -105,7 +105,7 @@ class ExperienceTest extends TestCase {
         $myExperience = $this->sdk
             ->api()
             ->experiences()
-            ->read($this->notion->getId(), $this->account->getId());
+            ->read($this->notion->getId());
         $this->assertInstanceOf(Model\Experience::class, $myExperience);
         $this->assertEquals(0, count($myExperience->listProps()));
         $this->assertEquals($grade, $myExperience->getSelfEval()->getAverage());
@@ -143,7 +143,7 @@ class ExperienceTest extends TestCase {
             $experience = $serviceSdk
                 ->api()
                 ->experiences()
-                ->evaluatePeer($this->notion->getId(), $this->account->getId(), $grade);
+                ->evaluatePeer($this->notion->getId(), $grade, $this->account->getId());
             $this->assertInstanceOf(Model\Experience::class, $experience);
             $this->assertEquals(0, count($experience->listProps()));
         }
@@ -161,7 +161,7 @@ class ExperienceTest extends TestCase {
         $myExperience = $this->sdk
             ->api()
             ->experiences()
-            ->read($this->notion->getId(), $this->account->getId());
+            ->read($this->notion->getId());
         $this->assertInstanceOf(Model\Experience::class, $myExperience);
         $this->assertEquals(0, count($myExperience->listProps()));
         $this->assertEquals($grade, $myExperience->getPeerEval()->getAverage());
@@ -172,7 +172,7 @@ class ExperienceTest extends TestCase {
         $xpList = $this->sdk
             ->api()
             ->experiences()
-            ->list($this->account->getId());
+            ->list();
         $this->assertInstanceOf(Model\ExperiencesList::class, $xpList);
         $this->assertEquals(0, count($xpList->listProps()));
 
@@ -194,7 +194,7 @@ class ExperienceTest extends TestCase {
         $xpRead = $this->sdk
             ->api()
             ->experiences()
-            ->read($this->notion->getId(), $this->account->getId());
+            ->read($this->notion->getId());
         $this->assertInstanceOf(Model\Experience::class, $xpRead);
         $this->assertEquals(0, count($xpRead->listProps()));
 
@@ -218,7 +218,7 @@ class ExperienceTest extends TestCase {
         $experience = $this->sdk
             ->api()
             ->experiences()
-            ->evaluateSelf($notion->getId(), mt_rand(1, 5));
+            ->evaluate($notion->getId(), mt_rand(1, 10));
         $this->assertInstanceOf(Model\Experience::class, $experience);
         $this->assertEquals(0, count($experience->listProps()));
 
@@ -234,6 +234,6 @@ class ExperienceTest extends TestCase {
         $this->sdk
             ->api()
             ->experiences()
-            ->read($notion->getId(), $this->account->getId());
+            ->read($notion->getId());
     }
 }

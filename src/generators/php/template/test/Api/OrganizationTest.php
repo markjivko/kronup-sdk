@@ -320,7 +320,7 @@ class OrganizationTest extends TestCase {
         $this->experience = $this->sdk
             ->api()
             ->experiences()
-            ->evaluateSelf($this->notion->getId(), mt_rand(1, 5));
+            ->evaluate($this->notion->getId(), mt_rand(1, 10));
         $this->assertInstanceOf(Model\Experience::class, $this->experience);
         $this->assertEquals(0, count($this->experience->listProps()));
     }

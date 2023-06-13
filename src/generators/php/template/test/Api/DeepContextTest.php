@@ -193,7 +193,7 @@ class DeepContextTest extends TestCase {
         $this->sdk
             ->api()
             ->experiences()
-            ->evaluateSelf($this->notion->getId(), 5);
+            ->evaluate($this->notion->getId(), mt_rand(1, 10));
 
         // Update task
         $taskUpdated = $this->sdk
