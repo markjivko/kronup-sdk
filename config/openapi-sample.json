@@ -21,7 +21,7 @@
     "tags": [
         {
             "name": "Account",
-            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account and Service Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **100** Item Events and **1000** Evaluation Events for each [Organization](#tag/Organizations) they are a part of."
+            "description": "Manage the current account.\n\nThese methods apply to the identity declared in the authorization bearer token.\n\nEach Account can send at most **10000** requests per day through our API.\n\nEach [User](#tag/Users) can receive at most **100** Item Events and **1000** Evaluation Events for each [Organization](#tag/Organizations) they are a part of.\n\nUsers are asked to re-evaluate notions after **30** days."
         },
         {
             "name": "Service accounts",
@@ -33,7 +33,7 @@
         },
         {
             "name": "Invitations",
-            "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **100** invitations."
+            "description": "Invitations follow the [Organization](#tag/Organizations) role-based access control rules.\n\nEach organization can have a maximum of **50** invitations."
         },
         {
             "name": "Organizations",
@@ -41,11 +41,11 @@
         },
         {
             "name": "Teams",
-            "description": "Each [Organization](#tag/Organizations) has at least **1** and at most **100** Teams."
+            "description": "Each [Organization](#tag/Organizations) has at least **1** and at most **50** Teams."
         },
         {
             "name": "Channels",
-            "description": "Each [Team](#tag/Teams) has at least **1** and at most **100** Channels."
+            "description": "Each [Team](#tag/Teams) has at least **1** and at most **50** Channels."
         },
         {
             "name": "Value items",
@@ -57,7 +57,7 @@
         },
         {
             "name": "Tasks",
-            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **50** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **15** [Notions](#tag/Notions), **50** discoveries, and **50** feedback items."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **50** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **10** [Notions](#tag/Notions), **50** discoveries, and **50** feedback items."
         },
         {
             "name": "Notions",
@@ -65,7 +65,7 @@
         },
         {
             "name": "Experiences",
-            "description": "Team members can anonymously assess their own and their peer's proficiency with each each [Notion](#tag/Notions).\n\nThe evaluation of notions will be used to determine task assignments in order to maximize productivity and team happiness."
+            "description": "Team members can anonymously assess their own and their peer's proficiency with each each [Notion](#tag/Notions).\n\nThe evaluation of notions will be used to determine task assignments in order to maximize productivity and team happiness, following Yerkes-Dodson's law.\n\nExperiences that have not been updated in the past **180** days are removed."
         },
         {
             "name": "Deep Context",
@@ -258,7 +258,7 @@
                 "tags": [
                     "Account"
                 ],
-                "summary": "List events",
+                "summary": "Fetch events",
                 "description": "Get a list of event models",
                 "operationId": "accountEventsList",
                 "parameters": [
@@ -1035,9 +1035,9 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Grade between 1 and 5",
+                        "description": "Grade between 1 and 10",
                         "minimum": 1,
-                        "maximum": 5,
+                        "maximum": 10,
                         "example": 5
                     }
                 ],
@@ -1143,9 +1143,9 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Grade between 1 and 5",
+                        "description": "Grade between 1 and 10",
                         "minimum": 1,
-                        "maximum": 5,
+                        "maximum": 10,
                         "example": 5
                     }
                 ],
@@ -8645,11 +8645,11 @@
                         "type": "string",
                         "description": "Event type",
                         "enum": [
-                            "i",
-                            "a",
-                            "t",
-                            "s",
-                            "p"
+                            "items",
+                            "assumptions",
+                            "tasks",
+                            "self-evaluation",
+                            "peer evaluation"
                         ]
                     },
                     "teamId": {
@@ -8754,7 +8754,7 @@
                                 "items": {
                                     "type": "integer",
                                     "minimum": 1,
-                                    "maximum": 5
+                                    "maximum": 10
                                 },
                                 "example": [
                                     4,
@@ -8785,7 +8785,7 @@
                                 "items": {
                                     "type": "integer",
                                     "minimum": 1,
-                                    "maximum": 5
+                                    "maximum": 10
                                 },
                                 "example": [
                                     4,
@@ -8793,6 +8793,11 @@
                                 ]
                             }
                         }
+                    },
+                    "expiresAt": {
+                        "type": "string",
+                        "description": "Expires timestamp",
+                        "example": "2001-01-01T08:08:08.000+00:00"
                     },
                     "createdAt": {
                         "type": "string",
