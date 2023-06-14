@@ -287,13 +287,11 @@ class ItemTaskTest extends TestCase {
                     ->setHeading("New task title")
                     ->setState(Model\PayloadTaskUpdate::STATE_DONE)
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $taskUpdated);
+        $this->assertInstanceOf(Model\Task::class, $taskUpdated);
         $this->assertEquals(0, count($taskUpdated->listProps()));
 
         $this->assertEquals("New task title", $taskUpdated->getHeading());
         $this->assertEquals(Model\PayloadTaskUpdate::STATE_DONE, $taskUpdated->getState());
-        $this->assertInstanceOf(Model\Minute::class, $taskUpdated->getMinute());
-        $this->assertEquals(0, count($taskUpdated->getMinute()->listProps()));
 
         // Re-fetch the item
         $this->item = $this->sdk
@@ -396,11 +394,10 @@ class ItemTaskTest extends TestCase {
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$this->notion->getId()])
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertInstanceOf(Model\Task::class, $taskNotion);
         $this->assertEquals(0, count($taskNotion->listProps()));
-
-        $this->assertIsArray($taskNotion->getNotions());
-        $this->assertEquals(1, count($taskNotion->getNotions()));
+        $this->assertIsArray($taskNotion->getNotionIds());
+        $this->assertEquals(1, count($taskNotion->getNotionIds()));
 
         // Read the task
         $task = $this->sdk
@@ -429,10 +426,10 @@ class ItemTaskTest extends TestCase {
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([])
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $taskEmptyNotions);
+        $this->assertInstanceOf(Model\Task::class, $taskEmptyNotions);
         $this->assertEquals(0, count($taskEmptyNotions->listProps()));
-        $this->assertIsArray($taskEmptyNotions->getNotions());
-        $this->assertEquals(0, count($taskEmptyNotions->getNotions()));
+        $this->assertIsArray($taskEmptyNotions->getNotionIds());
+        $this->assertEquals(0, count($taskEmptyNotions->getNotionIds()));
 
         // Read the task
         $task = $this->sdk
@@ -542,11 +539,11 @@ class ItemTaskTest extends TestCase {
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$notion->getId()])
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $taskNotion);
+        $this->assertInstanceOf(Model\Task::class, $taskNotion);
         $this->assertEquals(0, count($taskNotion->listProps()));
 
-        $this->assertIsArray($taskNotion->getNotions());
-        $this->assertEquals(1, count($taskNotion->getNotions()));
+        $this->assertIsArray($taskNotion->getNotionIds());
+        $this->assertEquals(1, count($taskNotion->getNotionIds()));
 
         // Read the task
         $task = $this->sdk

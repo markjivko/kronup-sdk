@@ -188,7 +188,7 @@ class DeepContextTest extends TestCase {
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$this->notion->getId()])
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertInstanceOf(Model\Task::class, $task);
         $this->assertEquals(0, count($task->listProps()));
         $this->sdk
             ->api()
@@ -208,20 +208,28 @@ class DeepContextTest extends TestCase {
                     ->setHeading("New task title")
                     ->setState(Model\PayloadTaskUpdate::STATE_DONE)
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $taskUpdated);
+        $this->assertInstanceOf(Model\Task::class, $taskUpdated);
         $this->assertEquals(0, count($taskUpdated->listProps()));
 
         $this->assertEquals("New task title", $taskUpdated->getHeading());
         $this->assertEquals(Model\PayloadTaskUpdate::STATE_DONE, $taskUpdated->getState());
-        $this->assertInstanceOf(Model\Minute::class, $taskUpdated->getMinute());
-        $this->assertEquals(0, count($taskUpdated->getMinute()->listProps()));
+
+        // Fetch the expanded state
+        $taskRead = $this->sdk
+            ->api()
+            ->tasks()
+            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
+        $this->assertInstanceOf(Model\TaskExpanded::class, $taskRead);
+        $this->assertEquals(0, count($taskRead->listProps()));
+        $this->assertInstanceOf(Model\Minute::class, $taskRead->getMinute());
+        $this->assertEquals(0, count($taskRead->getMinute()->listProps()));
 
         // Validate notion
-        $this->assertIsArray($taskUpdated->getNotions());
-        $this->assertGreaterThanOrEqual(1, count($taskUpdated->getNotions()));
-        $this->assertInstanceOf(Model\Notion::class, $taskUpdated->getNotions()[0]);
-        $this->assertEquals(0, count($taskUpdated->getNotions()[0]->listProps()));
-        $this->assertEquals($this->notion->getValue(), $taskUpdated->getNotions()[0]->getValue());
+        $this->assertIsArray($taskRead->getNotions());
+        $this->assertGreaterThanOrEqual(1, count($taskRead->getNotions()));
+        $this->assertInstanceOf(Model\Notion::class, $taskRead->getNotions()[0]);
+        $this->assertEquals(0, count($taskRead->getNotions()[0]->listProps()));
+        $this->assertEquals($this->notion->getValue(), $taskRead->getNotions()[0]->getValue());
 
         // Advance
         $this->item = $this->sdk

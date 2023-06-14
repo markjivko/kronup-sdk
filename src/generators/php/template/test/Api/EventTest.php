@@ -386,7 +386,7 @@ class EventTest extends TestCase {
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
-        $this->sdk
+        $taskUpdated = $this->sdk
             ->api()
             ->tasks()
             ->update(
@@ -396,8 +396,8 @@ class EventTest extends TestCase {
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setHeading("Task heading update")->setDetails("Task details update")
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
-        $this->assertEquals(0, count($task->listProps()));
+        $this->assertInstanceOf(Model\Task::class, $taskUpdated);
+        $this->assertEquals(0, count($taskUpdated->listProps()));
 
         // Fetch my notifications
         $eventsList = $this->sdk
@@ -631,7 +631,7 @@ class EventTest extends TestCase {
                 $taks->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$notion->getId()])
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertInstanceOf(Model\Task::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
         // Fetch my notifications
