@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2022-2023 kronup.io
  * @license   MIT
- * @package   kronup
+ * @package   Kronup
  * @author    Mark Jivko
  */
 
@@ -23,14 +23,14 @@ use Kronup\Sdk\ApiException;
  */
 class RemoveFromOrgTest extends TestCase {
     /**
-     * kronup SDK
+     * Kronup SDK
      *
      * @var \Kronup\Sdk
      */
     protected $sdk;
 
     /**
-     * kronup SDK ran by the service account
+     * Kronup SDK ran by the service account
      *
      * @var \Kronup\Sdk
      */

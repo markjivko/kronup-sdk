@@ -1,8 +1,8 @@
 /**
  * PHP SDK hooks
  *
- * @package   kronup
- * @author    Mark Jivko
+ * @package Kronup
+ * @author  Mark Jivko
  */
 const iHook = require("../../lib/iHook");
 const { readdirRelative } = require("../../utils/file");

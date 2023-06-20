@@ -3,10 +3,10 @@
     "info": {
         "version": "0.0.1",
         "title": "kronup / api",
-        "description": "# API reference\n\nThe kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Authorization\n\nOur API uses a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) authentication scheme. \n\nYou can manage your API keys from 👉 [Organization > Service Accounts](https://go.kronup.com/organization/#/tab:service-accounts).\n\n```\n$ curl --header \"Authorization: Bearer <YOUR.API.KEY>\"\n```\n\n# RBAC\n\nThere are 3 [Account](#tag/Account) roles: **owner**, **admin** and **member**.\n\nWithin the same [Organization](#tag/Organizations), account actions are limited (read as **A can B**):\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\\n\\n\n\nAccounts have **read/write** permissions over **themselves**.\n\n# SDKs\n\nYou can start building your kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/). \n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
+        "description": "# API reference\n\nThe Kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Authorization\n\nOur API uses a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) authentication scheme.\n\n👉 You can manage your API keys from [Organization > Service Accounts](https://go.kronup.com/organization/#/tab:service-accounts).\n\n```\n$ curl --header \"Authorization: Bearer <YOUR.API.KEY>\"\n```\n\n# RBAC\n\nThere are 3 [Account](#tag/Account) roles: **owner**, **admin** and **member**.\n\nWithin the same [Organization](#tag/Organizations), account actions are limited (read as **A can B**):\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\\n\\n\n\nAccounts have **read/write** permissions over **themselves**.\n\n# SDKs\n\nYou can start building your Kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/). \n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with Kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
         "x-logo": {
             "url": "/img/banner.svg",
-            "altText": "kronup"
+            "altText": "Kronup"
         },
         "license": {
             "name": "Apache 2.0",
@@ -25,7 +25,7 @@
         },
         {
             "name": "Service accounts",
-            "description": "Manage service accounts.\n        \nThese accounts have the same abilities as regular [Users](#tag/Users), but they work remotely through API calls.\n\nService accounts are **free**. [Organizations](#tag/Organizations) cannot have more service accounts than user accounts."
+            "description": "Manage service accounts.\n\nThese accounts have the same abilities as regular [Users](#tag/Users), but they work remotely through API calls.\n\nService accounts are **free**. [Organizations](#tag/Organizations) cannot have more service accounts than user accounts."
         },
         {
             "name": "Users",
@@ -57,11 +57,11 @@
         },
         {
             "name": "Tasks",
-            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **50** Tasks.\n        \nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **10** [Notions](#tag/Notions), **50** discoveries, and **50** feedback items."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **50** Tasks.\n\nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **10** [Notions](#tag/Notions), **50** discoveries, and **50** feedback items."
         },
         {
             "name": "Notions",
-            "description": "Each [Task](#tag/Tasks) can be described with a list of Notions.\n        \nNotions are products, services, tools, methodologies or skills required to successfully complete a task.\n\nEach [Organization](#tag/Organizations) can define at most **55000** Notions."
+            "description": "Each [Task](#tag/Tasks) can be described with a list of Notions.\n\nNotions are products, services, tools, methodologies or skills required to successfully complete a task.\n\nEach [Organization](#tag/Organizations) can define at most **55000** Notions."
         },
         {
             "name": "Experiences",
@@ -69,7 +69,7 @@
         },
         {
             "name": "Deep Context",
-            "description": "Once all [Tasks](#tag/Tasks) are marked as done, [Value items](#tag/Value-items) can be advanced further to Deep Context.\n        \nOnce in Deep Context, Value items can no longer be modified or restored to an active state."
+            "description": "Once all [Tasks](#tag/Tasks) are marked as done, [Value items](#tag/Value-items) can be advanced further to Deep Context.\n\nOnce in Deep Context, Value items can no longer be modified or restored to an active state."
         }
     ],
     "paths": {
@@ -9420,12 +9420,14 @@
             },
             "YerkesDodson": {
                 "type": "number",
-                "description": "Yerkes-Dodson score",
+                "title": "Yerkes-Dodson",
+                "description": "Yerkes-Dodson score; 40+ is good, 90+ is great",
                 "minimum": 0,
                 "maximum": 100
             },
             "Candidate": {
                 "type": "object",
+                "title": "Candidate",
                 "description": "Task Candidate",
                 "properties": {
                     "userId": {
@@ -9439,19 +9441,19 @@
                         "example": "John Doe"
                     },
                     "userItems": {
-                        "type": "number",
+                        "type": "integer",
                         "description": "Number of value items where this user is executing tasks",
                         "minimum": 0
                     },
                     "ydStress": {
                         "type": "number",
-                        "description": "Task difficulty based on notion assessments",
+                        "description": "Forecast stress level based on notion assessments (0 to 100)",
                         "minimum": 0,
                         "maximum": 100
                     },
                     "ydPrecision": {
                         "type": "number",
-                        "description": "Perecentage of notions assessed for this task",
+                        "description": "Perecentage of notions assessed for this task (0 to 100)",
                         "minimum": 0,
                         "maximum": 100
                     },

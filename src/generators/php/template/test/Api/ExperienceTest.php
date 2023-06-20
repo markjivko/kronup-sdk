@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2022-2023 kronup.io
  * @license   MIT
- * @package   kronup
+ * @package   Kronup
  * @author    Mark Jivko
  */
 
@@ -23,7 +23,7 @@ use Kronup\Sdk\ApiException;
  */
 class ExperienceTest extends TestCase {
     /**
-     * kronup SDK
+     * Kronup SDK
      *
      * @var \Kronup\Sdk
      */

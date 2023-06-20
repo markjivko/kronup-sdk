@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2022-2023 kronup.io
  * @license   MIT
- * @package   kronup
+ * @package   Kronup
  * @author    Mark Jivko
  */
 
@@ -23,14 +23,14 @@ use Kronup\Sdk\ApiException;
  */
 class EventTest extends TestCase {
     /**
-     * kronup SDK
+     * Kronup SDK
      *
      * @var \Kronup\Sdk
      */
     protected $sdk;
 
     /**
-     * kronup SDK for the Service Account
+     * Kronup SDK for the Service Account
      *
      * @var \Kronup\Sdk
      */

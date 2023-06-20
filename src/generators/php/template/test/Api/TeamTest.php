@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2022-2023 kronup.io
  * @license   MIT
- * @package   kronup
+ * @package   Kronup
  * @author    Mark Jivko
  */
 
@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TeamTest extends TestCase {
     /**
-     * kronup sdk
+     * Kronup SDK
      *
      * @var \Kronup\Sdk
      */
