@@ -9453,7 +9453,7 @@
                     },
                     "ydPrecision": {
                         "type": "number",
-                        "description": "Perecentage of notions assessed for this task (0 to 100)",
+                        "description": "Percentage of notions assessed for this task (0 to 100)",
                         "minimum": 0,
                         "maximum": 100
                     },
