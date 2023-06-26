@@ -3686,11 +3686,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Expanded Task model",
+                        "description": "Discovery model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/MinuteDiscovery"
                                 }
                             }
                         }
@@ -3832,11 +3832,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Expanded Task model",
+                        "description": "Discovery model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/MinuteDiscovery"
                                 }
                             }
                         }
@@ -4092,11 +4092,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Expanded Task model",
+                        "description": "Feedback model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/MinuteFeedback"
                                 }
                             }
                         }
@@ -4252,11 +4252,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Expanded Task model",
+                        "description": "Feedback model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/MinuteFeedback"
                                 }
                             }
                         }
@@ -4537,11 +4537,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Expanded Task model",
+                        "description": "Feedback model",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TaskExpanded"
+                                    "$ref": "#/components/schemas/MinuteFeedback"
                                 }
                             }
                         }
@@ -9772,6 +9772,81 @@
                     }
                 }
             },
+            "MinuteDiscovery": {
+                "type": "object",
+                "title": "Minute Discovery",
+                "description": "Task discovery recorded in an iteration",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Discovery ID",
+                        "example": "0123456789abcdef01234567"
+                    },
+                    "iteration": {
+                        "type": "number",
+                        "description": "Iteration number",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "authorUserId": {
+                        "$ref": "#/components/schemas/UserId"
+                    },
+                    "details": {
+                        "type": "string",
+                        "description": "Discovery details",
+                        "minLength": 0,
+                        "maxLength": 512
+                    }
+                }
+            },
+            "MinuteFeedback": {
+                "type": "object",
+                "title": "Minute Feedback",
+                "description": "Task feedback recorded in an iteration",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Feedback ID",
+                        "example": "0123456789abcdef01234567"
+                    },
+                    "iteration": {
+                        "type": "number",
+                        "description": "Iteration number",
+                        "minimum": 1,
+                        "default": 1
+                    },
+                    "authorUserId": {
+                        "$ref": "#/components/schemas/UserId"
+                    },
+                    "issue": {
+                        "type": "string",
+                        "description": "Feedback issue",
+                        "enum": [
+                            "value",
+                            "complexity",
+                            "flexibility",
+                            "testing",
+                            "security",
+                            "ci/cd",
+                            "standards",
+                            "misc"
+                        ],
+                        "default": "value"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Feedback for assignee",
+                        "minLength": 0,
+                        "maxLength": 512
+                    },
+                    "reply": {
+                        "type": "string",
+                        "description": "Reply from assignee",
+                        "minLength": 0,
+                        "maxLength": 512
+                    }
+                }
+            },
             "Minute": {
                 "type": "object",
                 "title": "Minute",
@@ -9787,83 +9862,14 @@
                         "type": "array",
                         "description": "Discoveries",
                         "items": {
-                            "type": "object",
-                            "title": "Minute Discovery",
-                            "description": "Task discovery recorded in an iteration",
-                            "properties": {
-                                "id": {
-                                    "type": "string",
-                                    "description": "Discovery ID",
-                                    "example": "0123456789abcdef01234567"
-                                },
-                                "iteration": {
-                                    "type": "number",
-                                    "description": "Iteration number",
-                                    "minimum": 1,
-                                    "default": 1
-                                },
-                                "authorUserId": {
-                                    "$ref": "#/components/schemas/UserId"
-                                },
-                                "details": {
-                                    "type": "string",
-                                    "description": "Discovery details",
-                                    "minLength": 0,
-                                    "maxLength": 512
-                                }
-                            }
+                            "$ref": "#/components/schemas/MinuteDiscovery"
                         }
                     },
                     "feedback": {
                         "type": "array",
                         "description": "Feedback items",
                         "items": {
-                            "type": "object",
-                            "title": "Minute Feedback",
-                            "description": "Task feedback recorded in an iteration",
-                            "properties": {
-                                "id": {
-                                    "type": "string",
-                                    "description": "Feedback ID",
-                                    "example": "0123456789abcdef01234567"
-                                },
-                                "iteration": {
-                                    "type": "number",
-                                    "description": "Iteration number",
-                                    "minimum": 1,
-                                    "default": 1
-                                },
-                                "authorUserId": {
-                                    "$ref": "#/components/schemas/UserId"
-                                },
-                                "issue": {
-                                    "type": "string",
-                                    "description": "Feedback issue",
-                                    "enum": [
-                                        "value",
-                                        "complexity",
-                                        "flexibility",
-                                        "testing",
-                                        "security",
-                                        "ci/cd",
-                                        "standards",
-                                        "misc"
-                                    ],
-                                    "default": "value"
-                                },
-                                "message": {
-                                    "type": "string",
-                                    "description": "Feedback for assignee",
-                                    "minLength": 1,
-                                    "maxLength": 512
-                                },
-                                "reply": {
-                                    "type": "string",
-                                    "description": "Reply from assignee",
-                                    "minLength": 1,
-                                    "maxLength": 512
-                                }
-                            }
+                            "$ref": "#/components/schemas/MinuteFeedback"
                         }
                     }
                 }

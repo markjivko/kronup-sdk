@@ -436,14 +436,14 @@ class RemoveFromOrgTest extends TestCase {
             $serviceClosed->getId(),
             $task
                 ->getMinute()
-                ->getDiscoveries()[0]
+                ->getDiscoveries()[1]
                 ->getAuthorUserId()
         );
         $this->assertEquals(
             $this->account->getId(),
             $task
                 ->getMinute()
-                ->getDiscoveries()[1]
+                ->getDiscoveries()[0]
                 ->getAuthorUserId()
         );
 
@@ -452,14 +452,14 @@ class RemoveFromOrgTest extends TestCase {
             $serviceClosed->getId(),
             $task
                 ->getMinute()
-                ->getFeedback()[0]
+                ->getFeedback()[1]
                 ->getAuthorUserId()
         );
         $this->assertEquals(
             $this->account->getId(),
             $task
                 ->getMinute()
-                ->getFeedback()[1]
+                ->getFeedback()[0]
                 ->getAuthorUserId()
         );
     }

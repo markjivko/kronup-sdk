@@ -218,7 +218,7 @@ class ItemTaskMinuteTest extends TestCase {
         $discoveryTextUpdated = "The new discovery";
 
         // Create discovery
-        $task = $this->sdk
+        $discovery = $this->sdk
             ->api()
             ->tasks()
             ->discoveryCreate(
@@ -228,33 +228,10 @@ class ItemTaskMinuteTest extends TestCase {
                 $this->task->getId(),
                 (new Model\PayloadTaskDiscoveryCreate())->setDetails($discoveryText)
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
-        $this->assertEquals(0, count($task->listProps()));
+        $this->assertInstanceOf(Model\MinuteDiscovery::class, $discovery);
+        $this->assertEquals(0, count($discovery->listProps()));
 
-        $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
-        $this->assertEquals(0, count($task->getMinute()->listProps()));
-
-        $this->assertIsArray($task->getMinute()->getDiscoveries());
-        $this->assertEquals(1, count($task->getMinute()->getDiscoveries()));
-
-        $this->assertInstanceOf(Model\MinuteDiscovery::class, $task->getMinute()->getDiscoveries()[0]);
-        $this->assertEquals(
-            0,
-            count(
-                $task
-                    ->getMinute()
-                    ->getDiscoveries()[0]
-                    ->listProps()
-            )
-        );
-
-        $this->assertEquals(
-            $discoveryText,
-            $task
-                ->getMinute()
-                ->getDiscoveries()[0]
-                ->getDetails()
-        );
+        $this->assertEquals($discoveryText, $discovery->getDetails());
 
         // Fetch the task again
         $task = $this->sdk
@@ -272,7 +249,7 @@ class ItemTaskMinuteTest extends TestCase {
         );
 
         // Update discovery
-        $task = $this->sdk
+        $discovery = $this->sdk
             ->api()
             ->tasks()
             ->discoveryUpdate(
@@ -286,15 +263,9 @@ class ItemTaskMinuteTest extends TestCase {
                     ->getId(),
                 (new Model\PayloadTaskDiscoveryUpdate())->setDetails($discoveryTextUpdated)
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
-        $this->assertEquals(0, count($task->listProps()));
-        $this->assertEquals(
-            $discoveryTextUpdated,
-            $task
-                ->getMinute()
-                ->getDiscoveries()[0]
-                ->getDetails()
-        );
+        $this->assertInstanceOf(Model\MinuteDiscovery::class, $discovery);
+        $this->assertEquals(0, count($discovery->listProps()));
+        $this->assertEquals($discoveryTextUpdated, $discovery->getDetails());
 
         // Delete the discovery
         $deleted = $this->sdk
@@ -331,10 +302,9 @@ class ItemTaskMinuteTest extends TestCase {
         $feedbackMessage = "My feedback";
         $feedbackMessageUpdated = "My updated feedback";
         $feedbackReply = "My reply";
-        $feedbackReplyUpdated = "My updated reply";
 
         // Create feedback
-        $task = $this->sdk
+        $feedback = $this->sdk
             ->api()
             ->tasks()
             ->feedbackCreate(
@@ -346,33 +316,9 @@ class ItemTaskMinuteTest extends TestCase {
                     ->setMessage($feedbackMessage)
                     ->setIssue(Model\PayloadTaskFeedbackCreate::ISSUE_VALUE)
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
-        $this->assertEquals(0, count($task->listProps()));
-
-        $this->assertInstanceOf(Model\Minute::class, $task->getMinute());
-        $this->assertEquals(0, count($task->getMinute()->listProps()));
-
-        $this->assertIsArray($task->getMinute()->getFeedback());
-        $this->assertEquals(1, count($task->getMinute()->getFeedback()));
-
-        $this->assertInstanceOf(Model\MinuteFeedback::class, $task->getMinute()->getFeedback()[0]);
-        $this->assertEquals(
-            0,
-            count(
-                $task
-                    ->getMinute()
-                    ->getFeedback()[0]
-                    ->listProps()
-            )
-        );
-
-        $this->assertEquals(
-            $feedbackMessage,
-            $task
-                ->getMinute()
-                ->getFeedback()[0]
-                ->getMessage()
-        );
+        $this->assertInstanceOf(Model\MinuteFeedback::class, $feedback);
+        $this->assertEquals(0, count($feedback->listProps()));
+        $this->assertEquals($feedbackMessage, $feedback->getMessage());
 
         // Fetch the task again
         $task = $this->sdk
@@ -390,7 +336,7 @@ class ItemTaskMinuteTest extends TestCase {
         );
 
         // Update feedback
-        $task = $this->sdk
+        $feedback = $this->sdk
             ->api()
             ->tasks()
             ->feedbackUpdate(
@@ -406,26 +352,13 @@ class ItemTaskMinuteTest extends TestCase {
                     ->setMessage($feedbackMessageUpdated)
                     ->setIssue(Model\PayloadTaskFeedbackUpdate::ISSUE_MISC)
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
-        $this->assertEquals(0, count($task->listProps()));
-
-        $this->assertEquals(
-            $feedbackMessageUpdated,
-            $task
-                ->getMinute()
-                ->getFeedback()[0]
-                ->getMessage()
-        );
-        $this->assertEquals(
-            Model\PayloadTaskFeedbackUpdate::ISSUE_MISC,
-            $task
-                ->getMinute()
-                ->getFeedback()[0]
-                ->getIssue()
-        );
+        $this->assertInstanceOf(Model\MinuteFeedback::class, $feedback);
+        $this->assertEquals(0, count($feedback->listProps()));
+        $this->assertEquals($feedbackMessageUpdated, $feedback->getMessage());
+        $this->assertEquals(Model\PayloadTaskFeedbackUpdate::ISSUE_MISC, $feedback->getIssue());
 
         // Reply
-        $task = $this->sdk
+        $feedback = $this->sdk
             ->api()
             ->tasks()
             ->feedbackReply(
@@ -439,15 +372,9 @@ class ItemTaskMinuteTest extends TestCase {
                     ->getId(),
                 (new Model\PayloadTaskFeedbackReply())->setReply($feedbackReply)
             );
-        $this->assertInstanceOf(Model\TaskExpanded::class, $task);
+        $this->assertInstanceOf(Model\MinuteFeedback::class, $feedback);
         $this->assertEquals(0, count($task->listProps()));
-        $this->assertEquals(
-            $feedbackReply,
-            $task
-                ->getMinute()
-                ->getFeedback()[0]
-                ->getReply()
-        );
+        $this->assertEquals($feedbackReply, $feedback->getReply());
 
         // Delete the feedback
         $deleted = $this->sdk
