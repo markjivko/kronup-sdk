@@ -9782,6 +9782,11 @@
                         "description": "Discovery ID",
                         "example": "0123456789abcdef01234567"
                     },
+                    "iat": {
+                        "type": "number",
+                        "description": "Issued at time",
+                        "example": 1680000861
+                    },
                     "iteration": {
                         "type": "number",
                         "description": "Iteration number",
@@ -9808,6 +9813,11 @@
                         "type": "string",
                         "description": "Feedback ID",
                         "example": "0123456789abcdef01234567"
+                    },
+                    "iat": {
+                        "type": "number",
+                        "description": "Issued at time",
+                        "example": 1680000861
                     },
                     "iteration": {
                         "type": "number",
