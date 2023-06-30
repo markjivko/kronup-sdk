@@ -71,7 +71,13 @@ const operations = {
             .replace(/\#.*?$/g, "")
             .replace(/\//g, " /")
             .trim(),
-    host: str => (config.application().production ? str : str.replace(/^.*?\/v(\d+)\b/g, "http://localhost:3000/v$1")),
+    host: str =>
+        config.application().production
+            ? str
+            : str.replace(
+                  /^.*?\/v(\d+)\b/g,
+                  `http://${config.application().apiHost}:${config.application().apiPort}/v$1`
+              ),
     defaultDebug: str => ("debug" !== config.application().logLevel ? str : "true"),
     commentLines: str =>
         `${str}`

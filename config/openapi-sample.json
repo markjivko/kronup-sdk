@@ -70,6 +70,10 @@
         {
             "name": "Deep Context",
             "description": "Once all [Tasks](#tag/Tasks) are marked as done, [Value items](#tag/Value-items) can be advanced further to Deep Context.\n\nOnce in Deep Context, Value items can no longer be modified or restored to an active state."
+        },
+        {
+            "name": "Billing",
+            "description": "Manage billing information and subscriptions"
         }
     ],
     "paths": {
@@ -10473,7 +10477,8 @@
                 "Tasks",
                 "Notions",
                 "Experiences",
-                "Deep Context"
+                "Deep Context",
+                "Billing"
             ]
         }
     ]

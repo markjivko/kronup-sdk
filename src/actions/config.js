@@ -266,7 +266,9 @@ const tools = {
         const pathConfigFetched = path.join(configPath, configName);
 
         // Fetch the html
-        const openApiObject = await axios.get(`http://localhost:3000/openapi.json`);
+        const openApiObject = await axios.get(
+            `http://${config.application().apiHost}:${config.application().apiPort}/openapi.json`
+        );
 
         // Invalid response
         if ("object" !== typeof openApiObject || null === openApiObject) {
@@ -284,7 +286,9 @@ const tools = {
         // Development mode
         let openApiDevObject = null;
         if (devMode) {
-            openApiDevObject = await axios.get(`http://localhost:3000/openapi-dev.json`);
+            openApiDevObject = await axios.get(
+                `http://${config.application().apiHost}:${config.application().apiPort}/openapi-dev.json`
+            );
 
             // Invalid response
             if ("object" !== typeof openApiDevObject || null === openApiDevObject) {

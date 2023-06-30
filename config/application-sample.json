@@ -3,5 +3,7 @@
     "unitTest": null,
     "production": true,
     "apiKey": "",
+    "apiHost": "localhost",
+    "apiPort": 3000,
     "schemaMappings": {}
 }
