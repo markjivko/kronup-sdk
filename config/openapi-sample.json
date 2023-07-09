@@ -9803,7 +9803,7 @@
                     "url": {
                         "type": "string",
                         "description": "Custom Checkout URL",
-                        "example": "https://x.example.com/checkout/custom/000"
+                        "example": "https://x.kronup.com/checkout/custom/000"
                     },
                     "expiresAt": {
                         "type": "string",
@@ -10133,7 +10133,7 @@
                     "url": {
                         "type": "string",
                         "description": "Manage invoice URL",
-                        "example": "https://app.example.com/my-orders/000/subscription-invoice/456"
+                        "example": "https://app.kronup.com/my-orders/000/subscription-invoice/456"
                     },
                     "refunded": {
                         "type": "boolean",
@@ -11044,7 +11044,7 @@
                     "url": {
                         "type": "string",
                         "description": "Update payment method URL",
-                        "example": "https://x.example.com/subscription/123/payment-details"
+                        "example": "https://x.kronup.com/subscription/123/payment-details"
                     },
                     "orderId": {
                         "type": "number",
@@ -11156,7 +11156,7 @@
                     "url": {
                         "type": "string",
                         "description": "Update payment method URL",
-                        "example": "https://x.example.com/subscription/123/payment-details"
+                        "example": "https://x.kronup.com/subscription/123/payment-details"
                     },
                     "orderId": {
                         "type": "number",
