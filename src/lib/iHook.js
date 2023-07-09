@@ -193,9 +193,11 @@ module.exports = class iHook {
         if ("string" !== typeof result.KRONUP_API_KEY) {
             result.KRONUP_API_KEY = config.application().apiKey;
         }
+        result.KRONUP_LEMON_SECRET = config.application().lemon.secret;
 
         logger.silentInfo("Environment variables", {
-            KRONUP_API_KEY: result.KRONUP_API_KEY
+            KRONUP_API_KEY: result.KRONUP_API_KEY,
+            KRONUP_LEMON_SECRET: config.application().lemon.secret
         });
 
         return result;
