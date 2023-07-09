@@ -6,7 +6,14 @@ layout: page
 
 # Api/{{classname}}
 
-[{{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}} API Reference](https://api.kronup.com/#tag/{{#operations}}{{#operation}}{{#-first}}((#toDashes)){{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}((/toDashes)){{/-first}}{{/operation}}{{/operations}})
+Method | Description
+------------- | -------------
+{{#operations}}{{#operation}}{{^isDeprecated}}🔹 [**{{vendorExtensions.x-method}}()**](#((#anchorText)){{vendorExtensions.x-method}}((/anchorText))) | {{#summary}}((#tableCell)){{{summary}}}((/tableCell)){{/summary}}
+{{/isDeprecated}}{{/operation}}{{/operations}}{{#operations}}{{#operation}}{{^isDeprecated}}
+
+📚 [{{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}} API Reference](https://api.kronup.com/#tag/{{#operations}}{{#operation}}{{#-first}}((#toDashes)){{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}((/toDashes)){{/-first}}{{/operation}}{{/operations}})
+
+## Getting started
 
 ```php
 // Place your API Key 👇 here
@@ -19,14 +26,6 @@ $sdk->api()->{{classVarName}}();
 
 {{{unescapedDescription}}}
 {{/description}}
-
-## Methods
-
-Method | Description
-------------- | -------------
-{{#operations}}{{#operation}}{{^isDeprecated}}[**{{vendorExtensions.x-method}}()**](#((#anchorText)){{vendorExtensions.x-method}}((/anchorText))) | {{#summary}}((#tableCell)){{{summary}}}((/tableCell)){{/summary}}
-{{/isDeprecated}}{{/operation}}{{/operations}}{{#operations}}{{#operation}}{{^isDeprecated}}
-
 
 ## `{{{vendorExtensions.x-method}}}()`
 
