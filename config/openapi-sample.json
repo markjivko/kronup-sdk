@@ -49,7 +49,7 @@
         },
         {
             "name": "Value items",
-            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly.\n\nIn order to prevent information overload, each [Channel](#tag/Channels) can hold at most **undefined** 'value items'."
+            "description": "Instead of `issues`, we're using `value items` to emphasise that everything must be viewed through the lens of customer value.\n\nValue items are debated and advanced in [Channels](#tag/Channels). \n\nEach `value item` has length restrictions to encourage brevity and to ensure that all team members are well-informed quickly.\n\nIn order to prevent information overload, each stage of a [Channel](#tag/Channels) can hold at most **10** 'value items'."
         },
         {
             "name": "Assumptions",
