@@ -26,12 +26,15 @@ $sdk->api()->{{classVarName}}();
 
 ## `{{{vendorExtensions.x-method}}}()`
 
-{{#description}}
+{{#description}}{{{unescapedDescription}}}{{/description}}
 
-{{{unescapedDescription}}}
-{{/description}}
+> ((#tableCell)){{#summary}}{{{summary}}}{{/summary}}((/tableCell))
 
-### Example
+((#cleanHtml))
+>> {{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}} <<
+
+{{#notes}}{{{notes}}}{{/notes}}
+((/cleanHtml))
 
 <!---kronup-example file="Api/{{classname}}/{{{vendorExtensions.x-method}}}.php"--->
 ```php
@@ -125,16 +128,6 @@ Note: the input parameter is an associative array with the keys listed as the pa
 ### Return type
 
 {{#returnType}}{{#returnTypeIsPrimitive}}**{{{returnType}}}**{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}[**{{{returnType}}}**](../../Model/{{returnBaseType}}){{/returnTypeIsPrimitive}}{{/returnType}}{{^returnType}}void (empty response body){{/returnType}}
-
-### Description
-
-> ((#tableCell)){{#summary}}{{{summary}}}{{/summary}}((/tableCell))
-
-((#cleanHtml))
->> {{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}} <<
-
-{{#notes}}{{{notes}}}{{/notes}}
-((/cleanHtml))
 
 [🔺 Back to top](#top)
 
