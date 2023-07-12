@@ -167,7 +167,7 @@ module.exports = class iHook {
                         // Replace example block with link
                         exAll = `{: .new-title }\n> #️⃣ Execute command in terminal \n> \n> [${
                             "string" === typeof commandPrefix ? commandPrefix + " " : ""
-                        }**${path.basename(exRelativePath)}**](${url}){: .btn .btn-green .mt-4}`;
+                        }**${path.basename(exRelativePath)}**](${url}){: .btn .mt-4}`;
                     }
 
                     return exAll;

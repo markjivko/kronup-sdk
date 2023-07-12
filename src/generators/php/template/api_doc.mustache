@@ -9,7 +9,7 @@ layout: page
 Method | Description
 ------------- | -------------
 {{#operations}}{{#operation}}{{^isDeprecated}}🔹 [**{{vendorExtensions.x-method}}()**](#((#anchorText)){{vendorExtensions.x-method}}((/anchorText))) | {{#summary}}((#tableCell)){{{summary}}}((/tableCell)){{/summary}}
-{{/isDeprecated}}{{/operation}}{{/operations}}{{#operations}}{{#operation}}{{^isDeprecated}}
+{{/isDeprecated}}{{/operation}}{{/operations}}
 
 📚 [{{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}} API Reference](https://api.kronup.com/#tag/{{#operations}}{{#operation}}{{#-first}}((#toDashes)){{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}((/toDashes)){{/-first}}{{/operation}}{{/operations}})
 
@@ -22,12 +22,14 @@ $sdk = new \Kronup\Sdk();
 // API Call
 $sdk->api()->{{classVarName}}();
 ```
+{{#operations}}{{#operation}}{{^isDeprecated}}
+
+## `{{{vendorExtensions.x-method}}}()`
+
 {{#description}}
 
 {{{unescapedDescription}}}
 {{/description}}
-
-## `{{{vendorExtensions.x-method}}}()`
 
 ### Example
 
@@ -134,7 +136,7 @@ Note: the input parameter is an associative array with the keys listed as the pa
 {{#notes}}{{{notes}}}{{/notes}}
 ((/cleanHtml))
 
-[Back to top](#top){: .btn .btn-purple }
+[🔺 Back to top](#top)
 
 ---
 {{/isDeprecated}}{{/operation}}{{/operations}}
