@@ -26,12 +26,9 @@ $sdk->api()->{{classVarName}}();
 
 ## `{{{vendorExtensions.x-method}}}()`
 
+> ((#cleanHtml))
 {{#description}}{{{unescapedDescription}}}{{/description}}
-
-> ((#tableCell)){{#summary}}{{{summary}}}{{/summary}}((/tableCell))
-
-((#cleanHtml))
->> {{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}} <<
+{{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}}
 
 {{#notes}}{{{notes}}}{{/notes}}
 ((/cleanHtml))
