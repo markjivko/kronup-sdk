@@ -6,7 +6,7 @@
     "apiHost": "localhost",
     "apiPort": 3000,
     "schemaMappings": {},
-    "lemon": {
+    "billing": {
         "secret": ""
     }
 }

@@ -583,7 +583,7 @@
                             "type": "string"
                         },
                         "description": "Price Plan ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "darkMode",
@@ -595,7 +595,8 @@
                             "enum": [
                                 0,
                                 1
-                            ]
+                            ],
+                            "example": 1
                         }
                     }
                 ],
@@ -660,7 +661,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/billing/price-plans/000000000000000000000000?darkMode=SOME_INTEGER_VALUE' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/billing/price-plans/fff?darkMode=1' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -825,7 +826,7 @@
                             "type": "string"
                         },
                         "description": "Price Plan ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -889,7 +890,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/billing/subscription/price-plans/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/billing/subscription/price-plans/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1020,7 +1021,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -1084,7 +1085,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/deep-context/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/deep-context/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -1104,7 +1105,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -1168,7 +1169,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/deep-context/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/deep-context/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1446,7 +1447,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "pageNumber",
@@ -1563,7 +1564,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/users/000000000000000000000000?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/xp/users/fff?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1585,7 +1586,7 @@
                             "type": "string"
                         },
                         "description": "Notion ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -1649,7 +1650,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/xp/notions/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/xp/notions/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1671,7 +1672,7 @@
                             "type": "string"
                         },
                         "description": "Notion ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "userId",
@@ -1681,7 +1682,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -1745,7 +1746,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/xp/notions/000000000000000000000000/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/xp/notions/fff/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1767,7 +1768,7 @@
                             "type": "string"
                         },
                         "description": "Notion ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "grade",
@@ -1843,7 +1844,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/xp/notions/000000000000000000000000/grade/5 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/xp/notions/fff/grade/5 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -1865,7 +1866,7 @@
                             "type": "string"
                         },
                         "description": "Notion ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "grade",
@@ -1887,7 +1888,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -1951,7 +1952,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/xp/notions/000000000000000000000000/grade/5/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/xp/notions/fff/grade/5/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -2019,7 +2020,7 @@
                                     "teamId": {
                                         "type": "string",
                                         "description": "Team ID",
-                                        "example": "000000000000000000000000"
+                                        "example": "fff"
                                     },
                                     "inviteName": {
                                         "type": "string",
@@ -2071,7 +2072,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamId\":\"000000000000000000000000\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamId\":\"fff\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
                     }
                 ]
             },
@@ -2210,7 +2211,7 @@
                             "type": "string"
                         },
                         "description": "Invitation ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -2259,7 +2260,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/invitations/000000000000000000000000"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/invitations/fff"
                     }
                 ]
             },
@@ -2279,7 +2280,7 @@
                             "type": "string"
                         },
                         "description": "Invitation ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -2336,7 +2337,7 @@
                                     "teamId": {
                                         "type": "string",
                                         "description": "Team ID",
-                                        "example": "000000000000000000000000"
+                                        "example": "fff"
                                     },
                                     "inviteName": {
                                         "type": "string",
@@ -2384,7 +2385,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamId\":\"000000000000000000000000\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/invitations/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamId\":\"fff\",\"inviteName\":\"string\",\"inviteOrgRole\":\"member\",\"inviteExpireDays\":5,\"inviteUsesMax\":10}'"
                     }
                 ]
             },
@@ -2404,7 +2405,7 @@
                             "type": "string"
                         },
                         "description": "Invitation ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -2468,7 +2469,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/invitations/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/invitations/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -2488,7 +2489,7 @@
                             "type": "string"
                         },
                         "description": "Invitation ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -2552,7 +2553,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/invitations/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/invitations/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -2574,7 +2575,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -2584,7 +2585,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -2594,7 +2595,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -2689,7 +2690,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/assms \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"This thing is possible\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/assms \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"This thing is possible\"}'"
                     }
                 ]
             },
@@ -2709,7 +2710,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -2719,7 +2720,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -2729,7 +2730,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "pageNumber",
@@ -2846,7 +2847,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/assms?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/assms?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -2868,7 +2869,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -2878,7 +2879,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -2888,7 +2889,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "assmId",
@@ -2898,7 +2899,7 @@
                             "type": "string"
                         },
                         "description": "Assumption ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -2993,7 +2994,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/assms/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/assms/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\"}'"
                     }
                 ]
             },
@@ -3013,7 +3014,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -3023,7 +3024,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -3033,7 +3034,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "assmId",
@@ -3043,7 +3044,7 @@
                             "type": "string"
                         },
                         "description": "Assumption ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -3117,7 +3118,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/assms/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/assms/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -3139,7 +3140,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -3149,7 +3150,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -3159,7 +3160,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "assmId",
@@ -3169,7 +3170,7 @@
                             "type": "string"
                         },
                         "description": "Assumption ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -3276,7 +3277,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/assms/000000000000000000000000/exp \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"confirmed\":true,\"details\":\"string\",\"state\":\"idle\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/assms/fff/exp \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"confirmed\":true,\"details\":\"string\",\"state\":\"idle\"}'"
                     }
                 ]
             }
@@ -3298,7 +3299,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -3308,7 +3309,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -3318,7 +3319,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -3418,7 +3419,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\"}'"
                     }
                 ]
             },
@@ -3438,7 +3439,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -3448,7 +3449,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -3458,7 +3459,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "pageNumber",
@@ -3575,7 +3576,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -3597,7 +3598,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -3607,7 +3608,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -3617,7 +3618,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -3627,7 +3628,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -3691,7 +3692,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -3711,7 +3712,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -3721,7 +3722,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -3731,7 +3732,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -3741,7 +3742,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -3842,7 +3843,7 @@
                                         "description": "Notion IDs",
                                         "items": {
                                             "type": "string",
-                                            "example": "000000000000000000000000"
+                                            "example": "fff"
                                         }
                                     }
                                 }
@@ -3859,7 +3860,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\",\"notionIds\":[\"000000000000000000000000\"]}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"string\",\"details\":\"string\",\"state\":\"idle\",\"notionIds\":[\"fff\"]}'"
                     }
                 ]
             },
@@ -3879,7 +3880,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -3889,7 +3890,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -3899,7 +3900,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -3909,7 +3910,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -3983,7 +3984,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -4005,7 +4006,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -4015,7 +4016,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -4025,7 +4026,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -4035,7 +4036,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -4099,7 +4100,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/candidates \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/candidates \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -4121,7 +4122,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -4131,7 +4132,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -4141,7 +4142,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -4151,7 +4152,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "userId",
@@ -4161,7 +4162,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -4235,7 +4236,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -4257,7 +4258,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -4267,7 +4268,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -4277,7 +4278,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -4287,7 +4288,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -4381,7 +4382,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/discoveries \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"details\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/discoveries \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"details\":\"string\"}'"
                     }
                 ]
             }
@@ -4403,7 +4404,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -4413,7 +4414,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -4423,7 +4424,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -4433,7 +4434,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "discoveryId",
@@ -4443,7 +4444,7 @@
                             "type": "string"
                         },
                         "description": "Discovery ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -4537,7 +4538,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/discoveries/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"details\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/discoveries/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"details\":\"string\"}'"
                     }
                 ]
             },
@@ -4557,7 +4558,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -4567,7 +4568,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -4577,7 +4578,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -4587,7 +4588,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "discoveryId",
@@ -4597,7 +4598,7 @@
                             "type": "string"
                         },
                         "description": "Discovery ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -4671,7 +4672,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/discoveries/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/discoveries/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -4693,7 +4694,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -4703,7 +4704,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -4713,7 +4714,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -4723,7 +4724,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -4831,7 +4832,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/feedback \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/feedback \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
                     }
                 ]
             }
@@ -4853,7 +4854,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -4863,7 +4864,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -4873,7 +4874,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -4883,7 +4884,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "feedbackId",
@@ -4893,7 +4894,7 @@
                             "type": "string"
                         },
                         "description": "Feedback ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -5002,7 +5003,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/feedback/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/feedback/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"message\":\"string\",\"issue\":\"value\"}'"
                     }
                 ]
             },
@@ -5022,7 +5023,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -5032,7 +5033,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -5042,7 +5043,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -5052,7 +5053,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "feedbackId",
@@ -5062,7 +5063,7 @@
                             "type": "string"
                         },
                         "description": "Feedback ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -5136,7 +5137,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/feedback/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/feedback/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -5158,7 +5159,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -5168,7 +5169,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -5178,7 +5179,7 @@
                             "type": "string"
                         },
                         "description": "Value Item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "taskId",
@@ -5188,7 +5189,7 @@
                             "type": "string"
                         },
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "feedbackId",
@@ -5198,7 +5199,7 @@
                             "type": "string"
                         },
                         "description": "Feedback ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -5293,7 +5294,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000/tasks/000000000000000000000000/feedback/000000000000000000000000/reply \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"reply\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff/tasks/fff/feedback/fff/reply \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"reply\":\"string\"}'"
                     }
                 ]
             }
@@ -5315,7 +5316,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -5325,7 +5326,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -5434,7 +5435,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":1}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":1}'"
                     }
                 ]
             },
@@ -5454,7 +5455,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -5464,7 +5465,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "stage",
@@ -5586,7 +5587,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items?stage=planning&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/fff/channels/fff/items?stage=planning&pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -5608,7 +5609,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -5618,7 +5619,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -5628,7 +5629,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -5692,7 +5693,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -5712,7 +5713,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -5722,7 +5723,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -5732,7 +5733,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -5851,7 +5852,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":1}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":1}'"
                     }
                 ]
             },
@@ -5871,7 +5872,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -5881,7 +5882,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -5891,7 +5892,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -5965,7 +5966,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -5985,7 +5986,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -5995,7 +5996,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "itemId",
@@ -6005,7 +6006,7 @@
                             "type": "string"
                         },
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -6079,7 +6080,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/items/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/items/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -6312,7 +6313,7 @@
                             "type": "string"
                         },
                         "description": "Notion ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -6376,7 +6377,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/notions/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/notions/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -6396,7 +6397,7 @@
                             "type": "string"
                         },
                         "description": "Notion ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -6480,7 +6481,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/notions/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/notions/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"value\":\"string\"}'"
                     }
                 ]
             },
@@ -6500,7 +6501,7 @@
                             "type": "string"
                         },
                         "description": "Notion ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -6564,7 +6565,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/notions/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/notions/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -6672,7 +6673,7 @@
                             "type": "string"
                         },
                         "description": "Organization ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -6757,7 +6758,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/organizations/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"orgName\":\"Example, Inc.\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/organizations/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"orgName\":\"Example, Inc.\"}'"
                     }
                 ]
             },
@@ -6777,7 +6778,7 @@
                             "type": "string"
                         },
                         "description": "Organization ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -6831,7 +6832,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/organizations/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/organizations/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -6853,7 +6854,7 @@
                             "type": "string"
                         },
                         "description": "Organization ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -6936,7 +6937,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/organizations/000000000000000000000000/logo \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: multipart/form-data' \\\n  --form logo=string"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/organizations/fff/logo \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: multipart/form-data' \\\n  --form logo=string"
                     }
                 ]
             }
@@ -7173,7 +7174,7 @@
                             "type": "string"
                         },
                         "description": "Service Account ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -7237,7 +7238,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/service-accounts/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/service-accounts/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -7257,7 +7258,7 @@
                             "type": "string"
                         },
                         "description": "Service account ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -7350,7 +7351,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/service-accounts/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleOrg\":\"admin\",\"userName\":\"John Doe\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/service-accounts/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleOrg\":\"admin\",\"userName\":\"John Doe\"}'"
                     }
                 ]
             },
@@ -7370,7 +7371,7 @@
                             "type": "string"
                         },
                         "description": "Service account ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -7434,7 +7435,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/service-accounts/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/service-accounts/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -7454,7 +7455,7 @@
                             "type": "string"
                         },
                         "description": "Service account ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -7518,7 +7519,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/service-accounts/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/service-accounts/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -7540,7 +7541,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -7633,7 +7634,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
                     }
                 ]
             }
@@ -7655,7 +7656,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -7665,7 +7666,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -7758,7 +7759,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"channelName\":\"string\",\"channelDesc\":\"\"}'"
                     }
                 ]
             },
@@ -7778,7 +7779,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -7788,7 +7789,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -7852,7 +7853,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -7874,7 +7875,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -7884,7 +7885,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "userId",
@@ -7894,7 +7895,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -7968,7 +7969,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -7988,7 +7989,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -7998,7 +7999,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "userId",
@@ -8008,7 +8009,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -8082,7 +8083,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8104,7 +8105,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -8114,7 +8115,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "pageNumber",
@@ -8221,7 +8222,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/fff/channels/fff/users?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8243,7 +8244,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "channelId",
@@ -8253,7 +8254,7 @@
                             "type": "string"
                         },
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "userName",
@@ -8327,7 +8328,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/000000000000000000000000/channels/000000000000000000000000/prospects?userName=John%20Doe' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/fff/channels/fff/prospects?userName=John%20Doe' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8564,7 +8565,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -8628,7 +8629,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/teams/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -8648,7 +8649,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -8742,7 +8743,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamName\":\"string\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"teamName\":\"string\"}'"
                     }
                 ]
             },
@@ -8762,7 +8763,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -8836,7 +8837,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8858,7 +8859,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "pageNumber",
@@ -8975,7 +8976,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/users/000000000000000000000000?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url 'https://api.kronup.com/v1/teams/users/fff?pageNumber=1&pageSize=100' \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -8997,7 +8998,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "userId",
@@ -9007,7 +9008,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -9081,7 +9082,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request PUT \\\n  --url https://api.kronup.com/v1/teams/fff/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -9101,7 +9102,7 @@
                             "type": "string"
                         },
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     {
                         "name": "userId",
@@ -9111,7 +9112,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -9185,7 +9186,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/000000000000000000000000/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/teams/fff/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -9207,7 +9208,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -9271,7 +9272,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request GET \\\n  --url https://api.kronup.com/v1/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             },
@@ -9291,7 +9292,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -9400,7 +9401,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleSite\":\"user\",\"roleOrg\":\"member\"}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"roleSite\":\"user\",\"roleOrg\":\"member\"}'"
                     }
                 ]
             },
@@ -9420,7 +9421,7 @@
                             "type": "string"
                         },
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 ],
                 "responses": {
@@ -9484,7 +9485,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/users/000000000000000000000000 \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
+                        "source": "curl --request DELETE \\\n  --url https://api.kronup.com/v1/users/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>'"
                     }
                 ]
             }
@@ -9781,7 +9782,7 @@
                     "id": {
                         "type": "string",
                         "description": "Checkout ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "productId": {
                         "type": "integer",
@@ -9819,7 +9820,7 @@
                     "id": {
                         "type": "string",
                         "description": "Event ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "type": {
                         "type": "string",
@@ -9835,43 +9836,43 @@
                     "teamId": {
                         "type": "string",
                         "description": "Team ID",
-                        "example": "000000000000000000000000",
+                        "example": "fff",
                         "default": null
                     },
                     "channelId": {
                         "type": "string",
                         "description": "Channel ID",
-                        "example": "000000000000000000000000",
+                        "example": "fff",
                         "default": null
                     },
                     "notionId": {
                         "type": "string",
                         "description": "Notion ID",
-                        "example": "000000000000000000000000",
+                        "example": "fff",
                         "default": null
                     },
                     "peerUserId": {
                         "type": "string",
                         "description": "Peers User ID",
-                        "example": "000000000000000000000000",
+                        "example": "fff",
                         "default": null
                     },
                     "itemId": {
                         "type": "string",
                         "description": "Item ID",
-                        "example": "000000000000000000000000",
+                        "example": "fff",
                         "default": null
                     },
                     "assmId": {
                         "type": "string",
                         "description": "Assumption ID",
-                        "example": "000000000000000000000000",
+                        "example": "fff",
                         "default": null
                     },
                     "taskId": {
                         "type": "string",
                         "description": "Task ID",
-                        "example": "000000000000000000000000",
+                        "example": "fff",
                         "default": null
                     },
                     "diff": {
@@ -9902,12 +9903,12 @@
                     "id": {
                         "type": "string",
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "userId": {
                         "type": "string",
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "notion": {
                         "$ref": "#/components/schemas/Notion"
@@ -9998,22 +9999,22 @@
                     "id": {
                         "type": "string",
                         "description": "Invitation ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "orgId": {
                         "type": "string",
                         "description": "Organization ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "teamId": {
                         "type": "string",
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "userId": {
                         "type": "string",
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "inviteName": {
                         "type": "string",
@@ -10093,7 +10094,7 @@
                             "id": {
                                 "type": "string",
                                 "description": "Price Plan ID",
-                                "example": "000000000000000000000000"
+                                "example": "fff"
                             },
                             "name": {
                                 "type": "string",
@@ -10193,17 +10194,17 @@
                     "id": {
                         "type": "string",
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "teamId": {
                         "type": "string",
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "channelId": {
                         "type": "string",
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "heading": {
                         "type": "string",
@@ -10285,7 +10286,7 @@
                 "type": "string",
                 "title": "User ID",
                 "description": "User ID",
-                "example": "000000000000000000000000"
+                "example": "fff"
             },
             "Assumption": {
                 "type": "object",
@@ -10294,7 +10295,7 @@
                     "id": {
                         "type": "string",
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "authorUserId": {
                         "$ref": "#/components/schemas/UserId"
@@ -10351,7 +10352,7 @@
                     "id": {
                         "type": "string",
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "assigneeUserId": {
                         "$ref": "#/components/schemas/UserId"
@@ -10379,7 +10380,7 @@
                         "items": {
                             "type": "string",
                             "title": "Notion ID",
-                            "example": "000000000000000000000000"
+                            "example": "fff"
                         }
                     }
                 }
@@ -10436,7 +10437,7 @@
                     "id": {
                         "type": "string",
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "assigneeUserId": {
                         "$ref": "#/components/schemas/UserId"
@@ -10483,17 +10484,17 @@
                     "id": {
                         "type": "string",
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "teamId": {
                         "type": "string",
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "channelId": {
                         "type": "string",
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "heading": {
                         "type": "string",
@@ -10578,17 +10579,17 @@
                     "id": {
                         "type": "string",
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "teamId": {
                         "type": "string",
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "channelId": {
                         "type": "string",
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "heading": {
                         "type": "string",
@@ -10666,7 +10667,7 @@
                     "id": {
                         "type": "string",
                         "description": "Value item ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "authorUserId": {
                         "$ref": "#/components/schemas/UserId"
@@ -10711,7 +10712,7 @@
                     "id": {
                         "type": "string",
                         "description": "Task ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "assigneeUserId": {
                         "$ref": "#/components/schemas/UserId"
@@ -10733,7 +10734,7 @@
                         "items": {
                             "type": "string",
                             "title": "Notion ID",
-                            "example": "000000000000000000000000"
+                            "example": "fff"
                         }
                     }
                 }
@@ -10746,7 +10747,7 @@
                     "id": {
                         "type": "string",
                         "description": "Discovery ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "iat": {
                         "type": "number",
@@ -10778,7 +10779,7 @@
                     "id": {
                         "type": "string",
                         "description": "Feedback ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "iat": {
                         "type": "number",
@@ -10857,7 +10858,7 @@
                     "id": {
                         "type": "string",
                         "description": "Notion ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "value": {
                         "type": "string",
@@ -10875,7 +10876,7 @@
                     "id": {
                         "type": "string",
                         "description": "Organization ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "orgName": {
                         "type": "string",
@@ -10885,7 +10886,7 @@
                     "orgIconId": {
                         "type": "string",
                         "description": "Organization logo ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "orgOwners": {
                         "type": "array",
@@ -10893,7 +10894,7 @@
                         "items": {
                             "type": "string",
                             "title": "User ID",
-                            "example": "000000000000000000000000"
+                            "example": "fff"
                         }
                     },
                     "orgUsersMax": {
@@ -10928,12 +10929,12 @@
                     "id": {
                         "type": "string",
                         "description": "Price Plan ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "slug": {
                         "type": "string",
                         "description": "Variant slug",
-                        "example": "00000000-0000-0000-0000-000000000000"
+                        "example": "fff-fff"
                     },
                     "price": {
                         "type": "integer",
@@ -11235,7 +11236,7 @@
                     "id": {
                         "type": "string",
                         "description": "Organization ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     }
                 }
             },
@@ -11246,7 +11247,7 @@
                     "id": {
                         "type": "string",
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "teamName": {
                         "type": "string",
@@ -11274,7 +11275,7 @@
                     "id": {
                         "type": "string",
                         "description": "Channel ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "isDefault": {
                         "type": "boolean",
@@ -11303,7 +11304,7 @@
                     "id": {
                         "type": "string",
                         "description": "Team ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "teamName": {
                         "type": "string",
@@ -11338,7 +11339,7 @@
                     "id": {
                         "type": "string",
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "provider": {
                         "type": "string",
@@ -11354,7 +11355,7 @@
                     "userAvatarId": {
                         "type": "string",
                         "description": "User avatar ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "userColor": {
                         "type": "string",
@@ -11391,7 +11392,7 @@
                                 "teamId": {
                                     "type": "string",
                                     "description": "Team ID",
-                                    "example": "000000000000000000000000"
+                                    "example": "fff"
                                 },
                                 "channelIds": {
                                     "type": "array",
@@ -11399,7 +11400,7 @@
                                     "items": {
                                         "type": "string",
                                         "description": "Channel ID",
-                                        "example": "000000000000000000000000"
+                                        "example": "fff"
                                     }
                                 }
                             }
@@ -11448,7 +11449,7 @@
                     "id": {
                         "type": "string",
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "provider": {
                         "type": "string",
@@ -11464,7 +11465,7 @@
                     "userAvatarId": {
                         "type": "string",
                         "description": "User avatar ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "userColor": {
                         "type": "string",
@@ -11501,12 +11502,12 @@
                                 "orgId": {
                                     "type": "string",
                                     "description": "Organization ID",
-                                    "example": "000000000000000000000000"
+                                    "example": "fff"
                                 },
                                 "teamId": {
                                     "type": "string",
                                     "description": "Team ID",
-                                    "example": "000000000000000000000000"
+                                    "example": "fff"
                                 },
                                 "channelIds": {
                                     "type": "array",
@@ -11514,7 +11515,7 @@
                                     "items": {
                                         "type": "string",
                                         "description": "Channel ID",
-                                        "example": "000000000000000000000000"
+                                        "example": "fff"
                                     }
                                 }
                             }
@@ -11539,7 +11540,7 @@
                                 "orgId": {
                                     "type": "string",
                                     "description": "Organization ID",
-                                    "example": "000000000000000000000000"
+                                    "example": "fff"
                                 },
                                 "role": {
                                     "type": "string",
@@ -11586,7 +11587,7 @@
                                 "orgId": {
                                     "type": "string",
                                     "description": "Organization ID",
-                                    "example": "000000000000000000000000"
+                                    "example": "fff"
                                 },
                                 "teamIds": {
                                     "type": "array",
@@ -11594,7 +11595,7 @@
                                     "items": {
                                         "type": "string",
                                         "description": "Team ID",
-                                        "example": "000000000000000000000000"
+                                        "example": "fff"
                                     }
                                 }
                             }
@@ -11623,7 +11624,7 @@
                     "id": {
                         "type": "string",
                         "description": "User ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "provider": {
                         "type": "string",
@@ -11639,7 +11640,7 @@
                     "userAvatarId": {
                         "type": "string",
                         "description": "User avatar ID",
-                        "example": "000000000000000000000000"
+                        "example": "fff"
                     },
                     "userColor": {
                         "type": "string",
@@ -11676,7 +11677,7 @@
                                 "teamId": {
                                     "type": "string",
                                     "description": "Team ID",
-                                    "example": "000000000000000000000000"
+                                    "example": "fff"
                                 },
                                 "channelIds": {
                                     "type": "array",
@@ -11684,7 +11685,7 @@
                                     "items": {
                                         "type": "string",
                                         "description": "Channel ID",
-                                        "example": "000000000000000000000000"
+                                        "example": "fff"
                                     }
                                 }
                             }

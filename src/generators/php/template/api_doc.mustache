@@ -26,12 +26,8 @@ $sdk->api()->{{classVarName}}();
 
 ## `{{{vendorExtensions.x-method}}}()`
 
-> ((#cleanHtml))
+> ((#cleanHtml)){{#notes}}{{{notes}}}{{/notes}}((/cleanHtml))
 {{#description}}{{{unescapedDescription}}}{{/description}}
-{{#operations}}{{#operation}}{{#-first}}{{#tags}}{{#-first}}{{{name}}}{{/-first}}{{/tags}}{{/-first}}{{/operation}}{{/operations}}
-
-{{#notes}}{{{notes}}}{{/notes}}
-((/cleanHtml))
 
 <!---kronup-example file="Api/{{classname}}/{{{vendorExtensions.x-method}}}.php"--->
 ```php

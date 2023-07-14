@@ -67,7 +67,7 @@ class BillingTest extends TestCase {
      * Generate signature
      */
     protected function getSignature($payload) {
-        return hash_hmac("sha256", $payload, getenv("KRONUP_LEMON_SECRET"));
+        return hash_hmac("sha256", $payload, getenv("KRONUP_BILLING_SECRET"));
     }
 
     /**
