@@ -23,7 +23,7 @@ use Kronup\Sdk\ApiException;
  */
 class DeepContextTest extends TestCase {
     /**
-     * Kronup sdk
+     * Kronup SDK
      *
      * @var \Kronup\Sdk
      */

@@ -3,7 +3,7 @@
     "info": {
         "version": "0.0.1",
         "title": "kronup / api",
-        "description": "# API reference\n\nThe Kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Authorization\n\nOur API uses a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) authentication scheme. You can manage your API keys from 👉 [Organization > Service Accounts](https://go.kronup.com/organization/#/tab:service-accounts).\n\n```\n$ curl --header \"Authorization: Bearer <YOUR.API.KEY>\"\n```\n\n# RBAC\n\nThere are 3 [Account](#tag/Account) roles: **owner**, **admin** and **member**.\n\nWithin the same [Organization](#tag/Organizations), account actions are limited (read as **A can B**):\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\\n\\n\n\nAccounts have **read/write** permissions over **themselves**.\n\n# SDKs\n\nYou can start building your Kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/). \n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with Kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
+        "description": "# API reference\n\nThe kronup API follows [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) guidelines. All responses are [JSON-encoded](http://www.json.org/), with standard HTTP response codes and verbs.\n\n# Authorization\n\nOur API uses a standard [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token) authentication scheme. You can manage your API keys from 👉 [Organization > Service Accounts](https://go.kronup.com/organization/#/tab:service-accounts).\n\n```\n$ curl --header \"Authorization: Bearer <YOUR.API.KEY>\"\n```\n\n# RBAC\n\nThere are 3 [Account](#tag/Account) roles: **owner**, **admin** and **member**.\n\nWithin the same [Organization](#tag/Organizations), account actions are limited (read as **A can B**):\n\n|  | B: owner | B: admin | B: member |\n|---|---|---|---|\n| A: owner | read/write | read/write | read/write |\n| A: admin | read | read/write | read/write |\n| A: member | read | read | read |\\n\\n\n\nAccounts have **read/write** permissions over **themselves**.\n\n# SDKs\n\nYou can start building your kronup application today with our [PHP SDK](https://kronup.github.io/kronup-php/). \n\n# Errors\n\nConventional HTTP response codes are used to indicate the status of an API request.\n\n| HTTP Status Codes |  |\n|---|---|\n| 400 - Bad Request | Invalid request, ususally due to a missing argument |\n| 401 - Unauthorized | Authorization error due to invalid, expired or missing token |\n| 402 - Request Failed | Payment required |\n| 403 - Forbidden | You are not allowed to perform that request |\n| 404 - Not Found | Resource does not exist |\n| 409 - Conflict | This request is in conflict with another |\n| 429 - Too Many Requests | You are sending too many requests to our API servers |\n| 5xx - Server Errors | Something went wrong with kronup's servers |\n\n## 401 Unauthorized\n\nFor status code `401 - Unauthorized` you can receive one of the following errors:\n\n| Error ID | Error Message |\n|---|---|\n| jwt-missing | Authentication token missing |\n| jwt-format | Invalid JWT token |\n| jwt-format-header | Invalid JWT header |\n| jwt-format-body | Invalid JWT body |\n| jwt-payload | Invalid JWT payload |\n| jwt-issuer | Invalid JWT issuer |\n| jwt-public-key | Could not fetch JWT public key |\n| auth-missing | Authorization header missing |\n| auth-invalid | Wrong authorization strategy |\n| auth-api-invalid | API user does not exist |\n| auth-api-expired | API token is no longer valid |",
         "x-logo": {
             "url": "/img/banner.svg",
             "altText": "Kronup"
@@ -79,9 +79,7 @@
     "paths": {
         "/account": {
             "get": {
-                "tags": [
-                    "Account"
-                ],
+                "tags": ["Account"],
                 "summary": "Fetch account",
                 "description": "Retrieve the current account model",
                 "operationId": "accountRead",
@@ -122,9 +120,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Account"
-                ],
+                "tags": ["Account"],
                 "summary": "Update account",
                 "description": "Update the current account model.",
                 "operationId": "accountUpdate",
@@ -194,9 +190,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Account"
-                ],
+                "tags": ["Account"],
                 "summary": "Close account",
                 "description": "Close the current account. This action is reversible only if you sign back in within 14 days. You must first abandon or delete all the organizations you own to perform this action.",
                 "operationId": "accountClose",
@@ -259,9 +253,7 @@
         },
         "/account/events": {
             "get": {
-                "tags": [
-                    "Account"
-                ],
+                "tags": ["Account"],
                 "summary": "Fetch events",
                 "description": "Get a list of event models",
                 "operationId": "accountEventsList",
@@ -394,9 +386,7 @@
         },
         "/account/avatar": {
             "post": {
-                "tags": [
-                    "Account"
-                ],
+                "tags": ["Account"],
                 "summary": "Update avatar",
                 "description": "Update account avatar",
                 "operationId": "accountAvatar",
@@ -488,9 +478,7 @@
         },
         "/billing/price-plans": {
             "get": {
-                "tags": [
-                    "Billing"
-                ],
+                "tags": ["Billing"],
                 "summary": "List Price Plans",
                 "description": "Get a list of Price Plans",
                 "operationId": "billingPlanList",
@@ -568,9 +556,7 @@
         },
         "/billing/price-plans/{pricePlanId}": {
             "get": {
-                "tags": [
-                    "Billing"
-                ],
+                "tags": ["Billing"],
                 "summary": "Prepare Checkout",
                 "description": "Prepare the checkout URL for this Price Plan. The link expires in 23 hours. This method fails if a Subscription is associated with this Organization.",
                 "operationId": "billingPlanCheckout",
@@ -592,10 +578,7 @@
                         "schema": {
                             "type": "integer",
                             "default": 0,
-                            "enum": [
-                                0,
-                                1
-                            ],
+                            "enum": [0, 1],
                             "example": 1
                         }
                     }
@@ -668,9 +651,7 @@
         },
         "/billing/subscription": {
             "get": {
-                "tags": [
-                    "Billing"
-                ],
+                "tags": ["Billing"],
                 "summary": "Fetch Subscription",
                 "description": "Get the Subscription model for the current organization",
                 "operationId": "billingSubscriptionRead",
@@ -736,9 +717,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Billing"
-                ],
+                "tags": ["Billing"],
                 "summary": "Cancel Subscription",
                 "description": "Cancel the Subscription for the current Organization",
                 "operationId": "billingSubscriptionCancel",
@@ -811,9 +790,7 @@
         },
         "/billing/subscription/price-plans/{pricePlanId}": {
             "put": {
-                "tags": [
-                    "Billing"
-                ],
+                "tags": ["Billing"],
                 "summary": "Update Subscription",
                 "description": "Update the Subscription Price Plan for the current Organization",
                 "operationId": "billingSubscriptionUpdate",
@@ -897,9 +874,7 @@
         },
         "/billing/invoices": {
             "get": {
-                "tags": [
-                    "Billing"
-                ],
+                "tags": ["Billing"],
                 "summary": "List Invoices",
                 "description": "Get a list of Invoices",
                 "operationId": "billingInvoiceList",
@@ -1006,9 +981,7 @@
         },
         "/deep-context/{itemId}": {
             "get": {
-                "tags": [
-                    "Deep Context"
-                ],
+                "tags": ["Deep Context"],
                 "summary": "Fetch expanded value item",
                 "description": "Retrieve value item model",
                 "operationId": "deepContextRead",
@@ -1090,9 +1063,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Deep Context"
-                ],
+                "tags": ["Deep Context"],
                 "summary": "Delete value item",
                 "description": "Delete a value item from Deep Context",
                 "operationId": "deepContextDelete",
@@ -1176,9 +1147,7 @@
         },
         "/deep-context": {
             "get": {
-                "tags": [
-                    "Deep Context"
-                ],
+                "tags": ["Deep Context"],
                 "summary": "Search value items",
                 "description": "Get a list of value item models",
                 "operationId": "deepContextSearch",
@@ -1303,9 +1272,7 @@
         },
         "/xp": {
             "get": {
-                "tags": [
-                    "Experiences"
-                ],
+                "tags": ["Experiences"],
                 "summary": "Fetch my experiences",
                 "description": "Retrieve all my experience models",
                 "operationId": "experienceList",
@@ -1432,9 +1399,7 @@
         },
         "/xp/users/{userId}": {
             "get": {
-                "tags": [
-                    "Experiences"
-                ],
+                "tags": ["Experiences"],
                 "summary": "Fetch peer experiences",
                 "description": "Retrieve all experience models for this user",
                 "operationId": "experienceListPeer",
@@ -1571,9 +1536,7 @@
         },
         "/xp/notions/{notionId}": {
             "get": {
-                "tags": [
-                    "Experiences"
-                ],
+                "tags": ["Experiences"],
                 "summary": "Fetch my notion experience",
                 "description": "Retrieve my experience model for specified Notion",
                 "operationId": "experienceRead",
@@ -1657,9 +1620,7 @@
         },
         "/xp/notions/{notionId}/users/{userId}": {
             "get": {
-                "tags": [
-                    "Experiences"
-                ],
+                "tags": ["Experiences"],
                 "summary": "Fetch peer notion experience",
                 "description": "Retrieve peer experience model for specified Notion",
                 "operationId": "experienceReadPeer",
@@ -1753,9 +1714,7 @@
         },
         "/xp/notions/{notionId}/grade/{grade}": {
             "put": {
-                "tags": [
-                    "Experiences"
-                ],
+                "tags": ["Experiences"],
                 "summary": "Evaluate myself",
                 "description": "Evaluate yourself on a notion. Only the last evaluation is kept in a 24 hours interval.",
                 "operationId": "experienceEvaluate",
@@ -1851,9 +1810,7 @@
         },
         "/xp/notions/{notionId}/grade/{grade}/users/{userId}": {
             "put": {
-                "tags": [
-                    "Experiences"
-                ],
+                "tags": ["Experiences"],
                 "summary": "Evaluate peers",
                 "description": "Anonymously evaluate another peer on this notion. Only the last evaluation is kept in a 24 hours interval.",
                 "operationId": "experienceEvaluatePeer",
@@ -1959,9 +1916,7 @@
         },
         "/invitations": {
             "post": {
-                "tags": [
-                    "Invitations"
-                ],
+                "tags": ["Invitations"],
                 "summary": "Create invitation",
                 "description": "Create a new invitation to this organization",
                 "operationId": "invitationCreate",
@@ -2031,10 +1986,7 @@
                                     "inviteOrgRole": {
                                         "type": "string",
                                         "description": "User role",
-                                        "enum": [
-                                            "admin",
-                                            "member"
-                                        ],
+                                        "enum": ["admin", "member"],
                                         "default": "member",
                                         "example": "member"
                                     },
@@ -2055,10 +2007,7 @@
                                         "example": 10
                                     }
                                 },
-                                "required": [
-                                    "inviteName",
-                                    "teamId"
-                                ]
+                                "required": ["inviteName", "teamId"]
                             }
                         }
                     }
@@ -2077,9 +2026,7 @@
                 ]
             },
             "get": {
-                "tags": [
-                    "Invitations"
-                ],
+                "tags": ["Invitations"],
                 "summary": "List invitations",
                 "description": "Get a list of invitation models",
                 "operationId": "invitationList",
@@ -2196,9 +2143,7 @@
         },
         "/invitations/{inviteId}": {
             "get": {
-                "tags": [
-                    "Invitations"
-                ],
+                "tags": ["Invitations"],
                 "summary": "Fetch invitation",
                 "description": "Retrieve invitation model",
                 "operationId": "invitationRead",
@@ -2265,9 +2210,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Invitations"
-                ],
+                "tags": ["Invitations"],
                 "summary": "Update invitation",
                 "description": "Update invitation details",
                 "operationId": "invitationUpdate",
@@ -2348,10 +2291,7 @@
                                     "inviteOrgRole": {
                                         "type": "string",
                                         "description": "User role",
-                                        "enum": [
-                                            "admin",
-                                            "member"
-                                        ],
+                                        "enum": ["admin", "member"],
                                         "default": "member",
                                         "example": "member"
                                     },
@@ -2390,9 +2330,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Invitations"
-                ],
+                "tags": ["Invitations"],
                 "summary": "Delete invitation",
                 "description": "Delete invitation",
                 "operationId": "invitationDelete",
@@ -2474,9 +2412,7 @@
                 ]
             },
             "put": {
-                "tags": [
-                    "Invitations"
-                ],
+                "tags": ["Invitations"],
                 "summary": "Accept invitation",
                 "description": "Accept an invitation to join an organization",
                 "operationId": "invitationAccept",
@@ -2560,9 +2496,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/assms": {
             "post": {
-                "tags": [
-                    "Assumptions"
-                ],
+                "tags": ["Assumptions"],
                 "summary": "Create assumption",
                 "description": "Add an assumption to value item",
                 "operationId": "assumptionCreate",
@@ -2695,9 +2629,7 @@
                 ]
             },
             "get": {
-                "tags": [
-                    "Assumptions"
-                ],
+                "tags": ["Assumptions"],
                 "summary": "List assumptions",
                 "description": "Get a list of assumption models",
                 "operationId": "assumptionList",
@@ -2854,9 +2786,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/assms/{assmId}": {
             "post": {
-                "tags": [
-                    "Assumptions"
-                ],
+                "tags": ["Assumptions"],
                 "summary": "Update assumption",
                 "description": "Update assumption details",
                 "operationId": "assumptionUpdate",
@@ -2999,9 +2929,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Assumptions"
-                ],
+                "tags": ["Assumptions"],
                 "summary": "Delete assumption",
                 "description": "Delete an assumption from a value item",
                 "operationId": "assumptionDelete",
@@ -3125,9 +3053,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/assms/{assmId}/exp": {
             "post": {
-                "tags": [
-                    "Assumptions"
-                ],
+                "tags": ["Assumptions"],
                 "summary": "Experiment",
                 "description": "Update experiment details",
                 "operationId": "assumptionExperiment",
@@ -3257,11 +3183,7 @@
                                     "state": {
                                         "type": "string",
                                         "description": "Experiment state",
-                                        "enum": [
-                                            "idle",
-                                            "running",
-                                            "done"
-                                        ]
+                                        "enum": ["idle", "running", "done"]
                                     }
                                 }
                             }
@@ -3284,9 +3206,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks": {
             "post": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Create task",
                 "description": "Add a task to value item",
                 "operationId": "taskCreate",
@@ -3424,9 +3344,7 @@
                 ]
             },
             "get": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "List tasks",
                 "description": "Get a list of task models",
                 "operationId": "taskList",
@@ -3583,9 +3501,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}": {
             "get": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Fetch task",
                 "description": "Retrieve task model",
                 "operationId": "taskRead",
@@ -3697,9 +3613,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Update task",
                 "description": "Update task details",
                 "operationId": "taskUpdate",
@@ -3831,12 +3745,7 @@
                                     "state": {
                                         "type": "string",
                                         "description": "Task state",
-                                        "enum": [
-                                            "idle",
-                                            "in progress",
-                                            "in review",
-                                            "done"
-                                        ]
+                                        "enum": ["idle", "in progress", "in review", "done"]
                                     },
                                     "notionIds": {
                                         "type": "array",
@@ -3865,9 +3774,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Delete task",
                 "description": "Delete a task from a value item",
                 "operationId": "taskDelete",
@@ -3991,9 +3898,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/candidates": {
             "get": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "List candidates",
                 "description": "List potential assignees for this task",
                 "operationId": "taskListCandidates",
@@ -4107,9 +4012,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/users/{userId}": {
             "put": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Assign to user",
                 "description": "Assign task to user",
                 "operationId": "taskAssign",
@@ -4243,9 +4146,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/discoveries": {
             "post": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Create discovery",
                 "description": "Add a discovery to task",
                 "operationId": "taskDiscoveryCreate",
@@ -4389,9 +4290,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/discoveries/{discoveryId}": {
             "post": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Update discovery",
                 "description": "Update a task discovery",
                 "operationId": "taskDiscoveryUpdate",
@@ -4543,9 +4442,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Delete discovery",
                 "description": "Delete a task discovery",
                 "operationId": "taskDiscoveryDelete",
@@ -4679,9 +4576,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/feedback": {
             "post": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Create feedback",
                 "description": "Add a feedback to task",
                 "operationId": "taskFeedbackCreate",
@@ -4839,9 +4734,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/feedback/{feedbackId}": {
             "post": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Update feedback",
                 "description": "Update a task feedback",
                 "operationId": "taskFeedbackUpdate",
@@ -5008,9 +4901,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Delete feedback",
                 "description": "Delete a feedback for a task",
                 "operationId": "taskFeedbackDelete",
@@ -5144,9 +5035,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}/tasks/{taskId}/feedback/{feedbackId}/reply": {
             "post": {
-                "tags": [
-                    "Tasks"
-                ],
+                "tags": ["Tasks"],
                 "summary": "Reply to feedback",
                 "description": "Update a reply to a task feedback",
                 "operationId": "taskFeedbackReply",
@@ -5301,9 +5190,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items": {
             "post": {
-                "tags": [
-                    "Value items"
-                ],
+                "tags": ["Value items"],
                 "summary": "Create value item",
                 "description": "Add a value item to planning",
                 "operationId": "valueItemCreate",
@@ -5407,11 +5294,7 @@
                                     "type": {
                                         "type": "string",
                                         "description": "Value item type",
-                                        "enum": [
-                                            "feature",
-                                            "bug fix",
-                                            "routine"
-                                        ],
+                                        "enum": ["feature", "bug fix", "routine"],
                                         "example": "feature"
                                     },
                                     "priority": {
@@ -5440,9 +5323,7 @@
                 ]
             },
             "get": {
-                "tags": [
-                    "Value items"
-                ],
+                "tags": ["Value items"],
                 "summary": "List value items",
                 "description": "Get a list of value item models",
                 "operationId": "valueItemList",
@@ -5471,12 +5352,7 @@
                         "name": "stage",
                         "in": "query",
                         "description": "Value item stage",
-                        "enum": [
-                            "planning",
-                            "validation",
-                            "execution",
-                            "deep-context"
-                        ],
+                        "enum": ["planning", "validation", "execution", "deep-context"],
                         "example": "planning",
                         "schema": {
                             "type": "string"
@@ -5594,9 +5470,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/items/{itemId}": {
             "get": {
-                "tags": [
-                    "Value items"
-                ],
+                "tags": ["Value items"],
                 "summary": "Fetch value item",
                 "description": "Retrieve value item model",
                 "operationId": "valueItemRead",
@@ -5698,9 +5572,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Value items"
-                ],
+                "tags": ["Value items"],
                 "summary": "Update value item",
                 "description": "Update value item details",
                 "operationId": "valueItemUpdate",
@@ -5824,11 +5696,7 @@
                                     "type": {
                                         "type": "string",
                                         "description": "Value item type",
-                                        "enum": [
-                                            "feature",
-                                            "bug fix",
-                                            "routine"
-                                        ],
+                                        "enum": ["feature", "bug fix", "routine"],
                                         "example": "feature"
                                     },
                                     "priority": {
@@ -5857,9 +5725,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Value items"
-                ],
+                "tags": ["Value items"],
                 "summary": "Delete value item",
                 "description": "Delete a value item from the flow",
                 "operationId": "valueItemDelete",
@@ -5971,9 +5837,7 @@
                 ]
             },
             "put": {
-                "tags": [
-                    "Value items"
-                ],
+                "tags": ["Value items"],
                 "summary": "Advance value item",
                 "description": "Advance a value item",
                 "operationId": "valueItemAdvance",
@@ -6087,9 +5951,7 @@
         },
         "/notions": {
             "post": {
-                "tags": [
-                    "Notions"
-                ],
+                "tags": ["Notions"],
                 "summary": "Create notion",
                 "description": "Define a notion",
                 "operationId": "notionCreate",
@@ -6171,9 +6033,7 @@
                 ]
             },
             "get": {
-                "tags": [
-                    "Notions"
-                ],
+                "tags": ["Notions"],
                 "summary": "Search notions",
                 "description": "Get a list of notion models",
                 "operationId": "notionSearch",
@@ -6298,9 +6158,7 @@
         },
         "/notions/{notionId}": {
             "get": {
-                "tags": [
-                    "Notions"
-                ],
+                "tags": ["Notions"],
                 "summary": "Fetch notion",
                 "description": "Retrieve notion model",
                 "operationId": "notionRead",
@@ -6382,9 +6240,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Notions"
-                ],
+                "tags": ["Notions"],
                 "summary": "Update notion",
                 "description": "Update notion",
                 "operationId": "notionUpdate",
@@ -6486,9 +6342,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Notions"
-                ],
+                "tags": ["Notions"],
                 "summary": "Delete notion",
                 "description": "Delete a notion model. This also removes the associated Experiences for all users in this Organization.",
                 "operationId": "notionDelete",
@@ -6572,9 +6426,7 @@
         },
         "/organizations": {
             "post": {
-                "tags": [
-                    "Organizations"
-                ],
+                "tags": ["Organizations"],
                 "summary": "Create organization",
                 "description": "Add an organization owned by the current user",
                 "operationId": "organizationCreate",
@@ -6658,9 +6510,7 @@
         },
         "/organizations/{orgId}": {
             "post": {
-                "tags": [
-                    "Organizations"
-                ],
+                "tags": ["Organizations"],
                 "summary": "Update organization",
                 "description": "Update organization details",
                 "operationId": "organizationUpdate",
@@ -6763,9 +6613,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Organizations"
-                ],
+                "tags": ["Organizations"],
                 "summary": "Delete organization",
                 "description": "Remove organization",
                 "operationId": "organizationDelete",
@@ -6839,9 +6687,7 @@
         },
         "/organizations/{orgId}/logo": {
             "post": {
-                "tags": [
-                    "Organizations"
-                ],
+                "tags": ["Organizations"],
                 "summary": "Update logo",
                 "description": "Update organization logo",
                 "operationId": "organizationLogo",
@@ -6944,9 +6790,7 @@
         },
         "/service-accounts": {
             "post": {
-                "tags": [
-                    "Service accounts"
-                ],
+                "tags": ["Service accounts"],
                 "summary": "Create service account",
                 "description": "Create a new service account for this Organization",
                 "operationId": "serviceAccountCreate",
@@ -7005,10 +6849,7 @@
                                     "roleOrg": {
                                         "type": "string",
                                         "description": "Service Account organization role",
-                                        "enum": [
-                                            "admin",
-                                            "member"
-                                        ]
+                                        "enum": ["admin", "member"]
                                     },
                                     "userName": {
                                         "type": "string",
@@ -7018,10 +6859,7 @@
                                         "example": "John Doe"
                                     }
                                 },
-                                "required": [
-                                    "roleOrg",
-                                    "userName"
-                                ]
+                                "required": ["roleOrg", "userName"]
                             }
                         }
                     }
@@ -7040,9 +6878,7 @@
                 ]
             },
             "get": {
-                "tags": [
-                    "Service accounts"
-                ],
+                "tags": ["Service accounts"],
                 "summary": "List service acounts",
                 "description": "Get a list of all service account models, including those that were closed",
                 "operationId": "serviceAccountList",
@@ -7159,9 +6995,7 @@
         },
         "/service-accounts/{accountId}": {
             "get": {
-                "tags": [
-                    "Service accounts"
-                ],
+                "tags": ["Service accounts"],
                 "summary": "Fetch service account",
                 "description": "Retrieve service account model",
                 "operationId": "serviceAccountRead",
@@ -7243,9 +7077,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Service accounts"
-                ],
+                "tags": ["Service accounts"],
                 "summary": "Update service account",
                 "description": "Update service account details",
                 "operationId": "serviceAccountUpdate",
@@ -7325,10 +7157,7 @@
                                     "roleOrg": {
                                         "type": "string",
                                         "description": "Service Account organization role",
-                                        "enum": [
-                                            "admin",
-                                            "member"
-                                        ]
+                                        "enum": ["admin", "member"]
                                     },
                                     "userName": {
                                         "type": "string",
@@ -7356,9 +7185,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Service accounts"
-                ],
+                "tags": ["Service accounts"],
                 "summary": "Close service account",
                 "description": "Close this service account. This action is always reversible. You can re-open it anytime with \"regenerate\".",
                 "operationId": "serviceAccountClose",
@@ -7440,9 +7267,7 @@
                 ]
             },
             "put": {
-                "tags": [
-                    "Service accounts"
-                ],
+                "tags": ["Service accounts"],
                 "summary": "Regenerate",
                 "description": "Regenerate service account JSON Web Token and re-open service account if previously closed",
                 "operationId": "serviceAccountRegenerate",
@@ -7526,9 +7351,7 @@
         },
         "/teams/{teamId}/channels": {
             "post": {
-                "tags": [
-                    "Channels"
-                ],
+                "tags": ["Channels"],
                 "summary": "Create channel",
                 "description": "Create a new channel for a team",
                 "operationId": "channelCreate",
@@ -7618,9 +7441,7 @@
                                         "default": ""
                                     }
                                 },
-                                "required": [
-                                    "teamName"
-                                ]
+                                "required": ["teamName"]
                             }
                         }
                     }
@@ -7641,9 +7462,7 @@
         },
         "/teams/{teamId}/channels/{channelId}": {
             "post": {
-                "tags": [
-                    "Channels"
-                ],
+                "tags": ["Channels"],
                 "summary": "Update channel",
                 "description": "Update channel details for a team",
                 "operationId": "channelUpdate",
@@ -7743,9 +7562,7 @@
                                         "default": ""
                                     }
                                 },
-                                "required": [
-                                    "teamName"
-                                ]
+                                "required": ["teamName"]
                             }
                         }
                     }
@@ -7764,9 +7581,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Channels"
-                ],
+                "tags": ["Channels"],
                 "summary": "Delete channel",
                 "description": "Delete a channel and unassign all users",
                 "operationId": "channelDelete",
@@ -7860,9 +7675,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/users/{userId}": {
             "put": {
-                "tags": [
-                    "Channels"
-                ],
+                "tags": ["Channels"],
                 "summary": "Assign to channel",
                 "description": "Assign a user to a channel",
                 "operationId": "channelAssign",
@@ -7974,9 +7787,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Channels"
-                ],
+                "tags": ["Channels"],
                 "summary": "Unassign from channel",
                 "description": "Remove a user from a channel; removing the user from the default channel is the same as removing the user from the team",
                 "operationId": "channelUnassign",
@@ -8090,9 +7901,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/users": {
             "get": {
-                "tags": [
-                    "Channels"
-                ],
+                "tags": ["Channels"],
                 "summary": "List members",
                 "description": "List all channel members",
                 "operationId": "channelListMembers",
@@ -8229,9 +8038,7 @@
         },
         "/teams/{teamId}/channels/{channelId}/prospects": {
             "get": {
-                "tags": [
-                    "Channels"
-                ],
+                "tags": ["Channels"],
                 "summary": "Find prospects",
                 "description": "List 10 channel prospects",
                 "operationId": "channelListProspects",
@@ -8335,9 +8142,7 @@
         },
         "/teams": {
             "post": {
-                "tags": [
-                    "Teams"
-                ],
+                "tags": ["Teams"],
                 "summary": "Create team",
                 "description": "Create a new team to this organization",
                 "operationId": "teamCreate",
@@ -8400,9 +8205,7 @@
                                         "maxLength": 64
                                     }
                                 },
-                                "required": [
-                                    "teamName"
-                                ]
+                                "required": ["teamName"]
                             }
                         }
                     }
@@ -8421,9 +8224,7 @@
                 ]
             },
             "get": {
-                "tags": [
-                    "Teams"
-                ],
+                "tags": ["Teams"],
                 "summary": "List all teams",
                 "description": "Get a list of all organization team models",
                 "operationId": "teamListAll",
@@ -8550,9 +8351,7 @@
         },
         "/teams/{teamId}": {
             "get": {
-                "tags": [
-                    "Teams"
-                ],
+                "tags": ["Teams"],
                 "summary": "Fetch team",
                 "description": "Retrieve team model",
                 "operationId": "teamRead",
@@ -8634,9 +8433,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Teams"
-                ],
+                "tags": ["Teams"],
                 "summary": "Update team",
                 "description": "Update team details",
                 "operationId": "teamUpdate",
@@ -8748,9 +8545,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Teams"
-                ],
+                "tags": ["Teams"],
                 "summary": "Delete team",
                 "description": "Delete a team and unassign all users",
                 "operationId": "teamDelete",
@@ -8844,9 +8639,7 @@
         },
         "/teams/users/{userId}": {
             "get": {
-                "tags": [
-                    "Teams"
-                ],
+                "tags": ["Teams"],
                 "summary": "List user teams",
                 "description": "Get a list of all teams this user is a part of",
                 "operationId": "teamListUser",
@@ -8983,9 +8776,7 @@
         },
         "/teams/{teamId}/users/{userId}": {
             "put": {
-                "tags": [
-                    "Teams"
-                ],
+                "tags": ["Teams"],
                 "summary": "Assign to team",
                 "description": "Assign a user to a team",
                 "operationId": "teamAssign",
@@ -9087,9 +8878,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Teams"
-                ],
+                "tags": ["Teams"],
                 "summary": "Unassign from team",
                 "description": "Remove a user from a team",
                 "operationId": "teamUnassign",
@@ -9193,9 +8982,7 @@
         },
         "/users/{userId}": {
             "get": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "Fetch user",
                 "description": "Retrieve user model",
                 "operationId": "userRead",
@@ -9277,9 +9064,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "Update roles",
                 "description": "Update the user model",
                 "operationId": "userUpdateRole",
@@ -9307,20 +9092,12 @@
                                         "roleSite": {
                                             "type": "string",
                                             "description": "User site role",
-                                            "enum": [
-                                                "founder",
-                                                "moderator",
-                                                "user"
-                                            ]
+                                            "enum": ["founder", "moderator", "user"]
                                         },
                                         "roleOrg": {
                                             "type": "string",
                                             "description": "User organization role",
-                                            "enum": [
-                                                "owner",
-                                                "admin",
-                                                "member"
-                                            ]
+                                            "enum": ["owner", "admin", "member"]
                                         }
                                     }
                                 }
@@ -9406,9 +9183,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "Remove user",
                 "description": "Remove user from Organization",
                 "operationId": "userRemove",
@@ -9492,9 +9267,7 @@
         },
         "/users": {
             "get": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "List users",
                 "description": "Get a list of user models",
                 "operationId": "userList",
@@ -9638,10 +9411,7 @@
                         "example": "Invalid arguments provided"
                     }
                 },
-                "required": [
-                    "id",
-                    "message"
-                ]
+                "required": ["id", "message"]
             },
             "Error401": {
                 "description": "Unauthorized error",
@@ -9660,10 +9430,7 @@
                         "example": "Authorization error"
                     }
                 },
-                "required": [
-                    "id",
-                    "message"
-                ]
+                "required": ["id", "message"]
             },
             "Error402": {
                 "description": "Payment required",
@@ -9682,10 +9449,7 @@
                         "example": "Payment required error"
                     }
                 },
-                "required": [
-                    "id",
-                    "message"
-                ]
+                "required": ["id", "message"]
             },
             "Error403": {
                 "description": "Operation not allowed",
@@ -9704,10 +9468,7 @@
                         "example": "Not allowed"
                     }
                 },
-                "required": [
-                    "id",
-                    "message"
-                ]
+                "required": ["id", "message"]
             },
             "Error404": {
                 "description": "Resource not found",
@@ -9726,10 +9487,7 @@
                         "example": "Not found"
                     }
                 },
-                "required": [
-                    "id",
-                    "message"
-                ]
+                "required": ["id", "message"]
             },
             "Error409": {
                 "description": "Conflict",
@@ -9748,10 +9506,7 @@
                         "example": "Cluster not configured"
                     }
                 },
-                "required": [
-                    "id",
-                    "message"
-                ]
+                "required": ["id", "message"]
             },
             "Error429": {
                 "description": "Too many requests",
@@ -9770,10 +9525,7 @@
                         "example": "API daily usage limit reached"
                     }
                 },
-                "required": [
-                    "id",
-                    "message"
-                ]
+                "required": ["id", "message"]
             },
             "Checkout": {
                 "type": "object",
@@ -9825,13 +9577,7 @@
                     "type": {
                         "type": "string",
                         "description": "Event type",
-                        "enum": [
-                            "items",
-                            "assumptions",
-                            "tasks",
-                            "self-evaluation",
-                            "peer evaluation"
-                        ]
+                        "enum": ["items", "assumptions", "tasks", "self-evaluation", "peer evaluation"]
                     },
                     "teamId": {
                         "type": "string",
@@ -9886,12 +9632,7 @@
                     "stage": {
                         "type": "string",
                         "description": "Value Item Stage",
-                        "enum": [
-                            "planning",
-                            "validation",
-                            "execution",
-                            "deep context"
-                        ],
+                        "enum": ["planning", "validation", "execution", "deep context"],
                         "default": null
                     }
                 }
@@ -9937,10 +9678,7 @@
                                     "minimum": 1,
                                     "maximum": 10
                                 },
-                                "example": [
-                                    4,
-                                    5
-                                ]
+                                "example": [4, 5]
                             }
                         }
                     },
@@ -9968,10 +9706,7 @@
                                     "minimum": 1,
                                     "maximum": 10
                                 },
-                                "example": [
-                                    4,
-                                    5
-                                ]
+                                "example": [4, 5]
                             }
                         }
                     },
@@ -10024,10 +9759,7 @@
                     "inviteOrgRole": {
                         "type": "string",
                         "description": "Invitation user role",
-                        "enum": [
-                            "admin",
-                            "member"
-                        ]
+                        "enum": ["admin", "member"]
                     },
                     "inviteOrgName": {
                         "type": "string",
@@ -10104,12 +9836,7 @@
                             "interval": {
                                 "type": "string",
                                 "description": "Subscription interval type",
-                                "enum": [
-                                    "day",
-                                    "week",
-                                    "month",
-                                    "year"
-                                ],
+                                "enum": ["day", "week", "month", "year"],
                                 "default": "month"
                             },
                             "intervalCount": {
@@ -10123,13 +9850,7 @@
                     "status": {
                         "type": "string",
                         "description": "Invoice status",
-                        "enum": [
-                            "paid",
-                            "open",
-                            "void",
-                            "uncollectible",
-                            "draft"
-                        ]
+                        "enum": ["paid", "open", "void", "uncollectible", "draft"]
                     },
                     "url": {
                         "type": "string",
@@ -10159,15 +9880,7 @@
                     "cardBrand": {
                         "type": "string",
                         "description": "Card brand",
-                        "enum": [
-                            "visa",
-                            "mastercard",
-                            "american_express",
-                            "discover",
-                            "jcb",
-                            "diners_club",
-                            null
-                        ],
+                        "enum": ["visa", "mastercard", "american_express", "discover", "jcb", "diners_club", null],
                         "example": "visa"
                     },
                     "cardLast4": {
@@ -10226,12 +9939,7 @@
                     "stage": {
                         "type": "string",
                         "description": "Value Item Stage",
-                        "enum": [
-                            "planning",
-                            "validation",
-                            "execution",
-                            "deep context"
-                        ],
+                        "enum": ["planning", "validation", "execution", "deep context"],
                         "example": "planning"
                     },
                     "canAdvance": {
@@ -10242,11 +9950,7 @@
                     "type": {
                         "type": "string",
                         "description": "Value Item Type",
-                        "enum": [
-                            "feature",
-                            "bug fix",
-                            "routine"
-                        ],
+                        "enum": ["feature", "bug fix", "routine"],
                         "example": "feature"
                     },
                     "priority": {
@@ -10333,11 +10037,7 @@
                             "state": {
                                 "type": "string",
                                 "description": "Experiment state",
-                                "enum": [
-                                    "idle",
-                                    "running",
-                                    "done"
-                                ],
+                                "enum": ["idle", "running", "done"],
                                 "default": "idle"
                             }
                         }
@@ -10366,12 +10066,7 @@
                     "state": {
                         "type": "string",
                         "description": "Task state",
-                        "enum": [
-                            "idle",
-                            "in progress",
-                            "in review",
-                            "done"
-                        ],
+                        "enum": ["idle", "in progress", "in review", "done"],
                         "default": "idle"
                     },
                     "notionIds": {
@@ -10451,12 +10146,7 @@
                     "state": {
                         "type": "string",
                         "description": "Task state",
-                        "enum": [
-                            "idle",
-                            "in progress",
-                            "in review",
-                            "done"
-                        ],
+                        "enum": ["idle", "in progress", "in review", "done"],
                         "default": "idle"
                     },
                     "details": {
@@ -10516,12 +10206,7 @@
                     "stage": {
                         "type": "string",
                         "description": "Value Item Stage",
-                        "enum": [
-                            "planning",
-                            "validation",
-                            "execution",
-                            "deep context"
-                        ],
+                        "enum": ["planning", "validation", "execution", "deep context"],
                         "example": "planning"
                     },
                     "canAdvance": {
@@ -10532,11 +10217,7 @@
                     "type": {
                         "type": "string",
                         "description": "Value Item Type",
-                        "enum": [
-                            "feature",
-                            "bug fix",
-                            "routine"
-                        ],
+                        "enum": ["feature", "bug fix", "routine"],
                         "example": "feature"
                     },
                     "priority": {
@@ -10604,12 +10285,7 @@
                     "stage": {
                         "type": "string",
                         "description": "Value Item Stage",
-                        "enum": [
-                            "planning",
-                            "validation",
-                            "execution",
-                            "deep context"
-                        ],
+                        "enum": ["planning", "validation", "execution", "deep context"],
                         "example": "planning"
                     },
                     "canAdvance": {
@@ -10620,11 +10296,7 @@
                     "type": {
                         "type": "string",
                         "description": "Value Item Type",
-                        "enum": [
-                            "feature",
-                            "bug fix",
-                            "routine"
-                        ],
+                        "enum": ["feature", "bug fix", "routine"],
                         "example": "feature"
                     },
                     "priority": {
@@ -10692,11 +10364,7 @@
                             "state": {
                                 "type": "string",
                                 "description": "Experiment state",
-                                "enum": [
-                                    "idle",
-                                    "running",
-                                    "done"
-                                ],
+                                "enum": ["idle", "running", "done"],
                                 "default": "idle"
                             }
                         }
@@ -10720,12 +10388,7 @@
                     "state": {
                         "type": "string",
                         "description": "Task state",
-                        "enum": [
-                            "idle",
-                            "in progress",
-                            "in review",
-                            "done"
-                        ],
+                        "enum": ["idle", "in progress", "in review", "done"],
                         "default": "idle"
                     },
                     "notionIds": {
@@ -10945,12 +10608,7 @@
                     "interval": {
                         "type": "string",
                         "description": "Subscription interval type",
-                        "enum": [
-                            "day",
-                            "week",
-                            "month",
-                            "year"
-                        ],
+                        "enum": ["day", "week", "month", "year"],
                         "default": "month"
                     },
                     "intervalCount": {
@@ -10967,12 +10625,7 @@
                     "trialInterval": {
                         "type": "string",
                         "description": "Subscription trial interval type",
-                        "enum": [
-                            "day",
-                            "week",
-                            "month",
-                            "year"
-                        ],
+                        "enum": ["day", "week", "month", "year"],
                         "default": "day"
                     },
                     "trialIntervalCount": {
@@ -11032,15 +10685,7 @@
                     },
                     "status": {
                         "type": "string",
-                        "enum": [
-                            "active",
-                            "on_trial",
-                            "past_due",
-                            "cancelled",
-                            "unpaid",
-                            "paused",
-                            "expired"
-                        ]
+                        "enum": ["active", "on_trial", "past_due", "cancelled", "unpaid", "paused", "expired"]
                     },
                     "url": {
                         "type": "string",
@@ -11080,15 +10725,7 @@
                     "cardBrand": {
                         "type": "string",
                         "description": "Card brand",
-                        "enum": [
-                            "visa",
-                            "mastercard",
-                            "american_express",
-                            "discover",
-                            "jcb",
-                            "diners_club",
-                            null
-                        ],
+                        "enum": ["visa", "mastercard", "american_express", "discover", "jcb", "diners_club", null],
                         "example": "visa"
                     },
                     "cardLast4": {
@@ -11144,15 +10781,7 @@
                     },
                     "status": {
                         "type": "string",
-                        "enum": [
-                            "active",
-                            "on_trial",
-                            "past_due",
-                            "cancelled",
-                            "unpaid",
-                            "paused",
-                            "expired"
-                        ]
+                        "enum": ["active", "on_trial", "past_due", "cancelled", "unpaid", "paused", "expired"]
                     },
                     "url": {
                         "type": "string",
@@ -11192,15 +10821,7 @@
                     "cardBrand": {
                         "type": "string",
                         "description": "Card brand",
-                        "enum": [
-                            "visa",
-                            "mastercard",
-                            "american_express",
-                            "discover",
-                            "jcb",
-                            "diners_club",
-                            null
-                        ],
+                        "enum": ["visa", "mastercard", "american_express", "discover", "jcb", "diners_club", null],
                         "example": "visa"
                     },
                     "cardLast4": {
@@ -11360,16 +10981,7 @@
                     "userColor": {
                         "type": "string",
                         "description": "User profile color",
-                        "enum": [
-                            "clear",
-                            "red",
-                            "orange",
-                            "yellow",
-                            "green",
-                            "blue",
-                            "pink",
-                            "violet"
-                        ],
+                        "enum": ["clear", "red", "orange", "yellow", "green", "blue", "pink", "violet"],
                         "example": "red"
                     },
                     "serviceAccount": {
@@ -11409,20 +11021,12 @@
                     "roleSite": {
                         "type": "string",
                         "description": "User site role",
-                        "enum": [
-                            "founder",
-                            "moderator",
-                            "user"
-                        ]
+                        "enum": ["founder", "moderator", "user"]
                     },
                     "roleOrg": {
                         "type": "string",
                         "description": "User organization role",
-                        "enum": [
-                            "owner",
-                            "admin",
-                            "member"
-                        ]
+                        "enum": ["owner", "admin", "member"]
                     },
                     "closedTime": {
                         "type": "number",
@@ -11470,16 +11074,7 @@
                     "userColor": {
                         "type": "string",
                         "description": "User profile color",
-                        "enum": [
-                            "clear",
-                            "red",
-                            "orange",
-                            "yellow",
-                            "green",
-                            "blue",
-                            "pink",
-                            "violet"
-                        ],
+                        "enum": ["clear", "red", "orange", "yellow", "green", "blue", "pink", "violet"],
                         "example": "red"
                     },
                     "serviceAccount": {
@@ -11524,11 +11119,7 @@
                     "roleSite": {
                         "type": "string",
                         "description": "User site role",
-                        "enum": [
-                            "founder",
-                            "moderator",
-                            "user"
-                        ]
+                        "enum": ["founder", "moderator", "user"]
                     },
                     "roleOrg": {
                         "type": "array",
@@ -11545,11 +11136,7 @@
                                 "role": {
                                     "type": "string",
                                     "description": "User organization role",
-                                    "enum": [
-                                        "owner",
-                                        "admin",
-                                        "member"
-                                    ]
+                                    "enum": ["owner", "admin", "member"]
                                 }
                             }
                         }
@@ -11645,16 +11232,7 @@
                     "userColor": {
                         "type": "string",
                         "description": "User profile color",
-                        "enum": [
-                            "clear",
-                            "red",
-                            "orange",
-                            "yellow",
-                            "green",
-                            "blue",
-                            "pink",
-                            "violet"
-                        ],
+                        "enum": ["clear", "red", "orange", "yellow", "green", "blue", "pink", "violet"],
                         "example": "red"
                     },
                     "serviceAccount": {
@@ -11694,20 +11272,12 @@
                     "roleSite": {
                         "type": "string",
                         "description": "User site role",
-                        "enum": [
-                            "founder",
-                            "moderator",
-                            "user"
-                        ]
+                        "enum": ["founder", "moderator", "user"]
                     },
                     "roleOrg": {
                         "type": "string",
                         "description": "User organization role",
-                        "enum": [
-                            "owner",
-                            "admin",
-                            "member"
-                        ]
+                        "enum": ["owner", "admin", "member"]
                     },
                     "closedTime": {
                         "type": "number",

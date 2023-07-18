@@ -1,5 +1,5 @@
 /**
- * kronup sdk Builder
+ * Kronup SDK Builder
  *
  * @desc      Build SDK client
  * @copyright (c) 2022-2023 kronup.io

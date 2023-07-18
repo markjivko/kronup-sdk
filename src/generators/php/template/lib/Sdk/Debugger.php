@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Kronup sdk Debugger
+ * Kronup SDK Debugger
  *
  * @copyright (c) 2022-2023 kronup.io
  * @license   MIT

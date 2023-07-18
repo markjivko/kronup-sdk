@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvitationTest extends TestCase {
     /**
-     * Kronup sdk
+     * Kronup SDK
      *
      * @var \Kronup\Sdk
      */

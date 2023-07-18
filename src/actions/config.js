@@ -1,5 +1,5 @@
 /**
- * kronup sdk Configuration manager
+ * Kronup SDK Configuration manager
  *
  * @copyright (c) 2022-2023 kronup.io
  * @author    Mark Jivko

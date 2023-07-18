@@ -23,7 +23,7 @@
 
 ## Compatibility
 
-The Kronup SDK Generator requires Node.js version 18+.
+The kronup SDK Generator requires Node.js version 18+.
 
 ## Installation
 
