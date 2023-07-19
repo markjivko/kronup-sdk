@@ -2050,7 +2050,7 @@
                                         "type": "integer",
                                         "description": "The invitation expires after being used this many times. 0 = no limit",
                                         "minimum": 0,
-                                        "maximum": 1000,
+                                        "maximum": 500,
                                         "default": 0,
                                         "example": 10
                                     }
@@ -2367,7 +2367,7 @@
                                         "type": "integer",
                                         "description": "The invitation expires after being used this many times. 0 = no limit",
                                         "minimum": 0,
-                                        "maximum": 1000,
+                                        "maximum": 500,
                                         "default": 0,
                                         "example": 10
                                     }
@@ -10043,7 +10043,7 @@
                     "inviteUsesMax": {
                         "type": "integer",
                         "minimum": 0,
-                        "maximum": 10000,
+                        "maximum": 500,
                         "description": "Maximum number of uses",
                         "example": 0
                     },
