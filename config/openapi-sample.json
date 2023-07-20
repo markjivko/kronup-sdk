@@ -73,7 +73,7 @@
         },
         {
             "name": "Billing",
-            "description": "Manage billing information and subscriptions"
+            "description": "Manage billing information and subscriptions. At most **100** Invoices are stored for each [Organization](#tag/Organizations)."
         }
     ],
     "paths": {
@@ -10086,6 +10086,24 @@
                         "minimum": 1,
                         "example": 123
                     },
+                    "productId": {
+                        "type": "number",
+                        "description": "Product ID",
+                        "minimum": 1,
+                        "example": 1
+                    },
+                    "variantId": {
+                        "type": "number",
+                        "description": "Variant ID",
+                        "minimum": 1,
+                        "example": 1
+                    },
+                    "customerId": {
+                        "type": "number",
+                        "description": "Customer ID",
+                        "minimum": 1,
+                        "example": 1
+                    },
                     "pricePlan": {
                         "type": "object",
                         "title": "Price Plan - Lite",
@@ -11033,8 +11051,8 @@
                     "status": {
                         "type": "string",
                         "enum": [
-                            "active",
                             "on_trial",
+                            "active",
                             "past_due",
                             "cancelled",
                             "unpaid",
@@ -11145,8 +11163,8 @@
                     "status": {
                         "type": "string",
                         "enum": [
-                            "active",
                             "on_trial",
+                            "active",
                             "past_due",
                             "cancelled",
                             "unpaid",
