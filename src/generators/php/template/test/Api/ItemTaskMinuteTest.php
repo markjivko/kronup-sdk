@@ -30,11 +30,25 @@ class ItemTaskMinuteTest extends TestCase {
     protected $sdk;
 
     /**
+     * Kronup SDK for the Service Account
+     *
+     * @var \Kronup\Sdk
+     */
+    protected $sdkService;
+
+    /**
      * Account model
      *
      * @var Model\Account
      */
     protected $account;
+
+    /**
+     * Service Account model
+     *
+     * @var Model\ServiceAccount
+     */
+    protected $serviceAccount;
 
     /**
      * Team model
@@ -95,6 +109,19 @@ class ItemTaskMinuteTest extends TestCase {
         } else {
             $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
         }
+
+        // Initialize a new service account
+        $this->serviceAccount = $this->sdk
+            ->api()
+            ->serviceAccounts()
+            ->create(
+                (new Model\PayloadServiceAccountCreate())
+                    ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_MEMBER)
+                    ->setUserName("New account name")
+            );
+
+        // Store ths Service Account API
+        $this->sdkService = new Sdk($this->serviceAccount->getServiceToken());
 
         // Set-up a new team
         $this->team = $this->sdk
@@ -357,8 +384,30 @@ class ItemTaskMinuteTest extends TestCase {
         $this->assertEquals($feedbackMessageUpdated, $feedback->getMessage());
         $this->assertEquals(Model\PayloadTaskFeedbackUpdate::ISSUE_MISC, $feedback->getIssue());
 
+        // Assign the user to channel
+        $assignedUser = $this->sdk
+            ->api()
+            ->channels()
+            ->assign($this->team->getId(), $this->channel->getId(), $this->serviceAccount->getId());
+        $this->assertInstanceOf(Model\User::class, $assignedUser);
+        $this->assertEquals(0, count($assignedUser->listProps()));
+
+        // Assign task to user
+        $assignedTask = $this->sdk
+            ->api()
+            ->tasks()
+            ->assign(
+                $this->team->getId(),
+                $this->channel->getId(),
+                $this->item->getId(),
+                $this->task->getId(),
+                $this->serviceAccount->getId()
+            );
+        $this->assertInstanceOf(Model\Task::class, $assignedTask);
+        $this->assertEquals(0, count($assignedTask->listProps()));
+
         // Reply
-        $feedback = $this->sdk
+        $feedback = $this->sdkService
             ->api()
             ->tasks()
             ->feedbackReply(

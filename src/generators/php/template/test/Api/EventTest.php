@@ -76,18 +76,23 @@ class EventTest extends TestCase {
             ->account()
             ->read();
 
-        // Get the first organization ID
-        if (!count($this->account->getRoleOrg())) {
-            $organization = $this->sdk
+        // Remove the current organization
+        if (count($this->account->getRoleOrg())) {
+            $deleted = $this->sdk
                 ->api()
                 ->organizations()
-                ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
-            $this->assertInstanceOf(Model\Organization::class, $organization);
-            $this->assertEquals(0, count($organization->listProps()));
-            $this->sdk->config()->setOrgId($organization->getId());
-        } else {
-            $this->sdk->config()->setOrgId(current($this->account->getRoleOrg())->getOrgId());
+                ->delete(current($this->account->getRoleOrg())->getOrgId());
+            $this->assertTrue($deleted);
         }
+
+        // (Re-)create it
+        $organization = $this->sdk
+            ->api()
+            ->organizations()
+            ->create((new Model\PayloadOrganizationCreate())->setOrgName("Org " . mt_rand(1, 999) . ", Inc."));
+        $this->assertInstanceOf(Model\Organization::class, $organization);
+        $this->assertEquals(0, count($organization->listProps()));
+        $this->sdk->config()->setOrgId($organization->getId());
 
         $serviceAccountList = $this->sdk
             ->api()

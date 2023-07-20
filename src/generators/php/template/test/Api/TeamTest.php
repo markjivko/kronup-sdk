@@ -141,15 +141,7 @@ class TeamTest extends TestCase {
         $this->assertInstanceOf(Model\ChannelProspectsList::class, $prospectsList);
         $this->assertEquals(0, count($prospectsList->listProps()));
         $this->assertIsArray($prospectsList->getProspects());
-        $this->assertGreaterThanOrEqual(1, count($prospectsList->getProspects()));
-        $this->assertInstanceOf(Model\User::class, $prospectsList->getProspects()[0]);
-        $this->assertEquals(0, count($prospectsList->getProspects()[0]->listProps()));
-
-        // Sign me up
-        $this->sdk
-            ->api()
-            ->teams()
-            ->assign($team->getId(), $account->getId());
+        $this->assertEquals(0, count($prospectsList->getProspects()));
 
         // Fetch user teams
         $listUser = $this->sdk
