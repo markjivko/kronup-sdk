@@ -681,6 +681,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
+                                    "title": "Subscription Nullable",
                                     "nullable": true,
                                     "allOf": [
                                         {
@@ -10177,15 +10178,6 @@
                     "cardBrand": {
                         "type": "string",
                         "description": "Card brand",
-                        "enum": [
-                            "visa",
-                            "mastercard",
-                            "american_express",
-                            "discover",
-                            "jcb",
-                            "diners_club",
-                            null
-                        ],
                         "example": "visa"
                     },
                     "cardLast4": {
@@ -11098,15 +11090,6 @@
                     "cardBrand": {
                         "type": "string",
                         "description": "Card brand",
-                        "enum": [
-                            "visa",
-                            "mastercard",
-                            "american_express",
-                            "discover",
-                            "jcb",
-                            "diners_club",
-                            null
-                        ],
                         "example": "visa"
                     },
                     "cardLast4": {
@@ -11210,15 +11193,6 @@
                     "cardBrand": {
                         "type": "string",
                         "description": "Card brand",
-                        "enum": [
-                            "visa",
-                            "mastercard",
-                            "american_express",
-                            "discover",
-                            "jcb",
-                            "diners_club",
-                            null
-                        ],
                         "example": "visa"
                     },
                     "cardLast4": {
