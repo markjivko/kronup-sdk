@@ -77,17 +77,6 @@ class ServiceAccountTest extends TestCase {
     }
 
     /**
-     * Remove the organization
-     */
-    public function tearDown(): void {
-        $deleted = $this->sdk
-            ->api()
-            ->organizations()
-            ->delete($this->sdk->config()->getOrgId());
-        $this->assertTrue($deleted);
-    }
-
-    /**
      * Create, read, list, update, delete, use
      */
     public function testAll(): void {
@@ -110,11 +99,13 @@ class ServiceAccountTest extends TestCase {
                             ->setRoleOrg(Model\PayloadServiceAccountCreate::ROLE_ORG_ADMIN)
                             ->setUserName("New account name")
                     );
-
         $this->assertInstanceOf(Model\ServiceAccount::class, $serviceAccount);
         $this->assertEquals(0, count($serviceAccount->listProps()));
-
         $this->assertIsString($serviceAccount->getRoleOrg());
+
+        // All service accounts must symlink to a default avatar
+        $remoteFileExits = $this->checkRemoteFile("users/" . $serviceAccount->getId());
+        $this->assertTrue($remoteFileExits, "Avatar symlink not found");
 
         // Fetch the account
         $serviceAccountRead = $this->sdk
@@ -175,6 +166,25 @@ class ServiceAccountTest extends TestCase {
         $this->assertEquals(0, count($regenerated->listProps()));
         $this->assertNotEquals($serviceAccount->getServiceToken(), $regenerated->getServiceToken());
 
+        // Update the API Key
+        $sdkService->config()->setApiKey($regenerated->getServiceToken());
+
+        // Upload an avatar
+        $pathAvatar = dirname(__DIR__, 4) . "/res/dummy/avatar.png";
+        $updatedAccount = $sdkService
+            ->api()
+            ->account()
+            ->avatar(new \SplFileObject($pathAvatar));
+        $this->assertInstanceOf(Model\Account::class, $updatedAccount);
+        $this->assertEquals(0, count($updatedAccount->listProps()));
+
+        // Avatar ID must be a string
+        $this->assertIsString($updatedAccount->getId());
+
+        // Fetch the remote file headers
+        $remoteFileExits = $this->checkRemoteFile("users/" . $updatedAccount->getId());
+        $this->assertTrue($remoteFileExits, "Avatar upload failed");
+
         // Delete
         $deleted = $this->sdk
             ->api()
@@ -184,10 +194,51 @@ class ServiceAccountTest extends TestCase {
         $this->assertEquals(0, count($deleted->listProps()));
         $this->assertNotEquals($serviceAccount->getServiceToken(), $deleted->getServiceToken());
 
-        $this->expectExceptionObject(new ApiException("Not Found", 404));
-        $serviceAccountRead = $this->sdk
+        try {
+            $serviceAccountRead = $this->sdk
+                ->api()
+                ->serviceAccounts()
+                ->read($serviceAccount->getId());
+            $this->assertTrue(false, "serviceAccount.read() should throw an error");
+        } catch (Sdk\ApiException $exc) {
+            $this->assertEquals("not-found", $exc->getResponseObject()["id"]);
+        }
+
+        // Fetch the remote file headers
+        $remoteFileExits = $this->checkRemoteFile("users/" . $updatedAccount->getId());
+        $this->assertTrue($remoteFileExits, "Avatar not found after service account closed");
+
+        // Remove the organization
+        $deleted = $this->sdk
             ->api()
-            ->serviceAccounts()
-            ->read($serviceAccount->getId());
+            ->organizations()
+            ->delete($this->sdk->config()->getOrgId());
+        $this->assertTrue($deleted);
+
+        // Fetch the remote file headers
+        $remoteFileExits = $this->checkRemoteFile("users/" . $updatedAccount->getId());
+        $this->assertFalse($remoteFileExits, "Avatar still present after organization deleted");
+    }
+
+    /**
+     * Check remote file exists
+     *
+     * @param string $storagePath Storage path relative to our API server (must not include "s3")
+     */
+    protected function checkRemoteFile($storagePath) {
+        $host = preg_replace('%\/v\d+$%i', "/s3", $this->sdk->config()->getHost());
+        $url = "$host/$storagePath";
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+        curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return 200 === $httpCode;
     }
 }
