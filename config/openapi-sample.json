@@ -269,23 +269,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     },
@@ -311,19 +311,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 1500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -908,23 +899,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -939,19 +930,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -1195,23 +1177,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -1226,19 +1208,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -1314,23 +1287,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -1345,19 +1318,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -1453,23 +1417,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -1484,19 +1448,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -2088,23 +2043,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -2119,19 +2074,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -2736,23 +2682,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -2767,19 +2713,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -3465,23 +3402,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -3496,19 +3433,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -5486,23 +5414,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -5517,19 +5445,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -6190,23 +6109,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -6221,19 +6140,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -7051,23 +6961,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -7082,19 +6992,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -8121,23 +8022,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -8152,19 +8053,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -8432,23 +8324,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -8463,19 +8355,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -8865,23 +8748,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -8896,19 +8779,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -9503,23 +9377,23 @@
                     {
                         "name": "pageNumber",
                         "in": "query",
-                        "description": "Pagination: page number",
                         "schema": {
                             "type": "integer",
+                            "description": "Pagination: page number",
+                            "example": 1,
                             "default": 1,
-                            "minimum": 1,
-                            "example": 1
+                            "minimum": 1
                         }
                     },
                     {
                         "name": "pageSize",
                         "in": "query",
-                        "description": "Pagination: page size",
                         "schema": {
                             "type": "integer",
-                            "default": 100,
+                            "description": "Pagination: page size",
+                            "default": 500,
                             "minimum": 1,
-                            "maximum": 500,
+                            "maximum": 1500,
                             "example": 100
                         }
                     }
@@ -9534,19 +9408,10 @@
                                     "type": "object",
                                     "properties": {
                                         "pageNumber": {
-                                            "type": "integer",
-                                            "description": "Page number",
-                                            "example": 1,
-                                            "default": 1,
-                                            "minimum": 1
+                                            "$ref": "#/components/schemas/PageNumber"
                                         },
                                         "pageSize": {
-                                            "type": "integer",
-                                            "description": "Page size",
-                                            "example": 100,
-                                            "default": 500,
-                                            "minimum": 1,
-                                            "maximum": 1500
+                                            "$ref": "#/components/schemas/PageSize"
                                         },
                                         "total": {
                                             "type": "integer",
@@ -9618,9 +9483,24 @@
     },
     "components": {
         "schemas": {
+            "PageNumber": {
+                "type": "integer",
+                "description": "Pagination: page number",
+                "example": 1,
+                "default": 1,
+                "minimum": 1
+            },
+            "PageSize": {
+                "type": "integer",
+                "description": "Pagination: page size",
+                "default": 500,
+                "minimum": 1,
+                "maximum": 1500,
+                "example": 100
+            },
             "OK": {
-                "description": "Operation was successful",
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Operation was successful"
             },
             "Error400": {
                 "description": "Invalid argument error",
@@ -11344,6 +11224,11 @@
                         "maxLength": 64,
                         "example": "John Doe"
                     },
+                    "userEmail": {
+                        "type": "string",
+                        "description": "User email",
+                        "example": "example@gmail.com"
+                    },
                     "userAvatarId": {
                         "type": "string",
                         "description": "User avatar ID",
@@ -11453,6 +11338,11 @@
                         "minLength": 3,
                         "maxLength": 64,
                         "example": "John Doe"
+                    },
+                    "userEmail": {
+                        "type": "string",
+                        "description": "User email",
+                        "example": "example@gmail.com"
                     },
                     "userAvatarId": {
                         "type": "string",
@@ -11628,6 +11518,11 @@
                         "minLength": 3,
                         "maxLength": 64,
                         "example": "John Doe"
+                    },
+                    "userEmail": {
+                        "type": "string",
+                        "description": "User email",
+                        "example": "example@gmail.com"
                     },
                     "userAvatarId": {
                         "type": "string",

@@ -669,7 +669,10 @@ class EventTest extends TestCase {
         $this->assertInstanceOf(Model\EventsList::class, $eventsList);
         $this->assertEquals(0, count($eventsList->listProps()));
         $this->assertIsArray($eventsList->getEvents());
-        $this->assertEquals(0, count($eventsList->getEvents()));
+        $this->assertEquals(1, count($eventsList->getEvents()));
+        $this->assertEquals(Model\Event::STAGE_EXECUTION, $eventsList->getEvents()[0]->getStage());
+        $this->assertEquals(Model\Event::TYPE_TASKS, $eventsList->getEvents()[0]->getType());
+        $this->assertContains("assigneeUserId", $eventsList->getEvents()[0]->getDiff());
 
         // Service account notifications
         $eventsList = $this->sdkService
@@ -705,11 +708,12 @@ class EventTest extends TestCase {
         $this->assertIsArray($eventsList->getEvents());
         $this->assertEquals(1, count($eventsList->getEvents()));
 
-        // Second: notion ids change
+        // Second: assignee userId change
         $this->assertInstanceOf(Model\Event::class, $eventsList->getEvents()[0]);
         $this->assertEquals(0, count($eventsList->getEvents()[0]->listProps()));
+        $this->assertEquals(Model\Event::STAGE_EXECUTION, $eventsList->getEvents()[0]->getStage());
         $this->assertEquals(Model\Event::TYPE_TASKS, $eventsList->getEvents()[0]->getType());
-        $this->assertContains("notionIds", $eventsList->getEvents()[0]->getDiff());
+        $this->assertContains("assigneeUserId", $eventsList->getEvents()[0]->getDiff());
 
         // --- Peer eval ---
         $this->sdk
