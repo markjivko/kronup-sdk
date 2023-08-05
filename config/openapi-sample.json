@@ -10459,6 +10459,20 @@
                         "type": "string",
                         "description": "Updated timestamp",
                         "example": "2001-01-01T08:08:08.000+00:00"
+                    },
+                    "teamName": {
+                        "type": "string",
+                        "description": "Team name",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "example": "UX"
+                    },
+                    "channelName": {
+                        "type": "string",
+                        "description": "Channel name",
+                        "minLength": 1,
+                        "maxLength": 64,
+                        "example": "General"
                     }
                 }
             },
