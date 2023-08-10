@@ -1,7 +1,7 @@
 {
     "name": "kronup-sdk",
     "version": "0.0.1",
-    "description": "SDK generator for kronup",
+    "description": "SDK generator for Kronup",
     "scripts": {
         "init": "node ./src/actions/initialize",
         "dev": "node ./src/actions/develop",

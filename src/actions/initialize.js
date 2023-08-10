@@ -61,8 +61,8 @@ const { exit } = require("process");
   invokerPackage: "Kronup"
   modelPackage: "Model"
   apiPackage: "Api"
-  composerVendorName: "kronup"
-  composerProjectName: "sdk"
+  composerVendorName: "Kronup"
+  composerProjectName: "SDK"
   licenseInfo: "MIT"
   copyright: "(c) ${new Date().getFullYear()} kronup.io"`
                     );

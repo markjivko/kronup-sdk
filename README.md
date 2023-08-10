@@ -23,7 +23,7 @@
 
 ## Compatibility
 
-The kronup SDK Generator requires Node.js version 18+.
+The Kronup SDK Generator requires Node.js version 18+.
 
 ## Installation
 
@@ -197,7 +197,7 @@ Workflows are defined in `.github/workflows/*.yml`.
 The license summary below may be copied.
 
 ```text
-Copyright 2022-2023 kronup.com
+Copyright 2022-2023 Kronup.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -534,7 +534,7 @@ class BillingTest extends TestCase {
     }
 
     /**
-     * Prepare the kronup signature
+     * Prepare the Kronup signature
      *
      * @param string $orgSecret Organization Secret
      * @param string $orgId     Organization ID

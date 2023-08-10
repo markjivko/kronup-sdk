@@ -8,8 +8,8 @@ additionalProperties:
   invokerPackage: "Kronup"
   modelPackage: "Model"
   apiPackage: "Api"
-  composerVendorName: "kronup"
-  composerProjectName: "sdk"
+  composerVendorName: "Kronup"
+  composerProjectName: "SDK"
   licenseInfo: "MIT"
   copyright: "(c) 2022-2023 kronup.io"
 
