@@ -246,7 +246,7 @@ class ItemTaskTest extends TestCase {
         $this->assertEquals(0, count($itemList->getItems()[0]->listProps()));
         $this->assertIsArray($itemList->getItems()[0]->getTasks());
         $this->assertGreaterThan(0, count($itemList->getItems()[0]->getTasks()));
-        $this->assertInstanceOf(Model\TaskLite::class, $itemList->getItems()[0]->getTasks()[0]);
+        $this->assertInstanceOf(Model\Task::class, $itemList->getItems()[0]->getTasks()[0]);
         $this->assertEquals(
             0,
             count(

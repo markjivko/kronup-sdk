@@ -57,7 +57,7 @@
         },
         {
             "name": "Tasks",
-            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **50** Tasks.\n\nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **10** [Notions](#tag/Notions), **50** discoveries, and **50** feedback items."
+            "description": "Each [Value item](#tag/Value-items) has at least **1** and at most **25** Tasks.\n\nUse divide-et-impera as often as you like, but preferably keep you value items as short as possible.\n\nAll tasks must be marked as done before the value item can be retired to deep context.\n\nEach task can have a maximum of **10** [Notions](#tag/Notions), **25** discoveries, and **50** feedback items."
         },
         {
             "name": "Notions",
@@ -10547,9 +10547,9 @@
                     },
                     "tasks": {
                         "type": "array",
-                        "description": "Tasks - Lite",
+                        "description": "Tasks",
                         "items": {
-                            "$ref": "#/components/schemas/TaskLite"
+                            "$ref": "#/components/schemas/Task"
                         }
                     },
                     "createdAt": {
@@ -10607,41 +10607,6 @@
                     }
                 },
                 "title": "Assumption - Lite"
-            },
-            "TaskLite": {
-                "type": "object",
-                "title": "Task - Lite",
-                "description": "Task model",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Task ID",
-                        "example": "fff"
-                    },
-                    "assigneeUserId": {
-                        "$ref": "#/components/schemas/UserId"
-                    },
-                    "state": {
-                        "type": "string",
-                        "description": "Task state",
-                        "enum": [
-                            "idle",
-                            "in progress",
-                            "in review",
-                            "done"
-                        ],
-                        "default": "idle"
-                    },
-                    "notionIds": {
-                        "type": "array",
-                        "description": "Notion IDs",
-                        "items": {
-                            "type": "string",
-                            "title": "Notion ID",
-                            "example": "fff"
-                        }
-                    }
-                }
             },
             "MinuteDiscovery": {
                 "type": "object",
