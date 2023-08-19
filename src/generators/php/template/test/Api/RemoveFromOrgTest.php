@@ -81,7 +81,7 @@ class RemoveFromOrgTest extends TestCase {
         $this->assertEquals(0, count($organization->listProps()));
         $this->sdk->config()->setOrgId($organization->getId());
 
-        // Fetch teh service accounts
+        // Fetch the service accounts
         $serviceAccountList = $this->sdk
             ->api()
             ->serviceAccounts()

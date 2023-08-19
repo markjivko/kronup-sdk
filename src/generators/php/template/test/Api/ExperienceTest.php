@@ -112,7 +112,7 @@ class ExperienceTest extends TestCase {
         $this->assertEquals(1, $myExperience->getSelfEval()->getCount());
         $this->assertEquals(1, count($myExperience->getSelfEval()->getRecent()));
 
-        // Fetch teh service accounts
+        // Fetch the service accounts
         $serviceAccountList = $this->sdk
             ->api()
             ->serviceAccounts()
