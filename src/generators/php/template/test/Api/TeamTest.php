@@ -238,8 +238,8 @@ class TeamTest extends TestCase {
             ->read($account->getId());
 
         // Fetch the teams
-        $userTeams = array_map(function ($item) {
-            return $item->getTeamId();
+        $userTeams = array_map(function ($feature) {
+            return $feature->getTeamId();
         }, $modelUser3->getTeams());
         $this->assertNotContains($team->getId(), $userTeams);
 
@@ -251,8 +251,8 @@ class TeamTest extends TestCase {
         $this->assertInstanceOf(Model\User::class, $modelUser4);
         $this->assertEquals(0, count($modelUser4->listProps()));
 
-        $userTeams = array_map(function ($item) {
-            return $item->getTeamId();
+        $userTeams = array_map(function ($feature) {
+            return $feature->getTeamId();
         }, $modelUser4->getTeams());
         $this->assertContains($team->getId(), $userTeams);
 
@@ -340,8 +340,8 @@ class TeamTest extends TestCase {
             ->api()
             ->teams()
             ->assign($team->getId(), $account->getId());
-        $teamIds = array_map(function ($item) {
-            return $item->getTeamId();
+        $teamIds = array_map(function ($feature) {
+            return $feature->getTeamId();
         }, $user->getTeams());
         $this->assertContains($team->getId(), $teamIds);
 
@@ -379,8 +379,8 @@ class TeamTest extends TestCase {
             ->api()
             ->account()
             ->read();
-        $teamIds = array_map(function ($item) {
-            return $item->getTeamId();
+        $teamIds = array_map(function ($feature) {
+            return $feature->getTeamId();
         }, $user->getTeams());
 
         // Check that the user is no longer part of the deleted team

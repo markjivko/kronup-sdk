@@ -1,6 +1,6 @@
 <?php
 /**
- * Value Item Task Minute Test
+ * Feature Task Minute Test
  *
  * @copyright (c) 2022-2023 kronup.io
  * @license   MIT
@@ -21,7 +21,7 @@ use Kronup\Sdk\ApiException;
  *
  * @coversDefaultClass \Kronup\Local\Wallet
  */
-class ItemTaskMinuteTest extends TestCase {
+class FeatureTaskMinuteTest extends TestCase {
     /**
      * Kronup SDK
      *
@@ -65,11 +65,11 @@ class ItemTaskMinuteTest extends TestCase {
     protected $channel;
 
     /**
-     * Value item
+     * Feature
      *
-     * @var Model\ValueItem
+     * @var Model\Feature
      */
-    protected $item;
+    protected $feature;
 
     /**
      * Notion
@@ -138,14 +138,14 @@ class ItemTaskMinuteTest extends TestCase {
             ->teams()
             ->assign($this->team->getId(), $this->account->getId());
 
-        // Add value item
-        $this->item = $this->sdk
+        // Add feature
+        $this->feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())
+                (new Model\PayloadFeatureCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
@@ -158,7 +158,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -167,8 +167,8 @@ class ItemTaskMinuteTest extends TestCase {
         // Advance to validation
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->feature->getId());
 
         // Validate assumption with experiment
         $this->sdk
@@ -177,7 +177,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->experiment(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("Experiment details")
@@ -188,13 +188,13 @@ class ItemTaskMinuteTest extends TestCase {
         // Advance to execution
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->feature->getId());
 
-        $this->item = $this->sdk
+        $this->feature = $this->sdk
             ->api()
-            ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->features()
+            ->read($this->team->getId(), $this->channel->getId(), $this->feature->getId());
 
         // Prepare the notion
         $this->notion = $this->sdk
@@ -211,7 +211,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $this->task);
@@ -251,7 +251,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->discoveryCreate(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $this->task->getId(),
                 (new Model\PayloadTaskDiscoveryCreate())->setDetails($discoveryText)
             );
@@ -264,7 +264,7 @@ class ItemTaskMinuteTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->task->getId());
+            ->read($this->team->getId(), $this->channel->getId(), $this->feature->getId(), $this->task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
         $this->assertEquals(
@@ -282,7 +282,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->discoveryUpdate(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $this->task->getId(),
                 $task
                     ->getMinute()
@@ -301,7 +301,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->discoveryDelete(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $this->task->getId(),
                 $task
                     ->getMinute()
@@ -314,7 +314,7 @@ class ItemTaskMinuteTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->task->getId());
+            ->read($this->team->getId(), $this->channel->getId(), $this->feature->getId(), $this->task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
@@ -337,7 +337,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->feedbackCreate(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $this->task->getId(),
                 (new Model\PayloadTaskFeedbackCreate())
                     ->setMessage($feedbackMessage)
@@ -351,7 +351,7 @@ class ItemTaskMinuteTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->task->getId());
+            ->read($this->team->getId(), $this->channel->getId(), $this->feature->getId(), $this->task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
         $this->assertEquals(
@@ -369,7 +369,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->feedbackUpdate(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $this->task->getId(),
                 $task
                     ->getMinute()
@@ -399,7 +399,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->assign(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $this->task->getId(),
                 $this->serviceAccount->getId()
             );
@@ -413,7 +413,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->feedbackReply(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $this->task->getId(),
                 $task
                     ->getMinute()
@@ -432,7 +432,7 @@ class ItemTaskMinuteTest extends TestCase {
             ->feedbackDelete(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $this->task->getId(),
                 $task
                     ->getMinute()
@@ -445,7 +445,7 @@ class ItemTaskMinuteTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $this->task->getId());
+            ->read($this->team->getId(), $this->channel->getId(), $this->feature->getId(), $this->task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 

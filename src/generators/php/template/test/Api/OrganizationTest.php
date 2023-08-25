@@ -56,18 +56,18 @@ class OrganizationTest extends TestCase {
     protected $channel;
 
     /**
-     * Value item
+     * Feature
      *
-     * @var Model\ValueItem
+     * @var Model\Feature
      */
-    protected $item;
+    protected $feature;
 
     /**
-     * Deep Context item
+     * Deep Context Feature
      *
-     * @var Model\ValueItem
+     * @var Model\Feature
      */
-    protected $dcItem;
+    protected $dcFeature;
 
     /**
      * Notion
@@ -123,29 +123,29 @@ class OrganizationTest extends TestCase {
             ->teams()
             ->assign($this->team->getId(), $this->account->getId());
 
-        // Add value item
-        $this->dcItem = $this->sdk
+        // Add feature
+        $this->dcFeature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())
+                (new Model\PayloadFeatureCreate())
                     ->setHeading("The heading information here")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
 
-        // Add second item
-        $this->item = $this->sdk
+        // Add second feature
+        $this->feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())
-                    ->setHeading("Second item heading")
-                    ->setDetails("Second item details")
+                (new Model\PayloadFeatureCreate())
+                    ->setHeading("Second feature heading")
+                    ->setDetails("Second feature details")
                     ->setPriority(4)
             );
 
@@ -156,32 +156,32 @@ class OrganizationTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->dcItem->getId(),
+                $this->dcFeature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
 
-        // Second item assumption
+        // Second feature assumption
         $assm2 = $this->sdk
             ->api()
             ->assumptions()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("X can be done a second time")
             );
 
         // Advance to validation
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->dcFeature->getId());
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->feature->getId());
 
         // Validate assumption with experiment
         $this->sdk
@@ -190,7 +190,7 @@ class OrganizationTest extends TestCase {
             ->experiment(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->dcItem->getId(),
+                $this->dcFeature->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("Experiment details")
@@ -204,7 +204,7 @@ class OrganizationTest extends TestCase {
             ->experiment(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $assm2->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("Second experiment details")
@@ -215,12 +215,12 @@ class OrganizationTest extends TestCase {
         // Advance to execution
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->dcFeature->getId());
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->feature->getId());
 
         // Prepare the notion
         $this->notion = $this->sdk
@@ -236,23 +236,23 @@ class OrganizationTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->dcItem->getId(),
+                $this->dcFeature->getId(),
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
-        // Prepare task for second item
+        // Prepare task for second feature
         $task2 = $this->sdk
             ->api()
             ->tasks()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 (new Model\PayloadTaskCreate())
                     ->setHeading("Second task one")
-                    ->setDetails("Second item task one details")
+                    ->setDetails("Second feature task one details")
             );
 
         // Add notion to task
@@ -262,7 +262,7 @@ class OrganizationTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->dcItem->getId(),
+                $this->dcFeature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$this->notion->getId()])
             );
@@ -276,7 +276,7 @@ class OrganizationTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $task2->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$this->notion->getId()])
             );
@@ -288,7 +288,7 @@ class OrganizationTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->dcItem->getId(),
+                $this->dcFeature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())
                     ->setHeading("New task title")
@@ -301,7 +301,7 @@ class OrganizationTest extends TestCase {
         $taskRead = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->dcItem->getId(), $task->getId());
+            ->read($this->team->getId(), $this->channel->getId(), $this->dcFeature->getId(), $task->getId());
 
         $this->assertInstanceOf(Model\TaskExpanded::class, $taskRead);
         $this->assertEquals(0, count($taskRead->listProps()));
@@ -319,12 +319,12 @@ class OrganizationTest extends TestCase {
         $this->assertEquals($this->notion->getValue(), $taskRead->getNotions()[0]->getValue());
 
         // Advance
-        $this->dcItem = $this->sdk
+        $this->dcFeature = $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->dcItem->getId());
-        $this->assertInstanceOf(Model\ValueItem::class, $this->dcItem);
-        $this->assertEquals(0, count($this->dcItem->listProps()));
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->dcFeature->getId());
+        $this->assertInstanceOf(Model\Feature::class, $this->dcFeature);
+        $this->assertEquals(0, count($this->dcFeature->listProps()));
 
         $this->experience = $this->sdk
             ->api()

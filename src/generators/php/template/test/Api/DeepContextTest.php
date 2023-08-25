@@ -51,11 +51,11 @@ class DeepContextTest extends TestCase {
     protected $channel;
 
     /**
-     * Value item
+     * Feature
      *
-     * @var Model\ValueItem
+     * @var Model\Feature
      */
-    protected $item;
+    protected $feature;
 
     /**
      * Notion
@@ -104,14 +104,14 @@ class DeepContextTest extends TestCase {
             ->teams()
             ->assign($this->team->getId(), $this->account->getId());
 
-        // Add value item
-        $this->item = $this->sdk
+        // Add feature
+        $this->feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())
+                (new Model\PayloadFeatureCreate())
                     ->setHeading("The heading information here")
                     ->setDetails("The details")
                     ->setPriority(4)
@@ -124,7 +124,7 @@ class DeepContextTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -133,8 +133,8 @@ class DeepContextTest extends TestCase {
         // Advance to validation
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->feature->getId());
 
         // Validate assumption with experiment
         $this->sdk
@@ -143,7 +143,7 @@ class DeepContextTest extends TestCase {
             ->experiment(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("Experiment details")
@@ -154,8 +154,8 @@ class DeepContextTest extends TestCase {
         // Advance to execution
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->feature->getId());
 
         // Prepare the notion
         $this->notion = $this->sdk
@@ -171,7 +171,7 @@ class DeepContextTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -184,7 +184,7 @@ class DeepContextTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$this->notion->getId()])
             );
@@ -202,7 +202,7 @@ class DeepContextTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())
                     ->setHeading("New task title")
@@ -218,7 +218,7 @@ class DeepContextTest extends TestCase {
         $taskRead = $this->sdk
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $this->item->getId(), $task->getId());
+            ->read($this->team->getId(), $this->channel->getId(), $this->feature->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $taskRead);
         $this->assertEquals(0, count($taskRead->listProps()));
         $this->assertInstanceOf(Model\Minute::class, $taskRead->getMinute());
@@ -232,12 +232,12 @@ class DeepContextTest extends TestCase {
         $this->assertEquals($this->notion->getValue(), $taskRead->getNotions()[0]->getValue());
 
         // Advance
-        $this->item = $this->sdk
+        $this->feature = $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
-        $this->assertInstanceOf(Model\ValueItem::class, $this->item);
-        $this->assertEquals(0, count($this->item->listProps()));
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->feature->getId());
+        $this->assertInstanceOf(Model\Feature::class, $this->feature);
+        $this->assertEquals(0, count($this->feature->listProps()));
     }
 
     /**
@@ -263,24 +263,24 @@ class DeepContextTest extends TestCase {
      * Read
      */
     public function testRead(): void {
-        // Fetch the item from deep context
-        $item = $this->sdk
+        // Fetch the feature from deep context
+        $feature = $this->sdk
             ->api()
             ->deepContext()
-            ->read($this->item->getId());
+            ->read($this->feature->getId());
 
-        $this->assertInstanceOf(Model\ValueItemExpanded::class, $item);
-        $this->assertEquals(0, count($item->listProps()));
+        $this->assertInstanceOf(Model\FeatureExpanded::class, $feature);
+        $this->assertEquals(0, count($feature->listProps()));
 
         // Assumptions
-        $this->assertIsArray($item->getAssumptions());
-        $this->assertInstanceOf(Model\Assumption::class, $item->getAssumptions()[0]);
-        $this->assertEquals(0, count($item->getAssumptions()[0]->listProps()));
-        $this->assertInstanceOf(Model\Experiment::class, $item->getAssumptions()[0]->getExperiment());
+        $this->assertIsArray($feature->getAssumptions());
+        $this->assertInstanceOf(Model\Assumption::class, $feature->getAssumptions()[0]);
+        $this->assertEquals(0, count($feature->getAssumptions()[0]->listProps()));
+        $this->assertInstanceOf(Model\Experiment::class, $feature->getAssumptions()[0]->getExperiment());
         $this->assertEquals(
             0,
             count(
-                $item
+                $feature
                     ->getAssumptions()[0]
                     ->getExperiment()
                     ->listProps()
@@ -288,16 +288,16 @@ class DeepContextTest extends TestCase {
         );
 
         // Tasks
-        $this->assertIsArray($item->getTasks());
-        $this->assertInstanceOf(Model\TaskExpanded::class, $item->getTasks()[0]);
-        $this->assertEquals(0, count($item->getTasks()[0]->listProps()));
+        $this->assertIsArray($feature->getTasks());
+        $this->assertInstanceOf(Model\TaskExpanded::class, $feature->getTasks()[0]);
+        $this->assertEquals(0, count($feature->getTasks()[0]->listProps()));
 
         // Task minutes
-        $this->assertInstanceOf(Model\Minute::class, $item->getTasks()[0]->getMinute());
+        $this->assertInstanceOf(Model\Minute::class, $feature->getTasks()[0]->getMinute());
         $this->assertEquals(
             0,
             count(
-                $item
+                $feature
                     ->getTasks()[0]
                     ->getMinute()
                     ->listProps()
@@ -305,13 +305,13 @@ class DeepContextTest extends TestCase {
         );
 
         // Task notions
-        $this->assertIsArray($item->getTasks()[0]->getNotions());
-        $this->assertGreaterThanOrEqual(1, count($item->getTasks()[0]->getNotions()));
-        $this->assertInstanceOf(Model\Notion::class, $item->getTasks()[0]->getNotions()[0]);
+        $this->assertIsArray($feature->getTasks()[0]->getNotions());
+        $this->assertGreaterThanOrEqual(1, count($feature->getTasks()[0]->getNotions()));
+        $this->assertInstanceOf(Model\Notion::class, $feature->getTasks()[0]->getNotions()[0]);
         $this->assertEquals(
             0,
             count(
-                $item
+                $feature
                     ->getTasks()[0]
                     ->getNotions()[0]
                     ->listProps()
@@ -319,22 +319,22 @@ class DeepContextTest extends TestCase {
         );
         $this->assertEquals(
             $this->notion->getValue(),
-            $item
+            $feature
                 ->getTasks()[0]
                 ->getNotions()[0]
                 ->getValue()
         );
 
         // Assert valid dates in the past
-        $this->assertIsString($item->getUpdatedAt());
-        $this->assertGreaterThan(0, strlen($item->getUpdatedAt()));
-        $itemTime = strtotime($item->getUpdatedAt());
-        $this->assertGreaterThan(0, $itemTime);
+        $this->assertIsString($feature->getUpdatedAt());
+        $this->assertGreaterThan(0, strlen($feature->getUpdatedAt()));
+        $featureTime = strtotime($feature->getUpdatedAt());
+        $this->assertGreaterThan(0, $featureTime);
 
-        $this->assertIsString($item->getCreatedAt());
-        $this->assertGreaterThan(0, strlen($item->getCreatedAt()));
-        $itemTime = strtotime($item->getCreatedAt());
-        $this->assertGreaterThan(0, $itemTime);
+        $this->assertIsString($feature->getCreatedAt());
+        $this->assertGreaterThan(0, strlen($feature->getCreatedAt()));
+        $featureTime = strtotime($feature->getCreatedAt());
+        $this->assertGreaterThan(0, $featureTime);
     }
 
     /**
@@ -349,20 +349,20 @@ class DeepContextTest extends TestCase {
         $this->assertInstanceOf(Model\DeepContextList::class, $search);
         $this->assertEquals(0, count($search->listProps()));
 
-        $this->assertIsArray($search->getItems());
-        $this->assertGreaterThanOrEqual(1, count($search->getItems()));
+        $this->assertIsArray($search->getFeatures());
+        $this->assertGreaterThanOrEqual(1, count($search->getFeatures()));
 
-        // Get the first item
-        $item = $search->getItems()[0];
+        // Get the first feature
+        $feature = $search->getFeatures()[0];
 
         // Tasks
-        $this->assertIsArray($item->getTasks());
-        $this->assertInstanceOf(Model\Task::class, $item->getTasks()[0]);
-        $this->assertEquals(0, count($item->getTasks()[0]->listProps()));
+        $this->assertIsArray($feature->getTasks());
+        $this->assertInstanceOf(Model\Task::class, $feature->getTasks()[0]);
+        $this->assertEquals(0, count($feature->getTasks()[0]->listProps()));
 
         // Task notions
-        $this->assertIsArray($item->getTasks()[0]->getNotionIds());
-        $this->assertGreaterThanOrEqual(1, count($item->getTasks()[0]->getNotionIds()));
+        $this->assertIsArray($feature->getTasks()[0]->getNotionIds());
+        $this->assertGreaterThanOrEqual(1, count($feature->getTasks()[0]->getNotionIds()));
     }
 
     /**
@@ -372,13 +372,13 @@ class DeepContextTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->deepContext()
-            ->delete($this->item->getId());
+            ->delete($this->feature->getId());
         $this->assertTrue($deleted);
 
         $this->expectExceptionObject(new ApiException("Not Found", 404));
         $this->sdk
             ->api()
             ->deepContext()
-            ->read($this->item->getId());
+            ->read($this->feature->getId());
     }
 }

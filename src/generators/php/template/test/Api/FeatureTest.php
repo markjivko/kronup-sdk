@@ -1,6 +1,6 @@
 <?php
 /**
- * Item Test
+ * Feature Test
  *
  * @copyright (c) 2022-2023 kronup.io
  * @license   MIT
@@ -17,11 +17,11 @@ use PHPUnit\Framework\TestCase;
 use Kronup\Sdk\ApiException;
 
 /**
- * Item Test
+ * Feature Test
  *
  * @coversDefaultClass \Kronup\Local\Wallet
  */
-class ItemTest extends TestCase {
+class FeatureTest extends TestCase {
     /**
      * Kronup SDK
      *
@@ -107,19 +107,19 @@ class ItemTest extends TestCase {
      * Read & Update
      */
     public function testCreateRead(): void {
-        $item = $this->sdk
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())
+                (new Model\PayloadFeatureCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
-        $this->assertInstanceOf(Model\ValueItem::class, $item);
-        $this->assertEquals(0, count($item->listProps()));
+        $this->assertInstanceOf(Model\Feature::class, $feature);
+        $this->assertEquals(0, count($feature->listProps()));
 
         // Get the events
         $events = $this->sdk
@@ -131,90 +131,90 @@ class ItemTest extends TestCase {
         $this->assertIsArray($events->getEvents());
 
         // Get the list
-        $items = $this->sdk
+        $features = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->list($this->team->getId(), $this->channel->getId());
-        $this->assertInstanceOf(Model\ValueItemsList::class, $items);
-        $this->assertEquals(0, count($items->listProps()));
+        $this->assertInstanceOf(Model\FeaturesList::class, $features);
+        $this->assertEquals(0, count($features->listProps()));
 
-        $this->assertIsArray($items->getItems());
-        $this->assertGreaterThan(0, count($items->getItems()));
-        $this->assertGreaterThanOrEqual(count($items->getItems()), $items->getTotal());
+        $this->assertIsArray($features->getFeatures());
+        $this->assertGreaterThan(0, count($features->getFeatures()));
+        $this->assertGreaterThanOrEqual(count($features->getFeatures()), $features->getTotal());
 
-        $this->assertInstanceOf(Model\ValueItemLite::class, $items->getItems()[0]);
-        $this->assertEquals(0, count($items->getItems()[0]->listProps()));
+        $this->assertInstanceOf(Model\FeatureLite::class, $features->getFeatures()[0]);
+        $this->assertEquals(0, count($features->getFeatures()[0]->listProps()));
     }
 
     /**
-     * Delete item
+     * Delete feature
      */
     public function testUpdateDelete() {
-        $item = $this->sdk
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())
+                (new Model\PayloadFeatureCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
 
-        // Update the item
-        $itemUpdated = $this->sdk
+        // Update the feature
+        $featureUpdated = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $item->getId(),
-                (new Model\PayloadValueItemUpdate())->setHeading("The new heading")
+                $feature->getId(),
+                (new Model\PayloadFeatureUpdate())->setHeading("The new heading")
             );
-        $this->assertInstanceOf(Model\ValueItem::class, $itemUpdated);
-        $this->assertEquals(0, count($itemUpdated->listProps()));
+        $this->assertInstanceOf(Model\Feature::class, $featureUpdated);
+        $this->assertEquals(0, count($featureUpdated->listProps()));
 
-        $this->assertEquals("The new heading", $itemUpdated->getHeading());
+        $this->assertEquals("The new heading", $featureUpdated->getHeading());
 
-        // Delete the item
+        // Delete the feature
         $deleted = $this->sdk
             ->api()
-            ->valueItems()
-            ->delete($this->team->getId(), $this->channel->getId(), $item->getId());
+            ->features()
+            ->delete($this->team->getId(), $this->channel->getId(), $feature->getId());
         $this->assertTrue($deleted);
 
-        // Expect to fail (item was removed)
+        // Expect to fail (feature was removed)
         $this->expectExceptionObject(new ApiException("Not Found", 404));
         $this->sdk
             ->api()
-            ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $item->getId());
+            ->features()
+            ->read($this->team->getId(), $this->channel->getId(), $feature->getId());
     }
 
     /**
      * Advance error
      */
     public function testAdvanceError() {
-        $item = $this->sdk
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())
+                (new Model\PayloadFeatureCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
             );
-        $this->assertInstanceOf(Model\ValueItem::class, $item);
-        $this->assertEquals(0, count($item->listProps()));
+        $this->assertInstanceOf(Model\Feature::class, $feature);
+        $this->assertEquals(0, count($feature->listProps()));
 
-        // Advance the item
+        // Advance the feature
         $this->expectExceptionObject(new ApiException("You must add at least 1 Assumption", 403));
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $item->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $feature->getId());
     }
 }

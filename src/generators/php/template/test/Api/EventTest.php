@@ -185,22 +185,22 @@ class EventTest extends TestCase {
     }
 
     /**
-     * Create a value item and check event list for author and other team member
+     * Create a feature and check event list for author and other team member
      *
-     * @return Model\ValueItem
+     * @return Model\Feature
      */
-    protected function _getValueItem() {
-        // Create a value item
-        $valueItem = $this->sdk
+    protected function _getFeature() {
+        // Create a feature
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())->setHeading("A test item")
+                (new Model\PayloadFeatureCreate())->setHeading("A test feature")
             );
-        $this->assertInstanceOf(Model\ValueItem::class, $valueItem);
-        $this->assertEquals(0, count($valueItem->listProps()));
+        $this->assertInstanceOf(Model\Feature::class, $feature);
+        $this->assertEquals(0, count($feature->listProps()));
 
         // Fetch my notifications
         $eventsList = $this->sdk
@@ -212,13 +212,13 @@ class EventTest extends TestCase {
         $this->assertIsArray($eventsList->getEvents());
         $this->assertEquals(0, count($eventsList->getEvents()));
 
-        // Read the item
-        $valueItemService = $this->sdkService
+        // Read the feature
+        $featureService = $this->sdkService
             ->api()
-            ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $valueItem->getId());
-        $this->assertInstanceOf(Model\ValueItem::class, $valueItemService);
-        $this->assertEquals(0, count($valueItemService->listProps()));
+            ->features()
+            ->read($this->team->getId(), $this->channel->getId(), $feature->getId());
+        $this->assertInstanceOf(Model\Feature::class, $featureService);
+        $this->assertEquals(0, count($featureService->listProps()));
 
         // Re-fetch events
         $eventsList = $this->sdkService
@@ -230,16 +230,16 @@ class EventTest extends TestCase {
         $this->assertIsArray($eventsList->getEvents());
         $this->assertEquals(0, count($eventsList->getEvents()));
 
-        return $valueItem;
+        return $feature;
     }
 
     /**
-     * Test create/update value item assumptions
+     * Test create/update feature assumptions
      *
-     * @return array Model\ValueItem, Model\TaskExpanded
+     * @return array Model\Feature, Model\TaskExpanded
      */
     protected function _getTask() {
-        $valueItem = $this->_getValueItem();
+        $feature = $this->_getFeature();
 
         // Create the assumption
         $assm = $this->sdk
@@ -248,17 +248,17 @@ class EventTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
+                $feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("Assumption heading")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
 
-        // Advance the value item
-        $valueItem = $this->sdk
+        // Advance the feature
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $valueItem->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $feature->getId());
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
 
@@ -284,17 +284,17 @@ class EventTest extends TestCase {
 
         $this->assertInstanceOf(Model\Event::class, $eventsList->getEvents()[0]);
         $this->assertEquals(0, count($eventsList->getEvents()[0]->listProps()));
-        $this->assertEquals($eventsList->getEvents()[0]->getItemId(), $valueItem->getId());
-        $this->assertEquals(Model\Event::TYPE_ITEMS, $eventsList->getEvents()[0]->getType());
+        $this->assertEquals($eventsList->getEvents()[0]->getFeatureId(), $feature->getId());
+        $this->assertEquals(Model\Event::TYPE_FEATURES, $eventsList->getEvents()[0]->getType());
         $this->assertContains("stage", $eventsList->getEvents()[0]->getDiff());
 
-        // Read the item
-        $valueItemService = $this->sdkService
+        // Read the feature
+        $featureService = $this->sdkService
             ->api()
-            ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $valueItem->getId());
-        $this->assertInstanceOf(Model\ValueItem::class, $valueItemService);
-        $this->assertEquals(0, count($valueItemService->listProps()));
+            ->features()
+            ->read($this->team->getId(), $this->channel->getId(), $feature->getId());
+        $this->assertInstanceOf(Model\Feature::class, $featureService);
+        $this->assertEquals(0, count($featureService->listProps()));
 
         // Validate the assumption
         $this->sdk
@@ -303,7 +303,7 @@ class EventTest extends TestCase {
             ->experiment(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
+                $feature->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("All good")
@@ -332,16 +332,16 @@ class EventTest extends TestCase {
 
         $this->assertInstanceOf(Model\Event::class, $eventsList->getEvents()[0]);
         $this->assertEquals(0, count($eventsList->getEvents()[0]->listProps()));
-        $this->assertEquals($eventsList->getEvents()[0]->getItemId(), $valueItem->getId());
+        $this->assertEquals($eventsList->getEvents()[0]->getFeatureId(), $feature->getId());
         $this->assertEquals(Model\Event::TYPE_ASSUMPTIONS, $eventsList->getEvents()[0]->getType());
         $this->assertContains("state", $eventsList->getEvents()[0]->getDiff());
         $this->assertContains("details", $eventsList->getEvents()[0]->getDiff());
 
         // Advance again
-        $valueItem = $this->sdk
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $valueItem->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $feature->getId());
         $this->assertInstanceOf(Model\Assumption::class, $assm);
         $this->assertEquals(0, count($assm->listProps()));
 
@@ -367,17 +367,17 @@ class EventTest extends TestCase {
 
         $this->assertInstanceOf(Model\Event::class, $eventsList->getEvents()[0]);
         $this->assertEquals(0, count($eventsList->getEvents()[0]->listProps()));
-        $this->assertEquals($eventsList->getEvents()[0]->getItemId(), $valueItem->getId());
-        $this->assertEquals(Model\Event::TYPE_ITEMS, $eventsList->getEvents()[0]->getType());
+        $this->assertEquals($eventsList->getEvents()[0]->getFeatureId(), $feature->getId());
+        $this->assertEquals(Model\Event::TYPE_FEATURES, $eventsList->getEvents()[0]->getType());
         $this->assertContains("stage", $eventsList->getEvents()[0]->getDiff());
 
-        // Read the item
-        $valueItemService = $this->sdkService
+        // Read the feature
+        $featureService = $this->sdkService
             ->api()
-            ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $valueItem->getId());
-        $this->assertInstanceOf(Model\ValueItem::class, $valueItemService);
-        $this->assertEquals(0, count($valueItemService->listProps()));
+            ->features()
+            ->read($this->team->getId(), $this->channel->getId(), $feature->getId());
+        $this->assertInstanceOf(Model\Feature::class, $featureService);
+        $this->assertEquals(0, count($featureService->listProps()));
 
         // --- TASKS ---
         $task = $this->sdk
@@ -386,7 +386,7 @@ class EventTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
+                $feature->getId(),
                 (new Model\PayloadTaskCreate())->setHeading("Task heading")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -397,7 +397,7 @@ class EventTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
+                $feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setHeading("Task heading update")->setDetails("Task details update")
             );
@@ -426,7 +426,7 @@ class EventTest extends TestCase {
 
         $this->assertInstanceOf(Model\Event::class, $eventsList->getEvents()[0]);
         $this->assertEquals(0, count($eventsList->getEvents()[0]->listProps()));
-        $this->assertEquals($eventsList->getEvents()[0]->getItemId(), $valueItem->getId());
+        $this->assertEquals($eventsList->getEvents()[0]->getFeatureId(), $feature->getId());
         $this->assertEquals(Model\Event::TYPE_TASKS, $eventsList->getEvents()[0]->getType());
         $this->assertContains("heading", $eventsList->getEvents()[0]->getDiff());
         $this->assertContains("details", $eventsList->getEvents()[0]->getDiff());
@@ -435,7 +435,7 @@ class EventTest extends TestCase {
         $task = $this->sdkService
             ->api()
             ->tasks()
-            ->read($this->team->getId(), $this->channel->getId(), $valueItem->getId(), $task->getId());
+            ->read($this->team->getId(), $this->channel->getId(), $feature->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
@@ -449,24 +449,24 @@ class EventTest extends TestCase {
         $this->assertIsArray($eventsList->getEvents());
         $this->assertEquals(0, count($eventsList->getEvents()));
 
-        return [$valueItem, $task];
+        return [$feature, $task];
     }
 
     /**
-     * Test create/update value item
+     * Test create/update feature
      */
-    public function testAddRemoveItem(): void {
-        // Create a value item
-        $valueItem = $this->sdk
+    public function testAddRemoveFeature(): void {
+        // Create a feature
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())->setHeading("A test item")
+                (new Model\PayloadFeatureCreate())->setHeading("A test feature")
             );
-        $this->assertInstanceOf(Model\ValueItem::class, $valueItem);
-        $this->assertEquals(0, count($valueItem->listProps()));
+        $this->assertInstanceOf(Model\Feature::class, $feature);
+        $this->assertEquals(0, count($feature->listProps()));
 
         // Fetch my notifications
         $eventsList = $this->sdk
@@ -490,22 +490,22 @@ class EventTest extends TestCase {
 
         $this->assertInstanceOf(Model\Event::class, $eventsList->getEvents()[0]);
         $this->assertEquals(0, count($eventsList->getEvents()[0]->listProps()));
-        $this->assertEquals($eventsList->getEvents()[0]->getItemId(), $valueItem->getId());
-        $this->assertEquals(Model\Event::TYPE_ITEMS, $eventsList->getEvents()[0]->getType());
+        $this->assertEquals($eventsList->getEvents()[0]->getFeatureId(), $feature->getId());
+        $this->assertEquals(Model\Event::TYPE_FEATURES, $eventsList->getEvents()[0]->getType());
         $this->assertContains("heading", $eventsList->getEvents()[0]->getDiff());
 
-        // Update the value item
-        $valueItem = $this->sdk
+        // Update the feature
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
-                (new Model\PayloadValueItemUpdate())->setHeading("Another heading")->setDetails("Value item details")
+                $feature->getId(),
+                (new Model\PayloadFeatureUpdate())->setHeading("Another heading")->setDetails("Feature details")
             );
-        $this->assertInstanceOf(Model\ValueItem::class, $valueItem);
-        $this->assertEquals(0, count($valueItem->listProps()));
+        $this->assertInstanceOf(Model\Feature::class, $feature);
+        $this->assertEquals(0, count($feature->listProps()));
 
         // Fetch service account notifications
         $eventsList = $this->sdkService
@@ -519,18 +519,18 @@ class EventTest extends TestCase {
 
         $this->assertInstanceOf(Model\Event::class, $eventsList->getEvents()[0]);
         $this->assertEquals(0, count($eventsList->getEvents()[0]->listProps()));
-        $this->assertEquals($eventsList->getEvents()[0]->getItemId(), $valueItem->getId());
-        $this->assertEquals(Model\Event::TYPE_ITEMS, $eventsList->getEvents()[0]->getType());
+        $this->assertEquals($eventsList->getEvents()[0]->getFeatureId(), $feature->getId());
+        $this->assertEquals(Model\Event::TYPE_FEATURES, $eventsList->getEvents()[0]->getType());
         $this->assertContains("heading", $eventsList->getEvents()[0]->getDiff());
         $this->assertContains("details", $eventsList->getEvents()[0]->getDiff());
 
-        // Read the item
-        $valueItemService = $this->sdkService
+        // Read the feature
+        $featureService = $this->sdkService
             ->api()
-            ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $valueItem->getId());
-        $this->assertInstanceOf(Model\ValueItem::class, $valueItemService);
-        $this->assertEquals(0, count($valueItemService->listProps()));
+            ->features()
+            ->read($this->team->getId(), $this->channel->getId(), $feature->getId());
+        $this->assertInstanceOf(Model\Feature::class, $featureService);
+        $this->assertEquals(0, count($featureService->listProps()));
 
         // Re-fetch events
         $eventsList = $this->sdkService
@@ -544,10 +544,10 @@ class EventTest extends TestCase {
     }
 
     /**
-     * Test create/update value item assumptions
+     * Test create/update feature assumptions
      */
-    public function testAddRemoveItemAssm(): void {
-        $valueItem = $this->_getValueItem();
+    public function testAddRemoveFeatureAssm(): void {
+        $feature = $this->_getFeature();
 
         // Create the assumption
         $assm = $this->sdk
@@ -556,7 +556,7 @@ class EventTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
+                $feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("Assumption heading")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -584,17 +584,17 @@ class EventTest extends TestCase {
 
         $this->assertInstanceOf(Model\Event::class, $eventsList->getEvents()[0]);
         $this->assertEquals(0, count($eventsList->getEvents()[0]->listProps()));
-        $this->assertEquals($eventsList->getEvents()[0]->getItemId(), $valueItem->getId());
+        $this->assertEquals($eventsList->getEvents()[0]->getFeatureId(), $feature->getId());
         $this->assertEquals(Model\Event::TYPE_ASSUMPTIONS, $eventsList->getEvents()[0]->getType());
         $this->assertContains("heading", $eventsList->getEvents()[0]->getDiff());
 
-        // Read the item
-        $valueItemService = $this->sdkService
+        // Read the feature
+        $featureService = $this->sdkService
             ->api()
-            ->valueItems()
-            ->read($this->team->getId(), $this->channel->getId(), $valueItem->getId());
-        $this->assertInstanceOf(Model\ValueItem::class, $valueItemService);
-        $this->assertEquals(0, count($valueItemService->listProps()));
+            ->features()
+            ->read($this->team->getId(), $this->channel->getId(), $feature->getId());
+        $this->assertInstanceOf(Model\Feature::class, $featureService);
+        $this->assertEquals(0, count($featureService->listProps()));
 
         // Re-fetch events
         $eventsList = $this->sdkService
@@ -612,10 +612,10 @@ class EventTest extends TestCase {
      */
     public function testNotions(): void {
         /**
-         * @var Model\ValueItem $valueItem
+         * @var Model\Feature $feature
          * @var Model\TaskExpanded $taks
          */
-        [$valueItem, $taks] = $this->_getTask();
+        [$feature, $taks] = $this->_getTask();
 
         // Prepare the notion
         $notion = $this->sdk
@@ -632,7 +632,7 @@ class EventTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
+                $feature->getId(),
                 $taks->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$notion->getId()])
             );
@@ -722,7 +722,7 @@ class EventTest extends TestCase {
             ->assign(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
+                $feature->getId(),
                 $task->getId(),
                 $this->serviceAccount->getId()
             );
@@ -732,7 +732,7 @@ class EventTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $valueItem->getId(),
+                $feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setState(Model\PayloadTaskUpdate::STATE_DONE)
             );

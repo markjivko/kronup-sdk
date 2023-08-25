@@ -1,6 +1,6 @@
 <?php
 /**
- * Value Item Assumption Test
+ * Feature Assumption Test
  *
  * @copyright (c) 2022-2023 kronup.io
  * @license   MIT
@@ -21,7 +21,7 @@ use Kronup\Sdk\ApiException;
  *
  * @coversDefaultClass \Kronup\Local\Wallet
  */
-class ItemAssmTest extends TestCase {
+class FeatureAssmTest extends TestCase {
     /**
      * Kronup SDK
      *
@@ -51,11 +51,11 @@ class ItemAssmTest extends TestCase {
     protected $channel;
 
     /**
-     * Value item
+     * Feature
      *
-     * @var Model\ValueItem
+     * @var Model\Feature
      */
-    protected $item;
+    protected $feature;
 
     /**
      * Set-up
@@ -97,14 +97,14 @@ class ItemAssmTest extends TestCase {
             ->teams()
             ->assign($this->team->getId(), $this->account->getId());
 
-        // Store the value item
-        $this->item = $this->sdk
+        // Store the feature
+        $this->feature = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                (new Model\PayloadValueItemCreate())
+                (new Model\PayloadFeatureCreate())
                     ->setHeading("The heading")
                     ->setDetails("The details")
                     ->setPriority(4)
@@ -133,7 +133,7 @@ class ItemAssmTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -143,7 +143,7 @@ class ItemAssmTest extends TestCase {
         $assmList = $this->sdk
             ->api()
             ->assumptions()
-            ->list($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->list($this->team->getId(), $this->channel->getId(), $this->feature->getId());
         $this->assertInstanceOf(Model\AssumptionsList::class, $assmList);
         $this->assertEquals(0, count($assmList->listProps()));
 
@@ -151,32 +151,32 @@ class ItemAssmTest extends TestCase {
         $this->assertGreaterThan(0, count($assmList->getAssumptions()));
         $this->assertGreaterThanOrEqual(count($assmList->getAssumptions()), $assmList->getTotal());
 
-        // Item list - tasks must not have minutes
-        $itemList = $this->sdk
+        // Features list - tasks must not have minutes
+        $featureList = $this->sdk
             ->api()
-            ->valueItems()
+            ->features()
             ->list($this->team->getId(), $this->channel->getId());
-        $this->assertInstanceOf(Model\ValueItemsList::class, $itemList);
-        $this->assertEquals(0, count($itemList->listProps()));
+        $this->assertInstanceOf(Model\FeaturesList::class, $featureList);
+        $this->assertEquals(0, count($featureList->listProps()));
 
-        $this->assertIsArray($itemList->getItems());
-        $this->assertGreaterThan(0, count($itemList->getItems()));
-        $this->assertInstanceOf(Model\ValueItemLite::class, $itemList->getItems()[0]);
-        $this->assertEquals(0, count($itemList->getItems()[0]->listProps()));
-        $this->assertIsArray($itemList->getItems()[0]->getAssumptions());
-        $this->assertGreaterThan(0, count($itemList->getItems()[0]->getAssumptions()));
-        $this->assertInstanceOf(Model\AssumptionLite::class, $itemList->getItems()[0]->getAssumptions()[0]);
+        $this->assertIsArray($featureList->getFeatures());
+        $this->assertGreaterThan(0, count($featureList->getFeatures()));
+        $this->assertInstanceOf(Model\FeatureLite::class, $featureList->getFeatures()[0]);
+        $this->assertEquals(0, count($featureList->getFeatures()[0]->listProps()));
+        $this->assertIsArray($featureList->getFeatures()[0]->getAssumptions());
+        $this->assertGreaterThan(0, count($featureList->getFeatures()[0]->getAssumptions()));
+        $this->assertInstanceOf(Model\AssumptionLite::class, $featureList->getFeatures()[0]->getAssumptions()[0]);
         $this->assertEquals(
             0,
             count(
-                $itemList
-                    ->getItems()[0]
+                $featureList
+                    ->getFeatures()[0]
                     ->getAssumptions()[0]
                     ->listProps()
             )
         );
-        $experimentLite = $itemList
-            ->getItems()[0]
+        $experimentLite = $featureList
+            ->getFeatures()[0]
             ->getAssumptions()[0]
             ->getExperiment();
         $this->assertInstanceOf(Model\ExperimentLite::class, $experimentLite);
@@ -193,7 +193,7 @@ class ItemAssmTest extends TestCase {
             ->create(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -206,7 +206,7 @@ class ItemAssmTest extends TestCase {
             ->update(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmUpdate())->setHeading("New assumption")
             );
@@ -217,8 +217,8 @@ class ItemAssmTest extends TestCase {
         // Advance
         $this->sdk
             ->api()
-            ->valueItems()
-            ->advance($this->team->getId(), $this->channel->getId(), $this->item->getId());
+            ->features()
+            ->advance($this->team->getId(), $this->channel->getId(), $this->feature->getId());
 
         // Validate assumption with experiment
         $assmUpdatedExp = $this->sdk
@@ -227,7 +227,7 @@ class ItemAssmTest extends TestCase {
             ->experiment(
                 $this->team->getId(),
                 $this->channel->getId(),
-                $this->item->getId(),
+                $this->feature->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("Experiment details")
@@ -248,7 +248,7 @@ class ItemAssmTest extends TestCase {
         $deleted = $this->sdk
             ->api()
             ->assumptions()
-            ->delete($this->team->getId(), $this->channel->getId(), $this->item->getId(), $assm->getId());
+            ->delete($this->team->getId(), $this->channel->getId(), $this->feature->getId(), $assm->getId());
         $this->assertTrue($deleted);
     }
 }

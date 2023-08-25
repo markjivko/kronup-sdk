@@ -187,17 +187,17 @@ class RemoveFromOrgTest extends TestCase {
         $this->assertInstanceOf(Model\User::class, $assigned);
         $this->assertEquals(0, count($assigned->listProps()));
 
-        // Create an item
-        $item = $this->serviceSdk
+        // Create a feature
+        $feature = $this->serviceSdk
             ->api()
-            ->valueItems()
+            ->features()
             ->create(
                 $team->getId(),
                 $channel->getId(),
-                (new Model\PayloadValueItemCreate())->setHeading("A value item heading")
+                (new Model\PayloadFeatureCreate())->setHeading("A feature heading")
             );
-        $this->assertInstanceOf(Model\ValueItem::class, $item);
-        $this->assertEquals(0, count($item->listProps()));
+        $this->assertInstanceOf(Model\Feature::class, $feature);
+        $this->assertEquals(0, count($feature->listProps()));
 
         // Add an assumption
         $assm = $this->serviceSdk
@@ -206,7 +206,7 @@ class RemoveFromOrgTest extends TestCase {
             ->create(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("X can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm);
@@ -219,7 +219,7 @@ class RemoveFromOrgTest extends TestCase {
             ->create(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 (new Model\PayloadAssmCreate())->setHeading("Y can be done")
             );
         $this->assertInstanceOf(Model\Assumption::class, $assm2);
@@ -228,8 +228,8 @@ class RemoveFromOrgTest extends TestCase {
         // Advance to validation
         $this->serviceSdk
             ->api()
-            ->valueItems()
-            ->advance($team->getId(), $channel->getId(), $item->getId());
+            ->features()
+            ->advance($team->getId(), $channel->getId(), $feature->getId());
 
         // Validate assumption with experiment
         $this->serviceSdk
@@ -238,7 +238,7 @@ class RemoveFromOrgTest extends TestCase {
             ->experiment(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("Experiment details")
@@ -253,7 +253,7 @@ class RemoveFromOrgTest extends TestCase {
             ->experiment(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 $assm->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("Experiment details 2")
@@ -266,7 +266,7 @@ class RemoveFromOrgTest extends TestCase {
             ->experiment(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 $assm2->getId(),
                 (new Model\PayloadAssmExperiment())
                     ->setDetails("Experiment 2 details 2")
@@ -277,8 +277,8 @@ class RemoveFromOrgTest extends TestCase {
         // Advance to execution
         $this->serviceSdk
             ->api()
-            ->valueItems()
-            ->advance($team->getId(), $channel->getId(), $item->getId());
+            ->features()
+            ->advance($team->getId(), $channel->getId(), $feature->getId());
 
         $task = $this->serviceSdk
             ->api()
@@ -286,7 +286,7 @@ class RemoveFromOrgTest extends TestCase {
             ->create(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 (new Model\PayloadTaskCreate())->setHeading("Task one")->setDetails("Details of task one")
             );
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
@@ -299,7 +299,7 @@ class RemoveFromOrgTest extends TestCase {
             ->update(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskUpdate())->setNotionIds([$notion->getId()])
             );
@@ -328,7 +328,13 @@ class RemoveFromOrgTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->assign($team->getId(), $channel->getId(), $item->getId(), $task->getId(), $this->serviceAccount->getId());
+            ->assign(
+                $team->getId(),
+                $channel->getId(),
+                $feature->getId(),
+                $task->getId(),
+                $this->serviceAccount->getId()
+            );
         $this->assertInstanceOf(Model\Task::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
@@ -339,7 +345,7 @@ class RemoveFromOrgTest extends TestCase {
             ->discoveryCreate(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskDiscoveryCreate())->setDetails("Discovery 1")
             );
@@ -349,7 +355,7 @@ class RemoveFromOrgTest extends TestCase {
             ->discoveryCreate(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskDiscoveryCreate())->setDetails("Discovery 2")
             );
@@ -361,7 +367,7 @@ class RemoveFromOrgTest extends TestCase {
             ->feedbackCreate(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskFeedbackCreate())->setMessage("Feedback 1")
             );
@@ -371,7 +377,7 @@ class RemoveFromOrgTest extends TestCase {
             ->feedbackCreate(
                 $team->getId(),
                 $channel->getId(),
-                $item->getId(),
+                $feature->getId(),
                 $task->getId(),
                 (new Model\PayloadTaskFeedbackCreate())->setMessage("Feedback 2")
             );
@@ -389,32 +395,32 @@ class RemoveFromOrgTest extends TestCase {
         // Confirm changes
         // --------------------------
 
-        // Fetch new item
-        $item = $this->sdk
+        // Fetch new feature
+        $feature = $this->sdk
             ->api()
-            ->valueItems()
-            ->read($team->getId(), $channel->getId(), $item->getId());
-        $this->assertInstanceOf(Model\ValueItem::class, $item);
-        $this->assertEquals(0, count($item->listProps()));
+            ->features()
+            ->read($team->getId(), $channel->getId(), $feature->getId());
+        $this->assertInstanceOf(Model\Feature::class, $feature);
+        $this->assertEquals(0, count($feature->listProps()));
 
-        // Confirm change: Value item author
-        $this->assertEquals($serviceClosed->getId(), $item->getAuthorUserId());
+        // Confirm change: Feature author
+        $this->assertEquals($serviceClosed->getId(), $feature->getAuthorUserId());
 
         // Confirm change: Assumption author
-        $this->assertEquals($this->account->getId(), $item->getAssumptions()[0]->getAuthorUserId());
-        $this->assertEquals($serviceClosed->getId(), $item->getAssumptions()[1]->getAuthorUserId());
+        $this->assertEquals($this->account->getId(), $feature->getAssumptions()[0]->getAuthorUserId());
+        $this->assertEquals($serviceClosed->getId(), $feature->getAssumptions()[1]->getAuthorUserId());
 
         // Confirm change: Assumption experiment authors
         $this->assertContains(
             $serviceClosed->getId(),
-            $item
+            $feature
                 ->getAssumptions()[1]
                 ->getExperiment()
                 ->getAuthorUserIds()
         );
         $this->assertContains(
             $this->account->getId(),
-            $item
+            $feature
                 ->getAssumptions()[0]
                 ->getExperiment()
                 ->getAuthorUserIds()
@@ -424,7 +430,7 @@ class RemoveFromOrgTest extends TestCase {
         $task = $this->sdk
             ->api()
             ->tasks()
-            ->read($team->getId(), $channel->getId(), $item->getId(), $task->getId());
+            ->read($team->getId(), $channel->getId(), $feature->getId(), $task->getId());
         $this->assertInstanceOf(Model\TaskExpanded::class, $task);
         $this->assertEquals(0, count($task->listProps()));
 
