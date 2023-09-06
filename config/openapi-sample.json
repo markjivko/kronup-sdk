@@ -4741,15 +4741,15 @@
                                         "maxLength": 2048,
                                         "example": "Feature description"
                                     },
-                                    "type": {
+                                    "focus": {
                                         "type": "string",
-                                        "description": "Feature type",
+                                        "description": "Feature Focus",
                                         "enum": [
-                                            "feature",
-                                            "bug fix",
-                                            "routine"
+                                            "firmitas",
+                                            "utilitas",
+                                            "venustas"
                                         ],
-                                        "example": "feature"
+                                        "example": "firmitas"
                                     },
                                     "priority": {
                                         "type": "number",
@@ -4772,7 +4772,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/features \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":1}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/features \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"focus\":\"firmitas\",\"priority\":1}'"
                     }
                 ]
             },
@@ -5149,15 +5149,15 @@
                                         "maxLength": 2048,
                                         "example": "Feature description"
                                     },
-                                    "type": {
+                                    "focus": {
                                         "type": "string",
-                                        "description": "Feature type",
+                                        "description": "Feature Focus",
                                         "enum": [
-                                            "feature",
-                                            "bug fix",
-                                            "routine"
+                                            "firmitas",
+                                            "utilitas",
+                                            "venustas"
                                         ],
-                                        "example": "feature"
+                                        "example": "firmitas"
                                     },
                                     "priority": {
                                         "type": "number",
@@ -5180,7 +5180,7 @@
                 "x-codeSamples": [
                     {
                         "lang": "$ curl",
-                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/features/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"type\":\"feature\",\"priority\":1}'"
+                        "source": "curl --request POST \\\n  --url https://api.kronup.com/v1/teams/fff/channels/fff/features/fff \\\n  --header 'Authorization: Bearer <YOUR.API.KEY>' \\\n  --header 'content-type: application/json' \\\n  --data '{\"heading\":\"Feature name\",\"details\":\"Feature description\",\"focus\":\"firmitas\",\"priority\":1}'"
                     }
                 ]
             },
@@ -9925,9 +9925,9 @@
                         "description": "Conditions for Features to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Features become read-only; they can only be deleted by an Organization owner or administrator",
                         "default": false
                     },
-                    "type": {
+                    "focus": {
                         "type": "string",
-                        "description": "Feature Type",
+                        "description": "Feature Focus",
                         "enum": [
                             "firmitas",
                             "utilitas",
@@ -10215,9 +10215,9 @@
                         "description": "Conditions for Features to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Features become read-only; they can only be deleted by an Organization owner or administrator",
                         "default": false
                     },
-                    "type": {
+                    "focus": {
                         "type": "string",
-                        "description": "Feature Type",
+                        "description": "Feature Focus",
                         "enum": [
                             "firmitas",
                             "utilitas",
@@ -10317,9 +10317,9 @@
                         "description": "Conditions for Features to advance to the next stage:\n\n  * `planning` - at least 1 Assumption was added\n  * `validation` - all Assumption experiments were marked as `done`\n  * `execution` - all Tasks were marked as `done`\n  * `deep context` - Features become read-only; they can only be deleted by an Organization owner or administrator",
                         "default": false
                     },
-                    "type": {
+                    "focus": {
                         "type": "string",
-                        "description": "Feature Type",
+                        "description": "Feature Focus",
                         "enum": [
                             "firmitas",
                             "utilitas",
