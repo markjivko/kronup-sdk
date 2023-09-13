@@ -2,7 +2,7 @@
  * Kronup SDK Developer
  *
  * @desc      Develop SDK client in real-time
- * @copyright (c) 2022-2023 kronup.io
+ * @copyright (c) 2022-2023 kronup.com
  * @author    Mark Jivko
  */
 const config = require("../utils/config");

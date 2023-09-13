@@ -2,7 +2,7 @@
  * Kronup SDK Initializer
  *
  * @desc      Initialize a new SDK client generator
- * @copyright (c) 2022-2023 kronup.io
+ * @copyright (c) 2022-2023 kronup.com
  * @author    Mark Jivko
  */
 const logger = require("../utils/logger");
@@ -54,8 +54,8 @@ const { exit } = require("process");
                         `additionalProperties:
   theGitUserId: "kronup"
   theGitRepoId: "kronup-${client}"
-  theAuthorName: "kronup.io"
-  theAuthorUrl: "https://kronup.io/"
+  theAuthorName: "kronup.com"
+  theAuthorUrl: "https://kronup.com/"
   packagePath: "Kronup"
   artifactVersion: "0.0.1"
   invokerPackage: "Kronup"
@@ -64,7 +64,7 @@ const { exit } = require("process");
   composerVendorName: "Kronup"
   composerProjectName: "SDK"
   licenseInfo: "MIT"
-  copyright: "(c) ${new Date().getFullYear()} kronup.io"`
+  copyright: "(c) ${new Date().getFullYear()} kronup.com"`
                     );
 
                     // Hooks

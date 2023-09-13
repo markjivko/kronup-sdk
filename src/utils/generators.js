@@ -1,7 +1,7 @@
 /**
  * Languages handler
  *
- * @copyright (c) 2022-2023 kronup.io
+ * @copyright (c) 2022-2023 kronup.com
  * @author    Mark Jivko
  */
 const path = require("path");

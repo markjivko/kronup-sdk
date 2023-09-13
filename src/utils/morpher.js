@@ -1,7 +1,7 @@
 /**
  * Morpher - Parse OpenAPI v3 specification for better handling of "allOf" and "oneOf" syntax
  *
- * @copyright (c) 2022-2023 kronup.io
+ * @copyright (c) 2022-2023 kronup.com
  * @author    Mark Jivko
  */
 

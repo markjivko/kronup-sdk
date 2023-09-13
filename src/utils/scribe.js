@@ -2,7 +2,7 @@
  * Scribe - Support for (()) syntax and generation of extra documentation files not covered by the OpenAPI specification
  * This utility uses "scribe-*.mustache" files; see src/generators/php/template for examples
  *
- * @copyright (c) 2022-2023 kronup.io
+ * @copyright (c) 2022-2023 kronup.com
  * @author    Mark Jivko
  */
 const fs = require("fs-extra");

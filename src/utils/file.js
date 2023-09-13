@@ -1,7 +1,7 @@
 /**
  * File utilities
  *
- * @copyright (c) 2022-2023 kronup.io
+ * @copyright (c) 2022-2023 kronup.com
  * @author    Mark Jivko
  */
 const fs = require("fs-extra");
