@@ -10772,7 +10772,7 @@
                         "description": "Maximum number of users in this organization",
                         "minimum": 0,
                         "maximum": 500,
-                        "default": 2
+                        "default": 3
                     },
                     "orgUsersCount": {
                         "type": "integer",
