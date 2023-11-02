@@ -51,6 +51,38 @@ module.exports = class hook extends iHook {
             }
         }
 
+        // Prepare the links
+        let sitemapText = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+        sitemapText += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+        sitemapText += `
+    <url>
+        <loc>https://php.kronup.com/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>`;
+
+        // Add all secondary pages
+        for (const relativePath in readdirRelative(path.join(this.buildPath, "docs"))) {
+            if (relativePath.match(/\.md$/gi)) {
+                const urlPath = `${relativePath}`
+                    .replace(/\/?index.md/gi, "")
+                    .replace(/\.md$/gi, "/")
+                    .trim();
+                if (urlPath.length) {
+                    sitemapText += `
+    <url>
+        <loc>https://php.kronup.com/${urlPath}</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>`;
+                }
+            }
+        }
+        sitemapText += `\n</urlset>`;
+
+        // Save the file
+        fs.writeFileSync(path.join(this.buildPath, "docs", "sitemap.xml"), sitemapText);
+
         // Remove extra files
         const filesToRemove = [".php-cs-fixer.dist.php", ".travis.yml"];
 
